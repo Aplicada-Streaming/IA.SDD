@@ -1,7 +1,7 @@
 # Nota de coherencia — Auditoría del marco teórico contra configuración dirigida por esquema
 
-**Proyecto:** Template SDD 2.2
-**Documento:** _coherencia-auditoria-marco_v1.0.md
+**Proyecto:** Template SDD
+**Documento:** _Coherencia-Auditoria-Marco-v1.0.md
 **Versión:** 1.0
 **Estado:** Vigente
 **Fecha:** 2026-06-20
@@ -11,7 +11,7 @@
 
 ## 1. Alcance
 
-Pase de verificación en lectura sobre la auditoría de `marco-teorico-sdd2.2_v1.0.md` contra las mejoras de configuración dirigida por esquema (schema-driven UI) y su AI-readiness. La auditoría diagnosticó sección por sección, convirtió cada brecha en una tarea con especialidad asignada y ejecutó las ediciones de forma quirúrgica y serializada sobre el documento. Esta nota verifica el resultado contra las invariantes D1–D8 (con énfasis en D7) y la cadena de trazabilidad con el catálogo de diseño, la regla 03 y el master-prompt.
+Pase de verificación en lectura sobre la auditoría de `Marco-Teorico-SDD-v1.0.md` contra las mejoras de configuración dirigida por esquema (schema-driven UI) y su AI-readiness. La auditoría diagnosticó sección por sección, convirtió cada brecha en una tarea con especialidad asignada y ejecutó las ediciones de forma quirúrgica y serializada sobre el documento. Esta nota verifica el resultado contra las invariantes D1–D8 (con énfasis en D7) y la cadena de trazabilidad con el catálogo de diseño, la regla 03 y el master-prompt.
 
 ## 2. Inventario de archivos
 
@@ -19,11 +19,11 @@ Pase de verificación en lectura sobre la auditoría de `marco-teorico-sdd2.2_v1
 
 | Archivo | Rol |
 | --- | --- |
-| `devs/guides/_coherencia-auditoria-marco_v1.0.md` | Esta nota de coherencia. |
+| `Devs/Guides/_coherencia-Auditoria-Marco-v1.0.md` | Esta nota de coherencia. |
 
 ### 2.2 Editado
 
-`devs/guides/marco-teorico-sdd2.2_v1.0.md` (1.3 → 1.4). Secciones tocadas, una por tarea de la auditoría:
+`Devs/Guides/Marco-Teorico-SDD-v1.0.md` (1.3 → 1.4). Secciones tocadas, una por tarea de la auditoría:
 
 | Tarea | Sección | Cambio | Lente |
 | --- | --- | --- | --- |
@@ -47,8 +47,8 @@ Secciones sin cambio: §8.7 ya reflejaba el núcleo de la mejora (Cumple en el d
 | --- | --- | --- |
 | D1 — Idioma | Cumple | Adiciones en español rioplatense técnico, tono alineado con el marco; sin emojis ni negritas decorativas (salvo las etiquetas de término del glosario, que siguen el estilo preexistente de esa tabla). |
 | D2 — Encoding | Cumple | El archivo nuevo se creó en UTF-8 sin BOM; las ediciones no introducen BOM. |
-| D3 — Nombres | Cumple | `_coherencia-auditoria-marco_v1.0.md` en kebab-case con prefijo `_` de meta-archivo, igual que `_coherencia-config-esquema`. |
-| D4 — Versionado de nombre | Cumple | Sufijo `_v1.0` con guion bajo; no aparece `.v1.0`. |
+| D3 — Nombres | Cumple | `_Coherencia-Auditoria-Marco-v1.0.md` en Título-Con-Guiones con prefijo `_` de meta-archivo, igual que `_coherencia-config-esquema`. |
+| D4 — Versionado de nombre | Cumple | Sufijo `-v1.0` con guion medio; no aparece `.v1.0`. |
 | D5 — Una sola versión vigente | Cumple | El marco sube de versión in situ (1.3 → 1.4); no hay copias paralelas. |
 | D6 — Trazabilidad de cabecera | Cumple | Esta nota declara Proyecto/Documento/Versión/Estado/Fecha/Autor y lleva control de cambios; el marco mantiene su cabecera con la versión actualizada. |
 | D7 — Neutralidad de dominio (crítica) | Cumple | Ningún literal del dominio de moderación de la fuente se filtró al marco: la búsqueda de baneo/banear/spam/timeout/fan-out/"palabra prohibida"/moderación no arroja coincidencias en las adiciones. El vocabulario es neutro: parámetro, descriptor, default, límite, ejemplo, preset, propuesta, simulación. |
@@ -58,8 +58,8 @@ Secciones sin cambio: §8.7 ya reflejaba el núcleo de la mejora (Cumple en el d
 
 | Eslabón | Resultado | Evidencia |
 | --- | --- | --- |
-| Marco → catálogo de diseño | Cumple | §1.5, §2.5, §4.2, §7.5, §8.3, §11.1 y §12.3 referencian `design-rules-config-esquema` y/o la frontera `PropuestaDeConfiguracion`; §8.7 ya la documentaba. |
-| Marco → regla 03 | Cumple | §4.2 (AG-03) refleja la carga de la extensión cuando hay superficies de configuración, consistente con `03_rules_ux_ui_dx.md` v1.4 §1.4. |
+| Marco → catálogo de diseño | Cumple | §1.5, §2.5, §4.2, §7.5, §8.3, §11.1 y §12.3 referencian `Design-Rules-Config-Esquema` y/o la frontera `PropuestaDeConfiguracion`; §8.7 ya la documentaba. |
+| Marco → regla 03 | Cumple | §4.2 (AG-03) refleja la carga de la extensión cuando hay superficies de configuración, consistente con `03-Rules-UX-UI-DX.md` v1.4 §1.4. |
 | Marco → master-prompt | Cumple | La responsabilidad de AG-03 de cargar la extensión (marco §4.2) es coherente con la nota operativa de §6 del master-prompt (insumo de AG-03 para proyectos con superficies de configuración). |
 | Reparto de responsabilidades UX/arquitectura/IA | Cumple | §4.2 separa AG-03 (lado UX), AG-05 (motor de la frontera) y AG-04 (asistente como tool definitions), sin solapamiento; coincide con el límite 05/02 del documento de capacidad. |
 | Terminología uniforme | Cumple | `PropuestaDeConfiguracion`, descriptor, modo simulación, plan-and-apply, human-in-the-loop y divulgación progresiva se usan con el mismo sentido en todas las secciones editadas y quedan definidos en §13. |

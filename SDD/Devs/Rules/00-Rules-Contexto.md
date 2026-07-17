@@ -1,6 +1,6 @@
 # Reglas constructivas — 00 Contexto del producto
 
-**Carpeta target:** `/SDD2.2D/docs/00_contexto/`
+**Carpeta target:** `SDD/Docs/00-Contexto/`
 **Subagente target del orquestador:** Product Manager Senior (AG-00) en conjunción con Analista de Negocio Senior (AG-01) si el proyecto tiene stakeholders múltiples.
 **Versión de las reglas:** 1.3
 
@@ -46,11 +46,11 @@ En proyectos pequeños (1 a 2 stakeholders, sin regulación), AG-00 trabaja solo
 
 | Archivo | Obligatorio para | Recomendado para | Omitir para | Descripción |
 | --- | --- | --- | --- | --- |
-| `vision-producto_v1.0.md` | Todos los tipos D8 | — | — | Por qué existe el sistema, audiencia, propuesta de valor, objetivos SMART, métricas de éxito. |
-| `alcance-proyecto_v1.0.md` | Todos los tipos D8 | — | — | Qué entra y qué no entra en el sistema, supuestos, restricciones, criterios de aceptación del proyecto. |
-| `roadmap-producto_v1.0.md` | web-monolith, web-microservices, desktop-app, mobile-app-maui, rest-api, worker-service | cli-tool, library | — | Hitos, fases y criterios de transición entre fases. |
-| `compatibilidad-plataformas_v1.0.md` | desktop-app, mobile-app-maui, cli-tool | web-monolith, rest-api, worker-service | library de puro lenguaje sin runtime particular | Versiones de SO, runtimes, navegadores y dispositivos soportados. |
-| `acuerdo-equipo_v1.0.md` | Todos los tipos con equipo de más de 2 personas | Equipos de 2 personas que coordinan con stakeholders externos | Proyectos de 1 desarrollador solo, sin equipo | Convenciones de trabajo, ceremonias, herramientas, branching strategy. |
+| `Vision-Producto-v1.0.md` | Todos los tipos D8 | — | — | Por qué existe el sistema, audiencia, propuesta de valor, objetivos SMART, métricas de éxito. |
+| `Alcance-Proyecto-v1.0.md` | Todos los tipos D8 | — | — | Qué entra y qué no entra en el sistema, supuestos, restricciones, criterios de aceptación del proyecto. |
+| `Roadmap-Producto-v1.0.md` | web-monolith, web-microservices, desktop-app, mobile-app-maui, rest-api, worker-service | cli-tool, library | — | Hitos, fases y criterios de transición entre fases. |
+| `Compatibilidad-Plataformas-v1.0.md` | desktop-app, mobile-app-maui, cli-tool | web-monolith, rest-api, worker-service | library de puro lenguaje sin runtime particular | Versiones de SO, runtimes, navegadores y dispositivos soportados. |
+| `Acuerdo-Equipo-v1.0.md` | Todos los tipos con equipo de más de 2 personas | Equipos de 2 personas que coordinan con stakeholders externos | Proyectos de 1 desarrollador solo, sin equipo | Convenciones de trabajo, ceremonias, herramientas, branching strategy. |
 
 ### 2.2 Reglas de inclusión/exclusión por tipo de proyecto
 
@@ -73,11 +73,11 @@ Regla general: si el documento se omite, dejar nota explícita en el README de l
 
 ### 3.1 Patrón de nombres
 
-Patrón único: `<nombre-documento>_v<X.Y>.md`. El sufijo `_v<X.Y>` usa guion bajo antes de la letra `v`. Prohibido el patrón `.v<X.Y>.md` (punto) observado en SDD 1.0. Ejemplos válidos: `vision-producto_v1.0.md`, `alcance-proyecto_v1.0.md`, `roadmap-producto_v1.0.md`. Ejemplo inválido: `vision-producto.v1.0.md`.
+Patrón único: `<nombre-documento>-v<X.Y>.md`. El sufijo `-v<X.Y>` usa guion medio antes de la letra `v`. Prohibido el patrón `-v<X.Y>.md` (punto) observado en SDD 1.0. Ejemplos válidos: `Vision-Producto-v1.0.md`, `Alcance-Proyecto-v1.0.md`, `Roadmap-Producto-v1.0.md`. Ejemplo inválido: `Vision-Producto-v1.0.md`.
 
 ### 3.2 Convenciones de prefijos / sufijos
 
-No se aplica en esta categoría. Los documentos de contexto no usan prefijos del tipo `NB-XX`, `CU-XX`, `RN-XX`. Solo nombre kebab-case más sufijo de versión.
+No se aplica en esta categoría. Los documentos de contexto no usan prefijos del tipo `NB-XX`, `CU-XX`, `RN-XX`. Solo nombre Título-Con-Guiones más sufijo de versión.
 
 ### 3.3 Vinculación cross-doc (trazabilidad upstream/downstream)
 
@@ -87,7 +87,7 @@ No se aplica en esta categoría. Los documentos de contexto no usan prefijos del
 
 ### 3.4 README de la sección
 
-Recomendado. La carpeta `/SDD2.2D/docs/00_contexto/` lleva un `README.md` (sin versión) que enumera los 5 documentos con su propósito, su estado y el orden de lectura sugerido. Si algún documento fue omitido por aplicación de §2.2, el README declara el motivo. El README también lista los stakeholders del proyecto con nombre o rol.
+Recomendado. La carpeta `SDD/Docs/00-Contexto/` lleva un `README.md` (sin versión) que enumera los 5 documentos con su propósito, su estado y el orden de lectura sugerido. Si algún documento fue omitido por aplicación de §2.2, el README declara el motivo. El README también lista los stakeholders del proyecto con nombre o rol.
 
 ---
 
@@ -101,18 +101,18 @@ Todos los documentos de la categoría 00 arrancan con un bloque markdown estánd
 # <Título del documento>
 
 **Proyecto:** <nombre-del-proyecto>
-**Documento:** <nombre-archivo>_v<X.Y>.md
+**Documento:** <nombre-archivo>-v<X.Y>.md
 **Versión:** <X.Y>
 **Estado:** Borrador | Propuesto | Aprobado | Vigente | Superado
 **Fecha:** <YYYY-MM-DD>
 **Autor:** <rol o nombre>
 **Trazabilidad upstream:** SOLUTION-INTAKE §<n>
-**Trazabilidad downstream:** 01_necesidades_negocio, 02_especificacion_funcional, 05_arquitectura_tecnica, ...
+**Trazabilidad downstream:** 01-Necesidades-Negocio, 02-Especificacion-Funcional, 05-Arquitectura-Tecnica, ...
 ```
 
 ### 4.2 Secciones obligatorias
 
-#### vision-producto_v1.0.md
+#### Vision-Producto-v1.0.md
 
 - §1 Problema de negocio.
 - §2 Audiencia y stakeholders.
@@ -125,7 +125,7 @@ Todos los documentos de la categoría 00 arrancan con un bloque markdown estánd
 - §9 Glosario del dominio.
 - §10 Trazabilidad.
 
-#### alcance-proyecto_v1.0.md
+#### Alcance-Proyecto-v1.0.md
 
 - §1 Propósito.
 - §2 Descripción general.
@@ -138,7 +138,7 @@ Todos los documentos de la categoría 00 arrancan con un bloque markdown estánd
 - §9 Gestión de cambios de alcance.
 - §10 Trazabilidad.
 
-#### roadmap-producto_v1.0.md
+#### Roadmap-Producto-v1.0.md
 
 - §1 Propósito.
 - §2 Fases del producto (objetivo, épicas asociadas, entregable, release target).
@@ -147,7 +147,7 @@ Todos los documentos de la categoría 00 arrancan con un bloque markdown estánd
 - §5 Criterios de transición entre fases.
 - §6 Trazabilidad downstream a 06 backlog y 07 sprint plan.
 
-#### compatibilidad-plataformas_v1.0.md
+#### Compatibilidad-Plataformas-v1.0.md
 
 - §1 Resumen ejecutivo.
 - §2 Matriz de compatibilidad (componente x plataforma).
@@ -156,7 +156,7 @@ Todos los documentos de la categoría 00 arrancan con un bloque markdown estánd
 - §5 Estado de implementación por plataforma.
 - §6 Trazabilidad downstream a 09 DevOps.
 
-#### acuerdo-equipo_v1.0.md
+#### Acuerdo-Equipo-v1.0.md
 
 - §1 Propósito.
 - §2 Equipo y roles (Scrum o el modelo de gestión adoptado).
@@ -212,7 +212,7 @@ Todos los documentos de la categoría 00 arrancan con un bloque markdown estánd
 - ¿Qué dice el SOLUTION-INTAKE §9 sobre exclusiones declaradas por el cliente?
 - ¿Qué dice el SOLUTION-INTAKE §10 sobre restricciones del cliente (presupuesto, fecha, normativa, integración obligatoria)?
 - ¿Qué dice el SOLUTION-INTAKE §11 sobre riesgos detectados desde el negocio?
-- ¿El SOLUTION-INTAKE §13 declara un tipo de proyecto que requiera `compatibilidad-plataformas_v1.0.md`?
+- ¿El SOLUTION-INTAKE §13 declara un tipo de proyecto que requiera `Compatibilidad-Plataformas-v1.0.md`?
 - ¿El SOLUTION-INTAKE §17 P.9 enumera plataformas target que deban reflejarse en compatibilidad?
 
 ### 5.2 Decisiones de scope
@@ -250,7 +250,7 @@ Todos los documentos de la categoría 00 arrancan con un bloque markdown estánd
 - [ ] La compatibilidad-plataformas declara todas las plataformas target listadas en el SOLUTION-INTAKE §17 P.9 cuando aplica por tipo D8.
 - [ ] El acuerdo-equipo declara herramientas, ceremonias, branching strategy y SLA de respuesta cuando aplica.
 - [ ] Cada documento de la carpeta declara su trazabilidad upstream (SOLUTION-INTAKE con secciones específicas) y downstream (categorías 01, 02, 05, 07, 11 con detalle).
-- [ ] El nombre de cada archivo respeta el patrón `<kebab>_v1.0.md` con guion bajo antes de la versión.
+- [ ] El nombre de cada archivo respeta el patrón `<Nombre>-v1.0.md` con guion medio antes de la versión.
 - [ ] Ningún documento contiene emojis, negritas decorativas ni referencias hardcoded a stack, frameworks o ejemplos del dominio fuente del bootstrap.
 
 ---
@@ -259,19 +259,19 @@ Todos los documentos de la categoría 00 arrancan con un bloque markdown estánd
 
 ### 7.1 Ejemplo 1 — Sistema de turnos médicos (web-monolith)
 
-Fragmento representativo de `vision-producto_v1.0.md` para un sistema de turnos médicos:
+Fragmento representativo de `Vision-Producto-v1.0.md` para un sistema de turnos médicos:
 
 ```markdown
 # Visión de Producto
 
 **Proyecto:** turnos-medicos-clinica
-**Documento:** vision-producto_v1.0.md
+**Documento:** Vision-Producto-v1.0.md
 **Versión:** 1.0
 **Estado:** Propuesto
 **Fecha:** 2026-04-10
 **Autor:** Product Manager
 **Trazabilidad upstream:** SOLUTION-INTAKE §1, §3, §10
-**Trazabilidad downstream:** 01_necesidades_negocio, 02_especificacion_funcional, 05_arquitectura_tecnica
+**Trazabilidad downstream:** 01-Necesidades-Negocio, 02-Especificacion-Funcional, 05-Arquitectura-Tecnica
 
 ## 1. Problema de negocio
 
@@ -291,19 +291,19 @@ competidores que ya ofrecen reserva online.
 
 ### 7.2 Ejemplo 2 — Librería de parsing CSV (library)
 
-Fragmento representativo de `alcance-proyecto_v1.0.md` para una librería utilitaria:
+Fragmento representativo de `Alcance-Proyecto-v1.0.md` para una librería utilitaria:
 
 ```markdown
 # Alcance del Proyecto
 
 **Proyecto:** csv-parser-lib
-**Documento:** alcance-proyecto_v1.0.md
+**Documento:** Alcance-Proyecto-v1.0.md
 **Versión:** 1.0
 **Estado:** Aprobado
 **Fecha:** 2026-04-12
 **Autor:** Product Manager + Curador de Librería
 **Trazabilidad upstream:** SOLUTION-INTAKE §4, §9
-**Trazabilidad downstream:** 02_especificacion_funcional, 11_examples
+**Trazabilidad downstream:** 02-Especificacion-Funcional, 11-Examples
 
 ## 4. Alcance incluido
 
@@ -341,19 +341,19 @@ Insumos:
 - Documentos upstream: ninguno (sos el inicio de la cadena de trazabilidad D6).
 
 Documentos a generar (según tipo de proyecto {{TIPO}} y reglas de §2.2):
-- vision-producto_v1.0.md (obligatorio para todos los tipos)
-- alcance-proyecto_v1.0.md (obligatorio para todos los tipos)
-- roadmap-producto_v1.0.md (según matriz §2.2)
-- compatibilidad-plataformas_v1.0.md (según matriz §2.2)
-- acuerdo-equipo_v1.0.md (si equipo > 2 personas)
+- Vision-Producto-v1.0.md (obligatorio para todos los tipos)
+- Alcance-Proyecto-v1.0.md (obligatorio para todos los tipos)
+- Roadmap-Producto-v1.0.md (según matriz §2.2)
+- Compatibilidad-Plataformas-v1.0.md (según matriz §2.2)
+- Acuerdo-Equipo-v1.0.md (si equipo > 2 personas)
 - README.md de la sección 00 (recomendado, sin versión)
 
-Reglas de redacción: §4 de 00_rules_contexto.md.
+Reglas de redacción: §4 de 00-Rules-Contexto.md.
 Trazabilidad esperada: declarar upstream a SOLUTION-INTAKE y downstream a 01, 02, 03, 05, 07, 11.
-Criterios de calidad: §6 de 00_rules_contexto.md (11 ítems verificables).
+Criterios de calidad: §6 de 00-Rules-Contexto.md (11 ítems verificables).
 Restricciones: idioma rioplatense técnico, UTF-8 LF, sin emojis, sin negritas decorativas, sin referencias a stack en visión y alcance.
 
-Salida: /SDD2.2D/docs/00_contexto/<archivos>_v1.0.md.
+Salida: SDD/Docs/00-Contexto/<archivos>-v1.0.md.
 ```
 
 ---
@@ -362,7 +362,7 @@ Salida: /SDD2.2D/docs/00_contexto/<archivos>_v1.0.md.
 
 | Versión | Fecha | Cambios |
 | --- | --- | --- |
-| 1.0 | 2026-05-17 | Reglas iniciales generadas durante bootstrap SDD 2.2 |
+| 1.0 | 2026-05-17 | Reglas iniciales generadas durante bootstrap SDD |
 | 1.1 | 2026-06-08 | Higiene D7 (hallazgo H-02 de la matriz de coherencia ST-01): el criterio de aceptación de §6 deja de nombrar el dominio fuente ("Motor DSL") y pasa a referirse a "ejemplos del dominio fuente del bootstrap". |
 | 1.2 | 2026-06-09 | Validación ST-06: aclaración de que la categoría 00 se genera a nivel solución desde el PROJECT-BRIEF único y usa la variante §1.2 del proyecto principal del manifiesto. |
 | 1.3 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |

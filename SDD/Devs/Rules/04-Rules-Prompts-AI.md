@@ -1,12 +1,12 @@
 # Reglas constructivas — 04 Prompts AI
 
-**Carpeta target (por proyecto):** `/SDD2.2D/docs/proyectos/<nombre-proyecto-kebab>/04_prompts_ai/`
+**Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/04-Prompts-AI/`
 **Subagente target del orquestador:** Ingeniero de Prompts / AI Specialist (AG-04)
 **Versión de las reglas:** 1.2
 
 ---
 
-## 0. Posición en la cadena SDD 2.2
+## 0. Posición en la cadena SDD
 
 La categoría 04 produce los artefactos que rigen toda interacción del sistema con modelos de lenguaje (LLMs) y demás componentes de IA generativa. Es una categoría **opcional** y **gated** por declaración explícita del proyecto. Recibe insumos de 01 (necesidades de negocio que declaran feature LLM) y del SOLUTION-INTAKE (§17 P.11 decisiones pre-ADR, §17 P.10 NFR). Alimenta a 02 (CU que delegan parte del flujo en LLM), a 05 (arquitectura del pipeline AI), a 08 (tests de comportamiento del prompt y umbrales) y a 09 (rate limits, costos por entorno). Esta categoría no es transversal: si el proyecto no consume LLMs, no se genera.
 
@@ -53,7 +53,7 @@ Esta categoría se genera **solo** si el proyecto declara explícitamente que us
 - SOLUTION-INTAKE §17 P.11 (decisiones pre-ADR): bandera `usa_llm: true|false`.
 - SOLUTION-INTAKE §17 P.10 (NFR): NFR explícita de funcionalidad asistida por IA o de procesamiento de lenguaje natural.
 
-El orquestador lee este flag al inicio del bootstrap. Si `usa_llm = false` (o ambos campos están ausentes), **omite por completo la generación de la carpeta `/SDD2.2D/docs/04_prompts_ai/`**, deja constancia en el log del orquestador y no produce ningún artefacto de 04. Si el flag pasa de `false` a `true` en una iteración posterior, la categoría se activa de forma retroactiva en esa iteración y se reabren los criterios de aceptación del §6.
+El orquestador lee este flag al inicio del bootstrap. Si `usa_llm = false` (o ambos campos están ausentes), **omite por completo la generación de la carpeta `SDD/Docs/04-Prompts-AI/`**, deja constancia en el log del orquestador y no produce ningún artefacto de 04. Si el flag pasa de `false` a `true` en una iteración posterior, la categoría se activa de forma retroactiva en esa iteración y se reabren los criterios de aceptación del §6.
 
 Queda prohibido producir documentos de 04 sin el flag positivo. Queda prohibido omitir documentos de 04 cuando el flag es positivo.
 
@@ -61,10 +61,10 @@ Queda prohibido producir documentos de 04 sin el flag positivo. Queda prohibido 
 
 | Archivo | Obligatorio si la categoría está activa | Recomendado | Omitir | Descripción |
 | --- | --- | --- | --- | --- |
-| `politica-uso-ai_v1.0.md` | Sí | — | — | Política transversal de uso responsable, datos sensibles, validación humana, costos, vendor lock-in y disclaimer al usuario final. |
-| `prompt-<tarea-kebab>_v1.0.md` | Sí, uno por tarea LLM identificada | — | — | Un prompt por tarea funcional. Incluye contrato, prompt completo, few-shot, métricas, costos y trazabilidad a CU. |
-| `evaluacion-prompts_v1.0.md` | Sí | — | — | Marco de evaluación: métricas, dataset referenciado, protocolo de A/B, umbrales mínimos y frecuencia de re-evaluación. |
-| `dataset-evaluacion_v1.0.md` | — | Sí | Proyectos con un único prompt trivial y dataset embebido | Dataset de evaluación versionado: muestras de entrada, salidas esperadas y origen de cada muestra. |
+| `Politica-Uso-AI-v1.0.md` | Sí | — | — | Política transversal de uso responsable, datos sensibles, validación humana, costos, vendor lock-in y disclaimer al usuario final. |
+| `prompt-<Tarea>-v1.0.md` | Sí, uno por tarea LLM identificada | — | — | Un prompt por tarea funcional. Incluye contrato, prompt completo, few-shot, métricas, costos y trazabilidad a CU. |
+| `Evaluacion-Prompts-v1.0.md` | Sí | — | — | Marco de evaluación: métricas, dataset referenciado, protocolo de A/B, umbrales mínimos y frecuencia de re-evaluación. |
+| `Dataset-Evaluacion-v1.0.md` | — | Sí | Proyectos con un único prompt trivial y dataset embebido | Dataset de evaluación versionado: muestras de entrada, salidas esperadas y origen de cada muestra. |
 | `README.md` de la sección | Recomendado | — | — | Índice de prompts vigentes, estado y vínculo a la política y a la evaluación. |
 
 ### 2.3 Reglas de inclusión y exclusión por tipo
@@ -86,20 +86,20 @@ Queda prohibido producir documentos de 04 sin el flag positivo. Queda prohibido 
 
 ### 3.1 Patrón de nombres
 
-- `prompt-<tarea-kebab>_v<X.Y>.md` para cada prompt productivo.
-- `politica-uso-ai_v<X.Y>.md` para la política transversal.
-- `evaluacion-prompts_v<X.Y>.md` para el marco de evaluación.
-- `dataset-evaluacion_v<X.Y>.md` para el dataset versionado.
+- `prompt-<Tarea>-v<X.Y>.md` para cada prompt productivo.
+- `politica-uso-ai-v<X.Y>.md` para la política transversal.
+- `evaluacion-prompts-v<X.Y>.md` para el marco de evaluación.
+- `dataset-evaluacion-v<X.Y>.md` para el dataset versionado.
 - `README.md` para el índice navegable.
 
-El sufijo `_v<X.Y>.md` es uniforme para los cuatro tipos. Queda prohibido el patrón heredado `.v<X.Y>`. Todos los slugs son kebab-case lowercase estricto.
+El sufijo `-v<X.Y>.md` es uniforme para los cuatro tipos. Queda prohibido el patrón heredado `-v<X.Y>`. Todos los slugs son Título-Con-Guiones estricto.
 
 ### 3.2 Convenciones de prefijos y semántica
 
 - `prompt-`: artefacto de tarea concreta delegada en LLM. Una tarea por archivo.
 - `politica-uso-ai`: artefacto transversal, único en toda la categoría.
 - `evaluacion-prompts`: marco metodológico de evaluación, único en toda la categoría.
-- `dataset-evaluacion`: dataset común; puede haber datasets específicos por prompt, en cuyo caso se nombran `dataset-evaluacion-<tarea-kebab>_v<X.Y>.md`.
+- `dataset-evaluacion`: dataset común; puede haber datasets específicos por prompt, en cuyo caso se nombran `dataset-evaluacion-<Tarea>-v<X.Y>.md`.
 
 ### 3.3 Vinculación cross-doc
 
@@ -117,7 +117,7 @@ Una sola versión vigente por nombre lógico. La versión menor avanza cuando el
 
 Cuando un prompt pasa de `v1.0` a `v2.0`:
 
-1. Se crea `prompt-<tarea>_v2.0.md` en la carpeta principal.
+1. Se crea `prompt-<tarea>-v2.0.md` en la carpeta principal.
 2. La versión `v1.0` se mueve a `_legacy/` con estado `Superado` y nota inicial que apunte a la versión vigente.
 3. El README de la sección referencia únicamente la versión vigente.
 4. Las métricas y el dataset se reevalúan antes de declarar vigente la versión nueva.
@@ -136,7 +136,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 # Prompt — <Nombre descriptivo de la tarea>
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** prompt-<tarea-kebab>_v<X.Y>.md
+**Documento:** prompt-<Tarea>-v<X.Y>.md
 **Versión:** <X.Y>
 **Estado:** Borrador | Propuesto | Aprobado | Vigente | Superado | Archivado
 **Fecha:** YYYY-MM-DD
@@ -147,7 +147,7 @@ Para la política, la evaluación y el dataset aplica la misma cabecera adaptand
 
 ### 4.2 Secciones obligatorias de un prompt
 
-Un archivo `prompt-<tarea>_v<X.Y>.md` tiene exactamente las siguientes secciones, en orden:
+Un archivo `prompt-<tarea>-v<X.Y>.md` tiene exactamente las siguientes secciones, en orden:
 
 1. Objetivo de la tarea. Una a tres oraciones que respondan qué resuelve el prompt y para quién.
 2. Modelo LLM target. Familia (por ejemplo Claude Sonnet, GPT-4o, Gemini Pro) y tamaño esperado, con justificación y plan de portabilidad a una familia alternativa.
@@ -240,13 +240,13 @@ Tabla de trazabilidad del prompt:
 | Prompt sin contrato de salida formal | La salida no es parseable y rompe el consumidor | Forzar JSON con JSON Schema o markdown con headings fijos |
 | Prompt sin few-shot cuando la tarea lo requiere | El modelo no tiene referencia de calidad esperada y alucina | Mínimo dos few-shot por prompt; tres si es generación abierta |
 | Política de uso sin sección de datos sensibles | Se exponen datos personales al proveedor sin control | Sección §2 obligatoria con clasificación de datos y política de redacción |
-| Evaluación sin dataset versionado | No hay forma de comparar versiones del prompt | Versionar `dataset-evaluacion` con sufijo `_v<X.Y>.md` |
+| Evaluación sin dataset versionado | No hay forma de comparar versiones del prompt | Versionar `dataset-evaluacion` con sufijo `-v<X.Y>.md` |
 | Vendor lock-in sin alternativa documentada | Si el proveedor sube precios o cambia política, no hay plan B | Sección §7 de la política con alternativa primaria y plan de portabilidad |
 | Confiar ciegamente en la salida del LLM | Efectos críticos aplicados sin validación humana | Declarar bucle de control humano para tareas con efecto irreversible |
 | Prompt monolítico con varias tareas | Difícil de evaluar y de versionar | Chain of prompts: un archivo por tarea con contrato propio |
 | Métricas sin umbral numérico | "Debe ser buena" no es evaluable | Cada métrica con umbral cuantitativo y acción si no se alcanza |
-| Patrón heredado `.v<X.Y>` | Convención prohibida en SDD 2.2 | Forzar `_v<X.Y>` |
-| Casing inconsistente en el slug | Rompe automatizaciones | Forzar kebab lowercase estricto |
+| Patrón heredado `-v<X.Y>` | Convención prohibida en SDD | Forzar `-v<X.Y>` |
+| Casing inconsistente en el slug | Rompe automatizaciones | Forzar Título-Con-Guiones estricto |
 
 ---
 
@@ -297,16 +297,16 @@ Tabla de trazabilidad del prompt:
 ## 6. Criterios de aceptación
 
 - [ ] La categoría se activa solamente si SOLUTION-INTAKE declara explícitamente que el sistema usa LLMs; caso contrario la carpeta no existe.
-- [ ] Existe `politica-uso-ai_v1.0.md` antes de cualquier `prompt-<tarea>` productivo.
+- [ ] Existe `Politica-Uso-AI-v1.0.md` antes de cualquier `prompt-<tarea>` productivo.
 - [ ] Cada `prompt-<tarea>` declara contrato de entrada y contrato de salida (con JSON Schema si la salida es JSON).
 - [ ] Cada `prompt-<tarea>` tiene mínimo dos few-shot; tres si la tarea es generación abierta.
 - [ ] Cada `prompt-<tarea>` enumera casos de borde con respuesta esperada.
 - [ ] Cada `prompt-<tarea>` declara costo esperado por request y latencia esperada p50 y p99.
-- [ ] Existe `evaluacion-prompts_v1.0.md` con métricas, dataset referenciado, umbrales numéricos y frecuencia de re-evaluación.
-- [ ] Existe `dataset-evaluacion_v1.0.md` versionado, salvo justificación documentada en `evaluacion-prompts`.
+- [ ] Existe `Evaluacion-Prompts-v1.0.md` con métricas, dataset referenciado, umbrales numéricos y frecuencia de re-evaluación.
+- [ ] Existe `Dataset-Evaluacion-v1.0.md` versionado, salvo justificación documentada en `evaluacion-prompts`.
 - [ ] Cada prompt declara trazabilidad NB→CU→ADR→tests en 08.
-- [ ] Ningún archivo usa el patrón `.v<X.Y>.md`; todos usan `_v<X.Y>.md`.
-- [ ] Ningún slug contiene mayúsculas, espacios, acentos ni caracteres no kebab.
+- [ ] Ningún archivo usa el patrón `-v<X.Y>.md`; todos usan `-v<X.Y>.md`.
+- [ ] Ningún slug contiene mayúsculas, espacios, acentos ni caracteres no permitidos.
 - [ ] No coexisten versiones distintas del mismo nombre lógico en la carpeta principal; las superadas viven en `_legacy/`.
 
 ---
@@ -321,7 +321,7 @@ Los ejemplos son ilustrativos y de dominios distintos al material fuente. No deb
 # Prompt — Clasificación de tickets de soporte
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** prompt-clasificacion-tickets-soporte_v1.0.md
+**Documento:** Prompt-Clasificacion-Tickets-Soporte-v1.0.md
 **Versión:** 1.0
 **Estado:** Propuesto
 **Fecha:** 2026-05-17
@@ -358,7 +358,7 @@ JSON estricto:
 # Prompt — Resumen de actas legales
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** prompt-resumen-documentos-legales_v1.0.md
+**Documento:** Prompt-Resumen-Documentos-Legales-v1.0.md
 **Versión:** 1.0
 **Estado:** Propuesto
 **Fecha:** 2026-05-17
@@ -377,7 +377,7 @@ Markdown estructurado con secciones fijas: Partes, Antecedentes, Hechos, Resoluc
 | Caso | Respuesta esperada |
 | --- | --- |
 | Documento sin estructura legal reconocible | Devolver `FORMATO_NO_RECONOCIDO` |
-| Documento con datos personales sin redactar | Aplicar redacción definida en `politica-uso-ai_v1.0.md` §2 y continuar |
+| Documento con datos personales sin redactar | Aplicar redacción definida en `Politica-Uso-AI-v1.0.md` §2 y continuar |
 | Documento truncado por límite de tokens | Devolver hasta donde alcanza y declarar `TRUNCADO=true` |
 ```
 
@@ -404,28 +404,28 @@ Proveedor primario: {{proveedor-1}}. Alternativa documentada: {{proveedor-2}}. P
 Sos un {{ESPECIALIDAD-VARIANTE}} responsable de la categoría 04 (prompts AI) del proyecto {{NOMBRE_PROYECTO}}.
 
 Precondición de gating:
-- Antes de generar cualquier artefacto, verificá que SOLUTION-INTAKE declare explícitamente `usa_llm = true` en §17 P.11 o una NFR de IA en §17 P.10. Si no está declarado, NO generes la carpeta /SDD2.2D/docs/04_prompts_ai/ y dejá constancia en el log.
+- Antes de generar cualquier artefacto, verificá que SOLUTION-INTAKE declare explícitamente `usa_llm = true` en §17 P.11 o una NFR de IA en §17 P.10. Si no está declarado, NO generes la carpeta SDD/Docs/04-Prompts-AI/ y dejá constancia en el log.
 
 Insumos:
 - SOLUTION-INTAKE: {{path}} (especialmente §17 P.10 NFR y §17 P.11 pre-ADR)
 - Upstream: 01 (NB que motivan IA), 02 (CU que delegan en LLM si ya existe).
 
 A generar (si la categoría está activa):
-- politica-uso-ai_v1.0.md (obligatorio, primero).
-- prompt-<tarea-kebab>_v1.0.md (uno por tarea LLM identificada).
-- evaluacion-prompts_v1.0.md (obligatorio).
-- dataset-evaluacion_v1.0.md (recomendado).
+- Politica-Uso-AI-v1.0.md (obligatorio, primero).
+- prompt-<Tarea>-v1.0.md (uno por tarea LLM identificada).
+- Evaluacion-Prompts-v1.0.md (obligatorio).
+- Dataset-Evaluacion-v1.0.md (recomendado).
 - README.md de la sección (recomendado).
 
-Reglas de redacción: §4 de 04_rules_prompts_ai.md.
-Nomenclatura: `prompt-<tarea-kebab>_v1.0.md` con `_v` (no `.v`); slug en minúsculas estricto.
+Reglas de redacción: §4 de 04-Rules-Prompts-AI.md.
+Nomenclatura: `prompt-<Tarea>-v1.0.md` con guion medio `-v` (no `_v` ni `.v`); slug en Título-Con-Guiones estricto.
 Trazabilidad: cada prompt debe enlazar a una NB y a un CU consumidor.
-Criterios de calidad: §6 de 04_rules_prompts_ai.md.
+Criterios de calidad: §6 de 04-Rules-Prompts-AI.md.
 Política de versionado: §3.5; una sola versión vigente; anteriores a `_legacy/` con estado Superado.
 
 Restricciones: no introducir stacks concretos, productos comerciales del dominio fuente ni protocolos específicos de impresión. Idioma rioplatense técnico, tildes correctas, sin emojis.
 
-Salida: /SDD2.2D/docs/proyectos/{{NOMBRE_PROYECTO_KEBAB}}/04_prompts_ai/<estructura>.
+Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/04-Prompts-AI/<estructura>.
 ```
 
 ---
@@ -434,6 +434,6 @@ Salida: /SDD2.2D/docs/proyectos/{{NOMBRE_PROYECTO_KEBAB}}/04_prompts_ai/<estruct
 
 | Versión | Fecha | Cambios |
 | --- | --- | --- |
-| 1.0 | 2026-05-17 | Reglas iniciales generadas durante bootstrap SDD 2.2. Categoría opcional con gating explícito por PROJECT-README. |
-| 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `proyectos/<nombre-proyecto-kebab>/04_prompts_ai/` (cuando `usa_llm` del proyecto es true); la ruta de salida del prompt-snippet referencia el proyecto en curso del manifiesto. Tablas §1.2 sin reescritura. |
+| 1.0 | 2026-05-17 | Reglas iniciales generadas durante bootstrap SDD. Categoría opcional con gating explícito por PROJECT-README. |
+| 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `Proyectos/<Nombre-Proyecto>/04-Prompts-AI/` (cuando `usa_llm` del proyecto es true); la ruta de salida del prompt-snippet referencia el proyecto en curso del manifiesto. Tablas §1.2 sin reescritura. |
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |

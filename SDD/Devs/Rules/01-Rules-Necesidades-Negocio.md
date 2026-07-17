@@ -1,6 +1,6 @@
 # Reglas constructivas — 01 Necesidades de negocio
 
-**Carpeta target:** `/SDD2.2D/docs/01_necesidades_negocio/`
+**Carpeta target:** `SDD/Docs/01-Necesidades-Negocio/`
 **Subagente target del orquestador:** Analista de Negocio Senior (AG-01)
 **Versión de las reglas:** 1.2
 
@@ -10,7 +10,7 @@
 
 ### 1.1 Especialidad base
 
-Analista de Negocio Senior, equivalente al AG-01 del catálogo de especialidades. Su rol es traducir los dolores y oportunidades capturados en SOLUTION-INTAKE y en la visión del producto (categoría 00) en necesidades de negocio (NB) estructuradas, medibles y trazables hacia los casos de uso (CU) que las implementarán. El AG-01 trabaja a partir del intake y consolida cada NB en un archivo independiente bajo `/SDD2.2D/docs/01_necesidades_negocio/necesidades-de-negocio/`, además de mantener un índice maestro en la raíz de la categoría. Su responsabilidad no es definir flujos funcionales (eso es del AG-02) ni decisiones técnicas (AG-05), sino articular qué problema concreto del negocio se resuelve, para quién, con qué métrica de éxito y con qué prioridad relativa.
+Analista de Negocio Senior, equivalente al AG-01 del catálogo de especialidades. Su rol es traducir los dolores y oportunidades capturados en SOLUTION-INTAKE y en la visión del producto (categoría 00) en necesidades de negocio (NB) estructuradas, medibles y trazables hacia los casos de uso (CU) que las implementarán. El AG-01 trabaja a partir del intake y consolida cada NB en un archivo independiente bajo `SDD/Docs/01-Necesidades-Negocio/Necesidades-De-Negocio/`, además de mantener un índice maestro en la raíz de la categoría. Su responsabilidad no es definir flujos funcionales (eso es del AG-02) ni decisiones técnicas (AG-05), sino articular qué problema concreto del negocio se resuelve, para quién, con qué métrica de éxito y con qué prioridad relativa.
 
 ### 1.2 Variantes según tipo de proyecto
 
@@ -39,8 +39,8 @@ El AG-01 se combina sistemáticamente con dos roles aledaños. Con AG-00 (Produc
 
 | Archivo | Obligatorio para | Recomendado para | Omitir para | Descripción |
 | --- | --- | --- | --- | --- |
-| `necesidades-negocio_v1.0.md` | Todos los tipos D8 | — | — | Índice maestro de NB del proyecto, con tabla resumen, mapa de dependencias y trazabilidad agregada. |
-| `necesidades-de-negocio/NB-XX-<kebab>_v1.0.md` | Todos los tipos D8 (mínimo 3 NB, máximo razonable 15) | — | — | Una necesidad de negocio por archivo, en subcarpeta dedicada. |
+| `Necesidades-Negocio-v1.0.md` | Todos los tipos D8 | — | — | Índice maestro de NB del proyecto, con tabla resumen, mapa de dependencias y trazabilidad agregada. |
+| `Necesidades-De-Negocio/NB-XX-<Nombre>-v1.0.md` | Todos los tipos D8 (mínimo 3 NB, máximo razonable 15) | — | — | Una necesidad de negocio por archivo, en subcarpeta dedicada. |
 | `README.md` de la sección | Proyectos con más de 5 NB | Proyectos con 4 o 5 NB | Proyectos con 3 NB | Índice navegable de las NB, incluye RACI y orden de lectura sugerido. |
 
 ### 2.2 Reglas de inclusión/exclusión por tipo de proyecto
@@ -64,50 +64,50 @@ Una NB se fusiona con otra cuando ambas tienen el mismo dolor central y se disti
 
 ### 3.1 Patrón de nombres
 
-El índice se llama `necesidades-negocio_v1.0.md` (sin sufijo de proyecto). Cada necesidad va en un archivo `NB-XX-<kebab>_v<X.Y>.md` dentro de la subcarpeta `necesidades-de-negocio/`. Reglas estrictas:
+El índice se llama `Necesidades-Negocio-v1.0.md` (sin sufijo de proyecto). Cada necesidad va en un archivo `NB-XX-<Nombre>-v<X.Y>.md` dentro de la subcarpeta `Necesidades-De-Negocio/`. Reglas estrictas:
 
 - `XX` son dos dígitos, con cero a la izquierda si corresponde (`NB-01`, no `NB-1`).
-- `<kebab>` es lowercase, palabras separadas por guion medio, sin acentos ni eñes en el filename (sí pueden aparecer en el cuerpo del documento).
-- El separador entre el slug y la versión es guion bajo (`_v1.0`), nunca punto.
-- La versión inicial es `_v1.0.md` y sigue D5.
+- `<Nombre>` va en Título-Con-Guiones (cada palabra capitalizada), palabras separadas por guion medio, sin acentos ni eñes en el filename (sí pueden aparecer en el cuerpo del documento).
+- El separador entre el slug y la versión es guion medio (`-v1.0`), nunca punto.
+- La versión inicial es `-v1.0.md` y sigue D5.
 
-Ejemplo válido: `NB-03-trazabilidad-pedidos_v1.0.md`.
-Ejemplo inválido a evitar: `NB-03-Trazabilidad-Pedidos.v1.0.md` (mayúsculas en kebab y punto antes de la versión; éste es el patrón heredado del material fuente SDD 1.0 explícitamente registrado en la auditoría de Fase 0, §4, y se corrige por convención en SDD 2.2).
+Ejemplo válido: `NB-03-Trazabilidad-Pedidos-v1.0.md`.
+Ejemplo inválido a evitar: `nb-03-trazabilidad-pedidos_v1.0.md` (todo-minúsculas y guion bajo antes de la versión; éste es el patrón heredado del material fuente SDD 1.0 explícitamente registrado en la auditoría de Fase 0, §4, y se corrige por convención en SDD).
 
 ### 3.2 Convenciones de prefijos / sufijos
 
 - Prefijo obligatorio: `NB-XX-`.
-- Sufijo obligatorio: `_v<X.Y>.md` con dos componentes numéricos `mayor.menor`.
-- Subcarpeta obligatoria para los archivos por necesidad: `necesidades-de-negocio/`.
-- El índice maestro vive en la raíz de `01_necesidades_negocio/`, no dentro de la subcarpeta.
-- Filename sin acentos, sin emojis, sin espacios, sin mayúsculas, sin caracteres especiales (excepto guion medio y guion bajo).
+- Sufijo obligatorio: `-v<X.Y>.md` con dos componentes numéricos `mayor.menor`.
+- Subcarpeta obligatoria para los archivos por necesidad: `Necesidades-De-Negocio/`.
+- El índice maestro vive en la raíz de `01-Necesidades-Negocio/`, no dentro de la subcarpeta.
+- Filename sin acentos, sin emojis, sin espacios, sin caracteres especiales (excepto guion medio), con cada palabra capitalizada (Título-Con-Guiones).
 
 ### 3.3 Vinculación cross-doc (trazabilidad upstream/downstream)
 
 Upstream:
 
 - SOLUTION-INTAKE: §1 (Idea y problema), §3 (Propuesta de valor), §4 (Alcance funcional con MoSCoW provisorio), §8 (Métricas de éxito), §13 (tipo D8) y §17 P.1 (stack) para condicionar variantes.
-- 00_contexto: `vision-producto_v1.0.md` y `alcance-proyecto_v1.0.md` consolidan el marco previo.
+- 00-Contexto: `Vision-Producto-v1.0.md` y `Alcance-Proyecto-v1.0.md` consolidan el marco previo.
 
 Downstream:
 
-- 02_especificacion_funcional: cada NB declara las CU previstas que la implementarán.
-- 04_prompts_ai: si el proyecto declara IA o LLMs en SOLUTION-INTAKE, las NB que motivan prompts se enlazan a sus artefactos en esa categoría.
-- 06_backlog-tecnico, 07_plan-sprint: la priorización MoSCoW de cada NB ordena el backlog y los sprints.
-- 08_calidad_y_pruebas: cada criterio de éxito de §5 de la NB es input directo para los criterios de aceptación de la categoría 08.
+- 02-Especificacion-Funcional: cada NB declara las CU previstas que la implementarán.
+- 04-Prompts-AI: si el proyecto declara IA o LLMs en SOLUTION-INTAKE, las NB que motivan prompts se enlazan a sus artefactos en esa categoría.
+- 06-Backlog-Tecnico, 07-Plan-Sprint: la priorización MoSCoW de cada NB ordena el backlog y los sprints.
+- 08-Calidad-Y-Pruebas: cada criterio de éxito de §5 de la NB es input directo para los criterios de aceptación de la categoría 08.
 
-La cadena de trazabilidad obligatoria por D6 es: SOLUTION-INTAKE → 00_contexto → NB → CU → US → BT → Sprint → Test → Pipeline.
+La cadena de trazabilidad obligatoria por D6 es: SOLUTION-INTAKE → 00-Contexto → NB → CU → US → BT → Sprint → Test → Pipeline.
 
 ### 3.4 README de la sección
 
-El `README.md` de `01_necesidades_negocio/` se recomienda cuando hay más de 5 NB. Contiene como mínimo:
+El `README.md` de `01-Necesidades-Negocio/` se recomienda cuando hay más de 5 NB. Contiene como mínimo:
 
 - Tabla `NB-XX / título / impacto / prioridad MoSCoW / estado / enlace al archivo`.
 - Mapa de dependencias entre NB en formato lista o tabla.
 - Orden de lectura sugerido si las NB tienen dependencias fuertes.
 - RACI breve con propietario, implementador y revisor por NB.
 
-Proyectos con 3 o 4 NB pueden prescindir del README y dejar al índice `necesidades-negocio_v1.0.md` como punto de entrada único.
+Proyectos con 3 o 4 NB pueden prescindir del README y dejar al índice `Necesidades-Negocio-v1.0.md` como punto de entrada único.
 
 ---
 
@@ -115,7 +115,7 @@ Proyectos con 3 o 4 NB pueden prescindir del README y dejar al índice `necesida
 
 ### 4.1 Cabecera obligatoria
 
-Cada archivo `NB-XX-<kebab>_v1.0.md` arranca con el siguiente bloque, completando los valores entre llaves dobles:
+Cada archivo `NB-XX-<Nombre>-v1.0.md` arranca con el siguiente bloque, completando los valores entre llaves dobles:
 
 ```markdown
 # NB-XX — {{titulo-descriptivo}}
@@ -123,18 +123,18 @@ Cada archivo `NB-XX-<kebab>_v1.0.md` arranca con el siguiente bloque, completand
 | Campo | Valor |
 | --- | --- |
 | Proyecto | {{nombre-proyecto}} |
-| Documento | NB-XX-<kebab>_v1.0.md |
+| Documento | NB-XX-<Nombre>-v1.0.md |
 | Versión | 1.0 |
 | Estado | Borrador / Propuesto / Aprobado / Vigente / Superado / Archivado |
 | Fecha | YYYY-MM-DD |
 | Autor | {{rol-y-nombre}} |
-| Trazabilidad upstream | SOLUTION-INTAKE §1, §4; vision-producto_v1.0.md |
-| Trazabilidad downstream | CU-XX, CU-YY (previstas en 02_especificacion_funcional) |
+| Trazabilidad upstream | SOLUTION-INTAKE §1, §4; Vision-Producto-v1.0.md |
+| Trazabilidad downstream | CU-XX, CU-YY (previstas en 02-Especificacion-Funcional) |
 ```
 
-El bloque equivalente para el índice `necesidades-negocio_v1.0.md` agrega los campos `Cantidad de NB` y `Versión del catálogo de NB`.
+El bloque equivalente para el índice `Necesidades-Negocio-v1.0.md` agrega los campos `Cantidad de NB` y `Versión del catálogo de NB`.
 
-### 4.2 Secciones obligatorias del archivo `NB-XX-<kebab>_v1.0.md`
+### 4.2 Secciones obligatorias del archivo `NB-XX-<Nombre>-v1.0.md`
 
 El cuerpo del documento debe contener, en este orden, las siguientes diez secciones numeradas:
 
@@ -189,7 +189,7 @@ Tabla D (solo para el índice maestro): Resumen de NB.
 
 | ID | Necesidad | Prioridad MoSCoW | CU previstas | Estado | Enlace |
 | --- | --- | --- | --- | --- | --- |
-| NB-01 | Reducir tiempo de asignación de turno | Must | CU-01, CU-02 | Aprobado | [NB-01](necesidades-de-negocio/NB-01-reduccion-tiempo-asignacion-turno_v1.0.md) |
+| NB-01 | Reducir tiempo de asignación de turno | Must | CU-01, CU-02 | Aprobado | [NB-01](Necesidades-De-Negocio/NB-01-Reduccion-Tiempo-Asignacion-Turno-v1.0.md) |
 
 ### 4.5 Anti-patrones a evitar
 
@@ -228,7 +228,7 @@ Tabla D (solo para el índice maestro): Resumen de NB.
 - ¿Cada NB declara qué CU la implementarán, aunque la CU todavía no esté redactada?
 - ¿Cada criterio de éxito de §5 es medible desde la categoría 08 con un caso de prueba?
 - ¿Las dependencias entre NB están explícitas y son acíclicas?
-- ¿El índice maestro `necesidades-negocio_v1.0.md` referencia todas las NB con paths correctos a la subcarpeta?
+- ¿El índice maestro `Necesidades-Negocio-v1.0.md` referencia todas las NB con paths correctos a la subcarpeta?
 
 ### 5.4 Calidad
 
@@ -236,7 +236,7 @@ Tabla D (solo para el índice maestro): Resumen de NB.
 - ¿Cada NB tiene prioridad MoSCoW explícita y justificada?
 - ¿Ninguna NB depende de más de 3 otras NB?
 - ¿Los stakeholders son nominales (rol específico), no genéricos?
-- ¿Los filenames respetan el patrón `NB-XX-<kebab>_v1.0.md` sin punto antes de la versión y sin mayúsculas en el kebab?
+- ¿Los filenames respetan el patrón `NB-XX-<Nombre>-v1.0.md` con guion medio antes de la versión y en Título-Con-Guiones?
 - ¿Se respetó D1 (rioplatense técnico, sin emojis, sin negritas decorativas)?
 - ¿Se evitó vocabulario del dominio prohibido por D7 (DSL, ESC-POS, MAUI literal fuera del valor del tipo D8, Bluetooth, NuGet, .NET 10, impresora térmica)?
 
@@ -244,15 +244,15 @@ Tabla D (solo para el índice maestro): Resumen de NB.
 
 ## 6. Criterios de aceptación del entregable
 
-- [ ] Existe el índice maestro `necesidades-negocio_v1.0.md` en la raíz de `/SDD2.2D/docs/01_necesidades_negocio/` con tabla resumen de todas las NB.
-- [ ] Existen al menos 3 archivos `NB-XX-<kebab>_v1.0.md` dentro de la subcarpeta `necesidades-de-negocio/`.
+- [ ] Existe el índice maestro `Necesidades-Negocio-v1.0.md` en la raíz de `SDD/Docs/01-Necesidades-Negocio/` con tabla resumen de todas las NB.
+- [ ] Existen al menos 3 archivos `NB-XX-<Nombre>-v1.0.md` dentro de la subcarpeta `Necesidades-De-Negocio/`.
 - [ ] Cada NB contiene las 10 secciones obligatorias §1 a §10 en el orden definido en §4.2 de estas reglas.
 - [ ] Cada NB tiene al menos 4 criterios de éxito SMART en §5, todos con métrica numérica, target y plazo.
 - [ ] Cada NB declara su prioridad MoSCoW en §9 con justificación de una línea.
-- [ ] Cada NB tiene trazabilidad upstream explícita a SOLUTION-INTAKE y/o a documentos de 00_contexto.
+- [ ] Cada NB tiene trazabilidad upstream explícita a SOLUTION-INTAKE y/o a documentos de 00-Contexto.
 - [ ] Cada NB declara en §7 las CU previstas que la implementarán, con estado `a generar`, `en redacción` o `aprobada`.
 - [ ] Cada NB tiene al menos 3 stakeholders nominales en §6, cubriendo las categorías propietario, implementador y beneficiario.
-- [ ] Ningún filename usa `.v` antes de la versión ni mayúsculas en el kebab; todos respetan el regex `^NB-\d{2}-[a-z0-9-]+_v\d+\.\d+\.md$`.
+- [ ] Ningún filename usa `.v` ni `_v` antes de la versión ni palabras en minúsculas; todos respetan el regex `^NB-\d{2}-([A-Z][A-Za-z0-9]*)(-[A-Z][A-Za-z0-9]*)*-v\d+\.\d+\.md$`.
 - [ ] El índice maestro referencia las NB con paths relativos correctos hacia la subcarpeta y todos los enlaces resuelven.
 - [ ] Ninguna NB depende de más de 3 otras NB en §8 ni existen ciclos de dependencias.
 - [ ] Si el proyecto tiene más de 5 NB, existe el `README.md` de la sección con la tabla de §3.4 completa.
@@ -271,12 +271,12 @@ Tabla D (solo para el índice maestro): Resumen de NB.
 | Campo | Valor |
 | --- | --- |
 | Proyecto | turnos-medicos |
-| Documento | NB-01-reduccion-tiempo-asignacion-turno_v1.0.md |
+| Documento | NB-01-Reduccion-Tiempo-Asignacion-Turno-v1.0.md |
 | Versión | 1.0 |
 | Estado | Aprobado |
 | Fecha | 2026-04-10 |
 | Autor | Analista de Negocio, Centro de Salud Norte |
-| Trazabilidad upstream | SOLUTION-INTAKE §1, §4; vision-producto_v1.0.md |
+| Trazabilidad upstream | SOLUTION-INTAKE §1, §4; Vision-Producto-v1.0.md |
 | Trazabilidad downstream | CU-01, CU-02 (previstas) |
 
 ## 1. Descripción de la necesidad
@@ -315,7 +315,7 @@ en SOLUTION-INTAKE §1 y no hay MVP defendible.
 | Campo | Valor |
 | --- | --- |
 | Proyecto | csv-parser-lib |
-| Documento | NB-01-extensibilidad-parsers_v1.0.md |
+| Documento | NB-01-Extensibilidad-Parsers-v1.0.md |
 | Versión | 1.0 |
 | Estado | Aprobado |
 | Fecha | 2026-04-22 |
@@ -344,7 +344,7 @@ Must Have. La promesa de valor de la librería es justamente extensibilidad
 sin recompilación; sin esta NB la librería pierde su diferenciador.
 ```
 
-Ambos ejemplos respetan filename en lowercase, separador de versión con guion bajo, criterios SMART con cifras y prioridad MoSCoW explícita. La estructura es la misma para los demás tipos D8; cambia el dominio del problema y la audiencia, no el esqueleto.
+Ambos ejemplos respetan filename en Título-Con-Guiones, separador de versión con guion medio, criterios SMART con cifras y prioridad MoSCoW explícita. La estructura es la misma para los demás tipos D8; cambia el dominio del problema y la audiencia, no el esqueleto.
 
 ---
 
@@ -355,20 +355,20 @@ Sos un {{ESPECIALIDAD-VARIANTE}} responsable de redactar las necesidades de nego
 
 Insumos:
 - SOLUTION-INTAKE: {{path-al-intake}}
-- Documentos upstream ya generados: vision-producto_v1.0.md, alcance-proyecto_v1.0.md (categoría 00).
+- Documentos upstream ya generados: Vision-Producto-v1.0.md, Alcance-Proyecto-v1.0.md (categoría 00).
 
 Documentos a generar:
-- necesidades-negocio_v1.0.md (índice maestro en la raíz de la categoría).
-- NB-XX-<kebab>_v1.0.md (uno por necesidad, mínimo 3, en subcarpeta necesidades-de-negocio/).
+- Necesidades-Negocio-v1.0.md (índice maestro en la raíz de la categoría).
+- NB-XX-<Nombre>-v1.0.md (uno por necesidad, mínimo 3, en subcarpeta Necesidades-De-Negocio/).
 - README.md de la sección si el proyecto tiene más de 5 NB.
 
-Reglas de redacción: §4 de 01_rules_necesidades_negocio.md.
-Nomenclatura: respetar el patrón NB-XX-<kebab-lowercase>_v1.0.md.
-Trazabilidad esperada: cada NB declara las CU previstas en 02_especificacion_funcional con estado a generar / en redacción / aprobada.
-Criterios de calidad: §6 de 01_rules_necesidades_negocio.md (14 ítems verificables).
+Reglas de redacción: §4 de 01-Rules-Necesidades-Negocio.md.
+Nomenclatura: respetar el patrón NB-XX-<Nombre>-v1.0.md.
+Trazabilidad esperada: cada NB declara las CU previstas en 02-Especificacion-Funcional con estado a generar / en redacción / aprobada.
+Criterios de calidad: §6 de 01-Rules-Necesidades-Negocio.md (14 ítems verificables).
 Restricciones: respetar D1 a D8; no incluir emojis, negritas decorativas, ni términos del dominio prohibido por D7.
 
-Salida: /SDD2.2D/docs/01_necesidades_negocio/<archivos>.
+Salida: SDD/Docs/01-Necesidades-Negocio/<archivos>.
 ```
 
 ---
@@ -377,6 +377,6 @@ Salida: /SDD2.2D/docs/01_necesidades_negocio/<archivos>.
 
 | Versión | Fecha | Cambios |
 | --- | --- | --- |
-| 1.0 | 2026-05-17 | Reglas iniciales generadas durante bootstrap SDD 2.2 |
+| 1.0 | 2026-05-17 | Reglas iniciales generadas durante bootstrap SDD |
 | 1.1 | 2026-06-09 | Validación ST-06: la categoría 01 se genera a nivel solución; la frase de cierre de §1.2 usa la variante del proyecto principal del manifiesto. Tablas §1.2 sin reescritura. |
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |

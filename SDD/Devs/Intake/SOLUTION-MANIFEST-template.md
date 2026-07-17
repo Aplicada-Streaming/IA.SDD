@@ -1,16 +1,16 @@
 # SOLUTION-MANIFEST-template
 
-Referencia de formato del artefacto `SOLUTION-MANIFEST-<nombre-solucion-kebab>_v1.0.md`. El manifiesto declara la jerarquía de proyectos de una solución: enumera los proyectos, su tipo D8, su rol, sus dependencias y sus nombres de código. Es la fuente única de verdad de la enumeración de proyectos para el resto del orquestador.
+Referencia de formato del artefacto `SOLUTION-MANIFEST-<Nombre-Solucion>-v1.0.md`. El manifiesto declara la jerarquía de proyectos de una solución: enumera los proyectos, su tipo D8, su rol, sus dependencias y sus nombres de código. Es la fuente única de verdad de la enumeración de proyectos para el resto del orquestador.
 
-A partir de SDD 2.2D con intake unificado, el manifiesto NO lo completa el usuario a mano: es un artefacto derivado. El usuario completa un único documento, `SOLUTION-INTAKE-<nombre-solucion-kebab>_v1.0.md`, y de su §13 (Proyectos de la solución) el orquestador construye este manifiesto durante la Fase de validación de intake, siguiendo las reglas de derivación de `rules/_intake_rules.md` §4, y lo presenta para confirmación humana. Este archivo describe el formato del artefacto generado; no es una plantilla a llenar.
+A partir de SDD con intake unificado, el manifiesto NO lo completa el usuario a mano: es un artefacto derivado. El usuario completa un único documento, `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md`, y de su §13 (Proyectos de la solución) el orquestador construye este manifiesto durante la Fase de validación de intake, siguiendo las reglas de derivación de `rules/Intake-Rules.md` §4, y lo presenta para confirmación humana. Este archivo describe el formato del artefacto generado; no es una plantilla a llenar.
 
 ## Guía de uso de esta referencia
 
-1. El orquestador genera `SOLUTION-MANIFEST-<nombre-solucion-kebab>_v1.0.md` en `/SDD2.2D/devs/intake/` a partir de `SOLUTION-INTAKE` §13, con la convención de nombres declarada en el perfil del intake.
+1. El orquestador genera `SOLUTION-MANIFEST-<Nombre-Solucion>-v1.0.md` en `SDD/Intake/` del repositorio destino a partir de `SOLUTION-INTAKE` §13, con la convención de nombres declarada en el perfil del intake.
 2. Compone el bloque de solución y la tabla de proyectos según el esquema de §1 y §2 de esta referencia.
 3. Aplica las validaciones de §4 (tipos D8, proyecto principal único, sin colisión de nombres, dependencias resueltas, grafo acíclico). Si alguna falla, no deriva el manifiesto y lo reporta en la batería de validación de intake.
 4. Presenta el manifiesto derivado al humano y espera confirmación explícita antes de tratarlo como canónico.
-5. Toda regeneración posterior sigue el flujo de no-modificación de `master-prompt.md` §13.
+5. Toda regeneración posterior sigue el flujo de no-modificación de `Master-Prompt.md` §13.
 
 Una solución de un solo proyecto es válida y es el caso degenerado: el manifiesto derivado tiene una sola fila y el orquestador aplana el layout, reproduciendo el comportamiento del template de tipo único.
 
@@ -23,11 +23,11 @@ Bloque obligatorio al inicio del documento. Reproducir y completar los placehold
 | Campo | Valor |
 |---|---|
 | Nombre de solución | [Nombre legible de la solución] |
-| `nombre-solucion-kebab` | [slug derivado del nombre, kebab-case lowercase] |
+| `Nombre-Solucion` | [slug derivado del nombre, Título-Con-Guiones] |
 | `NombreSolucionCodigo` | [forma PascalCase del nombre de la solución] |
-| Proyecto principal | [`nombre-proyecto-kebab` del proyecto cabeza] |
-| Intake (origen) | `SOLUTION-INTAKE-<nombre-solucion-kebab>_v1.0.md` (de su §13 se deriva este manifiesto) |
-| Documento | `SOLUTION-MANIFEST-<nombre-solucion-kebab>_v1.0.md` |
+| Proyecto principal | [`Nombre-Proyecto` del proyecto cabeza] |
+| Intake (origen) | `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md` (de su §13 se deriva este manifiesto) |
+| Documento | `SOLUTION-MANIFEST-<Nombre-Solucion>-v1.0.md` |
 | Versión | 1.0 |
 | Fecha | [YYYY-MM-DD] |
 | Estado | Borrador / En revisión / Aprobado |
@@ -48,9 +48,9 @@ Configuración que el orquestador aplica de forma reproducible para derivar los 
 
 Una fila por proyecto. Todos los campos son obligatorios salvo Dependencias, que puede quedar vacío para proyectos sin dependencias.
 
-| `nombre-proyecto-kebab` | `nombre-proyecto-codigo` | `project_type` (D8) | Rol en la solución | `redistribuible` | Dependencias | Path `/src` |
+| `Nombre-Proyecto` | `nombre-proyecto-codigo` | `project_type` (D8) | Rol en la solución | `redistribuible` | Dependencias | Path `/src` |
 |---|---|---|---|---|---|---|
-| [kebab] | [`<NombreSolucionCodigo>.<Sufijo>`] | [uno de los 8 D8] | [una frase] | [true / false] | [lista de kebab o vacío] | [`src/<NombreProyectoCodigo>/`] |
+| [Nombre-Proyecto] | [`<NombreSolucionCodigo>.<Sufijo>`] | [uno de los 8 D8] | [una frase] | [true / false] | [lista de Nombre-Proyecto o vacío] | [`src/<NombreProyectoCodigo>/`] |
 
 Valores cerrados de `project_type` (D8), exactamente 8:
 
@@ -79,7 +79,7 @@ La regla se expresa de forma agnóstica de stack a propósito. El perfil de conv
 
 ### §2.2 Derivación de nombres (a cargo del orquestador)
 
-- `nombre-solucion-kebab` y cada `nombre-proyecto-kebab` se derivan con el algoritmo de normalización del `master-prompt.md` §3: lowercase, espacios a guion medio, acentos a su equivalente sin acento, eliminación de caracteres no ascii/dígito/guion, colapso de guiones, recorte de guiones extremos.
+- `Nombre-Solucion` y cada `Nombre-Proyecto` se derivan con el algoritmo de normalización del `Master-Prompt.md` §3: acentos y eñes a su equivalente ASCII, capitalización de la inicial de cada palabra (Título-Con-Guiones), unión de palabras con guion medio, colapso de guiones y recorte de guiones extremos.
 - `NombreSolucionCodigo` se obtiene en PascalCase del nombre legible.
 - `nombre-proyecto-codigo` se compone por la regla de §2.1.
 
@@ -103,7 +103,7 @@ El orquestador detiene la cadena y reporta si alguna de estas condiciones no se 
 
 - Algún `project_type` no pertenece al conjunto cerrado D8.
 - No hay exactamente un proyecto principal (hay cero o más de uno).
-- Dos proyectos colisionan en `nombre-proyecto-kebab` o en `nombre-proyecto-codigo`.
+- Dos proyectos colisionan en `Nombre-Proyecto` o en `nombre-proyecto-codigo`.
 - Una dependencia apunta a un proyecto que no existe en la tabla.
 - El grafo de dependencias contiene un ciclo.
 - El `SOLUTION-INTAKE` §13 (origen del manifiesto) no puede recorrerse para derivar la tabla: filas de ejemplo sin reemplazar, perfil de convención ausente o campos bloqueantes vacíos.
@@ -117,16 +117,16 @@ Bloque de solución:
 | Campo | Valor |
 |---|---|
 | Nombre de solución | Gestión de Turnos |
-| `nombre-solucion-kebab` | `gestion-de-turnos` |
+| `Nombre-Solucion` | `gestion-de-turnos` |
 | `NombreSolucionCodigo` | `GestionDeTurnos` |
 | Proyecto principal | `gestion-de-turnos-api` |
-| Intake (origen) | `SOLUTION-INTAKE-gestion-de-turnos_v1.0.md` |
+| Intake (origen) | `SOLUTION-INTAKE-Gestion-De-Turnos-v1.0.md` |
 
 Perfil de convención: PascalCase; separador `.`; prefijo de redistribuibles `Aplicada`.
 
 Tabla de proyectos:
 
-| `nombre-proyecto-kebab` | `nombre-proyecto-codigo` | `project_type` | Rol | `redistribuible` | Dependencias | Path `/src` |
+| `Nombre-Proyecto` | `nombre-proyecto-codigo` | `project_type` | Rol | `redistribuible` | Dependencias | Path `/src` |
 |---|---|---|---|---|---|---|
 | `gestion-de-turnos-api` | `GestionDeTurnos.WebApi` | `rest-api` | API pública de turnos (principal) | false | `gestion-de-turnos-domain`, `aplicada-validaciones` | `src/GestionDeTurnos.WebApi/` |
 | `gestion-de-turnos-domain` | `GestionDeTurnos.Domain` | `library` | Dominio y reglas de negocio compartidas | false | `aplicada-validaciones` | `src/GestionDeTurnos.Domain/` |
@@ -160,14 +160,14 @@ Bloque de solución:
 | Campo | Valor |
 |---|---|
 | Nombre de solución | Parser CSV |
-| `nombre-solucion-kebab` | `parser-csv` |
+| `Nombre-Solucion` | `parser-csv` |
 | `NombreSolucionCodigo` | `ParserCsv` |
 | Proyecto principal | `parser-csv` |
-| Intake (origen) | `SOLUTION-INTAKE-parser-csv_v1.0.md` |
+| Intake (origen) | `SOLUTION-INTAKE-Parser-CSV-v1.0.md` |
 
 Tabla de proyectos:
 
-| `nombre-proyecto-kebab` | `nombre-proyecto-codigo` | `project_type` | Rol | `redistribuible` | Dependencias | Path `/src` |
+| `Nombre-Proyecto` | `nombre-proyecto-codigo` | `project_type` | Rol | `redistribuible` | Dependencias | Path `/src` |
 |---|---|---|---|---|---|---|
 | `parser-csv` | `ParserCsv.Core` | `library` | Librería de parseo (única y principal) | false | — | `src/ParserCsv.Core/` |
 
@@ -179,12 +179,12 @@ El orquestador recorre un solo proyecto; el resultado equivale a la ejecución a
 
 El orquestador verifica estos ítems al derivar el manifiesto desde `SOLUTION-INTAKE` §13, antes de presentarlo para confirmación. Todos deben cumplirse; si alguno falla, no deriva el manifiesto y lo reporta en la batería de validación de intake.
 
-- [ ] El bloque de solución tiene nombre, `nombre-solucion-kebab`, `NombreSolucionCodigo`, proyecto principal y referencias de intake completos.
+- [ ] El bloque de solución tiene nombre, `Nombre-Solucion`, `NombreSolucionCodigo`, proyecto principal y referencias de intake completos.
 - [ ] El perfil de convención de nombres está declarado (forma PascalCase, separador, prefijo de redistribuibles).
 - [ ] La tabla de proyectos tiene al menos una fila y todos los campos obligatorios completos.
 - [ ] Cada `project_type` pertenece al conjunto cerrado D8 de 8 valores.
 - [ ] Hay exactamente un proyecto principal.
-- [ ] No hay colisiones de `nombre-proyecto-kebab` ni de `nombre-proyecto-codigo`.
+- [ ] No hay colisiones de `Nombre-Proyecto` ni de `nombre-proyecto-codigo`.
 - [ ] Cada dependencia referencia un proyecto existente en la tabla.
 - [ ] El grafo de dependencias es acíclico.
 - [ ] Cada proyecto marcado `redistribuible: true` arranca su nombre de código con el prefijo de organización del perfil.
@@ -197,4 +197,4 @@ El orquestador verifica estos ítems al derivar el manifiesto desde `SOLUTION-IN
 | Versión | Fecha | Cambios | Autor |
 |---|---|---|---|
 | 1.0 | [YYYY-MM-DD] | Manifiesto inicial de la solución | [Autor] |
-| 2.0 | 2026-06-10 | Reconversión a referencia de formato del artefacto derivado (unificación de intake). El manifiesto deja de completarse a mano: el orquestador lo deriva de `SOLUTION-INTAKE` §13 según `rules/_intake_rules.md` §4 y lo presenta para confirmación. Se actualizan el intro, la guía de uso y el checklist; el esquema (bloque de solución, tabla de proyectos, validaciones) se conserva como formato de referencia. | Reformulación SDD 2.2D |
+| 2.0 | 2026-06-10 | Reconversión a referencia de formato del artefacto derivado (unificación de intake). El manifiesto deja de completarse a mano: el orquestador lo deriva de `SOLUTION-INTAKE` §13 según `rules/Intake-Rules.md` §4 y lo presenta para confirmación. Se actualizan el intro, la guía de uso y el checklist; el esquema (bloque de solución, tabla de proyectos, validaciones) se conserva como formato de referencia. | Reformulación SDD |

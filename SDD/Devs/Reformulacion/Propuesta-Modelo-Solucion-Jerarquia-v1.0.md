@@ -2,12 +2,12 @@
 
 | Campo | Valor |
 |---|---|
-| Archivo | `propuesta-modelo-solucion-jerarquia_v1.0.md` |
+| Archivo | `Propuesta-Modelo-Solucion-Jerarquia-v1.0.md` |
 | Versión | 1.1 |
-| Subtarea | ST-02 de la reformulación SDD 2.2D |
+| Subtarea | ST-02 de la reformulación SDD |
 | Fecha | 2026-06-08 |
 | Autor | AG-05 Arquitecto de Software Senior, con revisión de coherencia de AG-ROOT |
-| Insumos | §3 y §3.1 del prompt de reformulación; `matriz-coherencia-template_v1.0.md` (ST-01) |
+| Insumos | §3 y §3.1 del prompt de reformulación; `Matriz-Coherencia-Template-v1.0.md` (ST-01) |
 | Estado | APROBADA CON CAMBIOS (Opción B de intake) — habilita ST-03 |
 | Invariante | El conjunto cerrado D8 sigue teniendo exactamente 8 valores. No se agregan ni se quitan tipos |
 
@@ -27,7 +27,7 @@ Contenía tres decisiones que requerían confirmación explícita (consolidadas 
 
 Solución. Contenedor raíz del entregable. Agrupa una jerarquía de proyectos. No tiene un valor D8 propio: su tipo es compuesto y se describe por el conjunto de proyectos que agrupa. Posee su propio README de solución y su propia vista de arquitectura de alto nivel (detallada en ST-05).
 
-Proyecto. Nodo de la jerarquía con exactamente un valor D8. Es la unidad sobre la que el orquestador aplica la variante de especialidad de §1.2 de cada regla y filtra documentos por §2.1 y §2.2. Cada proyecto tiene un nombre de documentación (kebab) y un nombre de código (`/src`).
+Proyecto. Nodo de la jerarquía con exactamente un valor D8. Es la unidad sobre la que el orquestador aplica la variante de especialidad de §1.2 de cada regla y filtra documentos por §2.1 y §2.2. Cada proyecto tiene un nombre de documentación (Título-Con-Guiones) y un nombre de código (`/src`).
 
 Jerarquía. Conjunto de proyectos y sus relaciones de composición y dependencia, representado como grafo dirigido acíclico (DAG). Define el orden de generación (topológico) y el orden de construcción (ST-07).
 
@@ -39,7 +39,7 @@ Proyecto principal. El nodo cabeza de la solución, equivalente al «tipo domina
 2. Tipado: cada proyecto lleva exactamente uno de los 8 valores D8. La solución no lleva D8.
 3. Unicidad del principal: exactamente un proyecto es el principal.
 4. Aciclicidad: el grafo de dependencias entre proyectos es un DAG. Un ciclo detiene la cadena.
-5. Unicidad de nombres: dos planos de nombres sin colisión (ver §5). Dos proyectos no pueden compartir nombre de código ni nombre kebab.
+5. Unicidad de nombres: dos planos de nombres sin colisión (ver §5). Dos proyectos no pueden compartir nombre de código ni nombre Título-Con-Guiones.
 6. Cierre D8: el conjunto de tipos sigue siendo cerrado y de 8 valores. La cardinalidad y la topología cambian; el conjunto no.
 7. Degeneración: con N == 1, el modelo reproduce exactamente el comportamiento actual del template (ver §8).
 
@@ -65,7 +65,7 @@ El orquestador ordena los proyectos por dependencias: genera primero los proyect
 - Ciclo detectado: el orquestador se detiene y reporta el ciclo con la lista de proyectos involucrados.
 - Dependencia colgante: una dependencia que apunta a un proyecto que no existe en el manifiesto detiene la cadena.
 - Más de un proyecto principal, o ninguno: detiene la cadena.
-- `project_type` fuera del conjunto D8 en cualquier proyecto: detiene la cadena (igual que hoy en `master-prompt.md` §3).
+- `project_type` fuera del conjunto D8 en cualquier proyecto: detiene la cadena (igual que hoy en `Master-Prompt.md` §3).
 
 ---
 
@@ -73,8 +73,8 @@ El orquestador ordena los proyectos por dependencias: genera primero los proyect
 
 ### §4.1 Identidad
 
-- Nombre: `SOLUTION-MANIFEST-<nombre-solucion-kebab>_v1.0.md`.
-- Ubicación: `/SDD2.2D/devs/intake/`.
+- Nombre: `SOLUTION-MANIFEST-<Nombre-Solucion>-v1.0.md`.
+- Ubicación: `../IA.SDD/SDD/Devs/Intake/`.
 - Rol: declara la jerarquía. Es el primer insumo que el orquestador lee, antes de cualquier intake de proyecto. Es la fuente única de verdad de la enumeración de proyectos, su tipado, sus dependencias y sus nombres de código.
 - Formato: markdown con tablas, coherente con el estilo de `PROJECT-README-template.md`. Un bloque de metadatos a nivel solución y una tabla de proyectos. Se elige markdown (no YAML puro) por consistencia con el resto del intake y por legibilidad humana; el orquestador parsea las tablas.
 
@@ -83,23 +83,23 @@ El orquestador ordena los proyectos por dependencias: genera primero los proyect
 | Campo | Descripción |
 |---|---|
 | Nombre de solución | Nombre legible de la solución |
-| `nombre-solucion-kebab` | Slug derivado por el algoritmo de §5.3 (docs y archivos) |
+| `Nombre-Solucion` | Slug derivado por el algoritmo de §5.3 (docs y archivos) |
 | `NombreSolucionCodigo` | Forma PascalCase del nombre de solución (raíz de los nombres de código) |
-| Proyecto principal | `nombre-proyecto-kebab` del nodo cabeza |
+| Proyecto principal | `Nombre-Proyecto` del nodo cabeza |
 | Perfil de convención de nombres | Forma PascalCase, separador de segmentos (por defecto `.`) y prefijo de redistribuibles (por defecto `Aplicada`) |
-| Intake de negocio | Referencia al `PROJECT-BRIEF-<nombre-solucion-kebab>_v1.0.md` (uno por solución) |
-| Intake técnico | Referencia al `PROJECT-README-<nombre-solucion-kebab>_v1.0.md` (uno por solución, con bloque técnico por proyecto) |
+| Intake de negocio | Referencia al `PROJECT-BRIEF-<Nombre-Solucion>-v1.0.md` (uno por solución) |
+| Intake técnico | Referencia al `PROJECT-README-<Nombre-Solucion>-v1.0.md` (uno por solución, con bloque técnico por proyecto) |
 
 ### §4.3 Esquema por proyecto (una fila por proyecto)
 
 | Campo | Descripción | Validación |
 |---|---|---|
-| `nombre-proyecto-kebab` | Nombre del proyecto para docs y archivos | kebab-case D3, único en la solución |
+| `Nombre-Proyecto` | Nombre del proyecto para docs y archivos | Título-Con-Guiones D3, único en la solución |
 | `nombre-proyecto-codigo` | Nombre del proyecto en `/src` | `<NombreSolucionCodigo>.<Sufijo>` o `Aplicada.<X>` si redistribuible; único |
 | `project_type` | Valor D8 del proyecto | pertenece al conjunto cerrado D8 |
 | Rol en la solución | Una frase: qué aporta el proyecto a la solución | no vacío |
 | `redistribuible` | `true` o `false` | booleano |
-| Dependencias | Lista de `nombre-proyecto-kebab` de los que depende | referencian proyectos del manifiesto; no forman ciclo |
+| Dependencias | Lista de `Nombre-Proyecto` de los que depende | referencian proyectos del manifiesto; no forman ciclo |
 | Path en `/src` | Ruta de la carpeta del proyecto | coherente con `nombre-proyecto-codigo` |
 
 El BRIEF y el README de solución se referencian una sola vez en el bloque de §4.2, no por fila. Cada proyecto tiene su entrada técnica en el bloque de proyecto del README de solución (decisión Opción B de §6), no un intake propio.
@@ -111,14 +111,14 @@ Bloque a nivel solución:
 | Campo | Valor |
 |---|---|
 | Nombre de solución | Gestión de Turnos |
-| `nombre-solucion-kebab` | `gestion-de-turnos` |
+| `Nombre-Solucion` | `gestion-de-turnos` |
 | `NombreSolucionCodigo` | `GestionDeTurnos` |
 | Proyecto principal | `gestion-de-turnos-api` |
 | Perfil de convención | PascalCase; separador `.`; prefijo de redistribuibles `Aplicada` |
 
 Tabla de proyectos:
 
-| `nombre-proyecto-kebab` | `nombre-proyecto-codigo` | `project_type` | Rol | `redistribuible` | Dependencias | Path `/src` |
+| `Nombre-Proyecto` | `nombre-proyecto-codigo` | `project_type` | Rol | `redistribuible` | Dependencias | Path `/src` |
 |---|---|---|---|---|---|---|
 | `gestion-de-turnos-api` | `GestionDeTurnos.WebApi` | `rest-api` | API pública de turnos (principal) | false | `gestion-de-turnos-domain`, `aplicada-validaciones` | `src/GestionDeTurnos.WebApi/` |
 | `gestion-de-turnos-domain` | `GestionDeTurnos.Domain` | `library` | Dominio y reglas de negocio compartidas | false | `aplicada-validaciones` | `src/GestionDeTurnos.Domain/` |
@@ -143,7 +143,7 @@ nivel 2: gestion-de-turnos-api, gestion-de-turnos-notificaciones   (paralelizabl
 
 ### §4.5 Validaciones del manifiesto
 
-El orquestador, al leer el manifiesto, verifica en orden: tipos D8 válidos; un único proyecto principal; nombres kebab y de código únicos; dependencias resueltas; grafo acíclico. Cualquier falla detiene la cadena y se reporta con el patrón de ambigüedad de §9 del `master-prompt.md`.
+El orquestador, al leer el manifiesto, verifica en orden: tipos D8 válidos; un único proyecto principal; nombres de documentación y de código únicos; dependencias resueltas; grafo acíclico. Cualquier falla detiene la cadena y se reporta con el patrón de ambigüedad de §9 del `Master-Prompt.md`.
 
 ---
 
@@ -151,7 +151,7 @@ El orquestador, al leer el manifiesto, verifica en orden: tipos D8 válidos; un 
 
 ### §5.1 Dos planos que no se mezclan
 
-Plano de documentación (`/docs`, `/devs`). Sin cambios respecto de hoy: D3 intacto. kebab-case lowercase, sin acentos ni eñes en el nombre de archivo, sufijo `_v<X.Y>.md`. De aquí salen `nombre-solucion-kebab` y, por proyecto, `nombre-proyecto-kebab`. Los identificadores de artefactos (`NB-XX`, `CU-XX`, `ADR-XX`, etc.) no cambian.
+Plano de documentación (`/docs`, `/devs`). Sin cambios respecto de hoy: D3 intacto. Título-Con-Guiones, sin acentos ni eñes en el nombre de archivo, sufijo `-v<X.Y>.md`. De aquí salen `Nombre-Solucion` y, por proyecto, `Nombre-Proyecto`. Los identificadores de artefactos (`NB-XX`, `CU-XX`, `ADR-XX`, etc.) no cambian.
 
 Plano de código (`/src`). Sigue la convención idiomática del ecosistema, anclada en el nombre de la solución. Se formaliza como regla parametrizable, sin nombrar ningún framework ni gestor de paquetes (conformidad D7).
 
@@ -174,7 +174,7 @@ Plano de código (`/src`). Sigue la convención idiomática del ecosistema, ancl
 
 ### §5.3 Algoritmo de derivación (a cargo del orquestador)
 
-`nombre-solucion-kebab` y `nombre-proyecto-kebab` se derivan con el algoritmo de normalización del `master-prompt.md` §3: lowercase, espacios a guion medio, acentos a su equivalente sin acento, eliminación de caracteres no ascii/dígito/guion, colapso de guiones, recorte de guiones extremos.
+`Nombre-Solucion` y `Nombre-Proyecto` se derivan con el algoritmo de normalización del `Master-Prompt.md` §3: lowercase, espacios a guion medio, acentos a su equivalente sin acento, eliminación de caracteres no ascii/dígito/guion, colapso de guiones, recorte de guiones extremos.
 
 `NombreSolucionCodigo` se obtiene en PascalCase del mismo nombre legible: separar por espacios, capitalizar inicial de cada palabra, concatenar sin separadores.
 
@@ -182,7 +182,7 @@ Plano de código (`/src`). Sigue la convención idiomática del ecosistema, ancl
 
 ### §5.4 Detección de colisión
 
-Si dos proyectos derivan el mismo `nombre-proyecto-codigo` o el mismo `nombre-proyecto-kebab`, el orquestador se detiene y lo reporta como ambigüedad, pidiendo desambiguar el sufijo o el nombre.
+Si dos proyectos derivan el mismo `nombre-proyecto-codigo` o el mismo `Nombre-Proyecto`, el orquestador se detiene y lo reporta como ambigüedad, pidiendo desambiguar el sufijo o el nombre.
 
 ### §5.5 Conformidad D7
 
@@ -196,7 +196,7 @@ El template actual tiene dos intake por repositorio: PROJECT-BRIEF (negocio) y P
 
 Opciones:
 
-- Opción A (recomendada). Un PROJECT-BRIEF a nivel solución (el problema de negocio es uno) más un PROJECT-README por proyecto (las decisiones técnicas son por proyecto), más el manifiesto que los vincula. El BRIEF de solución alimenta a 00_contexto y 01_necesidades_negocio de toda la solución; cada README gobierna las categorías técnicas de su proyecto.
+- Opción A (recomendada). Un PROJECT-BRIEF a nivel solución (el problema de negocio es uno) más un PROJECT-README por proyecto (las decisiones técnicas son por proyecto), más el manifiesto que los vincula. El BRIEF de solución alimenta a 00-Contexto y 01-Necesidades-Negocio de toda la solución; cada README gobierna las categorías técnicas de su proyecto.
 - Opción B. Un PROJECT-BRIEF y un PROJECT-README a nivel solución, donde el README §1 enumera el tipo por proyecto en una tabla, sin README por proyecto. Más simple, pero mezcla decisiones técnicas heterogéneas (una API, una librería, un worker) en un solo documento y rompe la unidad de especialización por proyecto.
 - Opción C (lectura literal del prompt). Un par BRIEF + README por proyecto, más el manifiesto. Maximiza separación pero duplica el negocio: cada proyecto repetiría el problema, los stakeholders y las métricas del cliente, que son de la solución, no del proyecto.
 
@@ -219,12 +219,12 @@ Implicancia sobre `PROJECT-README` (ST-03): se reestructura para ser un document
 
 Las tablas §1.2 de las 13 reglas ya están indexadas por D8 y no se reescriben. Lo que cambia es la cardinalidad de su invocación: el orquestador las invoca una vez por proyecto, con el D8 de ese proyecto.
 
-La matriz de adaptabilidad del `master-prompt.md` §14 no cambia de contenido: cambia su ámbito. Hoy se aplica una vez contra el `project_type` del repositorio. Tras la reformulación se aplica una vez por cada proyecto del manifiesto, contra su D8.
+La matriz de adaptabilidad del `Master-Prompt.md` §14 no cambia de contenido: cambia su ámbito. Hoy se aplica una vez contra el `project_type` del repositorio. Tras la reformulación se aplica una vez por cada proyecto del manifiesto, contra su D8.
 
 Bucle del orquestador reformulado (ST-04 lo materializa):
 
 1. Leer el manifiesto y validar (tipos, principal único, nombres únicos, dependencias, aciclicidad).
-2. Derivar `nombre-solucion-kebab`, `NombreSolucionCodigo` y, por proyecto, `nombre-proyecto-kebab` y `nombre-proyecto-codigo`.
+2. Derivar `Nombre-Solucion`, `NombreSolucionCodigo` y, por proyecto, `Nombre-Proyecto` y `nombre-proyecto-codigo`.
 3. Ordenar los proyectos por orden topológico.
 4. Para cada proyecto, en orden: seleccionar la variante §1.2 de cada regla según su D8, filtrar documentos por §2.1 y §2.2, despachar subagentes con el contexto del proyecto (su D8 y su nombre de código), auditar por fase.
 5. Los proyectos del mismo nivel topológico pueden generarse en paralelo si el agente lo soporta.
@@ -238,8 +238,8 @@ Una solución de un solo proyecto es el caso degenerado y la garantía de no rup
 
 - Manifiesto trivial: un único proyecto, que es el principal, sin dependencias. `NombreSolucionCodigo` igual al nombre del proyecto si se desea.
 - Intake: con la Opción B adoptada, el par BRIEF + README de solución coincide con el intake actual; el README de solución tiene un solo bloque técnico (el del único proyecto) y un §1 con una sola fila. No hay documentos adicionales más allá del manifiesto trivial.
-- Generación: el bucle de §7 recorre un solo proyecto, lo que equivale a la ejecución actual del `master-prompt.md` contra un único `project_type`.
-- Resultado: la salida `/SDD2.2D/docs/` es idéntica a la que produce el template hoy para ese tipo. ST-09 verificará esta equivalencia como prueba de no regresión contra la línea base de ST-01.
+- Generación: el bucle de §7 recorre un solo proyecto, lo que equivale a la ejecución actual del `Master-Prompt.md` contra un único `project_type`.
+- Resultado: la salida `SDD/Docs/` es idéntica a la que produce el template hoy para ese tipo. ST-09 verificará esta equivalencia como prueba de no regresión contra la línea base de ST-01.
 
 En consecuencia, los proyectos existentes que hoy usan el template no se rompen: pasan a ser soluciones de un proyecto sin cambiar su salida.
 
@@ -263,10 +263,10 @@ Las variantes §1.2 por D8 se siguen aplicando por proyecto dentro de su propia 
 | Subtarea | Qué materializa de este modelo |
 |---|---|
 | ST-03 | `SOLUTION-MANIFEST-template.md` (§4); reestructurar `PROJECT-README-template.md` a documento de solución: encabezado de solución, §1 con tabla de proyectos y su D8 (mirror del manifiesto), y bloque técnico repetible por proyecto (condensa §2 a §16 actuales); §5 deriva la estructura de la jerarquía y de la convención de nombres (§5); `PROJECT-BRIEF` se mantiene a nivel solución con ajuste mínimo para nombrar la solución |
-| ST-04 | `master-prompt.md`: §3 lee el manifiesto y deriva la lista de proyectos tipados y sus nombres de código; §6 plan por proyecto; §7 bucle topológico; §8 inyecta contexto de proyecto; §14 matriz por proyecto |
-| ST-05 | Vista de solución (§9) por encima de `05_rules_arquitectura_tecnica.md`; contratos inter-proyecto y grafo de dependencias |
+| ST-04 | `Master-Prompt.md`: §3 lee el manifiesto y deriva la lista de proyectos tipados y sus nombres de código; §6 plan por proyecto; §7 bucle topológico; §8 inyecta contexto de proyecto; §14 matriz por proyecto |
+| ST-05 | Vista de solución (§9) por encima de `05-Rules-Arquitectura-Tecnica.md`; contratos inter-proyecto y grafo de dependencias |
 | ST-06 | Validar que las §1.2 de las 13 reglas se aplican por proyecto sin reescritura; ajuste mínimo del texto que asuma tipo único por repositorio |
-| ST-07 | `09_rules_devops.md`: build y publicación multi-proyecto en orden topológico; artefactos publicables por proyecto |
+| ST-07 | `09-Rules-Devops.md`: build y publicación multi-proyecto en orden topológico; artefactos publicables por proyecto |
 | ST-08 | README raíz: presenta la solución, la jerarquía y la tabla de proyectos con su D8, rol y dependencias |
 | ST-09 | Re-evaluar coherencia; verificar D1–D8, trazabilidad a nivel solución y proyecto, y el caso degenerado contra la línea base de ST-01 |
 
@@ -278,7 +278,7 @@ D-A (principal). Topología del intake: RESUELTA en Opción B. Un PROJECT-BRIEF 
 
 D-B. Fuente única de verdad del tipado: CONFIRMADA. El manifiesto es canónico para la enumeración de proyectos, sus tipos, dependencias y nombres de código. El README §1 refleja esa enumeración y agrega justificación técnica, sin introducir proyectos nuevos; ante divergencia, manda el manifiesto.
 
-D-C. Ubicación del workspace: CONFIRMADA. Los entregables de la reformulación viven en `/SDD2.2D/devs/_reformulacion/` (espejo de `_bootstrap/`). El `SOLUTION-MANIFEST-template.md` que produce ST-03 va a `/SDD2.2D/devs/intake/` como indica el prompt.
+D-C. Ubicación del workspace: CONFIRMADA. Los entregables de la reformulación viven en `../IA.SDD/SDD/Devs/Reformulacion/` (espejo de `Bootstrap/`). El `SOLUTION-MANIFEST-template.md` que produce ST-03 va a `../IA.SDD/SDD/Devs/Intake/` como indica el prompt.
 
 Con las tres decisiones resueltas, la propuesta queda aprobada con cambios (Opción B en lugar de la Opción A recomendada) y habilita la planificación de ST-03.
 
@@ -304,7 +304,7 @@ Con las tres decisiones resueltas, la propuesta queda aprobada con cambios (Opci
 | Solución | Contenedor raíz que agrupa una jerarquía de proyectos. No tiene D8 propio |
 | Proyecto | Nodo de la jerarquía con exactamente un valor D8. Unidad de especialización |
 | Manifiesto de solución | Artefacto de intake que enumera proyectos, su D8, rol, dependencias y nombres de código. Primer insumo del orquestador y fuente única de verdad de la enumeración |
-| Nombre de solución | Nombre legible del que se derivan `nombre-solucion-kebab` (docs) y `NombreSolucionCodigo` (código) |
+| Nombre de solución | Nombre legible del que se derivan `Nombre-Solucion` (docs) y `NombreSolucionCodigo` (código) |
 | Nombre de proyecto de código | Identificador en `/src`, `<NombreSolucionCodigo>.<Sufijo>`, salvo redistribuibles |
 | Paquete redistribuible | Proyecto `redistribuible: true`, cuyo nombre de código arranca con `Aplicada` |
 | Perfil de convención de nombres | Configuración del manifiesto que fija PascalCase, separador y prefijo de redistribuibles |

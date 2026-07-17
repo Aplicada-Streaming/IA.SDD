@@ -1,7 +1,7 @@
 # Reglas constructivas — README raíz del proyecto
 
-**Carpeta target:** `/SDD2.2D/docs/`
-**Archivo target:** `/SDD2.2D/docs/README.md`
+**Carpeta target:** `SDD/Docs/`
+**Archivo target:** `SDD/Docs/README.md`
 **Subagente target del orquestador:** Arquitecto de Soluciones Senior (AG-ROOT)
 **Versión de las reglas:** 1.3
 
@@ -30,7 +30,7 @@ El orquestador lee esta tabla y selecciona la variante según el `project_type` 
 
 ### 1.3 Multi-especialidad
 
-Cuando el README raíz necesita atender audiencias mixtas, se admite combinar AG-ROOT con el Technical Writer (AG-10) para refinar la narrativa orientada a desarrollador externo, y con el Analista de Negocio (AG-01) para validar que la propuesta de valor expuesta en la sección de identidad coincide con la visión declarada en `/SDD2.2D/docs/00_contexto/`. En proyectos `library` y `cli-tool` se recomienda incorporar a AG-11 (Developer Advocate) para curar el bloque de quick-start. La regla es: AG-ROOT mantiene la propiedad del documento; las multi-especialidades aportan revisión y enmienda, no autoría compartida.
+Cuando el README raíz necesita atender audiencias mixtas, se admite combinar AG-ROOT con el Technical Writer (AG-10) para refinar la narrativa orientada a desarrollador externo, y con el Analista de Negocio (AG-01) para validar que la propuesta de valor expuesta en la sección de identidad coincide con la visión declarada en `SDD/Docs/00-Contexto/`. En proyectos `library` y `cli-tool` se recomienda incorporar a AG-11 (Developer Advocate) para curar el bloque de quick-start. La regla es: AG-ROOT mantiene la propiedad del documento; las multi-especialidades aportan revisión y enmienda, no autoría compartida.
 
 ---
 
@@ -40,10 +40,10 @@ Cuando el README raíz necesita atender audiencias mixtas, se admite combinar AG
 
 | Archivo | Obligatorio para | Recomendado para | Omitir para | Descripción |
 | --- | --- | --- | --- | --- |
-| `/SDD2.2D/docs/README.md` | Todos los tipos D8 | — | — | Punto de entrada de la documentación del proyecto y ancla del árbol SDD. |
-| `/SDD2.2D/docs/CHANGELOG.md` | library, rest-api, cli-tool | web-monolith, web-microservices, worker-service, desktop-app, mobile-app-maui | — | Bitácora de cambios con relevancia para consumidores externos. |
-| `/SDD2.2D/docs/CONTRIBUTING.md` | library, cli-tool | rest-api, worker-service | web-monolith | Guía de contribución cuando el proyecto admite aportes externos. |
-| `/SDD2.2D/docs/LICENSE.md` | library, cli-tool | rest-api | — | Texto de licencia visible desde el árbol de documentación. |
+| `SDD/Docs/README.md` | Todos los tipos D8 | — | — | Punto de entrada de la documentación del proyecto y ancla del árbol SDD. |
+| `SDD/Docs/CHANGELOG.md` | library, rest-api, cli-tool | web-monolith, web-microservices, worker-service, desktop-app, mobile-app-maui | — | Bitácora de cambios con relevancia para consumidores externos. |
+| `SDD/Docs/CONTRIBUTING.md` | library, cli-tool | rest-api, worker-service | web-monolith | Guía de contribución cuando el proyecto admite aportes externos. |
+| `SDD/Docs/LICENSE.md` | library, cli-tool | rest-api | — | Texto de licencia visible desde el árbol de documentación. |
 
 ### 2.2 Reglas de inclusión/exclusión por tipo de proyecto
 
@@ -58,7 +58,7 @@ El README raíz es siempre obligatorio. Lo que varía es la presencia de bloques
 - `cli-tool`: incluye instalación, comandos principales y ejemplos.
 - `worker-service`: incluye fuentes y sinks de eventos, política de reintentos y observabilidad.
 
-Los archivos `CHANGELOG.md`, `CONTRIBUTING.md` y `LICENSE.md` se incluyen en `/SDD2.2D/docs/` solo cuando el proyecto requiere comunicación con consumidores externos al equipo.
+Los archivos `CHANGELOG.md`, `CONTRIBUTING.md` y `LICENSE.md` se incluyen en `SDD/Docs/` solo cuando el proyecto requiere comunicación con consumidores externos al equipo.
 
 ---
 
@@ -72,25 +72,25 @@ El archivo es `README.md` literal, sin versión en el nombre. El versionado vive
 
 El propio README raíz no usa prefijos. Para los archivos linkeados desde el README, se respetan los patrones canónicos de las 12 categorías:
 
-- `NB-XX-<kebab>_v<X.Y>.md` (necesidades de negocio).
-- `CU-XX-<kebab>_v<X.Y>.md` (casos de uso).
-- `RN-XX-<kebab>_v<X.Y>.md` (reglas de negocio).
-- `ADR-XX-<kebab>_v<X.Y>.md` (decisiones de arquitectura).
-- `US-XX-<kebab>_v<X.Y>.md` (historias de usuario).
-- `BT-XX-<kebab>_v<X.Y>.md` (backlog técnico).
-- `sprint-XX-<kebab>_v<X.Y>.md` (planes de sprint).
-- `ejemplo-XX-<kebab>_v<X.Y>.md` (ejemplos progresivos).
+- `NB-XX-<Nombre>-v<X.Y>.md` (necesidades de negocio).
+- `CU-XX-<Nombre>-v<X.Y>.md` (casos de uso).
+- `RN-XX-<Nombre>-v<X.Y>.md` (reglas de negocio).
+- `ADR-XX-<Nombre>-v<X.Y>.md` (decisiones de arquitectura).
+- `US-XX-<Nombre>-v<X.Y>.md` (historias de usuario).
+- `BT-XX-<Nombre>-v<X.Y>.md` (backlog técnico).
+- `sprint-XX-<Nombre>-v<X.Y>.md` (planes de sprint).
+- `ejemplo-XX-<Nombre>-v<X.Y>.md` (ejemplos progresivos).
 
-Todos los nombres respetan kebab-case estricto en minúsculas (D3) y sufijo de versión con guion bajo (D4).
+Todos los nombres respetan Título-Con-Guiones estricto (D3) y sufijo de versión con guion medio (D4).
 
 ### 3.3 Vinculación cross-doc (trazabilidad upstream/downstream)
 
 - Upstream: el README raíz consume `SOLUTION-MANIFEST` y `SOLUTION-INTAKE` producidos en la fase de intake. De allí extrae el nombre de la solución, la propuesta de valor, la enumeración de proyectos con su tipo D8 y dependencias, y los stacks declarados.
-- Downstream: el README raíz enlaza a las categorías de nivel solución (`00_contexto`, `01_necesidades_negocio`), a la vista y el pipeline de solución en `_solucion/`, y a la documentación de cada proyecto bajo `proyectos/<nombre-proyecto-kebab>/`. No enlaza directamente a artefactos internos; eso lo hace el README de cada sección o de cada proyecto.
+- Downstream: el README raíz enlaza a las categorías de nivel solución (`00-Contexto`, `01-Necesidades-Negocio`), a la vista y el pipeline de solución en `Solucion/`, y a la documentación de cada proyecto bajo `Proyectos/<Nombre-Proyecto>/`. No enlaza directamente a artefactos internos; eso lo hace el README de cada sección o de cada proyecto.
 
 ### 3.4 README de la sección
 
-No aplica. Este archivo es el README de la raíz de `/SDD2.2D/docs/`. Los README de sección (uno por cada carpeta numerada) son responsabilidad de los respectivos AG-00 a AG-11 y se rigen por su propio archivo de reglas.
+No aplica. Este archivo es el README de la raíz de `SDD/Docs/`. Los README de sección (uno por cada carpeta numerada) son responsabilidad de los respectivos AG-00 a AG-11 y se rigen por su propio archivo de reglas.
 
 ---
 
@@ -115,19 +115,19 @@ La cabecera del `README.md` generado debe seguir este bloque, completando los va
 | Documento | README raíz de la solución |
 ```
 
-Nota: el README raíz, por ser el ancla del árbol, no declara un bloque "Trazabilidad upstream/downstream" en su cabecera. Esa trazabilidad se materializa en el cuerpo del documento generado: la tabla de proyectos (sección 2), el mapa de la documentación (sección 4) con las categorías de nivel solución (00, 01), la vista y el pipeline de solución (`_solucion/`), y la documentación de cada proyecto bajo `proyectos/<nombre-proyecto-kebab>/`.
+Nota: el README raíz, por ser el ancla del árbol, no declara un bloque "Trazabilidad upstream/downstream" en su cabecera. Esa trazabilidad se materializa en el cuerpo del documento generado: la tabla de proyectos (sección 2), el mapa de la documentación (sección 4) con las categorías de nivel solución (00, 01), la vista y el pipeline de solución (`Solucion/`), y la documentación de cada proyecto bajo `Proyectos/<Nombre-Proyecto>/`.
 
 ### 4.2 Secciones obligatorias
 
 El README generado debe contener, como mínimo, las siguientes secciones en este orden:
 
 1. Identidad de la solución: propósito en 2 a 3 párrafos, propuesta de valor, audiencia objetivo.
-2. Proyectos de la solución: tabla con cada proyecto (`nombre-proyecto-kebab`, tipo D8, rol, dependencias, bandera redistribuible), con el proyecto principal señalado. Refleja el `SOLUTION-MANIFEST`.
+2. Proyectos de la solución: tabla con cada proyecto (`Nombre-Proyecto`, tipo D8, rol, dependencias, bandera redistribuible), con el proyecto principal señalado. Refleja el `SOLUTION-MANIFEST`.
 3. Stack y composición: tabla con el stack de cada proyecto y las plataformas soportadas.
-4. Mapa de la documentación: las categorías de nivel solución (`00_contexto`, `01_necesidades_negocio`), la vista y el pipeline de solución en `_solucion/`, y la documentación de cada proyecto bajo `proyectos/<nombre-proyecto-kebab>/`, cada una con descripción de propósito y enlace.
+4. Mapa de la documentación: las categorías de nivel solución (`00-Contexto`, `01-Necesidades-Negocio`), la vista y el pipeline de solución en `Solucion/`, y la documentación de cada proyecto bajo `Proyectos/<Nombre-Proyecto>/`, cada una con descripción de propósito y enlace.
 5. Flujo de lectura recomendado por audiencia: al menos 3 audiencias diferenciadas, con orden de lectura sugerido y justificación.
 6. Cómo contribuir y cómo regenerar la documentación: enlace a `CONTRIBUTING.md` si aplica y proceso de regeneración con los subagentes SDD.
-7. Estado actual y roadmap: tabla de estado por proyecto y por categoría, y enlace al roadmap detallado en `00_contexto`.
+7. Estado actual y roadmap: tabla de estado por proyecto y por categoría, y enlace al roadmap detallado en `00-Contexto`.
 8. Glosario rápido: mínimo 10 términos del dominio de la solución, breves, sin reemplazar el glosario completo de la categoría UX/UI.
 9. Contacto y responsables: tabla con rol, responsable y canal de comunicación.
 10. Control de cambios: tabla con versión, fecha y descripción del cambio.
@@ -151,17 +151,17 @@ Tabla de proyectos de la solución (refleja el `SOLUTION-MANIFEST`).
 
 | Proyecto | Tipo D8 | Rol | Dependencias | Redistribuible |
 | --- | --- | --- | --- | --- |
-| <nombre-proyecto-kebab> (principal) | rest-api | API pública de la solución | <nombre-proyecto-kebab> | false |
-| <nombre-proyecto-kebab> | library | Dominio compartido | — | false |
+| <Nombre-Proyecto> (principal) | rest-api | API pública de la solución | <Nombre-Proyecto> | false |
+| <Nombre-Proyecto> | library | Dominio compartido | — | false |
 
 Tabla A: Mapa de documentación.
 
 | Sección | Propósito | Responsable | Enlace |
 | --- | --- | --- | --- |
-| 00_contexto (solución) | Visión, alcance, roadmap del negocio | AG-00 | [00_contexto](00_contexto/) |
-| 01_necesidades_negocio (solución) | Necesidades de negocio | AG-01 | [01_necesidades_negocio](01_necesidades_negocio/) |
-| _solucion (solución) | Vista de solución y pipeline de solución | AG-05, AG-09 | [_solucion](_solucion/) |
-| proyectos/<nombre-proyecto-kebab> (por proyecto) | Documentación 02 a 11 del proyecto | AG-02 a AG-11 | [proyectos/<nombre-proyecto-kebab>](proyectos/<nombre-proyecto-kebab>/) |
+| 00-Contexto (solución) | Visión, alcance, roadmap del negocio | AG-00 | [00-Contexto](00-Contexto/) |
+| 01-Necesidades-Negocio (solución) | Necesidades de negocio | AG-01 | [01-Necesidades-Negocio](01-Necesidades-Negocio/) |
+| Solucion (solución) | Vista de solución y pipeline de solución | AG-05, AG-09 | [Solucion](Solucion/) |
+| Proyectos/<Nombre-Proyecto> (por proyecto) | Documentación 02 a 11 del proyecto | AG-02 a AG-11 | [Proyectos/<Nombre-Proyecto>](Proyectos/<Nombre-Proyecto>/) |
 
 Tabla B: Flujo de lectura por audiencia.
 
@@ -176,8 +176,8 @@ Tabla C: Estado actual.
 
 | Categoría | Estado | Versión vigente |
 | --- | --- | --- |
-| 00_contexto | Vigente | 1.0 |
-| 01_necesidades_negocio | Borrador | 0.9 |
+| 00-Contexto | Vigente | 1.0 |
+| 01-Necesidades-Negocio | Borrador | 0.9 |
 
 ### 4.5 Anti-patrones a evitar
 
@@ -187,7 +187,7 @@ Tabla C: Estado actual.
 | Stack mencionado sin versión | Imposible reproducir entornos y validar compatibilidad | Declarar siempre `tecnología @ versión` en la cabecera y en §2. |
 | Flujo de lectura único sin variantes por rol | Cada audiencia se pierde en información no relevante | Producir mínimo 3 flujos por rol en Tabla B. |
 | README como wiki extensa | Duplica contenido de las categorías y se desactualiza primero | Mantener el README en 200 a 400 líneas y delegar el detalle a cada categoría. |
-| Roadmap inline en el README | Genera dos fuentes de verdad sobre el roadmap | Enlazar a `00_contexto/roadmap-producto_v1.0.md` y no replicar contenido. |
+| Roadmap inline en el README | Genera dos fuentes de verdad sobre el roadmap | Enlazar a `00-Contexto/Roadmap-Producto-v1.0.md` y no replicar contenido. |
 | Glosario que reemplaza al de UX/UI | El glosario rápido se convierte en glosario completo y diverge | Limitar a 10 a 20 términos esenciales y enlazar al glosario de la categoría UX/UI. |
 | Estado libre fuera del enum | Estados ambiguos como "casi listo" o "WIP" | Usar exclusivamente: Borrador, Propuesto, Aprobado, Vigente, Superado, Archivado. |
 
@@ -197,7 +197,7 @@ Tabla C: Estado actual.
 
 ### 5.1 Comprensión del input upstream
 
-- ¿Cuál es el nombre canónico de la solución en kebab-case y cuáles son los proyectos que la componen según el `SOLUTION-MANIFEST`?
+- ¿Cuál es el nombre canónico de la solución en Título-Con-Guiones y cuáles son los proyectos que la componen según el `SOLUTION-MANIFEST`?
 - ¿Cuál es el proyecto principal y qué variante de §1.2 corresponde a su tipo D8? ¿Qué tipo D8 lleva cada proyecto?
 - ¿Cuáles son las dependencias entre proyectos y los stacks con versiones y plataformas objetivo de cada uno?
 - ¿Cuál es la propuesta de valor de la solución en una sola línea y en un párrafo?
@@ -212,8 +212,8 @@ Tabla C: Estado actual.
 
 ### 5.3 Trazabilidad
 
-- ¿La tabla de proyectos y las categorías de nivel solución están enlazadas con un párrafo breve de propósito, y cada proyecto enlaza a su carpeta `proyectos/<nombre-proyecto-kebab>/`?
-- ¿Los enlaces apuntan a rutas existentes en `/SDD2.2D/docs/`?
+- ¿La tabla de proyectos y las categorías de nivel solución están enlazadas con un párrafo breve de propósito, y cada proyecto enlaza a su carpeta `Proyectos/<Nombre-Proyecto>/`?
+- ¿Los enlaces apuntan a rutas existentes en `SDD/Docs/`?
 - ¿La cadena Visión → NB → CU → RN → ADR → US → BT → Sprint → Test → Pipeline está visible al menos como referencia conceptual en §3?
 - ¿El roadmap del README es un enlace y no una copia?
 
@@ -233,11 +233,11 @@ Tabla C: Estado actual.
 ## 6. Criterios de aceptación del entregable
 
 - [ ] La tabla de proyectos de la solución está presente con, por cada proyecto, su tipo D8, rol y dependencias, señala el proyecto principal y refleja el `SOLUTION-MANIFEST` sin divergencias.
-- [ ] El mapa de la documentación (Tabla A) enlaza las categorías de nivel solución (00, 01), la vista y el pipeline de solución (`_solucion/`) y la carpeta de cada proyecto (`proyectos/<nombre-proyecto-kebab>/`), con su path correcto.
+- [ ] El mapa de la documentación (Tabla A) enlaza las categorías de nivel solución (00, 01), la vista y el pipeline de solución (`Solucion/`) y la carpeta de cada proyecto (`Proyectos/<Nombre-Proyecto>/`), con su path correcto.
 - [ ] La composición de la solución (número de proyectos y proyecto principal) está reflejada en la cabecera.
 - [ ] El flujo de lectura está diferenciado para al menos 3 audiencias en la Tabla B, con justificación por rol.
 - [ ] El glosario rápido tiene mínimo 10 términos del dominio del proyecto, definidos en una línea cada uno.
-- [ ] Todos los enlaces internos del README apuntan a rutas que existen en `/SDD2.2D/docs/`; no hay enlaces rotos.
+- [ ] Todos los enlaces internos del README apuntan a rutas que existen en `SDD/Docs/`; no hay enlaces rotos.
 - [ ] La cabecera respeta el bloque obligatorio de §4.1 con todos los campos completos.
 - [ ] El documento tiene entre 200 y 400 líneas en su versión final.
 - [ ] No aparecen emojis, negritas decorativas, ni términos del dominio prohibido por D7.
@@ -283,9 +283,9 @@ asincrónica y reutiliza un paquete de validaciones independiente de la solució
 
 | Sección | Propósito | Responsable | Enlace |
 | --- | --- | --- | --- |
-| 00_contexto | Visión, alcance, roadmap | AG-00 | [00_contexto](00_contexto/) |
-| _solucion | Vista y pipeline de solución | AG-05, AG-09 | [_solucion](_solucion/) |
-| proyectos/gestion-de-turnos-api | Documentación de la API | AG-02 a AG-11 | [api](proyectos/gestion-de-turnos-api/) |
+| 00-Contexto | Visión, alcance, roadmap | AG-00 | [00-Contexto](00-Contexto/) |
+| Solucion | Vista y pipeline de solución | AG-05, AG-09 | [Solucion](Solucion/) |
+| Proyectos/gestion-de-turnos-api | Documentación de la API | AG-02 a AG-11 | [api](Proyectos/gestion-de-turnos-api/) |
 ```
 
 ### 7.2 Ejemplo B: Solución de un proyecto (caso degenerado), librería de parsing CSV
@@ -325,9 +325,9 @@ del módulo y ejemplo de 5 líneas que parsea un archivo y devuelve filas.
 
 | Categoría | Propósito | Responsable | Enlace |
 | --- | --- | --- | --- |
-| 02_especificacion_funcional | Contrato de la API pública | AG-02 | [02_especificacion_funcional](02_especificacion_funcional/) |
-| 10_developer_guide | Guía de integración | AG-10 | [10_developer_guide](10_developer_guide/) |
-| 11_examples | Ejemplos progresivos | AG-11 | [11_examples](11_examples/) |
+| 02-Especificacion-Funcional | Contrato de la API pública | AG-02 | [02-Especificacion-Funcional](02-Especificacion-Funcional/) |
+| 10-Developer-Guide | Guía de integración | AG-10 | [10-Developer-Guide](10-Developer-Guide/) |
+| 11-Examples | Ejemplos progresivos | AG-11 | [11-Examples](11-Examples/) |
 
 ## 4. Flujo de lectura recomendado
 
@@ -348,14 +348,14 @@ Sos un {{ESPECIALIDAD-VARIANTE}} (Arquitecto de Soluciones Senior más la varian
 Insumos:
 - SOLUTION-MANIFEST: {{path}} (enumeración de proyectos, tipo D8, rol, dependencias, nombres de código).
 - SOLUTION-INTAKE: {{path}}
-- Documentos upstream ya generados: las categorías de solución (00, 01), la vista y el pipeline de solución (`_solucion/`) y la documentación de cada proyecto (`proyectos/<kebab>/`).
+- Documentos upstream ya generados: las categorías de solución (00, 01), la vista y el pipeline de solución (`Solucion/`) y la documentación de cada proyecto (`Proyectos/<Nombre>/`).
 
-Reglas de redacción: §4 de _root_rules.md.
+Reglas de redacción: §4 de Root-Rules.md.
 Trazabilidad esperada: presentar la tabla de proyectos (D8, rol, dependencias) y enlazar las categorías de solución y la carpeta de cada proyecto con descripción de propósito.
-Criterios de calidad: §6 de _root_rules.md.
+Criterios de calidad: §6 de Root-Rules.md.
 Restricciones: respetar D1 a D8; no incluir emojis, negritas decorativas, ni términos del dominio prohibido por D7.
 
-Salida: /SDD2.2D/docs/README.md (sin versión en el nombre, con versión 1.0 en la cabecera).
+Salida: SDD/Docs/README.md (sin versión en el nombre, con versión 1.0 en la cabecera).
 ```
 
 ---
@@ -364,7 +364,7 @@ Salida: /SDD2.2D/docs/README.md (sin versión en el nombre, con versión 1.0 en 
 
 | Versión | Fecha | Cambios |
 | --- | --- | --- |
-| 1.0 | 2026-05-17 | Reglas iniciales generadas durante bootstrap SDD 2.2 |
+| 1.0 | 2026-05-17 | Reglas iniciales generadas durante bootstrap SDD |
 | 1.1 | 2026-06-09 | Validación ST-06: el README raíz se genera a nivel solución; §1.2 usa la variante del proyecto principal del manifiesto. El README presenta la solución y la tabla de proyectos (la reformulación de contenido se completa en ST-08). |
-| 1.2 | 2026-06-09 | Reformulación ST-08: el README raíz se reformula a documento de solución. La cabecera (§4.1) declara la solución, su composición y el proyecto principal en lugar de un único tipo D8. Se agrega la sección obligatoria "Proyectos de la solución" (§4.2) con la tabla de proyectos (D8, rol, dependencias, redistribuible). El mapa de documentación (§4.4) refleja las categorías de solución (00, 01), `_solucion/` y la carpeta de cada proyecto. Se actualizan §1.1, §3.3, anti-patrones, criterios de aceptación, preguntas guía, ejemplos (uno multi-proyecto y el caso degenerado) y el prompt-snippet. |
+| 1.2 | 2026-06-09 | Reformulación ST-08: el README raíz se reformula a documento de solución. La cabecera (§4.1) declara la solución, su composición y el proyecto principal en lugar de un único tipo D8. Se agrega la sección obligatoria "Proyectos de la solución" (§4.2) con la tabla de proyectos (D8, rol, dependencias, redistribuible). El mapa de documentación (§4.4) refleja las categorías de solución (00, 01), `Solucion/` y la carpeta de cada proyecto. Se actualizan §1.1, §3.3, anti-patrones, criterios de aceptación, preguntas guía, ejemplos (uno multi-proyecto y el caso degenerado) y el prompt-snippet. |
 | 1.3 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |

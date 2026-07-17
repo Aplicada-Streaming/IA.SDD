@@ -21,10 +21,10 @@ Las dos plantillas están bien estructuradas, con 13 secciones en el BRIEF y 17 
 |---|---|---|
 | D1 (español rioplatense neutro técnico, sin emojis, sin negritas decorativas) | Parcial | Sin emojis. Se usa negrita en encabezados de bloque ("**Instrucción:**", "**Preguntas guía:**", "**Lo que NO va...**") con función estructural, no decorativa: aceptable. También se usa negrita en valores MoSCoW y en targets dentro de tablas ("**Must Have**", "**≥ 40%**", "**Alto**") que puede interpretarse como negrita decorativa para resaltar. Sin embargo, son marcadores de valor categórico, no decoración estética. Cumplimiento aceptable. |
 | D2 (UTF-8, LF, .md, #, -) | Cumple | Archivo `.md`, headings con `#`, listas con `-`. EOL no se valida visualmente, pero el contenido renderiza correctamente. |
-| D3 (kebab-case en nombre de archivo) | Cumple | `PROJECT-BRIEF-template.md` está en kebab/UPPER-kebab consistente con la convención del bootstrap. |
-| D4 (nomenclatura artefacto generado en cabecera) | Cumple | Línea 6: `Documento: PROJECT-BRIEF-<nombre-kebab>_v1.0.md`. |
+| D3 (Título-Con-Guiones en nombre de archivo) | Cumple | `PROJECT-BRIEF-template.md` está en kebab/UPPER-kebab consistente con la convención del bootstrap. |
+| D4 (nomenclatura artefacto generado en cabecera) | Cumple | Línea 6: `Documento: PROJECT-BRIEF-<Nombre>-v1.0.md`. |
 | D5 (plantilla en v1.0) | Cumple | Línea 7: `Versión: 1.0`. Control de cambios línea 369: `1.0`. |
-| D6 (BRIEF alimenta Visión) | Cumple implícito | El BRIEF describe negocio, problema, valor, alcance funcional, métricas SMART; es input válido para `01_necesidades_negocio/` y la Visión. No declara explícitamente el destino downstream, lo cual es admisible para el BRIEF (no es su responsabilidad declarar trazabilidad técnica). |
+| D6 (BRIEF alimenta Visión) | Cumple implícito | El BRIEF describe negocio, problema, valor, alcance funcional, métricas SMART; es input válido para `01-Necesidades-Negocio/` y la Visión. No declara explícitamente el destino downstream, lo cual es admisible para el BRIEF (no es su responsabilidad declarar trazabilidad técnica). |
 | D7 (sin Motor DSL, ESC/POS, Bluetooth, NuGet, impresora térmica, MAUI fuera del valor D8) | Cumple | Búsqueda Grep negativa para todas las cadenas prohibidas. El BRIEF no menciona MAUI en ninguna sección. |
 | D8 (8 tipos en README §1) | No aplica | D8 aplica al README. |
 
@@ -34,10 +34,10 @@ Las dos plantillas están bien estructuradas, con 13 secciones en el BRIEF y 17 
 |---|---|---|
 | D1 (español rioplatense neutro técnico, sin emojis, sin negritas decorativas) | Parcial | Sin emojis. Negritas usadas con función estructural (igual que BRIEF). Sin embargo, casi todo el documento omite tildes ("seccion", "informacion", "version", "tecnologico", "decision", "ano", "minimo", "automatico", "deshabilitacion") en contraste con el BRIEF que sí las usa. Inconsistencia ortográfica entre plantillas hermanas: el español rioplatense neutro técnico exige tildes. Defecto P1. |
 | D2 (UTF-8, LF, .md, #, -) | Cumple | Archivo `.md`, headings con `#`, listas con `-`. Renderiza correctamente. |
-| D3 (kebab-case en nombre de archivo) | Cumple | `PROJECT-README-template.md`. |
-| D4 (nomenclatura artefacto generado en cabecera) | Cumple | Tabla de cabecera línea 25: `` `PROJECT-README-<nombre-kebab>_v1.0.md` ``. |
+| D3 (Título-Con-Guiones en nombre de archivo) | Cumple | `PROJECT-README-template.md`. |
+| D4 (nomenclatura artefacto generado en cabecera) | Cumple | Tabla de cabecera línea 25: `` `PROJECT-README-<Nombre>-v1.0.md` ``. |
 | D5 (plantilla en v1.0) | Cumple | Línea 26: `Version | 1.0`. Control de cambios línea 552. |
-| D6 (README alimenta `05_arquitectura_tecnica/`, `09_devops/`, `11_examples/` y gobierna variantes por project_type) | Cumple | Línea 3 declara explícitamente la alimentación a esas tres categorías. Sección "Trazabilidad downstream" (líneas 523-545) mapea cada §1..§16 a categorías SDD destino. §1 declara que el tipo gobierna las 12 categorías. |
+| D6 (README alimenta `05-Arquitectura-Tecnica/`, `09-Devops/`, `11-Examples/` y gobierna variantes por project_type) | Cumple | Línea 3 declara explícitamente la alimentación a esas tres categorías. Sección "Trazabilidad downstream" (líneas 523-545) mapea cada §1..§16 a categorías SDD destino. §1 declara que el tipo gobierna las 12 categorías. |
 | D7 (sin Motor DSL, ESC/POS, Bluetooth, NuGet, impresora térmica; MAUI solo como literal `mobile-app-maui`) | No cumple | Múltiples ocurrencias de "MAUI" y ".NET MAUI" fuera del literal `mobile-app-maui`: líneas 55, 149, 156, 436. Ver §5 del informe. Defecto P0. |
 | D8 (los 8 tipos enumerados en §1 con tabla de implicancias) | Cumple | §1 línea 42 enumera los 8 tipos. Tabla líneas 49-58 describe documentos obligatorios, recomendados, omitibles, carpetas `/src`, `/samples` y stack-hint por tipo. |
 
@@ -144,9 +144,9 @@ D7 dice literal: "La palabra MAUI puede aparecer solo como nombre del tipo D8 `m
 
 - Campo "Tipo de proyecto" en README §1: definido como selección **única y cerrada** entre 8 valores enumerados literalmente en la pregunta bloqueante (línea 42). La tabla líneas 49-58 amplía implicancias por tipo. La instrucción explicita "Seleccionar exactamente uno de los 8 valores cerrados D8" y permite sub-proyecto secundario solo declarándolo en §5. Es usable como llave por el orquestador para variantes downstream. Cumple.
 - Campo "Nombre del proyecto" en ambas cabeceras:
-  - BRIEF línea 4: `Nombre del Proyecto: [Nombre comercial o interno del proyecto, kebab-case sugerido]`.
+  - BRIEF línea 4: `Nombre del Proyecto: [Nombre comercial o interno del proyecto, Título-Con-Guiones sugerido]`.
   - README línea 22: `Nombre del proyecto | [Nombre legible del proyecto]`.
-  - Inconsistencia menor: capitalización ("Nombre del Proyecto" vs "Nombre del proyecto") y descripción ("kebab-case sugerido" vs "Nombre legible"). El BRIEF sugiere kebab-case; el README pide "legible". El placeholder `{{nombre-kebab}}` deriva del nombre, pero no se explicita la regla de derivación en ninguna de las dos cabeceras. Defecto P2.
+  - Inconsistencia menor: capitalización ("Nombre del Proyecto" vs "Nombre del proyecto") y descripción ("Título-Con-Guiones sugerido" vs "Nombre legible"). El BRIEF sugiere Título-Con-Guiones; el README pide "legible". El placeholder `{{nombre-kebab}}` deriva del nombre, pero no se explicita la regla de derivación en ninguna de las dos cabeceras. Defecto P2.
 
 ---
 
@@ -231,7 +231,7 @@ Cumple C10.
 ### 12.3 P2 (cosméticos — postergables)
 
 - **P2-001 — Inconsistencia de capitalización del campo "Nombre del proyecto" entre BRIEF y README.** BRIEF línea 4: "Nombre del Proyecto" con P mayúscula. README línea 22: "Nombre del proyecto" en minúscula. Recomendar usar la forma del README en ambos.
-- **P2-002 — No se documenta la regla de derivación de `<nombre-kebab>` a partir del nombre legible.** Ninguna de las dos plantillas explica cómo convertir el nombre del proyecto a kebab-case (por ejemplo, "Sistema de Turnos Médicos" → "sistema-turnos-medicos"). Sería deseable agregar una línea en la cabecera o en la guía de uso del orquestador.
+- **P2-002 — No se documenta la regla de derivación de `<Nombre>` a partir del nombre legible.** Ninguna de las dos plantillas explica cómo convertir el nombre del proyecto a Título-Con-Guiones (por ejemplo, "Sistema de Turnos Médicos" → "sistema-turnos-medicos"). Sería deseable agregar una línea en la cabecera o en la guía de uso del orquestador.
 - **P2-003 — Uso de negritas en valores de tabla en BRIEF §4 y §8 ("**Must Have**", "**≥ 40%**").** Aunque tienen función estructural categórica y no decorativa estricta, podría discutirse si encajan en la prohibición D1 de "negritas decorativas". Decisión final del lead.
 
 ---
@@ -244,9 +244,9 @@ Pasos correctivos requeridos antes de cerrar la Fase 1:
 
 1. **Bloqueante**: corregir las 5 ocurrencias de "MAUI" / ".NET MAUI" en PROJECT-README-template.md fuera del literal `mobile-app-maui` (P0-001).
 2. **Importante**: restituir tildes en PROJECT-README-template.md para alinear con D1 y con el BRIEF (P1-001).
-3. **Cosmético**: unificar capitalización "Nombre del proyecto" en ambas cabeceras y considerar documentar la derivación de `<nombre-kebab>` (P2-001, P2-002).
+3. **Cosmético**: unificar capitalización "Nombre del proyecto" en ambas cabeceras y considerar documentar la derivación de `<Nombre>` (P2-001, P2-002).
 
-Las plantillas en general son sólidas, completas, internamente coherentes y honran la separación de responsabilidades negocio ↔ técnico exigida por SDD 2.2. Una vez corregido el P0 las plantillas quedan en condición APROBADAS.
+Las plantillas en general son sólidas, completas, internamente coherentes y honran la separación de responsabilidades negocio ↔ técnico exigida por SDD. Una vez corregido el P0 las plantillas quedan en condición APROBADAS.
 
 ---
 
@@ -257,7 +257,7 @@ Las plantillas en general son sólidas, completas, internamente coherentes y hon
 | P0-001 | Reescritura de las 5 ocurrencias de "MAUI" / ".NET MAUI" fuera del literal `mobile-app-maui` en PROJECT-README-template.md. Tabla §1: `src/<App>.Maui/` → `src/<App>.Mobile/`; "Proyecto MAUI demo" → "Proyecto demo multiplataforma"; stack-hint reordenado a "Flutter, React Native, .NET MAUI, Xamarin legacy, Kotlin Multiplatform" (enumeración legítima, MAUI deja de ser primer ejemplo canónico). Ejemplo §5: tree comments y UI testing reformulados a "Mobile" / "framework móvil". Ejemplo §14: "app MAUI mínima" → "app móvil mínima". | Resuelto. Verificación grep posterior: 3 menciones restantes, todas válidas (`mobile-app-maui` literal D8 en líneas 42, 55, 182, más `.NET MAUI` como una de 5 opciones en stack-hint del propio tipo `mobile-app-maui`). |
 | P1-001 | Restitución masiva de tildes en PROJECT-README-template.md (~600+ tildes aplicadas a `sección`, `técnico`, `arquitectónico`, `comunicación`, `mínimo`, `máximo`, pronombres interrogativos `qué/cuál/dónde/cómo`, agudas y esdrújulas). Longitud preservada en 552 líneas. Estructura, identificadores en backticks, tipos D8, bloques de código y control de cambios sin alteración. | Resuelto. |
 | P2-001 | Pendiente. No bloqueante. Se postergará para Fase 5 (audit final). | Postergado. |
-| P2-002 | Pendiente. Se documentará la regla de derivación `<nombre-kebab>` en el master-prompt (Fase 3, §3 sobre detección del tipo de proyecto y normalización de nombre). | Postergado a Fase 3. |
+| P2-002 | Pendiente. Se documentará la regla de derivación `<Nombre>` en el master-prompt (Fase 3, §3 sobre detección del tipo de proyecto y normalización de nombre). | Postergado a Fase 3. |
 | P2-003 | Pendiente. Decisión: las negritas estructurales de valores categóricos (`**Must Have**`, `**≥ 40%**`) se aceptan como marcadores de valor categórico, no como decoración. No requiere acción. | Aceptado. |
 
 **Veredicto actualizado tras correctivos:** Fase 1 **APROBADA**. Las plantillas están listas para servir como insumo de Fase 2 (reglas constructivas) y Fase 3 (master-prompt).

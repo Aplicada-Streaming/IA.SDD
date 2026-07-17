@@ -2,7 +2,7 @@
 
 **Fase:** 4
 **Auditor:** Auditor independiente cross-doc
-**Alcance:** `SDD2.2D/devs/guides/marco-teorico-sdd_v1.0.md` + `SDD2.2D/guides/guia-usuario-sdd2.0_v1.0.md`
+**Alcance:** `../IA.SDD/SDD/Devs/Guides/Marco-Teorico-SDD-v1.0.md` + `../IA.SDD/SDD/Guides/Guia-Usuario-SDD-v1.0.md`
 **Versión del informe:** 1.0
 **Fecha:** 2026-05-17
 
@@ -20,27 +20,27 @@ Veredicto preliminar: **APROBADO CON OBSERVACIONES**.
 
 ## 2. Conformidad D1–D8
 
-### 2.1 Marco teórico (`marco-teorico-sdd_v1.0.md`)
+### 2.1 Marco teórico (`Marco-Teorico-SDD-v1.0.md`)
 
 | Invariante | Cumple | Evidencia |
 |---|---|---|
 | D1 — Rioplatense técnico, tildes, sin emojis, sin negritas decorativas | Sí | Idioma declarado en cabecera (líneas 9, 52); 0 emojis (grep Unicode emoji ranges = 0); las negritas se usan como etiquetas semánticas (`**Patrón típico.**`, `**Decisiones canónicas.**`), no decorativas; tildes sostenidas (estudió, técnico, sección, decisión, automático todas con tilde en cuerpo). |
 | D2 — UTF-8, LF, `.md`, `#`, `-` | Sí | `file(1)` reporta "Unicode text, UTF-8" sin "CRLF"; extensión `.md`; encabezados ATX con `#`; listas con `-`. |
-| D3 — Kebab-case en filename | Sí | `marco-teorico-sdd_v1.0.md` cumple kebab-case. |
-| D4 — Nomenclatura uniforme `_v<X.Y>.md` | Sí | Sufijo `_v1.0.md` correcto. |
+| D3 — Título-Con-Guiones en filename | Sí | `Marco-Teorico-SDD-v1.0.md` cumple Título-Con-Guiones. |
+| D4 — Nomenclatura uniforme `-v<X.Y>.md` | Sí | Sufijo `-v1.0.md` correcto. |
 | D5 — v1.0 | Sí | Cabecera declara "Versión: 1.0" y tabla de control de cambios fila única. |
 | D6 — Declara cadena Visión→NB→CU→RN→ADR→US→BT→Sprint→Test→Pipeline | Parcial | Cadena AG-XX en §4.4 cubre todos los nodos vía nombres de especialidad; el glosario (línea 1612) abrevia la cadena como "visión → necesidad → caso de uso → arquitectura → US → BT → test", sin incluir explícitamente RN, Sprint ni Pipeline en una sola sentencia canónica. Se sostiene por composición pero no aparece literal. **(P1)** |
 | D7 — 0 menciones canónicas Motor DSL/ESC-POS/MAUI/Bluetooth/NuGet/.NET 10/impresora térmica | Sí | Ver §5. Las pocas apariciones son referencia histórica explícita o literal D8. |
 | D8 — Enumera los 8 tipos y cubre los 8 estilos en §7 | Sí | Enumeración en líneas 124, 267, 767–776; §7 cubre los 8 tipos D8 en sub-secciones 7.2.1 a 7.2.8 con estilo arquitectónico declarado por tipo (ver §9 de este informe). |
 
-### 2.2 Guía de usuario (`guia-usuario-sdd2.0_v1.0.md`)
+### 2.2 Guía de usuario (`Guia-Usuario-SDD-v1.0.md`)
 
 | Invariante | Cumple | Evidencia |
 |---|---|---|
 | D1 — Rioplatense técnico, tildes, sin emojis, sin negritas decorativas | Sí | Idioma declarado en cabecera YAML (línea 8); 0 emojis; voseo natural usado ("asegurate", "completá", "regenerás"); negritas usadas semánticamente en tablas. |
 | D2 — UTF-8, LF, `.md`, `#`, `-` | Sí | `file(1)` reporta UTF-8 sin CRLF; listas y encabezados correctos. |
-| D3 — Kebab-case en filename | Sí | `guia-usuario-sdd2.0_v1.0.md` cumple. |
-| D4 — Nomenclatura uniforme `_v<X.Y>.md` | Sí | Sufijo `_v1.0.md` correcto. |
+| D3 — Título-Con-Guiones en filename | Sí | `Guia-Usuario-SDD-v1.0.md` cumple. |
+| D4 — Nomenclatura uniforme `-v<X.Y>.md` | Sí | Sufijo `-v1.0.md` correcto. |
 | D5 — v1.0 | Sí | Cabecera declara "Versión: 1.0". |
 | D6 — Declara cadena Visión→NB→CU→RN→ADR→US→BT→Sprint→Test→Pipeline | Sí | Línea 25: "Visión → Necesidad de Negocio → Caso de Uso → Regla de Negocio → ADR → User Story → Backlog Técnico → Sprint → Test → Pipeline". Línea 1064 reitera en formato corto. |
 | D7 — 0 menciones canónicas | Sí | Ver §5. Única aparición de "Motor DSL" es en §9.2 como antecedente histórico explícito. |
@@ -181,8 +181,8 @@ Sondeo con patrón de palabras frecuentes sin tilde: `\b(seccion|tecnico|politic
 
 | Archivo | Hits brutos | Contexto de los hits | Veredicto |
 |---|---|---|---|
-| marco-teorico | 6 hits relevantes | `06_backlog-tecnico` (kebab-case L109, L533), `DECISION` mayúscula como etiqueta en bloque prompt L1414, L1417, "Decision Record" en término inglés L1565, "Version 1.1" en cita inglesa NIST L1683. | Sin hallazgos de tildes faltantes en cuerpo prosa. Todos los hits son intencionales (anglicismos, kebab-case, mayúsculas de prompt). |
-| guía-usuario | 6 hits relevantes | `--version` flag CLI L42, L63, L64, `06_backlog-tecnico` kebab-case L354, L961, L1146. | Sin hallazgos de tildes faltantes en cuerpo prosa. |
+| marco-teorico | 6 hits relevantes | `06-Backlog-Tecnico` (Título-Con-Guiones L109, L533), `DECISION` mayúscula como etiqueta en bloque prompt L1414, L1417, "Decision Record" en término inglés L1565, "Version 1.1" en cita inglesa NIST L1683. | Sin hallazgos de tildes faltantes en cuerpo prosa. Todos los hits son intencionales (anglicismos, Título-Con-Guiones, mayúsculas de prompt). |
+| guía-usuario | 6 hits relevantes | `--version` flag CLI L42, L63, L64, `06-Backlog-Tecnico` Título-Con-Guiones L354, L961, L1146. | Sin hallazgos de tildes faltantes en cuerpo prosa. |
 
 Veredicto del sondeo: **D1 conforme**. El cuerpo en prosa sostiene las tildes (verificado manualmente sobre muestras: "especificación", "metodología", "arquitectónicos", "decisión", "técnico", "automático" todas con tilde).
 

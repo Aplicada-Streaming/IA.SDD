@@ -2,7 +2,7 @@
 
 **Fase:** 3 (Master-prompt del orquestador)
 **Auditor:** Auditor independiente del master-prompt
-**Alcance:** /SDD2.2D/devs/orchestrator/master-prompt.md
+**Alcance:** ../IA.SDD/SDD/Devs/Orchestrator/Master-Prompt.md
 **Versión:** 1.0
 **Fecha:** 2026-05-17
 
@@ -18,23 +18,23 @@ El master-prompt está completo, coherente y operativamente ejecutable. Cubre la
 
 | Path referenciado | Existe | Línea(s) | Veredicto |
 | --- | --- | --- | --- |
-| `/SDD2.2D/devs/intake/PROJECT-BRIEF-<nombre-kebab>_v1.0.md` | Plantilla `PROJECT-BRIEF-template.md` presente; el master-prompt usa nombre derivado en runtime | 7, 18, 73, 301, 371, 485 | OK (plantilla de origen presente; instanciación es runtime) |
-| `/SDD2.2D/devs/intake/PROJECT-README-<nombre-kebab>_v1.0.md` | Plantilla `PROJECT-README-template.md` presente | 7, 19, 74, 302, 372, 485 | OK |
-| `/SDD2.2D/devs/rules/_root_rules.md` | Sí | 214, 498, 506, 508 | OK |
-| `/SDD2.2D/devs/rules/00_rules_contexto.md` | Sí | 58, 202 | OK |
-| `/SDD2.2D/devs/rules/01_rules_necesidades_negocio.md` | Sí | 203 | OK |
-| `/SDD2.2D/devs/rules/02_rules_especificacion_funcional.md` | Sí | 204, 359, 373 | OK |
-| `/SDD2.2D/devs/rules/03_rules_ux_ui_dx.md` | Sí | 205 | OK |
-| `/SDD2.2D/devs/rules/04_rules_prompts_ai.md` | Sí | 206 | OK |
-| `/SDD2.2D/devs/rules/05_rules_arquitectura_tecnica.md` | Sí | 207 | OK |
-| `/SDD2.2D/devs/rules/06_rules_backlog_tecnico.md` | Sí | 208 | OK |
-| `/SDD2.2D/devs/rules/07_rules_plan_sprint.md` | Sí | 137, 209 | OK |
-| `/SDD2.2D/devs/rules/08_rules_calidad_y_pruebas.md` | Sí | 210 | OK |
-| `/SDD2.2D/devs/rules/09_rules_devops.md` | Sí | 211 | OK |
-| `/SDD2.2D/devs/rules/10_rules_developer_guide.md` | Sí | 212 | OK |
-| `/SDD2.2D/devs/rules/11_rules_examples.md` | Sí | 213 | OK |
-| `/SDD2.2D/devs/_bootstrap/audit-sdd1.md` | Sí | 330 | OBSERVADO (acoplamiento bootstrap, ver §9) |
-| `/SDD2.2D/devs/_bootstrap/audit-fase-2.md` | Sí | 330, 460 | OBSERVADO (acoplamiento bootstrap, ver §9) |
+| `../IA.SDD/SDD/Devs/Intake/PROJECT-BRIEF-<Nombre>-v1.0.md` | Plantilla `PROJECT-BRIEF-template.md` presente; el master-prompt usa nombre derivado en runtime | 7, 18, 73, 301, 371, 485 | OK (plantilla de origen presente; instanciación es runtime) |
+| `../IA.SDD/SDD/Devs/Intake/PROJECT-README-<Nombre>-v1.0.md` | Plantilla `PROJECT-README-template.md` presente | 7, 19, 74, 302, 372, 485 | OK |
+| `../IA.SDD/SDD/Devs/Rules/Root-Rules.md` | Sí | 214, 498, 506, 508 | OK |
+| `../IA.SDD/SDD/Devs/Rules/00-Rules-Contexto.md` | Sí | 58, 202 | OK |
+| `../IA.SDD/SDD/Devs/Rules/01-Rules-Necesidades-Negocio.md` | Sí | 203 | OK |
+| `../IA.SDD/SDD/Devs/Rules/02-Rules-Especificacion-Funcional.md` | Sí | 204, 359, 373 | OK |
+| `../IA.SDD/SDD/Devs/Rules/03-Rules-UX-UI-DX.md` | Sí | 205 | OK |
+| `../IA.SDD/SDD/Devs/Rules/04-Rules-Prompts-AI.md` | Sí | 206 | OK |
+| `../IA.SDD/SDD/Devs/Rules/05-Rules-Arquitectura-Tecnica.md` | Sí | 207 | OK |
+| `../IA.SDD/SDD/Devs/Rules/06-Rules-Backlog-Tecnico.md` | Sí | 208 | OK |
+| `../IA.SDD/SDD/Devs/Rules/07-Rules-Plan-Sprint.md` | Sí | 137, 209 | OK |
+| `../IA.SDD/SDD/Devs/Rules/08-Rules-Calidad-Y-Pruebas.md` | Sí | 210 | OK |
+| `../IA.SDD/SDD/Devs/Rules/09-Rules-Devops.md` | Sí | 211 | OK |
+| `../IA.SDD/SDD/Devs/Rules/10-Rules-Developer-Guide.md` | Sí | 212 | OK |
+| `../IA.SDD/SDD/Devs/Rules/11-Rules-Examples.md` | Sí | 213 | OK |
+| `../IA.SDD/SDD/Devs/Bootstrap/Audit-SDD1.md` | Sí | 330 | OBSERVADO (acoplamiento bootstrap, ver §9) |
+| `../IA.SDD/SDD/Devs/Bootstrap/Audit-Fase-2.md` | Sí | 330, 460 | OBSERVADO (acoplamiento bootstrap, ver §9) |
 
 Todos los archivos de reglas (13) y las plantillas de intake existen. No hay path roto. Aparecen dos referencias a archivos del bootstrap que el master-prompt cita textualmente como fuente de vocabulario prohibido y como referencia estructural de audit; se discute en §9.
 
@@ -46,7 +46,7 @@ Todos los archivos de reglas (13) y las plantillas de intake existen. No hay pat
 | --- | --- | --- |
 | D1 — Español rioplatense, tildes, sin emojis, sin negritas decorativas | Sí | L30, L185, L367 declaran y aplican el registro. Lectura global confirma uso correcto de tildes y ausencia de emojis y de negritas decorativas (las negritas existentes son de cabecera estructural, no decorativas) |
 | D2 — UTF-8, LF, `.md`, `#`, `-` | Sí | Archivo `.md`, cabeceras con `#`, listas con `-`. L181-182 redeclaran encoding/LF como invariantes |
-| D3 — kebab-case en nombre `master-prompt.md` | Sí | El archivo se llama `master-prompt.md` (L3) |
+| D3 — Título-Con-Guiones en nombre `Master-Prompt.md` | Sí | El archivo se llama `Master-Prompt.md` (L3) |
 | D4 — N/A (este archivo no produce artefactos por sí) | N/A | Aplicable: el archivo es ejecutivo, no entregable taxonómico; sin embargo declara D4 para sus subagentes (L189) |
 | D5 — Versionado v1.0 | Sí | L4 `Versión: 1.0`, §16 tabla de control de cambios con entrada `1.0 / 2026-05-17` |
 | D6 — Cadena de trazabilidad Visión→NB→CU→RN→ADR→US→BT→Sprint→Test→Pipeline | Sí | L40 menciona literal la cadena D6. §7 ejecuta por fases A-H en ese orden. §12 retoma la cadena en la tabla del resumen ejecutivo (L521) |
@@ -63,7 +63,7 @@ Todos los archivos de reglas (13) y las plantillas de intake existen. No hay pat
 | §0 Cómo usar | Sí | Prerrequisitos numerados, mecánica plan-then-confirm, idioma | 12-30 |
 | §1 Rol del orquestador con principio de delegación | Sí | Verbos, hace/no hace, principio rector con 4 razones | 34-62 |
 | §2 Lectura de intake | Sí | Procedimiento + patrón de detención por placeholders ("Pendiente", "TBD", "[Reemplazar]", "[Nombre]", "[YYYY-MM-DD]") | 66-81 |
-| §3 Detección del tipo de proyecto | Sí | Conjunto D8 cerrado + reglas determinísticas de derivación de `<nombre-kebab>` | 85-123 |
+| §3 Detección del tipo de proyecto | Sí | Conjunto D8 cerrado + reglas determinísticas de derivación de `<Nombre>` | 85-123 |
 | §4 Detección de capacidades especiales (gating) | Sí | 10 flags con origen/regla/impacto + bloque de salida obligatorio | 127-167 |
 | §5 Recolección de invariantes del proyecto | Sí | 13 invariantes con valor por defecto y notas; separación explícita bootstrap vs proyecto | 170-192 |
 | §6 Plan de generación por categoría | Sí | Tabla con 12 categorías + AG-ROOT, columna `Documentos / Subagente / Insumos upstream / Reglas / Path / Audit` | 196-232 |
@@ -88,13 +88,13 @@ Todos los archivos de reglas (13) y las plantillas de intake existen. No hay pat
   2. L58 — "Si cambia la especialidad ... se modifica un único archivo de reglas y el orquestador no requiere cambios."
   3. L59 — "Permite que el catálogo de especialidades evolucione sin re-publicar el master-prompt."
   4. L60 — "Mantiene al orquestador delgado y delegativo, lo cual baja el riesgo de inconsistencia entre fases."
-- Cita textual rectora (L53): "El master-prompt **no asigna** las especialidades de los subagentes. Las **lee** desde la sección §1 de cada `XX_rules_<categoria>.md`".
+- Cita textual rectora (L53): "El master-prompt **no asigna** las especialidades de los subagentes. Las **lee** desde la sección §1 de cada `XX-Rules-<Categoria>.md`".
 - Cita operativa (L62): "toda invocación a un subagente se construye copiando el bloque de §1.2 correspondiente, completando los placeholders y citando el archivo de reglas como fuente".
 - Reforzado operativamente en:
   - §6 — procedimiento de lectura de las reglas (L222-231) que enuncia los 7 pasos de copia textual.
   - §8 — esqueleto del despacho (L293) usa "leído literal de §1.2".
   - §15 — entrada de glosario "Principio de delegación de la especialidad" (L593).
-  - §11 — AG-ROOT también lee su variante de `_root_rules.md` (L498).
+  - §11 — AG-ROOT también lee su variante de `Root-Rules.md` (L498).
 
 Veredicto: cumplido y reforzado en cuatro secciones.
 
@@ -113,7 +113,7 @@ Veredicto: cumplido y reforzado en cuatro secciones.
 ## 7. Handoff a codificación
 
 - Detención explícita: sí. L514: "el orquestador NO inicia automáticamente la generación de código. Se detiene y presenta al usuario un resumen ejecutivo".
-- Texto literal obligatorio del cierre: L527-529 con la frase formal: "Documentación `/SDD2.2D/docs/` generada y auditada. Antes de avanzar a la generación de código, necesito confirmación explícita del usuario para arrancar el Sprint 1...".
+- Texto literal obligatorio del cierre: L527-529 con la frase formal: "Documentación `SDD/Docs/` generada y auditada. Antes de avanzar a la generación de código, necesito confirmación explícita del usuario para arrancar el Sprint 1...".
 - Refuerzo bloqueante: L531 "El orquestador no escribe código bajo ninguna circunstancia sin recibir la confirmación literal".
 - Resumen ejecutivo enumerado: tabla L519-526 con 6 bloques obligatorios:
   1. Documentos generados por categoría (cantidad/tamaño/estado por carpeta + README raíz).
@@ -152,11 +152,11 @@ Observación P2: §6 fila A-00 hace referencia condicional "acuerdo-equipo si eq
 ## 9. Ejecutabilidad standalone
 
 - Dependencias externas (fuera del intake, fuera de las 13 reglas):
-  - `_bootstrap/audit-sdd1.md` (L330): referenciado como fuente del listado de términos del dominio prohibido.
-  - `_bootstrap/audit-fase-2.md` (L330 y L460): referenciado como fuente de términos prohibidos y como modelo estructural del informe de audit.
-- Autocontención: parcial. El usuario final que ejecute el master-prompt necesita haber recibido (o tener acceso a) los dos archivos de bootstrap citados para que el subagente conozca el listado exacto de vocabulario prohibido. Esto no rompe la ejecución, porque el archivo `audit-sdd1.md` describe vocabulario del dominio fuente del bootstrap, no instrucciones operativas; pero el master-prompt asume que el lector acepta esa lista vinculada por referencia. Marcado P1.
-- Separación bootstrap vs proyecto: declarada explícitamente en §5 L171-172: "Las invariantes D1-D8 del bootstrap son globales del template (idioma, encoding, kebab-case, versionado, política, trazabilidad D6, prohibición de ejemplos del dominio fuente, conjunto cerrado D8). Sobre esa base, cada proyecto define otro conjunto de invariantes propias". §15 L590 ratifica en el glosario: "Existen invariantes globales del template (D1-D8 del bootstrap) e invariantes del proyecto (las recolectadas en §5)". §15 L595 declara: "Master-prompt ... Es la única instrucción que el usuario ejecuta para obtener /SDD2.2D/docs/. Es autocontenido."
-- Separación bootstrap vs master-prompt: §16 L611 cierra el control de cambios con autor "Bootstrap SDD 2.2", reconociendo que el bootstrap generó este archivo pero ya no es el actor. El master-prompt no se autocomporta como prompt del bootstrap.
+  - `Bootstrap/Audit-SDD1.md` (L330): referenciado como fuente del listado de términos del dominio prohibido.
+  - `Bootstrap/Audit-Fase-2.md` (L330 y L460): referenciado como fuente de términos prohibidos y como modelo estructural del informe de audit.
+- Autocontención: parcial. El usuario final que ejecute el master-prompt necesita haber recibido (o tener acceso a) los dos archivos de bootstrap citados para que el subagente conozca el listado exacto de vocabulario prohibido. Esto no rompe la ejecución, porque el archivo `Audit-SDD1.md` describe vocabulario del dominio fuente del bootstrap, no instrucciones operativas; pero el master-prompt asume que el lector acepta esa lista vinculada por referencia. Marcado P1.
+- Separación bootstrap vs proyecto: declarada explícitamente en §5 L171-172: "Las invariantes D1-D8 del bootstrap son globales del template (idioma, encoding, Título-Con-Guiones, versionado, política, trazabilidad D6, prohibición de ejemplos del dominio fuente, conjunto cerrado D8). Sobre esa base, cada proyecto define otro conjunto de invariantes propias". §15 L590 ratifica en el glosario: "Existen invariantes globales del template (D1-D8 del bootstrap) e invariantes del proyecto (las recolectadas en §5)". §15 L595 declara: "Master-prompt ... Es la única instrucción que el usuario ejecuta para obtener SDD/Docs/. Es autocontenido."
+- Separación bootstrap vs master-prompt: §16 L611 cierra el control de cambios con autor "Bootstrap SDD", reconociendo que el bootstrap generó este archivo pero ya no es el actor. El master-prompt no se autocomporta como prompt del bootstrap.
 
 Observación: la afirmación L595 ("autocontenido") tiene una tensión literal con las dos referencias de L330 y L460 al bootstrap. Es resoluble bajando esas referencias a "notas de inspiración" sin dependencia operativa.
 
@@ -171,13 +171,13 @@ Ninguno.
 ### 10.2 P1
 
 **P1-1 — Acoplamiento residual al bootstrap en §8 y §10.**
-- Archivo: master-prompt.md L330 y L460.
-- Evidencia: L330 enumera como prohibición "No introducir vocabulario ... (ver el listado de términos prohibidos en la auditoría `_bootstrap/audit-sdd1.md` y `_bootstrap/audit-fase-2.md`)". L460 dice "El informe sigue la estructura del audit de Fase 2 que se generó durante el bootstrap (`/SDD2.2D/devs/_bootstrap/audit-fase-2.md`) como referencia."
-- Problema: el master-prompt se declara autocontenido en L595 pero referencia dos archivos del bootstrap como fuente activa de información operativa. Un usuario externo que reciba solo el template podría no recibir `_bootstrap/`.
+- Archivo: Master-Prompt.md L330 y L460.
+- Evidencia: L330 enumera como prohibición "No introducir vocabulario ... (ver el listado de términos prohibidos en la auditoría `Bootstrap/Audit-SDD1.md` y `Bootstrap/Audit-Fase-2.md`)". L460 dice "El informe sigue la estructura del audit de Fase 2 que se generó durante el bootstrap (`../IA.SDD/SDD/Devs/Bootstrap/Audit-Fase-2.md`) como referencia."
+- Problema: el master-prompt se declara autocontenido en L595 pero referencia dos archivos del bootstrap como fuente activa de información operativa. Un usuario externo que reciba solo el template podría no recibir `Bootstrap/`.
 - Recomendación: o bien incorporar el listado de términos prohibidos directamente como sección del master-prompt (o como invariante de §5), o bien aclarar que las referencias son meramente inspirativas y describir la estructura del informe de audit íntegramente en §10.
 
 **P1-2 — Definición de `tiene_ui_final` para web-microservices ambigua sintácticamente.**
-- Archivo: master-prompt.md L134.
+- Archivo: Master-Prompt.md L134.
 - Evidencia: "true cuando `project_type` ∈ {web-monolith, web-microservices con frontend, desktop-app, mobile-app-maui}; web-microservices se subdivide según §3 del README explicite presencia de frontend".
 - Problema: `web-microservices con frontend` no es un valor del conjunto D8 cerrado declarado en L92. La regla mezcla un valor D8 puro con un literal compuesto. El criterio de subdivisión "según §3 del README explicite presencia de frontend" tiene además gramática rota ("según §3 del README explicite").
 - Recomendación: reescribir como "true cuando `project_type` ∈ {web-monolith, desktop-app, mobile-app-maui}, o cuando `project_type == web-microservices` y el PROJECT-README §3 declara explícitamente la presencia de frontend."
@@ -185,18 +185,18 @@ Ninguno.
 ### 10.3 P2
 
 **P2-1 — Microdesalineamiento de umbral de `acuerdo-equipo`.**
-- Archivo: master-prompt.md §6 L202 vs §14 L569.
-- Evidencia: §6 dice "acuerdo-equipo_v1.0.md (si equipo_n > 2)". §14 para cli-tool dice "acuerdo-equipo si > 1 dev"; para library/web-monolith/web-microservices/desktop/mobile/rest-api/worker-service lo lista sin condición.
+- Archivo: Master-Prompt.md §6 L202 vs §14 L569.
+- Evidencia: §6 dice "Acuerdo-Equipo-v1.0.md (si equipo_n > 2)". §14 para cli-tool dice "acuerdo-equipo si > 1 dev"; para library/web-monolith/web-microservices/desktop/mobile/rest-api/worker-service lo lista sin condición.
 - Recomendación: fijar el umbral único (probablemente `equipo_n > 1` para consistencia con la lógica de §4 L137).
 
 **P2-2 — Reanudación post-ambigüedad sin contrato de estado.**
-- Archivo: master-prompt.md §9 L428.
+- Archivo: Master-Prompt.md §9 L428.
 - Evidencia: "El subagente se reanuda desde el documento bloqueado, con los nuevos datos incorporados".
 - Problema: no se especifica si el subagente recupera contexto previo o reinicia la categoría con los datos nuevos. Para subagentes stateless por defecto, conviene declararlo explícitamente.
 - Recomendación: agregar una frase del tipo "El orquestador re-despacha al subagente con el mismo prompt original más el bloque `RESPUESTA A AMBIGÜEDAD` adjunto".
 
 **P2-3 — Fase H mezcla README raíz con handoff sin separar audits.**
-- Archivo: master-prompt.md §7 L273-276.
+- Archivo: Master-Prompt.md §7 L273-276.
 - Evidencia: "Fase H — README raíz y handoff. 1. AG-ROOT redacta ... 2. Audit final consolidado ... 3. Se ejecuta §12".
 - Problema: §12 no es estrictamente un paso de fase H sino un check-out posterior. Confunde la frontera entre "audit final consolidado" (que cierra docs) y "handoff" (que abre la siguiente etapa). No es bloqueante pero invita a confusión.
 - Recomendación: renombrar el paso 3 como "Fase post-H — Check-out y handoff (§12)" o mover §12 fuera de la fase H.

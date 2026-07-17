@@ -1,10 +1,10 @@
-# Marco Teórico SDD 2.2
+# Marco Teórico SDD
 
-**Documento:** marco-teorico-sdd2.2_v1.0.md
+**Documento:** Marco-Teorico-SDD-v1.0.md
 **Versión:** 1.4
 **Estado:** Aprobado
 **Fecha:** 2026-06-20
-**Autor:** Equipo Template SDD 2.2 — UTN
+**Autor:** Equipo Template SDD — UTN
 **Audiencia:** estudiantes universitarios (UTN), docentes, profesionales que adopten el template
 **Idioma:** español rioplatense neutro técnico
 **Norma bibliográfica:** APA 7
@@ -16,7 +16,7 @@
 
 - [§1 Introducción y encuadre](#1-introducción-y-encuadre)
 - [§2 Fundamentos del enfoque SDD](#2-fundamentos-del-enfoque-sdd)
-- [§3 Metodología del template SDD 2.2](#3-metodología-del-template-sdd-21)
+- [§3 Metodología del template SDD](#3-metodología-del-template-sdd-21)
   - [§3.10 El modelo de solución más jerarquía de proyectos](#310-el-modelo-de-solución-más-jerarquía-de-proyectos)
 - [§4 Especialidades del template](#4-especialidades-del-template)
 - [§5 Metodología ágil aplicada](#5-metodología-ágil-aplicada)
@@ -36,11 +36,11 @@
 
 ## 1.1 Propósito de este marco
 
-Este documento es el cuerpo doctrinal del template SDD 2.2. Su función es explicar el porqué de cada decisión metodológica que el template propone, ofrecer la fundamentación académica e industrial que sostiene esas decisiones y servir de material de estudio profundo para estudiantes universitarios y profesionales que adopten el template como base operativa.
+Este documento es el cuerpo doctrinal del template SDD. Su función es explicar el porqué de cada decisión metodológica que el template propone, ofrecer la fundamentación académica e industrial que sostiene esas decisiones y servir de material de estudio profundo para estudiantes universitarios y profesionales que adopten el template como base operativa.
 
 El marco teórico no enseña a operar el template paso a paso (esa es función de la guía de usuario, documento operativo separado). Acá se discute por qué la especificación es el artefacto central, por qué se separan 13 especialidades, por qué se prefiere Scrum como punto de partida, por qué se versionan los artefactos con SemVer, por qué se prohíben emojis en el cuerpo normativo y por qué la separación entre orquestador y subagentes es deliberada.
 
-Quien lea este documento de principio a fin termina con un mapa conceptual completo del enfoque Specification-Driven Development aplicado al template SDD 2.2, con capacidad para auditar, criticar, extender o adaptar el método a contextos nuevos.
+Quien lea este documento de principio a fin termina con un mapa conceptual completo del enfoque Specification-Driven Development aplicado al template SDD, con capacidad para auditar, criticar, extender o adaptar el método a contextos nuevos.
 
 ## 1.2 Audiencia primaria
 
@@ -87,51 +87,59 @@ Es importante no confundir este marco teórico con la guía de usuario del templ
 
 Las dos piezas son complementarias y se referencian mutuamente, pero no se solapan. Si un lector necesita saber cómo completar el documento `SOLUTION-INTAKE`, debe acudir a la guía de usuario. Si necesita saber por qué el intake pregunta lo que pregunta, debe acudir a este marco teórico.
 
-## 1.5 Mapa visual del template SDD 2.2
+## 1.5 Mapa visual del template SDD
 
-El template se organiza en dos planos paralelos:
+El template se organiza en dos planos paralelos, repartidos en dos repositorios hermanos de un workspace común: el plano metodológico vive en el repositorio fuente `IA.SDD`, y el plano operativo se genera en el repositorio destino de cada solución.
 
 ```text
-e:/repos/...../SDD2.2D/
-├── devs/                    Plano metodológico (marco teórico, plantillas, reglas)
-│   ├── guides/              Marco teórico (este documento)
-│   ├── intake/              Plantillas de carga inicial
-│   ├── orchestrator/        Prompts orquestadores y subagentes
-│   ├── rules/               Reglas de nomenclatura, decisiones D1..D8
-│   ├── references/          Catálogo de reglas de diseño por stack y por capacidad (insumo de AG-03)
-│   └── _bootstrap/          Auditoría del fuente SDD 1.0, ADR de origen
+workspace/
+├── IA.SDD/                          Repositorio fuente (solo lectura)
+│   ├── PROMPTs/                     Prompt de entrada del orquestador
+│   └── SDD/
+│       ├── Devs/                    Plano metodológico (marco teórico, plantillas, reglas)
+│       │   ├── Guides/              Marco teórico (este documento)
+│       │   ├── Intake/              Plantillas de carga inicial (SOLUTION-INTAKE/MANIFEST-template)
+│       │   ├── Orchestrator/        Prompts orquestadores y subagentes (Master-Prompt)
+│       │   ├── Rules/               Reglas de nomenclatura, decisiones D1..D8
+│       │   ├── References/          Catálogo de reglas de diseño por stack y por capacidad (insumo de AG-03)
+│       │   └── Bootstrap/           Auditoría del fuente SDD 1.0, ADR de origen
+│       └── Guides/                  Guía de usuario
 │
-└── docs/                    Plano operativo de la solución generada
-    ├── 00_contexto/         AG-00  Product Manager        (nivel solución)
-    ├── 01_necesidades_negocio/        AG-01  Analista de Negocio  (nivel solución)
-    ├── _solucion/           Consolidación de solución: vista de solución
-    │                        (mapa de proyectos, contratos inter-proyecto,
-    │                        grafo de dependencias) y pipeline de solución
-    │                        (orden de build topológico, artefactos publicables)
-    ├── proyectos/           Una carpeta por proyecto (kebab-case)
-    │   └── <nombre-proyecto>/
-    │       ├── 02_especificacion_funcional/   AG-02  Analista Funcional
-    │       ├── 03_ux-ui/            AG-03  Especialista DX/UX
-    │       ├── 04_prompts_ai/       AG-04  Ingeniero de Prompts
-    │       ├── 05_arquitectura_tecnica/       AG-05  Arquitecto de Software
-    │       ├── 06_backlog-tecnico/  AG-06  Scrum Master (backlog)
-    │       ├── 07_plan-sprint/      AG-07  Scrum Master (planificación)
-    │       ├── 08_calidad_y_pruebas/          AG-08  QA / SDET
-    │       ├── 09_devops/           AG-09  DevOps Engineer
-    │       ├── 10_developer_guide/  AG-10  Technical Writer
-    │       └── 11_examples/         AG-11  Developer Advocate
-    └── README.md            AG-ROOT  Arquitecto de Soluciones
+└── <Repositorio-Destino>/          Repositorio destino de la solución
+    └── SDD/
+        ├── Intake/                  SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md (humano)
+        │                            SOLUTION-MANIFEST-<Nombre-Solucion>-v1.0.md (derivado)
+        ├── Docs/                    Plano operativo de la solución generada
+        │   ├── 00-Contexto/         AG-00  Product Manager        (nivel solución)
+        │   ├── 01-Necesidades-Negocio/     AG-01  Analista de Negocio  (nivel solución)
+        │   ├── Solucion/            Consolidación de solución: vista de solución
+        │   │                        (mapa de proyectos, contratos inter-proyecto,
+        │   │                        grafo de dependencias) y pipeline de solución
+        │   ├── Proyectos/           Una carpeta por proyecto (Título-Con-Guiones)
+        │   │   └── <Nombre-Proyecto>/
+        │   │       ├── 02-Especificacion-Funcional/   AG-02  Analista Funcional
+        │   │       ├── 03-UX-UI-DX/            AG-03  Especialista DX/UX
+        │   │       ├── 04-Prompts-AI/          AG-04  Ingeniero de Prompts
+        │   │       ├── 05-Arquitectura-Tecnica/       AG-05  Arquitecto de Software
+        │   │       ├── 06-Backlog-Tecnico/     AG-06  Scrum Master (backlog)
+        │   │       ├── 07-Plan-Sprint/         AG-07  Scrum Master (planificación)
+        │   │       ├── 08-Calidad-Y-Pruebas/          AG-08  QA / SDET
+        │   │       ├── 09-Devops/              AG-09  DevOps Engineer
+        │   │       ├── 10-Developer-Guide/     AG-10  Technical Writer
+        │   │       └── 11-Examples/            AG-11  Developer Advocate
+        │   └── README.md            AG-ROOT  Arquitecto de Soluciones
+        └── README.md
 ```
 
-Las categorías 00 y 01 viven a nivel solución (el negocio es uno por solución); las categorías 02 a 11 viven por proyecto (la técnica se especializa según el tipo D8 de cada proyecto); `_solucion/` consolida la mirada de conjunto. En el caso degenerado de una solución con un único proyecto, el layout se aplana y `docs/` reproduce exactamente la estructura plana clásica (00 a 11 directamente bajo `docs/`, sin nivel `proyectos/`), garantizando la no ruptura con el modelo de tipo único. La fundamentación de este modelo solución más jerarquía de proyectos se desarrolla en §3.10.
+Las categorías 00 y 01 viven a nivel solución (el negocio es uno por solución); las categorías 02 a 11 viven por proyecto (la técnica se especializa según el tipo D8 de cada proyecto); `Solucion/` consolida la mirada de conjunto. En el caso degenerado de una solución con un único proyecto, el layout se aplana y `Docs/` reproduce exactamente la estructura plana clásica (00 a 11 directamente bajo `Docs/`, sin nivel `Proyectos/`), garantizando la no ruptura con el modelo de tipo único. La fundamentación de este modelo solución más jerarquía de proyectos se desarrolla en §3.10.
 
-La separación `/devs/` versus `/docs/` proviene del aprendizaje del fuente SDD 1.0: mezclar material metodológico con documentación operativa del producto contamina ambos. El marco teórico es estable y cambia rara vez; la documentación de la solución cambia cada sprint. Mantenerlos en árboles separados permite versionarlos de manera independiente.
+La separación entre el plano `Devs/` de la fuente y el plano `Docs/` del destino proviene del aprendizaje del fuente SDD 1.0: mezclar material metodológico con documentación operativa del producto contamina ambos. El marco teórico es estable y cambia rara vez; la documentación de la solución cambia cada sprint. Mantenerlos en repositorios separados permite versionarlos de manera independiente y propagar mejoras del template a nuevas soluciones sin re-copiarlo.
 
 ## 1.6 Origen del template
 
-Este template se construyó a partir de la auditoría del fuente SDD 1.0 aplicado al caso de estudio histórico Motor DSL en la cátedra de Aplicada del cuatrimestre 2026. El audit Fase 0 (ver `SDD2.2D/devs/_bootstrap/audit-sdd1.md`) inventarió 161 archivos markdown, identificó 14 patrones repetibles, 14 inconsistencias y un mapa de cobertura por capítulo. Sobre ese análisis se generalizó el material domain-specific para producir el template stack-agnóstico que SDD 2.2 propone.
+Este template se construyó a partir de la auditoría del fuente SDD 1.0 aplicado al caso de estudio histórico Motor DSL en la cátedra de Aplicada del cuatrimestre 2026. El audit Fase 0 (ver `../IA.SDD/SDD/Devs/Bootstrap/Audit-SDD1.md`) inventarió 161 archivos markdown, identificó 14 patrones repetibles, 14 inconsistencias y un mapa de cobertura por capítulo. Sobre ese análisis se generalizó el material domain-specific para producir el template stack-agnóstico que SDD propone.
 
-Las menciones al caso original se conservan exclusivamente como referencia formal del origen, no como contenido canónico del template. El template SDD 2.2 cubre ocho tipos de proyecto distintos (decisión D8): library, web-monolith, web-microservices, desktop-app, mobile-app-maui, rest-api, cli-tool, worker-service. Estos ocho valores son un conjunto cerrado que no cambia; lo que el modelo reformulado introdujo (ver §3.10) es que el tipo D8 se asigna por proyecto y una solución agrupa una jerarquía de N proyectos tipados, en lugar de asumir un único tipo por repositorio.
+Las menciones al caso original se conservan exclusivamente como referencia formal del origen, no como contenido canónico del template. El template SDD cubre ocho tipos de proyecto distintos (decisión D8): library, web-monolith, web-microservices, desktop-app, mobile-app-maui, rest-api, cli-tool, worker-service. Estos ocho valores son un conjunto cerrado que no cambia; lo que el modelo reformulado introdujo (ver §3.10) es que el tipo D8 se asigna por proyecto y una solución agrupa una jerarquía de N proyectos tipados, en lugar de asumir un único tipo por repositorio.
 
 ---
 
@@ -177,7 +185,7 @@ El flujo es lineal: el equipo escribe la spec, la IA o el desarrollador la imple
 
 ### Nivel 2 — Spec-Anchored
 
-Tanto la especificación como el código se mantienen como artefactos vivos. Los cambios a la spec preceden a los cambios de código. Este es el nivel estándar que SDD 2.2 propone para proyectos con equipo o con horizonte de mantenimiento mayor a seis meses.
+Tanto la especificación como el código se mantienen como artefactos vivos. Los cambios a la spec preceden a los cambios de código. Este es el nivel estándar que SDD propone para proyectos con equipo o con horizonte de mantenimiento mayor a seis meses.
 
 **Cuándo aplica.** Proyectos con múltiples contribuyentes, sistemas que requieren documentación de compliance, productos con horizonte de mantenimiento de seis meses o más, features que sufrirán múltiples iteraciones.
 
@@ -201,7 +209,7 @@ La especificación es el artefacto principal y el código se regenera bajo deman
 | Código repetitivo o desechable con buena cobertura de tests | Spec-as-Source (3) |
 | Experimento personal con buena cobertura | Spec-as-Source (3) |
 
-**Recomendación general.** Empezar con Spec-First y migrar a Spec-Anchored cuando el proyecto involucre equipo o tenga horizonte de mantenimiento largo. Reservar Spec-as-Source para contextos controlados con tests que garanticen el comportamiento esperado. El template SDD 2.2 está diseñado por defecto para operar en nivel Spec-Anchored.
+**Recomendación general.** Empezar con Spec-First y migrar a Spec-Anchored cuando el proyecto involucre equipo o tenga horizonte de mantenimiento largo. Reservar Spec-as-Source para contextos controlados con tests que garanticen el comportamiento esperado. El template SDD está diseñado por defecto para operar en nivel Spec-Anchored.
 
 ## 2.4 Comparación con TDD y BDD
 
@@ -213,9 +221,9 @@ SDD no reemplaza ni excluye a Test-Driven Development (TDD) ni a Behavior-Driven
 | **BDD** | Escenarios Given/When/Then (cómo se verifica el comportamiento) | Producto + QA + desarrollo | ¿Cómo se observa que el sistema cumple la spec? |
 | **TDD** | Test unitario (cómo se valida una unidad de código) | Desarrollo | ¿Cómo se construye correctamente la implementación? |
 
-En un flujo combinado típico bajo SDD 2.2:
+En un flujo combinado típico bajo SDD:
 
-1. SDD produce la especificación funcional (`docs/02_especificacion_funcional/`).
+1. SDD produce la especificación funcional (`docs/02-Especificacion-Funcional/`).
 2. BDD traduce los casos de uso de la spec a escenarios Given/When/Then ejecutables.
 3. TDD se aplica al construir cada unidad de código, asegurando que la implementación cumple los criterios de aceptación.
 
@@ -223,7 +231,7 @@ Las tres prácticas son compatibles y se refuerzan. Ninguna sustituye a la otra.
 
 ## 2.5 Por qué SDD encaja con el desarrollo asistido por IA
 
-El contexto industrial de adopción de SDD 2.2 incluye el uso de asistentes de IA basados en LLM (Claude, GitHub Copilot, Cursor, entre otros). En ese contexto, la especificación cumple cuatro funciones adicionales a las clásicas:
+El contexto industrial de adopción de SDD incluye el uso de asistentes de IA basados en LLM (Claude, GitHub Copilot, Cursor, entre otros). En ese contexto, la especificación cumple cuatro funciones adicionales a las clásicas:
 
 1. **Contrato para el modelo.** El LLM lee la spec y produce código que la respeta. Sin spec, el modelo improvisa.
 2. **Mecanismo de verificación.** El equipo puede pedirle al modelo que verifique si el código existente cumple la spec, detectando deriva.
@@ -241,15 +249,15 @@ SDD no es bala de plata. Tiene costos y riesgos que conviene reconocer:
 - **Riesgo de over-engineering documental.** Hay equipos que producen specs barrocas que nadie lee. La spec debe ser tan extensa como sea necesario y tan breve como sea posible.
 - **Curva de aprendizaje.** Equipos acostumbrados a "shipear primero, documentar después" tardan en internalizar la inversión.
 
-El template SDD 2.2 mitiga estos riesgos con plantillas mínimas, validación automatizada de nomenclatura, y un proceso explícito de actualización spec-code que se describe en §3 y §11.
+El template SDD mitiga estos riesgos con plantillas mínimas, validación automatizada de nomenclatura, y un proceso explícito de actualización spec-code que se describe en §3 y §11.
 
 ---
 
-# §3 Metodología del template SDD 2.2
+# §3 Metodología del template SDD
 
 ## 3.1 Visión general del flujo
 
-El template SDD 2.2 propone un flujo de seis pasos que va desde la idea informal hasta la documentación operativa lista para codificar. El flujo se diseñó con dos premisas:
+El template SDD propone un flujo de seis pasos que va desde la idea informal hasta la documentación operativa lista para codificar. El flujo se diseñó con dos premisas:
 
 1. **El humano decide; la IA ejecuta.** El equipo humano aporta visión, restricciones y criterio profesional. La IA materializa esas decisiones en artefactos coherentes con la estructura del template.
 2. **El plan precede a la acción.** En cada paso se pide a la IA que explique qué va a hacer antes de hacerlo, para que el humano confirme antes de comprometer cambios.
@@ -273,7 +281,7 @@ Estos dos artefactos no son la especificación final. Son el material crudo que 
 
 Cuando el BRIEF y el README inicial están maduros, se consolidan en un documento único que servirá de entrada al paso 3. Este documento debe contener, como mínimo:
 
-- Nombre tentativo del proyecto en kebab-case.
+- Nombre tentativo del proyecto en Título-Con-Guiones.
 - Problema que el sistema resuelve, en una frase.
 - Usuarios objetivo (primario, secundario, terciario si aplica).
 - Composición de la solución: lista de proyectos que la integran y, por cada proyecto, su tipo según la decisión D8 (library, web-monolith, web-microservices, desktop-app, mobile-app-maui, rest-api, cli-tool, worker-service). En una solución de un único proyecto, esta lista tiene un solo elemento y equivale a declarar un único tipo D8.
@@ -285,7 +293,7 @@ El consolidado se guarda como `intake-source.md` o se mantiene en el chat como m
 
 ## 3.4 Paso 3 — Volcado al documento único de intake
 
-El template provee un único documento de intake que el humano completa manualmente a partir del consolidado: `SOLUTION-INTAKE-<nombre-solucion-kebab>_v1.0.md`. Este documento reemplaza y deja deprecados a los dos artefactos previos (`PROJECT-BRIEF`, que capturaba el negocio, y `PROJECT-README`, que capturaba la técnica): ambos quedan subsumidos como partes de un solo documento de entrada.
+El template provee un único documento de intake que el humano completa manualmente a partir del consolidado: `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md`. Este documento reemplaza y deja deprecados a los dos artefactos previos (`PROJECT-BRIEF`, que capturaba el negocio, y `PROJECT-README`, que capturaba la técnica): ambos quedan subsumidos como partes de un solo documento de entrada.
 
 El intake se organiza en tres partes:
 
@@ -297,17 +305,17 @@ El documento se cierra con §18 (samples) y §19 (checklist de completitud).
 
 Por qué un único documento de intake y no dos o tres artefactos separados: mantener visión, composición y técnica en un solo archivo da una entrada única y autocontenida que el humano completa de corrido y que el orquestador lee de una sola fuente, sin tener que conciliar versiones de varios documentos. La asimetría negocio/técnica no se pierde: se preserva como secciones del documento (Parte A única por solución, Parte C repetible por proyecto), no como archivos distintos. La composición declarada en la Parte B es la que alimenta el SOLUTION-MANIFEST como fuente única de verdad de la jerarquía (ver §3.10.3); el manifiesto ya no se completa a mano sino que se deriva del §13 (ver §3.6).
 
-## 3.5 Paso 4 — Bootstrap local en Claude Code
+## 3.5 Paso 4 — Preparación del workspace de dos repositorios
 
-El humano clona o crea el repositorio del proyecto, copia el árbol `/SDD2.2D/devs/` del template adentro, y abre el repositorio en Claude Code (o el agente CLI equivalente). En este momento ya están en el repo:
+En el modelo reformulado, el humano no copia el árbol del template dentro del repositorio de su proyecto. Trabaja con dos repositorios hermanos en un workspace común: el repositorio fuente `IA.SDD` (este template, de solo lectura) y el repositorio destino de la solución. Clona ambos al mismo nivel, coloca el intake completado en `SDD/Intake/` del repositorio destino y abre ese repositorio destino en Claude Code (o el agente CLI equivalente). En este momento:
 
-- El documento único de intake completado (`SOLUTION-INTAKE`).
-- Las reglas de nomenclatura (`devs/rules/`), incluida la regla meta `rules/_intake_rules.md` que dirige la validación de intake.
-- Las plantillas de artefactos.
-- Los prompts del orquestador y de los subagentes (`devs/orchestrator/`).
-- Este marco teórico (`devs/guides/marco-teorico-sdd2.2_v1.0.md`).
+- El documento único de intake completado (`SOLUTION-INTAKE`) vive en `SDD/Intake/` del repositorio destino.
+- Las reglas de nomenclatura (`../IA.SDD/SDD/Devs/Rules/`), incluida la regla meta `Intake-Rules.md` que dirige la validación de intake, viven en la fuente.
+- Las plantillas de artefactos (`../IA.SDD/SDD/Devs/Intake/`) viven en la fuente.
+- Los prompts del orquestador y de los subagentes (`../IA.SDD/SDD/Devs/Orchestrator/`) y el prompt de entrada (`../IA.SDD/PROMPTS/`) viven en la fuente.
+- Este marco teórico (`../IA.SDD/SDD/Devs/Guides/Marco-Teorico-SDD-v1.0.md`) vive en la fuente.
 
-El humano verifica que el intake está bien cargado (no hay placeholders sin completar) y que las decisiones D1–D8 están explícitas. El SOLUTION-MANIFEST no se completa en este paso: es un artefacto derivado que el orquestador construye en la Fase de validación de intake (ver §3.6) a partir del §13 del intake.
+La separación es deliberada: las reglas, plantillas y prompts maestros quedan fuera del repositorio destino, de modo que las mejoras al template se propaguen a nuevas soluciones sin re-copiarlo; los artefactos generados del SDD quedan del lado del repositorio destino. El humano verifica que el intake está bien cargado (no hay placeholders sin completar) y que las decisiones D1–D8 están explícitas. El SOLUTION-MANIFEST no se completa en este paso: es un artefacto derivado que el orquestador construye en la Fase de validación de intake (ver §3.6) a partir del §13 del intake y escribe en `SDD/Intake/` del destino.
 
 ## 3.6 Paso 5 — Ejecución del master-prompt
 
@@ -315,7 +323,7 @@ El humano ejecuta en Claude Code el prompt orquestador maestro, en su versión v
 
 ### 3.6.1 Fase de validación de intake (previa a la Fase A)
 
-La Fase de validación de intake está dirigida por la regla meta `rules/_intake_rules.md`, que describe cómo leer el intake, qué verificar y cómo derivar el manifiesto. La fase hace tres cosas distintas:
+La Fase de validación de intake está dirigida por la regla meta `rules/Intake-Rules.md`, que describe cómo leer el intake, qué verificar y cómo derivar el manifiesto. La fase hace tres cosas distintas:
 
 1. Valida la completitud semántica del intake. No se limita al scan sintáctico de placeholders que el humano ya hizo en el Paso 4: revisa que cada parte del intake esté no solo presente sino también suficientemente especificada para generar sin ambigüedad. Es una validación proactiva, previa al despacho de subagentes.
 2. Emite una batería consolidada de preguntas. Cuando detecta subespecificación, el orquestador agrupa todas las preguntas pendientes en una sola batería y la presenta al humano de una vez, en lugar de descubrir los huecos de a uno durante la generación. Responder esa batería antes de generar evita que la IA derive por subespecificación, es decir, que rellene huecos inventando supuestos que después contaminan toda la cadena de artefactos.
@@ -335,15 +343,15 @@ Confirmado el manifiesto, el orquestador ejecuta la generación. Esta etapa:
 2. Genera las categorías de nivel solución (00 y 01) una vez, y determina el orden topológico de los proyectos a partir del grafo de dependencias del manifiesto.
 3. Para cada proyecto, en orden topológico (primero las dependencias, después los dependientes), identifica las secciones 02 a 11 que aplican según su tipo D8 y aplica la variante §1.2 de cada regla correspondiente a ese D8.
 4. Despacha subagentes especializados (uno por sección) en paralelo o en serie según la dependencia, y cada subagente genera la documentación de su sección respetando las plantillas y la nomenclatura.
-5. El orquestador consolida los resultados en `_solucion/` (vista de solución y pipeline de solución), valida coherencia cruzada intra e inter-proyecto y reporta inconsistencias.
+5. El orquestador consolida los resultados en `Solucion/` (vista de solución y pipeline de solución), valida coherencia cruzada intra e inter-proyecto y reporta inconsistencias.
 
-El producto del paso 5 es el árbol `/SDD2.2D/docs/` poblado con las categorías de solución, las carpetas `proyectos/<kebab>/` de cada proyecto y la consolidación `_solucion/`, listo para revisión humana. En el caso degenerado de un único proyecto, el árbol se aplana y el resultado es indistinguible del modelo de tipo único.
+El producto del paso 5 es el árbol `SDD/Docs/` poblado con las categorías de solución, las carpetas `Proyectos/<Nombre>/` de cada proyecto y la consolidación `Solucion/`, listo para revisión humana. En el caso degenerado de un único proyecto, el árbol se aplana y el resultado es indistinguible del modelo de tipo único.
 
 **Paralelización vs serialización.** Las secciones que dependen del resultado de otras se ejecutan en serie. Dentro de cada proyecto, el orden canónico de especialidades es: AG-02 → AG-03 → AG-04 → AG-05 → AG-06 → AG-07 → AG-08 → AG-09 → AG-10 → AG-11, precedido por AG-00 y AG-01 a nivel solución; las secciones que no dependen entre sí (por ejemplo AG-08 y AG-10) pueden ejecutarse en paralelo si el agente lo soporta. Entre proyectos, el orden lo dicta el grafo de dependencias: un proyecto se genera después de aquellos de los que depende, de modo que sus contratos ya estén disponibles.
 
 ## 3.7 Paso 6 — Confirmación y handoff a codificación
 
-El humano revisa la documentación generada en `/docs/`. Si encuentra inconsistencias, las reporta al orquestador, que despacha un subagente correctivo. Cuando la documentación está aprobada:
+El humano revisa la documentación generada en `/Docs/`. Si encuentra inconsistencias, las reporta al orquestador, que despacha un subagente correctivo. Cuando la documentación está aprobada:
 
 1. Se hace commit del estado completo en git.
 2. Se etiqueta como `docs-v1.0` (estado base de la documentación).
@@ -374,7 +382,7 @@ A partir de este punto, el equipo opera en nivel Spec-Anchored: cualquier cambio
 |             |                                                      |
 |             v                                                      |
 |    PASO 4: Bootstrap en repo local + Claude Code                   |
-|    Copia /SDD2.2D/devs/ al repo, abre Claude Code                  |
+|    Copia ../IA.SDD/SDD/Devs/ al repo, abre Claude Code                  |
 |             |                                                      |
 |             v                                                      |
 |    PASO 5: Ejecucion del master-prompt (v3.0)                      |
@@ -384,7 +392,7 @@ A partir de este punto, el equipo opera en nivel Spec-Anchored: cualquier cambio
 |             |                                                      |
 |             v                                                      |
 |    FASE VALIDACION DE INTAKE (previa a Fase A)                     |
-|    dirigida por rules/_intake_rules.md                            |
+|    dirigida por rules/Intake-Rules.md                            |
 |    - valida completitud semantica del intake                      |
 |    - emite bateria consolidada de preguntas                       |
 |    - deriva SOLUTION-MANIFEST desde §13 y lo confirma             |
@@ -401,7 +409,7 @@ A partir de este punto, el equipo opera en nivel Spec-Anchored: cualquier cambio
 |    Consolidacion + validacion cruzada                              |
 |             |                                                      |
 |             v                                                      |
-|    /SDD2.2D/docs/ poblado                                          |
+|    SDD/Docs/ poblado                                          |
 |             |                                                      |
 |             v                                                      |
 |    PASO 6: Confirmacion humana                                     |
@@ -420,24 +428,24 @@ El diagrama representa el flujo lineal pero los pasos 5 y 6 pueden iterar. La Fa
 
 ## 3.9 Diferencias con SDD 1.0
 
-SDD 2.2 hereda el patrón general del fuente SDD 1.0 (la cadena AG-00 → AG-11, la numeración `00..11`, las plantillas de CU/NB/RN/US/BT) pero introduce mejoras tomadas de la auditoría Fase 0:
+SDD hereda el patrón general del fuente SDD 1.0 (la cadena AG-00 → AG-11, la numeración `00..11`, las plantillas de CU/NB/RN/US/BT) pero introduce mejoras tomadas de la auditoría Fase 0:
 
-| Aspecto | SDD 1.0 | SDD 2.2 |
+| Aspecto | SDD 1.0 | SDD |
 |---|---|---|
 | Stack | Específico .NET / MAUI / NuGet | Stack-agnóstico con perfil por tipo D8 |
-| Separación devs/docs | Implícita | Explícita: `/devs/` versus `/docs/` |
+| Separación devs/docs | Implícita | Explícita: `/Devs/` versus `/Docs/` |
 | Tipos de proyecto | Uno (caso de estudio histórico) | Ocho (decisión D8) |
-| Versionado de artefactos | Mixto (`.v1.0` y `_v1.0`) | Unificado (`_v1.0`) |
-| Casing en nombres | Mixto | Estricto kebab-case lowercase |
+| Versionado de artefactos | Mixto (`.v1.0` y `-v1.0`) | Unificado (`-v1.0`) |
+| Casing en nombres | Mixto | Estricto Título-Con-Guiones |
 | ADR | Consolidado en un archivo | Un archivo por decisión (`ADR-XX-...`) |
 | Auditoría inicial | Inexistente | Obligatoria (Fase 0) |
-| Marco teórico | Disperso en `/references/` | Consolidado en `/devs/guides/` |
+| Marco teórico | Disperso en `/References/` | Consolidado en `/Devs/Guides/` |
 
-Aclaración sobre el alcance de D3 (casing kebab-lowercase). La regla de casing estricto kebab-lowercase gobierna los nombres de los artefactos generados: documentos versionados y carpetas de categoría y de proyecto bajo `/docs/` y `/src/`. No alcanza a los identificadores de variante de la metodología, que son tokens de marca, no artefactos generados: las carpetas raíz `SDD1.0`, `SDD2.2D`, `SDD2.1M` y `SDD2.1R` usan ese esquema de identificación a propósito, y su mayúscula no es una violación de D3. Lo mismo aplica a los prefijos de organización como `Aplicada` en los nombres de código. La validación automatizada de nomenclatura se aplica al plano de artefactos, no a estos identificadores de marca.
+Aclaración sobre el alcance de D3 (casing Título-Con-Guiones). La regla de casing estricto Título-Con-Guiones gobierna los nombres de los artefactos generados: documentos versionados y carpetas de categoría y de proyecto bajo `/Docs/` y `/src/`. No alcanza a los identificadores de variante de la metodología, que son tokens de marca, no artefactos generados: las carpetas raíz `SDD1.0`, `SDD`, `SDD2.1M` y `SDD2.1R` usan ese esquema de identificación a propósito, y su mayúscula no es una violación de D3. Lo mismo aplica a los prefijos de organización como `Aplicada` en los nombres de código. La validación automatizada de nomenclatura se aplica al plano de artefactos, no a estos identificadores de marca.
 
 ## 3.10 El modelo de solución más jerarquía de proyectos
 
-El modelo original del template asumía un proyecto único por repositorio: un solo tipo D8, un árbol de documentación plano, una sola cadena de generación. Ese modelo es correcto pero limitado: la mayoría de los sistemas reales no son una pieza monolítica de un solo tipo, sino un conjunto coordinado de piezas de tipos distintos (por ejemplo, una librería compartida, un servicio REST que la consume y una herramienta de línea de comandos que opera contra ese servicio). El modelo reformulado de SDD 2.2 generaliza el template a este caso sin romper el caso simple.
+El modelo original del template asumía un proyecto único por repositorio: un solo tipo D8, un árbol de documentación plano, una sola cadena de generación. Ese modelo es correcto pero limitado: la mayoría de los sistemas reales no son una pieza monolítica de un solo tipo, sino un conjunto coordinado de piezas de tipos distintos (por ejemplo, una librería compartida, un servicio REST que la consume y una herramienta de línea de comandos que opera contra ese servicio). El modelo reformulado de SDD generaliza el template a este caso sin romper el caso simple.
 
 ### 3.10.1 Qué es una solución y qué es un proyecto
 
@@ -474,7 +482,7 @@ A partir del DAG se obtiene un orden topológico: primero se generan y se constr
 
 ### 3.10.5 Intake a nivel solución
 
-El intake del modelo reformulado opera a nivel solución, coherente con la asimetría negocio/técnica, y se consolida en un único documento: `SOLUTION-INTAKE-<nombre-solucion-kebab>_v1.0.md`. Este documento reemplaza y deja deprecados a los dos artefactos previos (`PROJECT-BRIEF` de negocio y `PROJECT-README` técnico), que dejan de usarse como archivos separados y pasan a ser partes del documento único. La asimetría negocio/técnica se preserva como secciones:
+El intake del modelo reformulado opera a nivel solución, coherente con la asimetría negocio/técnica, y se consolida en un único documento: `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md`. Este documento reemplaza y deja deprecados a los dos artefactos previos (`PROJECT-BRIEF` de negocio y `PROJECT-README` técnico), que dejan de usarse como archivos separados y pasan a ser partes del documento único. La asimetría negocio/técnica se preserva como secciones:
 
 - Una Parte A de negocio por solución, que captura la visión y el problema una sola vez (el negocio es uno).
 - Una Parte C técnica con un bloque repetible por proyecto (la técnica es por proyecto).
@@ -488,11 +496,11 @@ La generación trabaja en dos niveles coherentes con la estructura de `docs/` de
 
 - Nivel solución: categorías 00 y 01 se generan una vez por solución.
 - Nivel proyecto: categorías 02 a 11 se generan por proyecto, en el orden topológico que dicta el grafo de dependencias.
-- Consolidación de solución: la carpeta `_solucion/` reúne una vista de solución (el mapa de proyectos, los contratos inter-proyecto y el grafo de dependencias) y un pipeline de solución (el orden de build topológico y los artefactos publicables por proyecto).
+- Consolidación de solución: la carpeta `Solucion/` reúne una vista de solución (el mapa de proyectos, los contratos inter-proyecto y el grafo de dependencias) y un pipeline de solución (el orden de build topológico y los artefactos publicables por proyecto).
 
 ### 3.10.7 El caso degenerado como garantía de no ruptura
 
-Una solución de un solo proyecto reproduce exactamente el comportamiento del template de tipo único: el layout se aplana (las categorías 00 a 11 quedan directamente bajo `docs/`, sin nivel `proyectos/`), no hay grafo no trivial que ordenar y no hay contratos inter-proyecto que consolidar. Este caso degenerado es la garantía de no ruptura: quien venía usando el template con un proyecto único no percibe cambio alguno, y quien necesita componer varios proyectos extiende el mismo modelo sin reaprenderlo.
+Una solución de un solo proyecto reproduce exactamente el comportamiento del template de tipo único: el layout se aplana (las categorías 00 a 11 quedan directamente bajo `docs/`, sin nivel `Proyectos/`), no hay grafo no trivial que ordenar y no hay contratos inter-proyecto que consolidar. Este caso degenerado es la garantía de no ruptura: quien venía usando el template con un proyecto único no percibe cambio alguno, y quien necesita componer varios proyectos extiende el mismo modelo sin reaprenderlo.
 
 Conviene subrayar qué no cambió. El conjunto D8 sigue teniendo exactamente ocho valores; no se agregó ni se quitó ningún tipo. Lo que cambió es la cardinalidad (de un tipo por repositorio a N proyectos tipados por solución) y la topología (la composición y la dependencia entre proyectos), no el conjunto de tipos.
 
@@ -506,7 +514,7 @@ Decidir qué proyectos integran la solución y qué dependencias hay entre ellos
 
 ## 4.1 Por qué 13 especialidades y no menos
 
-El template asigna una especialidad por carpeta de `/docs/` siguiendo una premisa: cada artefacto documental tiene un responsable claro con un perfil profesional específico. Esto cumple dos funciones:
+El template asigna una especialidad por carpeta de `/Docs/` siguiendo una premisa: cada artefacto documental tiene un responsable claro con un perfil profesional específico. Esto cumple dos funciones:
 
 1. **Criterio de calidad.** Cada especialidad define qué cuenta como un buen artefacto desde su disciplina. El AG-08 (QA) sabe qué hace que una matriz de cobertura sea útil; el AG-05 (Arquitecto) sabe qué hace que un ADR sea completo. Mezclar perfiles diluye los criterios.
 2. **Trazabilidad RACI.** Para cada documento existe un responsable (R) y un aprobador (A) explícitos. Esto evita el clásico "alguien debería actualizar esto" que termina sin actualizar.
@@ -567,7 +575,7 @@ Las 13 especialidades siguen siendo válidas sin cambios en el modelo de soluci�
 | desktop-app | UX completo, ergonomía de teclado/mouse, accesibilidad |
 | mobile-app-maui | UX completo, gestos, touch targets, modos offline |
 
-**Configuración dirigida por esquema.** En proyectos con superficies de configuración, AG-03 carga la extensión por capacidad `design-rules-config-esquema` y produce superficies donde cada parámetro se describe por su descriptor (default, límites, leyenda y ejemplos), con ayuda contextual derivada del descriptor, presets, explicación en lenguaje natural, modo simulación y la ranura del asistente de IA reservada (forward-compat).
+**Configuración dirigida por esquema.** En proyectos con superficies de configuración, AG-03 carga la extensión por capacidad `Design-Rules-Config-Esquema` y produce superficies donde cada parámetro se describe por su descriptor (default, límites, leyenda y ejemplos), con ayuda contextual derivada del descriptor, presets, explicación en lenguaje natural, modo simulación y la ranura del asistente de IA reservada (forward-compat).
 **Interacciones cross-rol.** Consume casos de uso de AG-02, alimenta a AG-05 (contratos del API), AG-10 (developer guide), AG-11 (ejemplos).
 
 ### AG-04 — Ingeniero de Prompts
@@ -583,7 +591,7 @@ Las 13 especialidades siguen siendo válidas sin cambios en el modelo de soluci�
 
 **Alias.** Software Architect, Solution Architect técnico.
 **Responsabilidad principal.** Diseño técnico del sistema, decisiones de arquitectura (ADR), contratos, modelo lógico de datos.
-**Documentos que produce.** Arquitectura de la solución, ADRs individuales (`ADR-XX-<kebab>_v1.0.md`), contratos, modelo lógico, extensibilidad, diagramas (C4 o equivalente).
+**Documentos que produce.** Arquitectura de la solución, ADRs individuales (`ADR-XX-<Nombre>-v1.0.md`), contratos, modelo lógico, extensibilidad, diagramas (C4 o equivalente).
 **Variantes por tipo de proyecto.** Ver §7 para la decisión arquitectónica por tipo D8.
 **Motor de configuración dirigida por esquema.** Cuando el proyecto tiene superficies de configuración, AG-05 diseña el motor detrás de la frontera `PropuestaDeConfiguracion`: el registro de descriptores como fuente única, la validación contra esos descriptores, las salidas estructuradas / tool calling del asistente de IA y la mecánica de plan-and-apply. El catálogo de diseño (AG-03) define el lado UX; la arquitectura define el motor.
 **Interacciones cross-rol.** Consume requisitos de AG-02 y AG-03, alimenta a AG-06 (BT técnico), AG-08 (testabilidad), AG-09 (deploy).
@@ -641,18 +649,18 @@ Las 13 especialidades siguen siendo válidas sin cambios en el modelo de soluci�
 | ID | Especialidad | Sección de docs | Artefacto principal | Aplica si |
 |---|---|---|---|---|
 | AG-ROOT | Arquitecto de Soluciones | `README.md` | Índice maestro | Siempre |
-| AG-00 | Product Manager | `00_contexto/` | Visión, alcance | Siempre |
-| AG-01 | Analista de Negocio | `01_necesidades_negocio/` | NB-XX | Siempre |
-| AG-02 | Analista Funcional | `02_especificacion_funcional/` | CU-XX, RN-XX | Siempre |
-| AG-03 | DX/UX Specialist | `03_ux-ui/` | Flujos, wireframes | Siempre (varía foco) |
-| AG-04 | Ingeniero de Prompts | `04_prompts_ai/` | Prompts versionados | Solo si producto integra IA |
-| AG-05 | Arquitecto de Software | `05_arquitectura_tecnica/` | ADR, contratos | Siempre |
-| AG-06 | SM Backlog | `06_backlog-tecnico/` | US, BT, DoR | Siempre |
-| AG-07 | SM Sprints | `07_plan-sprint/` | Sprint plans | Siempre |
-| AG-08 | QA / SDET | `08_calidad_y_pruebas/` | Estrategia testing, DoD | Siempre |
-| AG-09 | DevOps | `09_devops/` | Pipeline, versionado | Siempre |
-| AG-10 | Technical Writer | `10_developer_guide/` | Guías de consumo | Siempre |
-| AG-11 | Developer Advocate | `11_examples/` | Ejemplos ejecutables | Siempre |
+| AG-00 | Product Manager | `00-Contexto/` | Visión, alcance | Siempre |
+| AG-01 | Analista de Negocio | `01-Necesidades-Negocio/` | NB-XX | Siempre |
+| AG-02 | Analista Funcional | `02-Especificacion-Funcional/` | CU-XX, RN-XX | Siempre |
+| AG-03 | DX/UX Specialist | `03-UX-UI/` | Flujos, wireframes | Siempre (varía foco) |
+| AG-04 | Ingeniero de Prompts | `04-Prompts-AI/` | Prompts versionados | Solo si producto integra IA |
+| AG-05 | Arquitecto de Software | `05-Arquitectura-Tecnica/` | ADR, contratos | Siempre |
+| AG-06 | SM Backlog | `06-Backlog-Tecnico/` | US, BT, DoR | Siempre |
+| AG-07 | SM Sprints | `07-Plan-Sprint/` | Sprint plans | Siempre |
+| AG-08 | QA / SDET | `08-Calidad-Y-Pruebas/` | Estrategia testing, DoD | Siempre |
+| AG-09 | DevOps | `09-Devops/` | Pipeline, versionado | Siempre |
+| AG-10 | Technical Writer | `10-Developer-Guide/` | Guías de consumo | Siempre |
+| AG-11 | Developer Advocate | `11-Examples/` | Ejemplos ejecutables | Siempre |
 
 ## 4.4 Flujo de trazabilidad entre especialidades
 
@@ -674,7 +682,7 @@ AG-00 (Vision)
 
 Esta cadena es la materialización de la trazabilidad vertical que define el enfoque SDD. Cada artefacto downstream traza explícitamente a su upstream mediante referencias por ID (CU traza a NB, US traza a CU, BT traza a US, Test traza a CU, etc.). Sin esa trazabilidad la documentación se vuelve archipiélago de islas inconexas.
 
-En el modelo de solución más jerarquía de proyectos (§3.10), la cadena conserva su forma pero cierra en dos niveles complementarios. A nivel solución, la visión y las necesidades de negocio (AG-00 y AG-01) son únicas y trazan al valor de negocio de la solución completa. A nivel proyecto, la cadena de especificación funcional a ejemplos (AG-02 a AG-11) se materializa por proyecto, y los casos de uso de cada proyecto trazan hacia arriba a las necesidades de negocio compartidas a nivel solución. La consolidación en `_solucion/` cierra además la trazabilidad horizontal entre proyectos: los contratos inter-proyecto y el grafo de dependencias documentan cómo lo que un proyecto produce satisface lo que otro consume. En el caso degenerado de un único proyecto, ambos niveles colapsan en uno y la cadena se lee tal como en el modelo de tipo único.
+En el modelo de solución más jerarquía de proyectos (§3.10), la cadena conserva su forma pero cierra en dos niveles complementarios. A nivel solución, la visión y las necesidades de negocio (AG-00 y AG-01) son únicas y trazan al valor de negocio de la solución completa. A nivel proyecto, la cadena de especificación funcional a ejemplos (AG-02 a AG-11) se materializa por proyecto, y los casos de uso de cada proyecto trazan hacia arriba a las necesidades de negocio compartidas a nivel solución. La consolidación en `Solucion/` cierra además la trazabilidad horizontal entre proyectos: los contratos inter-proyecto y el grafo de dependencias documentan cómo lo que un proyecto produce satisface lo que otro consume. En el caso degenerado de un único proyecto, ambos niveles colapsan en uno y la cadena se lee tal como en el modelo de tipo único.
 
 ---
 
@@ -682,7 +690,7 @@ En el modelo de solución más jerarquía de proyectos (§3.10), la cadena conse
 
 ## 5.1 Por qué Scrum por defecto
 
-El template SDD 2.2 propone Scrum como metodología ágil por defecto. La elección no es dogmática: se justifica porque Scrum aporta tres cosas que SDD necesita:
+El template SDD propone Scrum como metodología ágil por defecto. La elección no es dogmática: se justifica porque Scrum aporta tres cosas que SDD necesita:
 
 1. **Cadencia fija para sincronización spec-código.** El sprint funciona como ventana en la que la spec y el código se alinean. Al cierre de cada sprint, ambos artefactos están coherentes.
 2. **Roles explícitos.** Product Owner (que valida la spec contra el negocio) y Scrum Master (que protege el ritmo) tienen contrapartes naturales en AG-00 y AG-07.
@@ -702,7 +710,7 @@ Cuando Scrum no encaja, el template admite Kanban o Scrumban. La elección depen
 | Métrica principal | Velocity | Lead time, cycle time | Velocity + WIP |
 | Cuándo elegir | Producto nuevo, equipo cohesionado, roadmap claro | Soporte, mantenimiento, equipos multi-proyecto | Transición desde Scrum cuando la demanda se vuelve menos predecible |
 
-**Recomendación operativa para SDD 2.2.** Empezar con Scrum en proyectos nuevos. Migrar a Scrumban si la demanda externa rompe el sprint goal con frecuencia (más de 30% de los sprints comprometidos se renegocian). Kanban puro queda reservado para equipos de soporte o mantenimiento de productos ya estabilizados.
+**Recomendación operativa para SDD.** Empezar con Scrum en proyectos nuevos. Migrar a Scrumban si la demanda externa rompe el sprint goal con frecuencia (más de 30% de los sprints comprometidos se renegocian). Kanban puro queda reservado para equipos de soporte o mantenimiento de productos ya estabilizados.
 
 ## 5.3 Sprint 0 y artefactos previos
 
@@ -743,7 +751,7 @@ Solo cuando estos artefactos están en su lugar, el equipo arranca el Sprint 1.
 
 ## 5.5 Roles de Scrum
 
-| Rol Scrum | Mapeo en SDD 2.2 | Responsabilidad nuclear |
+| Rol Scrum | Mapeo en SDD | Responsabilidad nuclear |
 |---|---|---|
 | **Product Owner** | AG-00 (Product Manager) | Maximizar el valor del producto; dueño del Product Backlog |
 | **Scrum Master** | AG-06 + AG-07 | Facilitar el proceso; remover impedimentos; coachar al equipo |
@@ -763,7 +771,7 @@ Los tres artefactos son siempre transparentes y siempre actualizados. Un Product
 
 ## 5.7 Definition of Ready (DoR) canónica
 
-Una historia entra a Sprint Planning solo si cumple el DoR. El template SDD 2.2 propone como DoR mínima:
+Una historia entra a Sprint Planning solo si cumple el DoR. El template SDD propone como DoR mínima:
 
 - La historia está escrita en formato "Como [rol], quiero [acción], para [beneficio]".
 - Tiene al menos tres escenarios de criterios de aceptación (happy path + dos edge cases) en formato Given/When/Then.
@@ -775,7 +783,7 @@ Una historia entra a Sprint Planning solo si cumple el DoR. El template SDD 2.2 
 
 ## 5.8 Definition of Done (DoD) canónica
 
-Una historia se considera terminada solo si cumple el DoD. El template SDD 2.2 propone como DoD mínima:
+Una historia se considera terminada solo si cumple el DoD. El template SDD propone como DoD mínima:
 
 - El código fue revisado y aprobado en pull request por al menos una persona distinta del autor.
 - Tiene tests automatizados (unit + integración cuando aplica).
@@ -881,7 +889,7 @@ Todo el equipo trabaja simultáneamente en una sola estación, alternando quién
 
 ## 7.1 La decisión D8 — Ocho tipos de proyecto
 
-El template SDD 2.2 soporta ocho tipos de proyecto. La decisión D8 (definida en el intake) selecciona uno por proyecto, y el resto del template se calibra en consecuencia para ese proyecto. En el modelo de solución más jerarquía de proyectos (§3.10), una solución agrupa N proyectos y cada uno declara su propio valor D8; la solución no tiene un D8 propio, su tipo es compuesto. El conjunto de tipos sigue siendo cerrado y de exactamente ocho valores: lo que cambió es que la decisión se toma por proyecto, no por repositorio.
+El template SDD soporta ocho tipos de proyecto. La decisión D8 (definida en el intake) selecciona uno por proyecto, y el resto del template se calibra en consecuencia para ese proyecto. En el modelo de solución más jerarquía de proyectos (§3.10), una solución agrupa N proyectos y cada uno declara su propio valor D8; la solución no tiene un D8 propio, su tipo es compuesto. El conjunto de tipos sigue siendo cerrado y de exactamente ocho valores: lo que cambió es que la decisión se toma por proyecto, no por repositorio.
 
 | ID D8 | Tipo de proyecto | Descripción corta |
 |---|---|---|
@@ -1167,7 +1175,7 @@ Aplicación en la configuración dirigida por esquema (§8.7): la divulgación p
 
 ## 8.4 Accesibilidad WCAG 2.2 nivel AA
 
-WCAG 2.2 (W3C, 2023) define tres niveles de conformidad: A (mínimo), AA (estándar industrial), AAA (estricto). El template SDD 2.2 recomienda AA como objetivo por defecto.
+WCAG 2.2 (W3C, 2023) define tres niveles de conformidad: A (mínimo), AA (estándar industrial), AAA (estricto). El template SDD recomienda AA como objetivo por defecto.
 
 **Cuatro principios POUR.**
 
@@ -1196,14 +1204,14 @@ Diátaxis (Procida, 2022) es un framework que organiza la documentación técnic
 | **Reference** | Estudio | Encontrar información precisa | "¿Cuál era el parámetro Y?" |
 | **Explanation** | Estudio | Entender el porqué | "¿Por qué funciona así?" |
 
-El template SDD 2.2 organiza los artefactos por modo Diátaxis:
+El template SDD organiza los artefactos por modo Diátaxis:
 
 | Artefacto | Modo Diátaxis |
 |---|---|
-| `docs/10_developer_guide/quick-start.md` | Tutorial |
-| `docs/10_developer_guide/troubleshooting.md` | How-to |
-| `docs/05_arquitectura_tecnica/contratos-*.md` | Reference |
-| `docs/05_arquitectura_tecnica/ADR-XX-*.md` | Explanation |
+| `docs/10-Developer-Guide/quick-start.md` | Tutorial |
+| `docs/10-Developer-Guide/troubleshooting.md` | How-to |
+| `docs/05-Arquitectura-Tecnica/contratos-*.md` | Reference |
+| `docs/05-Arquitectura-Tecnica/ADR-XX-*.md` | Explanation |
 
 ## 8.6 DX específico de APIs
 
@@ -1224,9 +1232,9 @@ Cuando el "usuario" es un desarrollador integrador, las heurísticas se instanci
 
 ## 8.7 Catálogo de reglas de diseño
 
-El plano `devs/` incluye un catálogo de reglas de diseño en `devs/references/design/`, insumo normativo de la categoría 03. Sigue un modelo base→especialización: un documento base de diseño web genérico (`design-rules-web-generico_v1.0.md`), agnóstico de framework, y especializaciones por stack que heredan del base y mapean cada token y patrón a su tecnología concreta (la primera es `design-rules-blazor-mudblazor_v1.0.md`; están previstas las de HTML puro, MAUI y Blazor en MAUI). El AG-03 carga el catálogo a través de su índice `_index_design-rules.md`, aplica siempre el documento base y, si existe, la especialización del stack declarado en el intake. Los tokens, patrones, estados e iconografía del catálogo son normativos: el subagente los hereda en lugar de definir decisiones visuales ad hoc por proyecto. Este subárbol es metodológico, vive en `devs/` y no en `docs/`.
+El plano `devs/` incluye un catálogo de reglas de diseño en `devs/References/Design/`, insumo normativo de la categoría 03. Sigue un modelo base→especialización: un documento base de diseño web genérico (`Design-Rules-Web-Generico-v1.0.md`), agnóstico de framework, y especializaciones por stack que heredan del base y mapean cada token y patrón a su tecnología concreta (la primera es `Design-Rules-Blazor-Mudblazor-v1.0.md`; están previstas las de HTML puro, MAUI y Blazor en MAUI). El AG-03 carga el catálogo a través de su índice `Index-Design-Rules.md`, aplica siempre el documento base y, si existe, la especialización del stack declarado en el intake. Los tokens, patrones, estados e iconografía del catálogo son normativos: el subagente los hereda en lugar de definir decisiones visuales ad hoc por proyecto. Este subárbol es metodológico, vive en `devs/` y no en `docs/`.
 
-Además de las especializaciones por stack, el catálogo admite extensiones por capacidad transversal. La primera es la configuración dirigida por esquema (`design-rules-config-esquema`): en superficies donde el usuario fija parámetros, cada parámetro se describe con un descriptor único, fuente de verdad de su default, límites, leyenda y ejemplos, que alimenta cuatro consumidores a la vez: el render del campo, la ayuda contextual, la validación y el contrato para una IA futura. Toda forma de cambiar la configuración (formulario, preset o, más adelante, una sugerencia de IA) llena una misma frontera `PropuestaDeConfiguracion`, que se previsualiza y se confirma antes de aplicar: plan-and-apply con human-in-the-loop, con el modo simulación como red de seguridad. El enganche de IA queda forward-compatible (registro de descriptores, frontera validable, simulación y una ranura de UI reservada), de modo que la IA se conecta después sin tocar el dominio. AG-03 carga esta extensión solo cuando el proyecto tiene superficies de configuración.
+Además de las especializaciones por stack, el catálogo admite extensiones por capacidad transversal. La primera es la configuración dirigida por esquema (`Design-Rules-Config-Esquema`): en superficies donde el usuario fija parámetros, cada parámetro se describe con un descriptor único, fuente de verdad de su default, límites, leyenda y ejemplos, que alimenta cuatro consumidores a la vez: el render del campo, la ayuda contextual, la validación y el contrato para una IA futura. Toda forma de cambiar la configuración (formulario, preset o, más adelante, una sugerencia de IA) llena una misma frontera `PropuestaDeConfiguracion`, que se previsualiza y se confirma antes de aplicar: plan-and-apply con human-in-the-loop, con el modo simulación como red de seguridad. El enganche de IA queda forward-compatible (registro de descriptores, frontera validable, simulación y una ranura de UI reservada), de modo que la IA se conecta después sin tocar el dominio. AG-03 carga esta extensión solo cuando el proyecto tiene superficies de configuración.
 
 ---
 
@@ -1273,7 +1281,7 @@ La pirámide de testing (Cohn, 2009) es la heurística de distribución de tests
 
 ## 9.3 ISO/IEC 25010 — Atributos de calidad
 
-ISO/IEC 25010:2011 (actualizada en 2023) define ocho atributos de calidad de producto. SDD 2.2 los usa como checklist en la definición de la estrategia de calidad por proyecto.
+ISO/IEC 25010:2011 (actualizada en 2023) define ocho atributos de calidad de producto. SDD los usa como checklist en la definición de la estrategia de calidad por proyecto.
 
 | Atributo | Definición operativa | Cómo se verifica |
 |---|---|---|
@@ -1414,7 +1422,7 @@ A partir de 2022 (Log4Shell, SolarWinds) la cadena de suministro de software se 
 | **NIST SSDF SP 800-218** | Marco de prácticas seguras de desarrollo | Compliance regulatorio |
 | **CycloneDX 1.6** | Formato estándar para SBOM | Interoperabilidad |
 
-**Recomendación SDD 2.2.** Como mínimo SBOM en cada release. Firma cuando el feed lo soporte. Apuntar a SLSA L2 como objetivo para librerías públicas.
+**Recomendación SDD.** Como mínimo SBOM en cada release. Firma cuando el feed lo soporte. Apuntar a SLSA L2 como objetivo para librerías públicas.
 
 ## 10.9 Feeds preview vs stable
 
@@ -1433,7 +1441,7 @@ El feed preview permite que consumidores integren cambios temprano y reporten pr
 | **Métricas** | Tendencias, agregaciones, SLOs | Prometheus + Grafana, Datadog |
 | **Trazas** | Latencia y errores cruzando servicios | OpenTelemetry, Jaeger, Zipkin |
 
-**OpenTelemetry** (CNCF Graduated, 2024) es el estándar de facto para instrumentación neutra. SDD 2.2 lo recomienda como punto de partida.
+**OpenTelemetry** (CNCF Graduated, 2024) es el estándar de facto para instrumentación neutra. SDD lo recomienda como punto de partida.
 
 ## 10.11 GitOps
 
@@ -1460,7 +1468,7 @@ Patrón donde el estado deseado de infraestructura y aplicaciones está declarad
 
 ## 11.1 El patrón nuclear — Plan-then-confirm
 
-El patrón de trabajo con IA que SDD 2.2 adopta se llama **plan-then-confirm con subagentes especializados y audit independiente**. Sus tres elementos:
+El patrón de trabajo con IA que SDD adopta se llama **plan-then-confirm con subagentes especializados y audit independiente**. Sus tres elementos:
 
 1. **Plan-then-confirm.** El agente IA primero declara qué va a hacer (lectura previa, archivos a crear, restricciones a respetar, criterios de éxito). El humano confirma antes de que el agente actúe. Esto evita acciones destructivas no intencionadas y obliga al humano a internalizar el plan.
 2. **Subagentes especializados.** El trabajo se divide entre agentes con perfil profesional acotado (uno por especialidad AG-XX). Cada subagente conoce solo su scope y sus criterios. Esto evita que un solo agente cubra demasiado terreno y diluya criterios.
@@ -1500,9 +1508,9 @@ Todo prompt destinado a generar artefactos comienza con una lista explícita de 
 
 ```text
 Antes de escribir nada, leé en orden:
-1. devs/intake/SOLUTION-INTAKE-<nombre-solucion-kebab>_v1.0.md
-2. devs/rules/decisiones-D1-D8.md
-3. devs/guides/marco-teorico-sdd2.2_v1.0.md (sección §4 si el rol que asumis es AG-XX)
+1. devs/Intake/SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md
+2. devs/Rules/decisiones-D1-D8.md
+3. Devs/Guides/Marco-Teorico-SDD-v1.0.md (sección §4 si el rol que asumis es AG-XX)
 
 Respondeme solo con:
 - Los puntos clave que entendiste del contexto
@@ -1519,9 +1527,9 @@ Para generación de múltiples artefactos, se exige creación secuencial con con
 ```text
 Crea estos archivos en orden, uno a la vez, esperando mi confirmación entre cada uno:
 
-ARCHIVO 1 — docs/00_contexto/vision-producto_v1.0.md
-ARCHIVO 2 — docs/00_contexto/alcance-proyecto_v1.0.md
-ARCHIVO 3 — docs/00_contexto/roadmap-producto_v1.0.md
+ARCHIVO 1 — Docs/00-Contexto/Vision-Producto-v1.0.md
+ARCHIVO 2 — Docs/00-Contexto/Alcance-Proyecto-v1.0.md
+ARCHIVO 3 — Docs/00-Contexto/Roadmap-Producto-v1.0.md
 
 Al terminar cada archivo, mostrá su contenido para verificación.
 ```
@@ -1587,7 +1595,7 @@ El patrón plan-then-confirm tiene fundamentos en la literatura de prompt engine
 - **Multi-agent collaboration** (Wu et al., 2023; Anthropic, 2024): agentes especializados colaborando producen mejores resultados que un solo agente generalista.
 - **Constitutional AI** (Bai et al., 2022): definir restricciones y criterios de aceptación explícitamente mejora alineamiento.
 
-La metodología SDD 2.2 toma elementos de estos enfoques y los compone en un patrón aplicable a la generación y mantenimiento de documentación técnica.
+La metodología SDD toma elementos de estos enfoques y los compone en un patrón aplicable a la generación y mantenimiento de documentación técnica.
 
 ## 11.7 Cadena de trazabilidad spec-prompt-código
 
@@ -1608,7 +1616,7 @@ Cada paso del ciclo tiene un dueño (especialidad AG-XX) y un artefacto verifica
 
 # §12 Anti-patrones y errores frecuentes
 
-Este capítulo consolida los errores típicos al adoptar SDD 2.2, agrupados por categoría. Cada anti-patrón se acompaña del problema concreto que genera y de una mitigación accionable.
+Este capítulo consolida los errores típicos al adoptar SDD, agrupados por categoría. Cada anti-patrón se acompaña del problema concreto que genera y de una mitigación accionable.
 
 ## 12.1 Anti-patrones de proceso SDD
 
@@ -1618,7 +1626,7 @@ Este capítulo consolida los errores típicos al adoptar SDD 2.2, agrupados por 
 | **Especificación barroca** | Docs extensos que nadie lee | Plantillas mínimas; eliminar secciones no aplicables; revisión periódica de utilidad |
 | **Falta de trazabilidad** | Imposible saber qué código justifica qué necesidad | Tablas obligatorias de trazabilidad CU→NB, US→CU, BT→US, Test→CU |
 | **ADR ausentes** | Decisiones críticas pierden su justificación con el tiempo | ADR como artefacto de primera clase, un archivo por decisión |
-| **Versionado inconsistente de docs** | `_v1.0` vs `.v1.0` vs sin sufijo | Convención única (`_v1.0`) enforzada por linter |
+| **Versionado inconsistente de docs** | `-v1.0` vs `.v1.0` vs sin sufijo | Convención única (`-v1.0`) enforzada por linter |
 | **Coexistencia de versiones múltiples sin marcar deprecación** | v1.0 y v2.0 en paralelo confunde al lector | Solo la versión vigente queda en el árbol; el resto archivado en `_legacy/` |
 
 ## 12.2 Anti-patrones de Scrum aplicado a SDD
@@ -1646,7 +1654,7 @@ Este capítulo consolida los errores típicos al adoptar SDD 2.2, agrupados por 
 | **Mezcla orquestador / productor** | Decisión y ejecución sin separación | Roles distintos, separados por prompt |
 | **IA que ejecuta en vez de proponer** | Saca al humano del lazo; cambios sin control | La IA llena una `PropuestaDeConfiguracion`; el humano confirma, el sistema valida |
 
-En superficies de configuración (§8.7) se suman dos anti-patrones de UX, detallados en `design-rules-config-esquema`: el default de un parámetro hardcodeado en la pantalla y la ayuda escrita a mano por campo, en vez de derivarlos del descriptor (fuente única). La corrección es tomar default, límites y ayuda del descriptor.
+En superficies de configuración (§8.7) se suman dos anti-patrones de UX, detallados en `Design-Rules-Config-Esquema`: el default de un parámetro hardcodeado en la pantalla y la ayuda escrita a mano por campo, en vez de derivarlos del descriptor (fuente única). La corrección es tomar default, límites y ayuda del descriptor.
 
 ## 12.4 Anti-patrones arquitectónicos
 
@@ -1697,12 +1705,12 @@ En superficies de configuración (§8.7) se suman dos anti-patrones de UX, detal
 
 # §13 Glosario
 
-Términos canónicos del template SDD 2.2. Cada uno con definición operativa en una a dos líneas.
+Términos canónicos del template SDD. Cada uno con definición operativa en una a dos líneas.
 
 | Término | Definición |
 |---|---|
 | **ADR (Architecture Decision Record)** | Documento corto que registra una decisión arquitectónica con su contexto, alternativas evaluadas y consecuencias. Un archivo por decisión. |
-| **AG-XX** | Identificador de especialidad del template (AG-ROOT, AG-00 a AG-11). Cada AG-XX es responsable de una sección de `/docs/`. |
+| **AG-XX** | Identificador de especialidad del template (AG-ROOT, AG-00 a AG-11). Cada AG-XX es responsable de una sección de `/Docs/`. |
 | **ATDD** | Acceptance Test-Driven Development. Los criterios de aceptación se escriben primero como tests ejecutables. |
 | **BDD** | Behavior-Driven Development. Escenarios Given/When/Then ejecutables que validan el comportamiento del sistema. |
 | **BFF (Backend for Frontend)** | Capa backend intermedia diseñada para las necesidades específicas de un tipo de frontend. |
@@ -1726,7 +1734,7 @@ Términos canónicos del template SDD 2.2. Cada uno con definición operativa en
 | **Given/When/Then** | Formato BDD para criterios de aceptación: contexto inicial, evento, resultado esperado. |
 | **Human-in-the-loop** | Esquema en el que un cambio propuesto (por un formulario o por IA) requiere confirmación humana explícita antes de aplicarse. |
 | **Intake** | Documento inicial único que el humano completa para alimentar al template: `SOLUTION-INTAKE`, con tres partes (A negocio, B composición, C técnica por proyecto). Reemplaza a `PROJECT-BRIEF` y `PROJECT-README`, ahora deprecados. |
-| **SOLUTION-INTAKE** | Documento único de entrada del template (`SOLUTION-INTAKE-<nombre-solucion-kebab>_v1.0.md`). Parte A negocio (§1-§12), Parte B composición (§13 tabla de proyectos tipados, §14 estilo, §15 descomposición, §16 estructura), Parte C técnica por proyecto (§17, bloque P.1-P.12), más §18 samples y §19 checklist. Su §13 es la fuente desde la que se deriva el SOLUTION-MANIFEST. |
+| **SOLUTION-INTAKE** | Documento único de entrada del template (`SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md`). Parte A negocio (§1-§12), Parte B composición (§13 tabla de proyectos tipados, §14 estilo, §15 descomposición, §16 estructura), Parte C técnica por proyecto (§17, bloque P.1-P.12), más §18 samples y §19 checklist. Su §13 es la fuente desde la que se deriva el SOLUTION-MANIFEST. |
 | **ISO 25010** | Norma ISO que define ocho atributos de calidad de producto de software. |
 | **ISO 29148** | Norma ISO de ingeniería de requisitos de software y sistemas. |
 | **Manifest-driven** | Patrón donde cada componente expone un manifest declarativo que un sistema consumidor lee para configurar UI o comportamiento. |
@@ -1877,7 +1885,7 @@ DORA. (2023). *State of DevOps Report 2023*. Google Cloud. https://dora.dev/
 
 OpenTelemetry Authors. (2024). *OpenTelemetry — Cloud Native Computing Foundation*. https://opentelemetry.io/
 
-Panaversity Agent Factory. (2024). *Three levels of Spec-Driven Development*. https://agentfactory.panaversity.org/docs/General-Agents-Foundations/spec-driven-development/three-levels-of-sdd
+Panaversity Agent Factory. (2024). *Three levels of Spec-Driven Development*. https://agentfactory.panaversity.org/Docs/General-Agents-Foundations/spec-driven-development/three-levels-of-sdd
 
 Procida, D. (2022). *Diátaxis: A systematic approach to technical documentation authoring*. https://diataxis.fr/
 
@@ -1894,10 +1902,10 @@ W3C. (2024). *ARIA — Accessible Rich Internet Applications*. https://www.w3.or
 | Versión | Fecha | Descripción |
 |---|---|---|
 | 1.0 | 2026-05-17 | Versión inicial — 14 capítulos, 50+ términos en glosario, 40+ referencias APA 7, 8 tipos D8 cubiertos. |
-| 1.1 | 2026-06-10 | Actualización al modelo de solución más jerarquía de proyectos: fundamentación del modelo (solución, proyecto como unidad de especialización, manifiesto como fuente única de verdad, orden topológico, caso degenerado como garantía de no ruptura), estructura del template con niveles solución/proyecto y _solucion/, y aclaración de que las variantes D8 y la trazabilidad se aplican por proyecto. Conjunto D8 sin cambios (8 valores). |
+| 1.1 | 2026-06-10 | Actualización al modelo de solución más jerarquía de proyectos: fundamentación del modelo (solución, proyecto como unidad de especialización, manifiesto como fuente única de verdad, orden topológico, caso degenerado como garantía de no ruptura), estructura del template con niveles solución/proyecto y Solucion/, y aclaración de que las variantes D8 y la trazabilidad se aplican por proyecto. Conjunto D8 sin cambios (8 valores). |
 | 1.2 | 2026-06-10 | Actualización al intake unificado: un único documento `SOLUTION-INTAKE` reemplaza a `PROJECT-BRIEF` y `PROJECT-README`; el `SOLUTION-MANIFEST` pasa a artefacto derivado del §13 del intake; se incorpora la fundamentación de la Fase de validación de intake (validación de completitud semántica, batería de preguntas, derivación y confirmación del manifiesto). Conjunto D8 sin cambios. |
-| 1.3 | 2026-06-10 | Higiene (resolución de P3): el archivo se renombra a `marco-teorico-sdd2.2_v1.0.md` para alinear el marcador de variante con `guia-usuario-sdd2.2` (se actualizan metadato y auto-referencias). Se agrega en §3.9 la aclaración del alcance de D3: el casing kebab-lowercase gobierna los artefactos generados; los identificadores de variante de la metodología (`SDD1.0`, `SDD2.2D`, `SDD2.1M`, `SDD2.1R`) y los prefijos de organización quedan fuera de su alcance. | Reformulación SDD 2.2D |
-| 1.4 | 2026-06-20 | Auditoría de reflexión de la configuración dirigida por esquema: §1.5 (eje por capacidad en `references/`), §2.5 (descriptor como contrato + frontera validable + simulación + propone/confirma/valida como encaje con IA), §4.2 (AG-03 carga la extensión; AG-05 el motor de la frontera; AG-04 el asistente como tool definitions), §7.5 (`PropuestaDeConfiguracion` como patrón transversal agnóstico de D8), §8.3 (divulgación progresiva ligada a Hick/Miller y ayuda contextual a la heurística 10), §11.1 (propone/confirma/valida como instancia de plan-then-confirm con human-in-the-loop), §12.3 (anti-patrones nuevos) y §13 (nueve términos de glosario). | Reformulación SDD 2.2D (auditoría config-esquema) |
+| 1.3 | 2026-06-10 | Higiene (resolución de P3): el archivo se renombra a `Marco-Teorico-SDD-v1.0.md` para alinear el marcador de variante con `guia-usuario-SDD` (se actualizan metadato y auto-referencias). Se agrega en §3.9 la aclaración del alcance de D3: el casing Título-Con-Guiones gobierna los artefactos generados; los identificadores de variante de la metodología (`SDD1.0`, `SDD`, `SDD2.1M`, `SDD2.1R`) y los prefijos de organización quedan fuera de su alcance. | Reformulación SDD |
+| 1.4 | 2026-06-20 | Auditoría de reflexión de la configuración dirigida por esquema: §1.5 (eje por capacidad en `references/`), §2.5 (descriptor como contrato + frontera validable + simulación + propone/confirma/valida como encaje con IA), §4.2 (AG-03 carga la extensión; AG-05 el motor de la frontera; AG-04 el asistente como tool definitions), §7.5 (`PropuestaDeConfiguracion` como patrón transversal agnóstico de D8), §8.3 (divulgación progresiva ligada a Hick/Miller y ayuda contextual a la heurística 10), §11.1 (propone/confirma/valida como instancia de plan-then-confirm con human-in-the-loop), §12.3 (anti-patrones nuevos) y §13 (nueve términos de glosario). | Reformulación SDD (auditoría config-esquema) |
 
 ---
 

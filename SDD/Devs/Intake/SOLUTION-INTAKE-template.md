@@ -1,6 +1,6 @@
 # SOLUTION-INTAKE-template
 
-Plantilla metodológica SDD 2.2 para producir el documento `SOLUTION-INTAKE-<nombre-solucion-kebab>_v1.0.md`: el único documento de intake de una solución. Reúne el negocio (lo que el cliente quiere), la composición (qué proyectos componen la solución y cómo dependen entre sí) y la técnica de construcción (decisiones por proyecto). El orquestador lo lee, valida su completitud en la fase de validación de intake, deriva de él el `SOLUTION-MANIFEST` canónico (con tu confirmación) y recién entonces despacha la generación.
+Plantilla metodológica SDD para producir el documento `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md`: el único documento de intake de una solución. Reúne el negocio (lo que el cliente quiere), la composición (qué proyectos componen la solución y cómo dependen entre sí) y la técnica de construcción (decisiones por proyecto). El orquestador lo lee, valida su completitud en la fase de validación de intake, deriva de él el `SOLUTION-MANIFEST` canónico (con tu confirmación) y recién entonces despacha la generación.
 
 Reemplaza a las dos plantillas anteriores (`PROJECT-BRIEF-template.md` y `PROJECT-README-template.md`), que quedan deprecadas. El usuario completa un solo documento.
 
@@ -12,12 +12,12 @@ Estructura en tres partes:
 
 ## Guía de uso de esta plantilla
 
-1. Copiar este archivo como `SOLUTION-INTAKE-<nombre-solucion-kebab>_v1.0.md` en `/SDD2.2D/devs/intake/`.
+1. Copiar este archivo como `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md` en `SDD/Intake/` del repositorio destino.
 2. Completar la cabecera y recorrer §1 a §19 en orden. Las preguntas guía marcadas con `(*)` son bloqueantes: el orquestador no avanza sin ellas.
 3. Replicar el bloque técnico de §17 una vez por cada proyecto declarado en §13.
 4. Borrar los bloques `Ejemplo` y `Lo que NO va en esta sección` una vez completado cada apartado.
 5. Validar el §19 (checklist) antes de pasar el intake al orquestador.
-6. Versionar siempre como `_v1.0` en la primera emisión.
+6. Versionar siempre como `-v1.0` en la primera emisión.
 
 Para una solución de un solo proyecto (caso degenerado), §13 tiene una sola fila y §17 se replica una vez: el orquestador aplana el layout y reproduce el comportamiento del template de tipo único.
 
@@ -33,7 +33,7 @@ Bloque obligatorio al inicio. Reproducir y completar:
 | Cliente / Stakeholder principal | [Persona, área u organización que la impulsa] |
 | Repositorio | [Repositorio URL] |
 | Lead técnico | [Nombre y rol] |
-| Documento | `SOLUTION-INTAKE-<nombre-solucion-kebab>_v1.0.md` |
+| Documento | `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md` |
 | Versión | 1.0 |
 | Fecha | [YYYY-MM-DD] |
 | Stack principal | [Lenguaje + framework principal de la solución] |
@@ -270,9 +270,9 @@ library, web-monolith, web-microservices, desktop-app, mobile-app-maui, rest-api
 
 Tabla de proyectos (fuente del manifiesto derivado):
 
-| `nombre-proyecto-kebab` | `project_type` (D8) | Rol en la solución | Dependencias | `redistribuible` |
+| `Nombre-Proyecto` | `project_type` (D8) | Rol en la solución | Dependencias | `redistribuible` |
 |---|---|---|---|---|
-| [kebab] (principal) | [uno de los 8 D8] | [una frase] | [lista de kebab o vacío] | [true / false] |
+| [Nombre-Proyecto] (principal) | [uno de los 8 D8] | [una frase] | [lista de Nombre-Proyecto o vacío] | [true / false] |
 
 Perfil de convención de nombres de código (el orquestador deriva los nombres `/src` con esta regla):
 
@@ -292,7 +292,7 @@ Lo que NO va en esta sección:
 
 ## §14 Estilo arquitectónico de la solución
 
-Instrucción: Describir a alto nivel cómo se componen los proyectos entre sí: quién depende de quién, qué expone cada proyecto a sus dependientes y por qué la jerarquía es la elegida. El detalle interno de cada proyecto va a §17 P.2 y a `05_arquitectura_tecnica/`.
+Instrucción: Describir a alto nivel cómo se componen los proyectos entre sí: quién depende de quién, qué expone cada proyecto a sus dependientes y por qué la jerarquía es la elegida. El detalle interno de cada proyecto va a §17 P.2 y a `05-Arquitectura-Tecnica/`.
 
 Preguntas guía:
 - (*) ¿Cómo se relacionan los proyectos y qué contrato expone cada uno a sus dependientes?
@@ -317,7 +317,7 @@ Preguntas guía:
 Ejemplo (solución multi-proyecto): walking skeleton en Sprint 0 que atraviesa el paquete de validaciones, el dominio y la API para una operación mínima end-to-end; el worker y el resto de las capacidades se agregan en sprints posteriores manteniendo el camino end-to-end. El orden de construcción respeta el orden topológico de las dependencias de §13.
 
 Lo que NO va en esta sección:
-- Plan de sprint con US/BT (va a `07_plan-sprint/`).
+- Plan de sprint con US/BT (va a `07-Plan-Sprint/`).
 
 ---
 
@@ -340,8 +340,8 @@ gestion-de-turnos/
 │   └── Aplicada.Validaciones/          # library redistribuible
 ├── tests/
 ├── samples/
-├── docs/                               # categorías 00-11 SDD (por proyecto bajo proyectos/<kebab>/)
-└── devs/intake/                        # SOLUTION-INTAKE
+├── docs/                               # categorías 00-11 SDD (por proyecto bajo Proyectos/<Nombre>/)
+└── devs/Intake/                        # SOLUTION-INTAKE
 ```
 
 ### §16.1 Materialización de `/samples`
@@ -357,7 +357,7 @@ Instrucción: Describir cómo se materializan los samples según el tipo D8 de c
 | (otros tipos) | Según la tabla de adaptabilidad del orquestador |
 
 Lo que NO va en esta sección:
-- Contenido detallado de los samples (va a `11_examples/`).
+- Contenido detallado de los samples (va a `11-Examples/`).
 
 ---
 
@@ -371,7 +371,7 @@ Identidad del proyecto (repetir por proyecto):
 
 | Campo | Valor |
 |---|---|
-| `nombre-proyecto-kebab` | [kebab] |
+| `Nombre-Proyecto` | [Nombre-Proyecto] |
 | `nombre-proyecto-codigo` | [`<NombreSolucionCodigo>.<Sufijo>` o `Aplicada.<X>`] |
 | `project_type` (D8) | [uno de los 8] |
 | Rol | [una frase] |
@@ -418,7 +418,7 @@ Instrucción: Métricas numéricas de performance, escalabilidad, disponibilidad
 Preguntas guía: (*) ¿Latencia objetivo p99 y throughput mínimo? (*) ¿SLO de disponibilidad? ¿Qué se loguea, mide y traza?
 
 ### §17.P.11 Decisiones técnicas pre-tomadas (pre-ADR)
-Instrucción: Decisiones cerradas antes del Sprint 0 con justificación y alternativas. Se convierten en ADRs en `05_arquitectura_tecnica/`.
+Instrucción: Decisiones cerradas antes del Sprint 0 con justificación y alternativas. Se convierten en ADRs en `05-Arquitectura-Tecnica/`.
 Preguntas guía: (*) ¿Decisiones cerradas y por qué? (*) ¿Alternativas evaluadas? ¿Qué queda abierto para Sprint 0?
 
 ### §17.P.12 Restricciones técnicas y trade-offs aceptados
@@ -427,7 +427,7 @@ Preguntas guía: (*) ¿Qué ganancias se priorizaron y a costa de qué? (*) ¿Re
 
 Lo que NO va en el bloque técnico:
 - Necesidades de negocio (van a la Parte A).
-- ADRs formales (viven en `05_arquitectura_tecnica/`).
+- ADRs formales (viven en `05-Arquitectura-Tecnica/`).
 
 ---
 
@@ -441,7 +441,7 @@ Preguntas guía:
 - ¿Hay un sample que demuestre el punto de extensión principal?
 
 Lo que NO va en esta sección:
-- Tutoriales conceptuales (van a `10_developer_guide/`).
+- Tutoriales conceptuales (van a `10-Developer-Guide/`).
 
 ---
 
@@ -481,16 +481,16 @@ General:
 
 ## Trazabilidad downstream
 
-Este documento alimenta las siguientes secciones SDD 2.2. La parte de negocio (A) es de nivel solución; la composición (B) deriva el manifiesto; la técnica (C) se aplica por proyecto.
+Este documento alimenta las siguientes secciones SDD. La parte de negocio (A) es de nivel solución; la composición (B) deriva el manifiesto; la técnica (C) se aplica por proyecto.
 
 | Sección del intake | Destino | Documento downstream típico |
 |---|---|---|
-| §1 a §12 (negocio) | `00_contexto/`, `01_necesidades_negocio/` | visión, alcance, NB-XX |
+| §1 a §12 (negocio) | `00-Contexto/`, `01-Necesidades-Negocio/` | visión, alcance, NB-XX |
 | §13 (proyectos) | `SOLUTION-MANIFEST` derivado; todas las categorías por proyecto | manifiesto canónico; selector de variantes D8 |
-| §14 estilo de solución | `05_arquitectura_tecnica/` (vista de solución) | `arquitectura-solucion_v1.0.md` |
-| §16 estructura | `05_arquitectura_tecnica/`, `10_developer_guide/` | árbol, README de carpeta |
+| §14 estilo de solución | `05-Arquitectura-Tecnica/` (vista de solución) | `Arquitectura-Solucion-v1.0.md` |
+| §16 estructura | `05-Arquitectura-Tecnica/`, `10-Developer-Guide/` | árbol, README de carpeta |
 | §17 P.x (técnica por proyecto) | `05`, `08`, `09`, `00` (según P) por proyecto | ADRs, estrategia testing, pipeline, NFR |
-| §18 samples | `11_examples/` | `ejemplo-XX_v1.0.md` |
+| §18 samples | `11-Examples/` | `Ejemplo-XX-v1.0.md` |
 
 ---
 

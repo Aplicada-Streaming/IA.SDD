@@ -1,14 +1,14 @@
 # Reglas de diseño — Configuración dirigida por esquema
 
 **Proyecto:** {{nombre-solucion}}
-**Documento:** design-rules-config-esquema_v1.0.md
+**Documento:** Design-Rules-Config-Esquema-v1.0.md
 **Versión:** 1.0
 **Estado:** Vigente
 **Fecha:** 2026-06-20
 **Autor:** {{equipo-o-rol}} (AG-03 UX/UI)
 **Ámbito:** Capacidad transversal — superficies de configuración (agnóstico de framework)
-**Hereda de:** `design-rules-web-generico_v1.0.md`
-**Posición:** Insumo normativo de la categoría 03. Extensión por capacidad del catálogo `references/design/`. No es un artefacto operativo de `docs/`.
+**Hereda de:** `Design-Rules-Web-Generico-v1.0.md`
+**Posición:** Insumo normativo de la categoría 03. Extensión por capacidad del catálogo `References/Design/`. No es un artefacto operativo de `docs/`.
 
 ---
 
@@ -175,12 +175,12 @@ Una superficie de configuración cumple esta extensión cuando: cada parámetro 
 | Dimensión | Referencia |
 | --- | --- |
 | Especialidad dueña | AG-03 UX/UI |
-| Hereda de | `design-rules-web-generico_v1.0.md` |
-| Mapeado por | especializaciones por stack (por ejemplo `design-rules-blazor-mudblazor_v1.0.md`) |
-| Regla que lo invoca | `devs/rules/03_rules_ux_ui_dx.md` (cuando el proyecto tiene superficies de configuración) |
+| Hereda de | `Design-Rules-Web-Generico-v1.0.md` |
+| Mapeado por | especializaciones por stack (por ejemplo `Design-Rules-Blazor-Mudblazor-v1.0.md`) |
+| Regla que lo invoca | `devs/Rules/03-Rules-UX-UI-DX.md` (cuando el proyecto tiene superficies de configuración) |
 | Cross-ref técnico | categoría 05 (motor, registro de descriptores, validación, salidas estructuradas / tool calling, plan-and-apply) |
 | Cross-ref funcional | categoría 02 (qué funcional de los parámetros y de la operación de configurar) |
-| Marco teórico | `guides/marco-teorico-sdd2.2_v1.0.md`, cap. UX/UI/DX |
+| Marco teórico | `Guides/Marco-Teorico-SDD-v1.0.md`, cap. UX/UI/DX |
 | Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>` de las superficies de configuración del proyecto |
 
 ---

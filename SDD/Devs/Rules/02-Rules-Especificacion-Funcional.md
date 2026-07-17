@@ -1,12 +1,12 @@
 # Reglas constructivas — 02 Especificación funcional
 
-**Carpeta target (por proyecto):** `/SDD2.2D/docs/proyectos/<nombre-proyecto-kebab>/02_especificacion_funcional/`
+**Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/02-Especificacion-Funcional/`
 **Subagente target del orquestador:** Analista Funcional / Ingeniero de Requisitos (AG-02)
 **Versión de las reglas:** 1.2
 
 ---
 
-## 0. Posición en la cadena SDD 2.2
+## 0. Posición en la cadena SDD
 
 La categoría 02 es el nodo central de la cadena de trazabilidad D6. Recibe insumos de 00 (visión, alcance) y 01 (necesidades de negocio NB-XX) y produce los artefactos que sirven como ancla para 03 (UX/UI), 04 (prompts si aplica), 05 (arquitectura y ADR), 06 (US/BT), 07 (sprints), 08 (tests) y 11 (ejemplos). Su salida define el qué del sistema sin invadir el cómo. Aplica de manera obligatoria a los ocho tipos D8.
 
@@ -50,12 +50,12 @@ El AG-02 mantiene siempre la titularidad del artefacto; las demás especialidade
 
 | Archivo | Obligatorio para | Recomendado | Omitir para | Descripción |
 | --- | --- | --- | --- | --- |
-| `especificacion-funcional_v1.0.md` | Todos los tipos D8 | — | — | Índice maestro de CU, RN y referencia al modelo. Incluye matriz NB→CU→RN→US. |
-| `definicion-<concepto-central>_v1.0.md` | Proyectos con un concepto técnico central (por ejemplo lenguaje declarativo, modelo de pagos, taxonomía de eventos) | library con superficie estrecha | Tipos sin concepto central | Define vocabulario, semántica y elementos del concepto en un único documento. |
-| `casos-de-uso/CU-XX-<kebab>_v1.0.md` | Todos los tipos D8, con un mínimo declarado en §2.2 | — | — | Un caso de uso por archivo. |
-| `reglas-de-negocio/RN-XX-<kebab>_v1.0.md` | Proyectos con reglas regulatorias o dominio fuerte | Resto de los proyectos | Proyectos triviales sin estado ni invariantes | Una regla de negocio por archivo. Invariante atemporal. |
-| `modelo-datos/modelo-conceptual_v1.0.md` | Proyectos con persistencia (web-monolith, web-microservices, rest-api, worker-service, mobile-app-maui) | desktop-app si guarda local | library puro sin estado, cli-tool sin estado | Modelo conceptual estilo ER o de clases de dominio. |
-| `modelo-datos/reglas-conceptuales-de-modelo/RC-XX-<kebab>_v1.0.md` | Proyectos con modelo rico (más de diez entidades o invariantes de integridad explícitas) | — | Resto | Una regla conceptual por archivo, focalizada en integridad de dominio. |
+| `Especificacion-Funcional-v1.0.md` | Todos los tipos D8 | — | — | Índice maestro de CU, RN y referencia al modelo. Incluye matriz NB→CU→RN→US. |
+| `definicion-<concepto-central>-v1.0.md` | Proyectos con un concepto técnico central (por ejemplo lenguaje declarativo, modelo de pagos, taxonomía de eventos) | library con superficie estrecha | Tipos sin concepto central | Define vocabulario, semántica y elementos del concepto en un único documento. |
+| `Casos-De-Uso/CU-XX-<Nombre>-v1.0.md` | Todos los tipos D8, con un mínimo declarado en §2.2 | — | — | Un caso de uso por archivo. |
+| `Reglas-De-Negocio/RN-XX-<Nombre>-v1.0.md` | Proyectos con reglas regulatorias o dominio fuerte | Resto de los proyectos | Proyectos triviales sin estado ni invariantes | Una regla de negocio por archivo. Invariante atemporal. |
+| `Modelo-Datos/Modelo-Conceptual-v1.0.md` | Proyectos con persistencia (web-monolith, web-microservices, rest-api, worker-service, mobile-app-maui) | desktop-app si guarda local | library puro sin estado, cli-tool sin estado | Modelo conceptual estilo ER o de clases de dominio. |
+| `Modelo-Datos/reglas-conceptuales-de-modelo/RC-XX-<Nombre>-v1.0.md` | Proyectos con modelo rico (más de diez entidades o invariantes de integridad explícitas) | — | Resto | Una regla conceptual por archivo, focalizada en integridad de dominio. |
 | `README.md` de la sección | Recomendado para todos | — | — | Índice navegable de CU, RN, modelo y RC con su estado actual. |
 
 ### 2.2 Reglas de inclusión y exclusión por tipo
@@ -79,21 +79,21 @@ El mínimo es piso, no techo. La cota superior queda definida por la cobertura c
 
 ### 3.1 Patrón de nombres
 
-- `CU-XX-<kebab-lowercase>_v<X.Y>.md`, con dos dígitos en `XX`, kebab estricto en el slug y guion bajo antes de la versión.
-- `RN-XX-<kebab-lowercase>_v<X.Y>.md`, mismas reglas.
-- `RC-XX-<kebab-lowercase>_v<X.Y>.md` para reglas conceptuales del modelo.
-- `modelo-conceptual_v<X.Y>.md` para el modelo conceptual de datos.
-- `definicion-<concepto>_v<X.Y>.md` para el documento opcional de concepto central.
-- `especificacion-funcional_v<X.Y>.md` para el índice maestro.
+- `CU-XX-<Nombre>-v<X.Y>.md`, con dos dígitos en `XX`, Título-Con-Guiones en el slug y guion medio antes de la versión.
+- `RN-XX-<Nombre>-v<X.Y>.md`, mismas reglas.
+- `RC-XX-<Nombre>-v<X.Y>.md` para reglas conceptuales del modelo.
+- `modelo-conceptual-v<X.Y>.md` para el modelo conceptual de datos.
+- `definicion-<concepto>-v<X.Y>.md` para el documento opcional de concepto central.
+- `especificacion-funcional-v<X.Y>.md` para el índice maestro.
 
-Queda prohibido el patrón heredado `NB-01-Desacople.v1.0.md` u homólogos. La versión siempre va con `_v`, jamás con `.v`. El slug siempre va en minúsculas; queda prohibido `CU-01-Cargar-Plantilla_v1.0.md` o variantes con mayúsculas o camelCase.
+Queda prohibido el patrón heredado `nb-01-desacople.v1.0.md` u homólogos. La versión siempre va con guion medio `-v`, jamás con guion bajo `_v` ni con punto `.v`. El slug va en Título-Con-Guiones (cada palabra capitalizada, separadas por guion medio); quedan prohibidas las variantes todo-minúsculas, camelCase, con espacios o con acentos.
 
 ### 3.2 Convenciones de prefijos y sufijos
 
 - `CU-`: caso de uso. Acción funcional con flujo, actores y criterios de aceptación.
 - `RN-`: regla de negocio. Invariante atemporal del dominio. No describe acción; describe restricción.
 - `RC-`: regla conceptual del modelo. Restricción de integridad expresada sobre entidades y relaciones.
-- Sufijo `_v<X.Y>.md` uniforme. La versión menor avanza por aclaración o corrección; la mayor avanza por cambio de alcance del CU/RN/RC.
+- Sufijo `-v<X.Y>.md` uniforme. La versión menor avanza por aclaración o corrección; la mayor avanza por cambio de alcance del CU/RN/RC.
 
 ### 3.3 Vinculación cross-doc
 
@@ -111,12 +111,12 @@ Recomendado para todos los tipos. Debe listar CU, RN, modelo y RC vigentes con p
 
 Una sola versión vigente por nombre lógico. Cuando un CU pasa de `v1.0` a `v2.0`:
 
-1. Se crea `CU-XX-<kebab>_v2.0.md` en la carpeta principal.
-2. La versión `v1.0` se mueve a `casos-de-uso/_legacy/` con estado `Superado` y una nota al inicio que apunte a la versión vigente.
-3. El índice `especificacion-funcional_v<X.Y>.md` referencia únicamente la versión vigente.
+1. Se crea `CU-XX-<Nombre>-v2.0.md` en la carpeta principal.
+2. La versión `v1.0` se mueve a `Casos-De-Uso/_legacy/` con estado `Superado` y una nota al inicio que apunte a la versión vigente.
+3. El índice `especificacion-funcional-v<X.Y>.md` referencia únicamente la versión vigente.
 4. Las RN, RC y referencias downstream se actualizan en la misma operación.
 
-Queda prohibido mantener `v1.0` y `v2.0` conviviendo en la carpeta principal sin marcado de deprecación. La lección está documentada en `_bootstrap/audit-sdd1.md` Fase 0.
+Queda prohibido mantener `v1.0` y `v2.0` conviviendo en la carpeta principal sin marcado de deprecación. La lección está documentada en `Bootstrap/Audit-SDD1.md` Fase 0.
 
 ---
 
@@ -130,7 +130,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 # CU-XX — <Nombre del caso de uso>
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** CU-XX-<kebab>_v<X.Y>.md
+**Documento:** CU-XX-<Nombre>-v<X.Y>.md
 **Versión:** <X.Y>
 **Estado:** Borrador | Propuesto | Aprobado | Vigente | Superado | Archivado
 **Fecha:** YYYY-MM-DD
@@ -229,9 +229,9 @@ Diagrama de flujo del CU expresado como pasos numerados o Mermaid sequenceDiagra
 | CU que mezcla flujo funcional con detalle de interfaz | Invade 03 UX/UI y vuelve frágil el CU | Mover el detalle visual a 03; mantener en 02 sólo qué hace y para quién |
 | RN escrita como CU | Confunde acción con invariante; rompe la trazabilidad | Reescribir como enunciado declarativo atemporal |
 | Modelo conceptual con tipos físicos (varchar(255), int(11)) | Invade 05 modelo lógico | Mantener nombres y semántica; los tipos viven en 05 |
-| Versionado paralelo `CU-06_v1.0` y `CU-06_v2.0` sin marcar deprecación | Ambigüedad sobre cuál vigencia leer | Aplicar §3.5: una vigente, anteriores a `_legacy/` |
-| Casing inconsistente (`NB-01-Desacople` vs `NB-02-estandarizacion`) | Inconsistencia que rompe automatizaciones | Forzar lowercase + kebab estricto |
-| Patrón `.v1.0` heredado del fuente | Convención prohibida en SDD 2.2 | Forzar `_v1.0` |
+| Versionado paralelo `CU-06-v1.0` y `CU-06-v2.0` sin marcar deprecación | Ambigüedad sobre cuál vigencia leer | Aplicar §3.5: una vigente, anteriores a `_legacy/` |
+| Casing inconsistente (`NB-01-Desacople` vs `NB-02-estandarizacion`) | Inconsistencia que rompe automatizaciones | Forzar Título-Con-Guiones estricto |
+| Patrón `.v1.0` heredado del fuente | Convención prohibida en SDD | Forzar `-v1.0` |
 | CU sin escenarios de error | Solo flujo feliz; el sistema queda subdefinido | Agregar al menos una excepción por CU |
 | Criterios de aceptación narrativos sin valores concretos | No automatizables; no anclan tests | Reescribir Given/When/Then con valores explícitos |
 | CU con más de un actor primario | Ambigüedad de responsabilidad | Separar en dos CU o reorganizar el flujo |
@@ -277,15 +277,15 @@ Diagrama de flujo del CU expresado como pasos numerados o Mermaid sequenceDiagra
 
 ## 6. Criterios de aceptación
 
-- [ ] Existe `especificacion-funcional_v1.0.md` con índice maestro y matriz NB→CU→RN→US.
+- [ ] Existe `Especificacion-Funcional-v1.0.md` con índice maestro y matriz NB→CU→RN→US.
 - [ ] La cantidad de CU cumple el mínimo declarado para el tipo D8 del proyecto.
 - [ ] Cada CU contiene las once secciones obligatorias del §4.2.
 - [ ] Cada CU declara trazabilidad NB→CU→US y al menos tres criterios Given/When/Then con valores concretos.
 - [ ] Cada RN contiene las siete secciones obligatorias del §4.2.1 y enumera CU afectados explícitos.
-- [ ] Si el tipo D8 exige modelo de datos, existe `modelo-datos/modelo-conceptual_v1.0.md` con diagrama o tabla equivalente.
-- [ ] Si el modelo supera diez entidades, existen RC-XX en `modelo-datos/reglas-conceptuales-de-modelo/` con las seis secciones obligatorias del §4.2.3.
-- [ ] Ningún archivo usa el patrón `.v<X.Y>.md`; todos usan `_v<X.Y>.md`.
-- [ ] Ningún slug contiene mayúsculas, espacios, acentos ni caracteres no kebab.
+- [ ] Si el tipo D8 exige modelo de datos, existe `Modelo-Datos/Modelo-Conceptual-v1.0.md` con diagrama o tabla equivalente.
+- [ ] Si el modelo supera diez entidades, existen RC-XX en `Modelo-Datos/reglas-conceptuales-de-modelo/` con las seis secciones obligatorias del §4.2.3.
+- [ ] Ningún archivo usa el patrón `-v<X.Y>.md`; todos usan `-v<X.Y>.md`.
+- [ ] Ningún slug contiene mayúsculas, espacios, acentos ni caracteres no permitidos.
 - [ ] No coexisten versiones distintas del mismo nombre lógico en la carpeta principal; las superadas viven en `_legacy/`.
 - [ ] No hay menciones a stacks concretos, productos comerciales ni protocolos específicos del dominio fuente.
 - [ ] Existe `README.md` de la sección si así lo decide el equipo (recomendado).
@@ -302,7 +302,7 @@ Fragmento ilustrativo, no documento completo:
 # CU-03 — Asignar turno médico
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** CU-03-asignar-turno-medico_v1.0.md
+**Documento:** CU-03-Asignar-Turno-Medico-v1.0.md
 **Versión:** 1.0
 **Estado:** Propuesto
 **Fecha:** 2026-05-17
@@ -339,7 +339,7 @@ Permitir que un agente administrativo asigne un turno a un paciente sobre la age
 # RN-02 — Validez del identificador de pago
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** RN-02-validez-identificador-pago_v1.0.md
+**Documento:** RN-02-Validez-Identificador-Pago-v1.0.md
 **Versión:** 1.0
 **Estado:** Aprobada
 **Fecha:** 2026-05-17
@@ -399,22 +399,22 @@ Insumos:
 - Upstream: 00 (visión, alcance), 01 (NB-XX).
 
 A generar (según tipo {{TIPO}} de D8):
-- especificacion-funcional_v1.0.md (índice maestro con matriz NB→CU→RN→US).
-- casos-de-uso/CU-XX-<kebab>_v1.0.md (mínimo según §2.2).
-- reglas-de-negocio/RN-XX-<kebab>_v1.0.md (si aplica).
-- modelo-datos/modelo-conceptual_v1.0.md (si aplica).
-- modelo-datos/reglas-conceptuales-de-modelo/RC-XX-<kebab>_v1.0.md (si el modelo supera 10 entidades).
+- Especificacion-Funcional-v1.0.md (índice maestro con matriz NB→CU→RN→US).
+- Casos-De-Uso/CU-XX-<Nombre>-v1.0.md (mínimo según §2.2).
+- Reglas-De-Negocio/RN-XX-<Nombre>-v1.0.md (si aplica).
+- Modelo-Datos/Modelo-Conceptual-v1.0.md (si aplica).
+- Modelo-Datos/reglas-conceptuales-de-modelo/RC-XX-<Nombre>-v1.0.md (si el modelo supera 10 entidades).
 - README.md de la sección (recomendado).
 
-Reglas de redacción: §4 de 02_rules_especificacion_funcional.md.
-Nomenclatura: `CU-XX-<kebab-lowercase>_v1.0.md` con `_v` (no `.v`); slug en minúsculas estricto.
+Reglas de redacción: §4 de 02-Rules-Especificacion-Funcional.md.
+Nomenclatura: `CU-XX-<Nombre>-v1.0.md` con guion medio `-v` (no `_v` ni `.v`); slug en Título-Con-Guiones estricto.
 Trazabilidad: cada CU debe enlazar a una NB y enumerar US a generar en 06.
-Criterios de calidad: §6 de 02_rules_especificacion_funcional.md.
+Criterios de calidad: §6 de 02-Rules-Especificacion-Funcional.md.
 Política de versionado: §3.5; una sola versión vigente; anteriores a `_legacy/` con estado Superado.
 
 Restricciones: no introducir stacks concretos, productos comerciales ni protocolos del dominio fuente. Idioma rioplatense técnico, tildes correctas, sin emojis.
 
-Salida: /SDD2.2D/docs/proyectos/{{NOMBRE_PROYECTO_KEBAB}}/02_especificacion_funcional/<estructura>.
+Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/02-Especificacion-Funcional/<estructura>.
 ```
 
 ---
@@ -423,6 +423,6 @@ Salida: /SDD2.2D/docs/proyectos/{{NOMBRE_PROYECTO_KEBAB}}/02_especificacion_func
 
 | Versión | Fecha | Cambios |
 | --- | --- | --- |
-| 1.0 | 2026-05-17 | Reglas iniciales generadas durante bootstrap SDD 2.2. |
-| 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `proyectos/<nombre-proyecto-kebab>/02_especificacion_funcional/`; la frase de cierre de §1.2 y la ruta de salida del prompt-snippet referencian el `project_type` del proyecto en curso (manifiesto). Tablas §1.2 sin reescritura. |
+| 1.0 | 2026-05-17 | Reglas iniciales generadas durante bootstrap SDD. |
+| 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `Proyectos/<Nombre-Proyecto>/02-Especificacion-Funcional/`; la frase de cierre de §1.2 y la ruta de salida del prompt-snippet referencian el `project_type` del proyecto en curso (manifiesto). Tablas §1.2 sin reescritura. |
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |

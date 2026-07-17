@@ -1,9 +1,9 @@
 # PROJECT BRIEF — Plantilla de intake de negocio
 
 ```yaml
-Nombre de la solución: [Nombre comercial o interno de la solución, kebab-case sugerido]
+Nombre de la solución: [Nombre comercial o interno de la solución, Título-Con-Guiones sugerido]
 Cliente / Stakeholder principal: [Nombre de la persona, área u organización que lo impulsa]
-Documento: PROJECT-BRIEF-<nombre-solucion-kebab>_v1.0.md
+Documento: PROJECT-BRIEF-<Nombre-Solucion>-v1.0.md
 Versión: 1.0
 Fecha: [YYYY-MM-DD]
 Autor del brief: [Nombre y rol de quien redacta el brief]
@@ -372,8 +372,8 @@ _El brief se considera listo para ser usado como input del flujo SDD (Visión �
 
 | Versión | Fecha | Cambios | Autor |
 |---|---|---|---|
-| 1.0 | [YYYY-MM-DD] | Plantilla inicial generada durante bootstrap SDD 2.2 | Bootstrap SDD 2.2 |
-| 1.1 | 2026-06-09 | Reformulación a nivel solución (ST-03): la cabecera declara "Nombre de la solución" y el documento se identifica como `PROJECT-BRIEF-<nombre-solucion-kebab>_v1.0.md`; nota de que el brief es uno por solución. El cuerpo de negocio (§1 a §13) no cambia. | Reformulación SDD 2.2D |
+| 1.0 | [YYYY-MM-DD] | Plantilla inicial generada durante bootstrap SDD | Bootstrap SDD |
+| 1.1 | 2026-06-09 | Reformulación a nivel solución (ST-03): la cabecera declara "Nombre de la solución" y el documento se identifica como `PROJECT-BRIEF-<Nombre-Solucion>-v1.0.md`; nota de que el brief es uno por solución. El cuerpo de negocio (§1 a §13) no cambia. | Reformulación SDD |
 
 ---
 

@@ -1,12 +1,12 @@
 # Reglas constructivas — 03 UX / UI / DX
 
-**Carpeta target (por proyecto):** `/SDD2.2D/docs/proyectos/<nombre-proyecto-kebab>/03_ux_ui_dx/`
+**Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/03-UX-UI-DX/`
 **Subagente target del orquestador:** Especialista UX/UI o Especialista DX (AG-03), según variante.
 **Versión de las reglas:** 1.4
 
 ---
 
-## 0. Posición en la cadena SDD 2.2
+## 0. Posición en la cadena SDD
 
 La categoría 03 recibe insumos de 00 (visión, alcance, persona objetivo) y de 02 (CU con interacción humana significativa, RN que afectan la presentación). Produce los artefactos que sirven como ancla para 05 (arquitectura de la capa de presentación o del portal de developers), 06 (US con criterios de aceptación visuales o de ergonomía de API), 08 (tests de UI, snapshot y accesibilidad) y 11 (ejemplos de uso ilustrados). Su salida define cómo se siente el producto, sin invadir el qué de 02 ni el cómo de 05.
 
@@ -53,22 +53,22 @@ La categoría 03 se combina con otras especialidades cuando el alcance lo requie
 
 Hay dos casos de combinación explícita de variantes:
 
-- rest-api con portal de developers visible. La superficie técnica es DX, pero el portal en sí es una aplicación web con experiencia propia. El artefacto principal es `dx-portal-developers_v1.0.md`, complementado con wireframes de las pantallas clave del portal.
+- rest-api con portal de developers visible. La superficie técnica es DX, pero el portal en sí es una aplicación web con experiencia propia. El artefacto principal es `DX-Portal-Developers-v1.0.md`, complementado con wireframes de las pantallas clave del portal.
 - web-microservices con frontend más SDK público. Se produce experiencia para el usuario final (UX/UI) y experiencia para el integrador externo (DX), en documentos separados.
 
 El AG-03 mantiene siempre la titularidad del artefacto; las demás especialidades aportan revisiones acotadas.
 
 ### 1.4 Insumos normativos de diseño por stack
 
-Antes de redactar `experiencia-de-uso` y `wireframes`, el AG-03 carga el catálogo de diseño de `devs/references/design/` a través de su índice `_index_design-rules.md`.
+Antes de redactar `experiencia-de-uso` y `wireframes`, el AG-03 carga el catálogo de diseño de `devs/References/Design/` a través de su índice `Index-Design-Rules.md`.
 
-Aplica siempre el documento base `design-rules-web-generico_v1.0.md` y, si existe, la especialización del stack declarado en la Parte C del intake (por ejemplo `design-rules-blazor-mudblazor_v1.0.md` para Blazor Interactive Server + MudBlazor). Si no hay especialización para el stack, rige únicamente el documento base.
+Aplica siempre el documento base `Design-Rules-Web-Generico-v1.0.md` y, si existe, la especialización del stack declarado en la Parte C del intake (por ejemplo `Design-Rules-Blazor-Mudblazor-v1.0.md` para Blazor Interactive Server + MudBlazor). Si no hay especialización para el stack, rige únicamente el documento base.
 
 Los tokens, patrones, estados y la iconografía SVG del catálogo son normativos: el subagente referencia sus patrones por nombre y hereda sus tokens; tiene prohibido definir tokens visuales ad hoc por proyecto. Un token nuevo solo se admite si es transversal y se promueve al catálogo.
 
 Trazabilidad: cada artefacto 03 con UI declara, en su tabla de trazabilidad, el o los documentos del catálogo de diseño aplicados.
 
-Cuando el proyecto tiene superficies de configuración (parámetros que el usuario fija), el AG-03 carga además, vía el índice, la extensión por capacidad `design-rules-config-esquema`. En esas superficies, los artefactos `experiencia-de-uso` y `wireframes` deben: describir cada parámetro configurable por su descriptor (etiqueta, leyenda, default, límites, ejemplos); colgar la ayuda contextual de cada campo del descriptor; incluir presets cuando apliquen; incluir la explicación en lenguaje natural ("en palabras"); declarar el modo simulación; y reservar la ranura del asistente de IA (forward-compat) sin construirla. La frontera `PropuestaDeConfiguracion` se previsualiza y se confirma antes de aplicar: la UI propone, el humano confirma, el sistema valida.
+Cuando el proyecto tiene superficies de configuración (parámetros que el usuario fija), el AG-03 carga además, vía el índice, la extensión por capacidad `Design-Rules-Config-Esquema`. En esas superficies, los artefactos `experiencia-de-uso` y `wireframes` deben: describir cada parámetro configurable por su descriptor (etiqueta, leyenda, default, límites, ejemplos); colgar la ayuda contextual de cada campo del descriptor; incluir presets cuando apliquen; incluir la explicación en lenguaje natural ("en palabras"); declarar el modo simulación; y reservar la ranura del asistente de IA (forward-compat) sin construirla. La frontera `PropuestaDeConfiguracion` se previsualiza y se confirma antes de aplicar: la UI propone, el humano confirma, el sistema valida.
 
 ---
 
@@ -78,15 +78,15 @@ Cuando el proyecto tiene superficies de configuración (parámetros que el usuar
 
 | Archivo | Variante | Obligatorio para | Recomendado | Omitir para | Descripción |
 | --- | --- | --- | --- | --- | --- |
-| `experiencia-de-uso_v1.0.md` | UX/UI | web-monolith, web-microservices (con frontend), desktop-app, mobile-app-maui | — | library, cli-tool, worker-service, rest-api sin portal | Marco de experiencia: audiencia, principios de diseño, flujos clave, accesibilidad, internacionalización, performance percibida. |
-| `wireframes-<superficie>_v1.0.md` | UX/UI | Tipos con UI final, uno por pantalla o flujo principal | — | Tipos sin UI final | Esquema textual o ASCII de cada pantalla con componentes, estados, interacciones, versión móvil cuando aplica. |
-| `representacion-<concepto>_v1.0.md` | UX/UI o DX | Cuando hay una representación visual o estructural reutilizada (un componente, una notificación, un documento exportado) | — | Si no aplica | Documento focalizado sobre una representación específica del sistema. |
-| `glosario-ux_v1.0.md` | UX/UI | Recomendado para todos los tipos con UI final | Tipos DX si hay vocabulario propio | — | Terminología canónica de la sección (pantalla, vista, modal, toast, estado vacío, etcétera). |
-| `dx-developer-experience_v1.0.md` | DX | library, cli-tool, worker-service, rest-api, web-microservices sin frontend | — | Tipos con UI final únicamente | Marco DX: audiencia developer, onboarding por tramos, quick-start, Diátaxis, mensajes de error, métricas DX. |
-| `guia-onboarding-developer_v1.0.md` | DX | library, rest-api, web-microservices sin frontend | cli-tool, worker-service | — | Recorrido de primera hora del developer integrador. |
-| `dx-error-messages_v1.0.md` | DX | cli-tool, library | rest-api, worker-service | — | Catálogo de mensajes de error y su diagnóstico accionable. |
-| `dx-portal-developers_v1.0.md` | DX | rest-api con portal visible, web-microservices con SDK público | library con portal hospedado | Tipos sin portal | Especificación del portal de documentación de developers. |
-| `dx-operability_v1.0.md` | DX | worker-service | rest-api con SLO estricto | Tipos con UI final | Experiencia del operador: logs estructurados, dashboards, alertas, runbooks. |
+| `Experiencia-De-Uso-v1.0.md` | UX/UI | web-monolith, web-microservices (con frontend), desktop-app, mobile-app-maui | — | library, cli-tool, worker-service, rest-api sin portal | Marco de experiencia: audiencia, principios de diseño, flujos clave, accesibilidad, internacionalización, performance percibida. |
+| `wireframes-<superficie>-v1.0.md` | UX/UI | Tipos con UI final, uno por pantalla o flujo principal | — | Tipos sin UI final | Esquema textual o ASCII de cada pantalla con componentes, estados, interacciones, versión móvil cuando aplica. |
+| `representacion-<concepto>-v1.0.md` | UX/UI o DX | Cuando hay una representación visual o estructural reutilizada (un componente, una notificación, un documento exportado) | — | Si no aplica | Documento focalizado sobre una representación específica del sistema. |
+| `Glosario-UX-v1.0.md` | UX/UI | Recomendado para todos los tipos con UI final | Tipos DX si hay vocabulario propio | — | Terminología canónica de la sección (pantalla, vista, modal, toast, estado vacío, etcétera). |
+| `DX-Developer-Experience-v1.0.md` | DX | library, cli-tool, worker-service, rest-api, web-microservices sin frontend | — | Tipos con UI final únicamente | Marco DX: audiencia developer, onboarding por tramos, quick-start, Diátaxis, mensajes de error, métricas DX. |
+| `Guia-Onboarding-Developer-v1.0.md` | DX | library, rest-api, web-microservices sin frontend | cli-tool, worker-service | — | Recorrido de primera hora del developer integrador. |
+| `DX-Error-Messages-v1.0.md` | DX | cli-tool, library | rest-api, worker-service | — | Catálogo de mensajes de error y su diagnóstico accionable. |
+| `DX-Portal-Developers-v1.0.md` | DX | rest-api con portal visible, web-microservices con SDK público | library con portal hospedado | Tipos sin portal | Especificación del portal de documentación de developers. |
+| `DX-Operability-v1.0.md` | DX | worker-service | rest-api con SLO estricto | Tipos con UI final | Experiencia del operador: logs estructurados, dashboards, alertas, runbooks. |
 | `README.md` de la sección | Ambas | Recomendado para todos | — | — | Índice navegable de la sección con estado actual de cada artefacto. |
 
 ### 2.2 Reglas de inclusión y exclusión por tipo
@@ -111,17 +111,17 @@ El mínimo es piso, no techo. La cota superior queda definida por la cobertura d
 
 ### 3.1 Patrón de nombres
 
-- `experiencia-de-uso_v<X.Y>.md` para el marco UX.
-- `wireframes-<superficie-kebab>_v<X.Y>.md` para cada superficie. Ejemplo: `wireframes-pantalla-login_v1.0.md`.
-- `representacion-<concepto-kebab>_v<X.Y>.md`. Ejemplo: `representacion-notificacion-toast_v1.0.md`.
-- `glosario-ux_v<X.Y>.md` para el vocabulario de la sección.
-- `dx-developer-experience_v<X.Y>.md` para el marco DX.
-- `guia-onboarding-developer_v<X.Y>.md` para el recorrido de primera hora.
-- `dx-error-messages_v<X.Y>.md` para el catálogo de errores accionables.
-- `dx-portal-developers_v<X.Y>.md` para el portal de documentación.
-- `dx-operability_v<X.Y>.md` para la experiencia del operador.
+- `experiencia-de-uso-v<X.Y>.md` para el marco UX.
+- `wireframes-<Superficie>-v<X.Y>.md` para cada superficie. Ejemplo: `Wireframes-Pantalla-Login-v1.0.md`.
+- `representacion-<Concepto>-v<X.Y>.md`. Ejemplo: `Representacion-Notificacion-Toast-v1.0.md`.
+- `glosario-ux-v<X.Y>.md` para el vocabulario de la sección.
+- `dx-developer-experience-v<X.Y>.md` para el marco DX.
+- `guia-onboarding-developer-v<X.Y>.md` para el recorrido de primera hora.
+- `dx-error-messages-v<X.Y>.md` para el catálogo de errores accionables.
+- `dx-portal-developers-v<X.Y>.md` para el portal de documentación.
+- `dx-operability-v<X.Y>.md` para la experiencia del operador.
 
-Queda prohibido el patrón heredado `.v<X.Y>.md`. La versión siempre va con guion bajo antes de `v`, jamás con punto. El slug siempre va en minúsculas; queda prohibido `wireframes-Pantalla-Login_v1.0.md` o variantes con mayúsculas. El sufijo `_v<X.Y>.md` es uniforme para todos los artefactos de la sección.
+Queda prohibido el patrón heredado `.v<X.Y>.md` (punto) y `_v<X.Y>.md` (guion bajo). La versión siempre va con guion medio antes de `v`. El slug va en Título-Con-Guiones (cada palabra capitalizada, separadas por guion medio); quedan prohibidas las variantes todo-minúsculas, camelCase, con espacios o con acentos. El sufijo `-v<X.Y>.md` es uniforme para todos los artefactos de la sección.
 
 ### 3.2 Convenciones de prefijos
 
@@ -149,7 +149,7 @@ Una sola versión vigente por nombre lógico. Cuando un artefacto pasa de `v1.0`
 3. El README de la sección referencia únicamente la versión vigente.
 4. Los wireframes y `dx-` docs que dependan del artefacto modificado se actualizan en la misma operación o se marca explícitamente la deuda.
 
-Queda prohibido mantener `v1.0` y `v1.1` conviviendo en la carpeta principal sin marcado de deprecación. La lección está documentada en `_bootstrap/audit-sdd1.md` Fase 0, donde se detectaron `experiencia-de-uso-del-motor_v1.0` y `v1.1` coexistiendo con la representación y los wireframes en el mismo estado.
+Queda prohibido mantener `v1.0` y `v1.1` conviviendo en la carpeta principal sin marcado de deprecación. La lección está documentada en `Bootstrap/Audit-SDD1.md` Fase 0, donde se detectaron `experiencia-de-uso-del-motor-v1.0` y `v1.1` coexistiendo con la representación y los wireframes en el mismo estado.
 
 ---
 
@@ -163,7 +163,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 # <Título del artefacto>
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** <nombre-de-archivo>_v<X.Y>.md
+**Documento:** <nombre-de-archivo>-v<X.Y>.md
 **Versión:** <X.Y>
 **Estado:** Borrador | Propuesto | Aprobado | Vigente | Superado | Archivado
 **Fecha:** YYYY-MM-DD
@@ -171,7 +171,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 **Variante:** UX/UI | DX
 ```
 
-### 4.2 Secciones obligatorias de `experiencia-de-uso_v1.0.md`
+### 4.2 Secciones obligatorias de `Experiencia-De-Uso-v1.0.md`
 
 1. Audiencia y contexto de uso. Persona objetivo, contexto físico y emocional, frecuencia y duración de uso.
 2. Principios de diseño. Selección explícita de heurísticas de Nielsen aplicables y leyes UX relevantes (Hick, Fitts, Miller, Jakob, según el caso) con justificación de aplicación al producto.
@@ -185,7 +185,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 10. Notas y supuestos.
 11. Control de cambios.
 
-### 4.2.1 Secciones obligatorias de `wireframes-<superficie>_v1.0.md`
+### 4.2.1 Secciones obligatorias de `wireframes-<superficie>-v1.0.md`
 
 1. Pantalla y propósito. Nombre canónico de la superficie y una a tres oraciones sobre la tarea que el usuario completa.
 2. Layout. Descripción textual o ASCII art de la disposición espacial. No se incluyen colores, tipografías ni valores de CSS.
@@ -197,7 +197,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 8. Trazabilidad. Tabla con CU origen, marco `experiencia-de-uso` aplicado, US a generar, tests previstos.
 9. Control de cambios.
 
-### 4.2.2 Secciones obligatorias de `representacion-<concepto>_v1.0.md`
+### 4.2.2 Secciones obligatorias de `representacion-<concepto>-v1.0.md`
 
 1. Concepto representado y propósito.
 2. Apariencia esquemática. Descripción textual o ASCII.
@@ -207,7 +207,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 6. Reutilización. Listado de wireframes o `dx-` docs que la invocan.
 7. Control de cambios.
 
-### 4.2.3 Secciones obligatorias de `dx-developer-experience_v1.0.md`
+### 4.2.3 Secciones obligatorias de `DX-Developer-Experience-v1.0.md`
 
 1. Audiencia developer. Tipo de developer (integrador, contributor, operador), nivel de experiencia esperado, herramientas que ya conoce.
 2. Onboarding por tramos. Qué logra el developer en 5 minutos, en 30 minutos y en 1 hora. Cada tramo con su objetivo verificable.
@@ -219,7 +219,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 8. Trazabilidad. Tabla con superficie pública que se documenta, CU upstream, US a generar, tests previstos.
 9. Control de cambios.
 
-### 4.2.4 Secciones obligatorias de `guia-onboarding-developer_v1.0.md`
+### 4.2.4 Secciones obligatorias de `Guia-Onboarding-Developer-v1.0.md`
 
 1. Audiencia y prerrequisitos.
 2. Instalación o acceso. Pasos mínimos verificables.
@@ -228,7 +228,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 5. Próximos pasos. Enlaces explícitos al modo tutorial, how-to y reference (Diátaxis).
 6. Control de cambios.
 
-### 4.2.5 Secciones obligatorias de `dx-error-messages_v1.0.md`
+### 4.2.5 Secciones obligatorias de `DX-Error-Messages-v1.0.md`
 
 1. Principios de redacción de errores. Lenguaje plano, acción sugerida, sin culpar al usuario.
 2. Taxonomía. Categorías de error (entrada inválida, recurso ausente, conflicto de estado, error transitorio, error interno).
@@ -237,7 +237,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 5. Localización. Política de traducción de los mensajes técnicos.
 6. Control de cambios.
 
-### 4.2.6 Secciones obligatorias de `dx-portal-developers_v1.0.md`
+### 4.2.6 Secciones obligatorias de `DX-Portal-Developers-v1.0.md`
 
 1. Audiencia y objetivos del portal.
 2. Estructura de información según Diátaxis.
@@ -248,7 +248,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 7. Métricas de uso del portal.
 8. Control de cambios.
 
-### 4.2.7 Secciones obligatorias de `dx-operability_v1.0.md`
+### 4.2.7 Secciones obligatorias de `DX-Operability-v1.0.md`
 
 1. Audiencia operador y contexto de operación.
 2. Logs estructurados. Campos mínimos, niveles, correlation id.
@@ -294,7 +294,7 @@ Tabla de trazabilidad de un artefacto 03:
 | Wireframes asociados | <archivo o N/A> |
 | US a generar | <US-XX en 06> |
 | Tests previstos | <referencia tentativa a 08> |
-| Catálogo de diseño aplicado | <design-rules-web-generico y especialización por stack, o N/A para variante DX> |
+| Catálogo de diseño aplicado | <Design-Rules-Web-Generico y especialización por stack, o N/A para variante DX> |
 | Configuración dirigida por esquema aplicada (descriptores, presets, modo simulación, ranura del asistente) | <sí / N/A> |
 
 ### 4.4 Anti-patrones a evitar
@@ -305,15 +305,15 @@ Tabla de trazabilidad de un artefacto 03:
 | Documento de experiencia que solo describe el flujo feliz | El producto queda subdefinido ante fallos | Listar estados de error y recuperación por superficie |
 | DX doc sin quick-start verificable o con snippet que no corre | El developer no logra el primer éxito y abandona | Validar manualmente el quick-start antes de publicar |
 | Accesibilidad ausente o reducida a una mención genérica | Riesgo legal y de exclusión; impide cumplir 08 | Declarar WCAG 2.2 AA como piso y enumerar criterios prioritarios |
-| Versionado paralelo `experiencia-de-uso_v1.0` y `v1.1` sin marcado de deprecación | Ambigüedad sobre cuál vigencia leer | Aplicar §3.5: una vigente, anteriores a `_legacy/` |
+| Versionado paralelo `experiencia-de-uso-v1.0` y `v1.1` sin marcado de deprecación | Ambigüedad sobre cuál vigencia leer | Aplicar §3.5: una vigente, anteriores a `_legacy/` |
 | Mensajes de error genéricos del tipo "Error 500" o "Ocurrió un problema" | El developer o el usuario no sabe qué hacer | Reescribir con causa probable y acción sugerida |
 | Onboarding sin tramos verificables (5/30/60 minutos) | No se puede medir el éxito del onboarding | Agregar hitos verificables por tramo |
 | Glosario duplicado con vocabulario distinto entre 02 y 03 | Confusión cross-doc | Reusar términos de 02 y solo agregar los nuevos de 03 |
 | Wireframe sin estados | El developer de 05 no sabe qué dibujar cuando algo falla | Enumerar estados mínimos: vacío, cargando, con datos, error |
 | DX docs que no aplican Diátaxis | Documentación mezclada entre tutorial y reference, ilegible | Separar los cuatro modos y enlazarlos explícitamente |
-| Patrón `.v1.0` heredado | Convención prohibida en SDD 2.2 | Forzar `_v1.0` |
-| Definir paleta, tipografía, espaciado o íconos ad hoc por proyecto en vez de heredar del catálogo de diseño | Rompe consistencia cross-proyecto y duplica decisiones ya tomadas; los íconos raster fallan accesibilidad | Heredar tokens y patrones de `references/design/`; iconografía SVG con `currentColor`; agregar token nuevo solo si es transversal y se promueve al catálogo |
-| Default de un parámetro o ayuda de un campo hardcodeados en la pantalla de configuración | Se desincronizan del descriptor; dos fuentes de verdad | Tomar default, límites y ayuda del descriptor (ver `design-rules-config-esquema`) |
+| Patrón `.v1.0` heredado | Convención prohibida en SDD | Forzar `-v1.0` |
+| Definir paleta, tipografía, espaciado o íconos ad hoc por proyecto en vez de heredar del catálogo de diseño | Rompe consistencia cross-proyecto y duplica decisiones ya tomadas; los íconos raster fallan accesibilidad | Heredar tokens y patrones de `References/Design/`; iconografía SVG con `currentColor`; agregar token nuevo solo si es transversal y se promueve al catálogo |
+| Default de un parámetro o ayuda de un campo hardcodeados en la pantalla de configuración | Se desincronizan del descriptor; dos fuentes de verdad | Tomar default, límites y ayuda del descriptor (ver `Design-Rules-Config-Esquema`) |
 | Explicación "en palabras" de una configuración escrita a mano | Se desfasa de los valores reales | Generarla por plantilla a partir de descriptores + valores |
 | Aplicar cambios de configuración sin previsualización ni modo simulación | El usuario no ve el efecto antes de comprometerlo | Previsualizar (en palabras + alcance) y simular antes de confirmar |
 | Dar a la IA capacidad de ejecutar cambios de configuración en vez de proponerlos | Saca al humano del lazo; cambios sin control | La IA llena una `PropuestaDeConfiguracion`; el humano confirma, el sistema valida |
@@ -359,14 +359,14 @@ Tabla de trazabilidad de un artefacto 03:
 ## 6. Criterios de aceptación
 
 - [ ] La variante aplicada (UX/UI, DX o combinada) está declarada explícitamente en la cabecera de cada artefacto y es coherente con el tipo D8.
-- [ ] Existe `experiencia-de-uso_v1.0.md` para todo tipo con UI final, con las once secciones obligatorias del §4.2.
-- [ ] Para tipos con UI final existe al menos un `wireframes-<superficie>_v1.0.md` por cada superficie clave, con las nueve secciones obligatorias del §4.2.1.
-- [ ] Para tipos sin UI final existe `dx-developer-experience_v1.0.md` con las nueve secciones obligatorias del §4.2.3, incluyendo Diátaxis y onboarding por tramos verificables (5/30/60 minutos).
+- [ ] Existe `Experiencia-De-Uso-v1.0.md` para todo tipo con UI final, con las once secciones obligatorias del §4.2.
+- [ ] Para tipos con UI final existe al menos un `wireframes-<superficie>-v1.0.md` por cada superficie clave, con las nueve secciones obligatorias del §4.2.1.
+- [ ] Para tipos sin UI final existe `DX-Developer-Experience-v1.0.md` con las nueve secciones obligatorias del §4.2.3, incluyendo Diátaxis y onboarding por tramos verificables (5/30/60 minutos).
 - [ ] Toda accesibilidad declarada toma WCAG 2.2 nivel AA como piso mínimo; las menciones a versiones anteriores aparecen solo en notas de evolución histórica.
 - [ ] Cada wireframe enumera al menos los estados vacío, cargando, con datos y error.
 - [ ] Cada `dx-` doc presenta un quick-start verificable con snippet ejecutable y reproducible.
 - [ ] Cada artefacto declara trazabilidad upstream (persona objetivo, CU origen, RN si aplica) y downstream (US, tests).
-- [ ] Ningún archivo usa el patrón `.v<X.Y>.md`; todos usan `_v<X.Y>.md` y kebab-case estricto en el slug.
+- [ ] Ningún archivo usa el patrón `-v<X.Y>.md`; todos usan `-v<X.Y>.md` y Título-Con-Guiones estricto en el slug.
 - [ ] No coexisten versiones distintas del mismo nombre lógico en la carpeta principal; las superadas viven en `_legacy/`.
 - [ ] El glosario de la sección no duplica términos del glosario de 02 con semántica distinta.
 - [ ] No hay menciones a stacks concretos, productos comerciales ni protocolos específicos del dominio fuente.
@@ -375,7 +375,7 @@ Tabla de trazabilidad de un artefacto 03:
 
 ## 7. Ejemplos genéricos
 
-### 7.1 Ejemplo 1 — Fragmento de `experiencia-de-uso_v1.0.md` para un sistema de turnos médicos (web-monolith)
+### 7.1 Ejemplo 1 — Fragmento de `Experiencia-De-Uso-v1.0.md` para un sistema de turnos médicos (web-monolith)
 
 Fragmento ilustrativo, no documento completo:
 
@@ -383,7 +383,7 @@ Fragmento ilustrativo, no documento completo:
 # Experiencia de uso — Sistema de turnos médicos
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** experiencia-de-uso_v1.0.md
+**Documento:** Experiencia-De-Uso-v1.0.md
 **Versión:** 1.0
 **Estado:** Propuesto
 **Fecha:** 2026-05-17
@@ -417,17 +417,17 @@ Compromiso WCAG 2.2 nivel AA. Criterios prioritarios: contraste 4.5:1 en texto, 
 | Persona objetivo | Agente administrativo (00) |
 | CU origen | CU-03 Asignar turno médico |
 | Reglas de negocio relevantes | RN-02, RN-04 |
-| Wireframes asociados | wireframes-pantalla-asignacion-turno_v1.0.md |
+| Wireframes asociados | Wireframes-Pantalla-Asignacion-Turno-v1.0.md |
 | US a generar | US-05, US-06 |
 ```
 
-### 7.2 Ejemplo 2 — Fragmento de `dx-developer-experience_v1.0.md` para una librería de parsing CSV (library)
+### 7.2 Ejemplo 2 — Fragmento de `DX-Developer-Experience-v1.0.md` para una librería de parsing CSV (library)
 
 ```markdown
 # DX — Librería de parsing CSV
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** dx-developer-experience_v1.0.md
+**Documento:** DX-Developer-Experience-v1.0.md
 **Versión:** 1.0
 **Estado:** Propuesto
 **Fecha:** 2026-05-17
@@ -456,7 +456,7 @@ Snippet ejecutable que produce el primer resultado visible. El equipo verifica e
 | Explanation | `docs/explanation.md` | Comprender el modelo de streaming y las decisiones de diseño. |
 
 ## 5. Mensajes de error y diagnóstico
-Cada error indica qué pasó (línea, columna), por qué pasó (regla violada) y qué hacer al respecto (cómo corregir o cómo ignorar la fila). Catálogo completo en `dx-error-messages_v1.0.md`.
+Cada error indica qué pasó (línea, columna), por qué pasó (regla violada) y qué hacer al respecto (cómo corregir o cómo ignorar la fila). Catálogo completo en `DX-Error-Messages-v1.0.md`.
 
 ## 6. Métricas DX
 | Métrica | Objetivo | Cómo se mide |
@@ -495,12 +495,12 @@ Insumos:
 - Upstream: 00 (visión, persona objetivo), 02 (CU con interacción humana o superficie pública, RN que afectan presentación).
 
 A generar (según variante):
-- Variante UX/UI: experiencia-de-uso_v1.0.md, wireframes-<superficie>_v1.0.md (uno por superficie clave), representacion-<concepto>_v1.0.md cuando aplique, glosario-ux_v1.0.md.
-- Variante DX: dx-developer-experience_v1.0.md, guia-onboarding-developer_v1.0.md, dx-error-messages_v1.0.md (cli-tool, library), dx-portal-developers_v1.0.md (rest-api con portal), dx-operability_v1.0.md (worker-service).
+- Variante UX/UI: Experiencia-De-Uso-v1.0.md, wireframes-<superficie>-v1.0.md (uno por superficie clave), representacion-<concepto>-v1.0.md cuando aplique, Glosario-UX-v1.0.md.
+- Variante DX: DX-Developer-Experience-v1.0.md, Guia-Onboarding-Developer-v1.0.md, DX-Error-Messages-v1.0.md (cli-tool, library), DX-Portal-Developers-v1.0.md (rest-api con portal), DX-Operability-v1.0.md (worker-service).
 - README.md de la sección (recomendado).
 
-Reglas de redacción: §4 de 03_rules_ux_ui_dx.md.
-Nomenclatura: `<nombre>_v1.0.md` con guion bajo antes de `v`; slug en minúsculas y kebab-case estricto.
+Reglas de redacción: §4 de 03-Rules-UX-UI-DX.md.
+Nomenclatura: `<nombre>-v1.0.md` con guion medio antes de `v`; slug en Título-Con-Guiones estricto.
 Trazabilidad: cada artefacto declara persona objetivo, CU origen y US a generar.
 Accesibilidad: WCAG 2.2 nivel AA como piso mínimo en todo artefacto UX.
 Diátaxis: aplicación explícita en al menos un artefacto DX.
@@ -508,7 +508,7 @@ Política de versionado: §3.5; una sola versión vigente; anteriores a `_legacy
 
 Restricciones: no introducir stacks concretos, productos comerciales ni protocolos del dominio fuente. Idioma rioplatense técnico, tildes correctas, sin emojis.
 
-Salida: /SDD2.2D/docs/proyectos/{{NOMBRE_PROYECTO_KEBAB}}/03_ux_ui_dx/<estructura>.
+Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/03-UX-UI-DX/<estructura>.
 ```
 
 ---
@@ -517,8 +517,8 @@ Salida: /SDD2.2D/docs/proyectos/{{NOMBRE_PROYECTO_KEBAB}}/03_ux_ui_dx/<estructur
 
 | Versión | Fecha | Cambios |
 | --- | --- | --- |
-| 1.0 | 2026-05-17 | Reglas iniciales generadas durante bootstrap SDD 2.2. Variantes UX/UI y DX cubriendo los 8 tipos D8, accesibilidad WCAG 2.2 AA como piso, Diátaxis explícito, política de versionado con `_legacy/`. |
-| 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `proyectos/<nombre-proyecto-kebab>/03_ux_ui_dx/`; la selección de variante y la ruta de salida del prompt-snippet referencian el `project_type` del proyecto en curso (manifiesto). Tablas §1.2 sin reescritura. |
+| 1.0 | 2026-05-17 | Reglas iniciales generadas durante bootstrap SDD. Variantes UX/UI y DX cubriendo los 8 tipos D8, accesibilidad WCAG 2.2 AA como piso, Diátaxis explícito, política de versionado con `_legacy/`. |
+| 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `Proyectos/<Nombre-Proyecto>/03-UX-UI-DX/`; la selección de variante y la ruta de salida del prompt-snippet referencian el `project_type` del proyecto en curso (manifiesto). Tablas §1.2 sin reescritura. |
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |
-| 1.3 | 2026-06-19 | Incorporación del catálogo de reglas de diseño (`devs/references/design/`) como insumo normativo de AG-03: nueva §1.4 (carga del índice, documento base más especialización por stack, tokens y patrones normativos, trazabilidad del catálogo), anti-patrón de tokens ad hoc en §4.4 y fila "Catálogo de diseño aplicado" en la tabla de trazabilidad de §4.3. |
-| 1.4 | 2026-06-20 | Cableado de la extensión por capacidad `design-rules-config-esquema`: §1.4 extendida (carga cuando hay superficies de configuración, y requisitos sobre `experiencia-de-uso`/`wireframes`: descriptores, ayuda contextual, presets, explicación en palabras, modo simulación, ranura del asistente y frontera `PropuestaDeConfiguracion`), nuevos anti-patrones de configuración por esquema en §4.4 y fila "Configuración dirigida por esquema aplicada" en la trazabilidad de §4.3. |
+| 1.3 | 2026-06-19 | Incorporación del catálogo de reglas de diseño (`devs/References/Design/`) como insumo normativo de AG-03: nueva §1.4 (carga del índice, documento base más especialización por stack, tokens y patrones normativos, trazabilidad del catálogo), anti-patrón de tokens ad hoc en §4.4 y fila "Catálogo de diseño aplicado" en la tabla de trazabilidad de §4.3. |
+| 1.4 | 2026-06-20 | Cableado de la extensión por capacidad `Design-Rules-Config-Esquema`: §1.4 extendida (carga cuando hay superficies de configuración, y requisitos sobre `experiencia-de-uso`/`wireframes`: descriptores, ayuda contextual, presets, explicación en palabras, modo simulación, ranura del asistente y frontera `PropuestaDeConfiguracion`), nuevos anti-patrones de configuración por esquema en §4.4 y fila "Configuración dirigida por esquema aplicada" en la trazabilidad de §4.3. |

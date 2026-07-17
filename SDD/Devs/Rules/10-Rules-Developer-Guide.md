@@ -1,18 +1,18 @@
 # Reglas constructivas — 10 Developer guide
 
-**Carpeta target (por proyecto):** `/SDD2.2D/docs/proyectos/<nombre-proyecto-kebab>/10_developer_guide/`
+**Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/10-Developer-Guide/`
 **Subagente target del orquestador:** Technical Writer / Developer Advocate Senior (AG-10)
 **Versión de las reglas:** 1.2
 
 ---
 
-## 0. Posición en la cadena SDD 2.2
+## 0. Posición en la cadena SDD
 
 La categoría 10 es la ventana que el proyecto le abre al desarrollador que lo va a consumir. Recibe upstream de 02 (casos de uso y modelo de datos lógico que explican qué resuelve el sistema), de 05 (arquitectura, contratos públicos, NFR y puntos de extensión que el consumidor debe respetar) y de 08 (estrategia de testing y convenciones de pruebas que la guía cita pero no redefine). Alimenta a 11 (examples ejecutables que ilustran los flujos descriptos por la guía) y, de manera transversal, a cualquier release y a su changelog público.
 
 Esta categoría es **obligatoria para library, rest-api y cli-tool**, donde la audiencia es explícitamente un desarrollador externo o integrador. Es **recomendada para web-microservices** cuando expone APIs públicas o un BFF documentado. Es **opcional para web-monolith, desktop-app, mobile-app-maui y worker-service**, casos en los que la documentación de consumo se limita al equipo interno y suele resolverse con el README del repositorio.
 
-La auditoría de Fase 0 (`_bootstrap/audit-sdd1.md`) detectó dos déficits del fuente SDD 1.0 que SDD 2.2 corrige aquí. Primero, los artefactos de `10_developer_guide/` del fuente carecen del sufijo `_v<X.Y>.md` (aparecen como `conceptos-fundamentales.md`, `formato-dsl-templates.md`, `guia-integracion-maui.md`, etc.), rompiendo la convención de versionado del resto del repositorio. Segundo, los nombres atan la guía a un sistema objetivo concreto (`guia-integracion-maui.md`), lo cual contamina la plantilla. SDD 2.2 corrige ambos puntos: impone `_v<X.Y>.md` uniforme y parametriza el nombre de la guía de integración como `guia-integracion-<sistema-objetivo>_v<X.Y>.md`.
+La auditoría de Fase 0 (`Bootstrap/Audit-SDD1.md`) detectó dos déficits del fuente SDD 1.0 que SDD corrige aquí. Primero, los artefactos de `10-Developer-Guide/` del fuente carecen del sufijo `-v<X.Y>.md` (aparecen como `conceptos-fundamentales.md`, `formato-dsl-templates.md`, `guia-integracion-maui.md`, etc.), rompiendo la convención de versionado del resto del repositorio. Segundo, los nombres atan la guía a un sistema objetivo concreto (`guia-integracion-maui.md`), lo cual contamina la plantilla. SDD corrige ambos puntos: impone `-v<X.Y>.md` uniforme y parametriza el nombre de la guía de integración como `guia-integracion-<sistema-objetivo>-v<X.Y>.md`.
 
 ---
 
@@ -59,13 +59,13 @@ El AG-10 mantiene titularidad de los artefactos de 10. Las demás especialidades
 
 | Archivo | Obligatorio para | Recomendado | Omitir para | Descripción |
 | --- | --- | --- | --- | --- |
-| `conceptos-fundamentales_v<X.Y>.md` | library, rest-api, cli-tool | web-microservices con APIs públicas | Resto | Modelo mental, vocabulario, decisiones de diseño relevantes para el consumidor y qué NO hace el sistema. |
-| `guia-onboarding-developer_v<X.Y>.md` | library, rest-api, cli-tool | web-microservices con APIs públicas | Resto | Tutorial Diátaxis. De cero a "primer éxito" en cinco pasos, con Hello world en menos de cinco minutos. |
-| `guia-integracion-<sistema-objetivo>_v<X.Y>.md` | library con stacks de integración nombrados | rest-api integrada a un stack específico, cli-tool ejecutado dentro de un stack específico | Resto | How-to Diátaxis. El nombre del archivo se parametriza con `<sistema-objetivo>` (por ejemplo `guia-integracion-spa-react_v1.0.md`, `guia-integracion-aplicacion-cli_v1.0.md`, `guia-integracion-servicio-web_v1.0.md`). Se puede haber más de una guía si hay más de un stack objetivo. |
-| `referencia-api_v<X.Y>.md` | library, rest-api | web-microservices con APIs públicas | Resto | Reference Diátaxis. Tipos públicos, métodos, eventos, excepciones, esquemas. Para REST, generada o curada desde OpenAPI. |
-| `referencia-cli_v<X.Y>.md` | cli-tool | rest-api con CLI auxiliar oficial | Resto | Reference Diátaxis. Comandos, subcomandos, flags, exit codes, variables de entorno. |
-| `troubleshooting_v<X.Y>.md` | library, rest-api, cli-tool | web-microservices con APIs públicas | Resto | Errores comunes con síntoma, causa, diagnóstico paso-a-paso y solución. Tabla de logs útiles. Cómo reportar un bug. |
-| `glosario-tecnico_v<X.Y>.md` | library, rest-api, cli-tool | web-microservices con APIs públicas | Resto | Vocabulario canónico del consumidor con definición y referencia cross-doc. Reemplaza glosarios duplicados en cada documento. |
+| `conceptos-fundamentales-v<X.Y>.md` | library, rest-api, cli-tool | web-microservices con APIs públicas | Resto | Modelo mental, vocabulario, decisiones de diseño relevantes para el consumidor y qué NO hace el sistema. |
+| `guia-onboarding-developer-v<X.Y>.md` | library, rest-api, cli-tool | web-microservices con APIs públicas | Resto | Tutorial Diátaxis. De cero a "primer éxito" en cinco pasos, con Hello world en menos de cinco minutos. |
+| `guia-integracion-<sistema-objetivo>-v<X.Y>.md` | library con stacks de integración nombrados | rest-api integrada a un stack específico, cli-tool ejecutado dentro de un stack específico | Resto | How-to Diátaxis. El nombre del archivo se parametriza con `<sistema-objetivo>` (por ejemplo `Guia-Integracion-Spa-React-v1.0.md`, `Guia-Integracion-Aplicacion-CLI-v1.0.md`, `Guia-Integracion-Servicio-Web-v1.0.md`). Se puede haber más de una guía si hay más de un stack objetivo. |
+| `referencia-api-v<X.Y>.md` | library, rest-api | web-microservices con APIs públicas | Resto | Reference Diátaxis. Tipos públicos, métodos, eventos, excepciones, esquemas. Para REST, generada o curada desde OpenAPI. |
+| `referencia-cli-v<X.Y>.md` | cli-tool | rest-api con CLI auxiliar oficial | Resto | Reference Diátaxis. Comandos, subcomandos, flags, exit codes, variables de entorno. |
+| `troubleshooting-v<X.Y>.md` | library, rest-api, cli-tool | web-microservices con APIs públicas | Resto | Errores comunes con síntoma, causa, diagnóstico paso-a-paso y solución. Tabla de logs útiles. Cómo reportar un bug. |
+| `glosario-tecnico-v<X.Y>.md` | library, rest-api, cli-tool | web-microservices con APIs públicas | Resto | Vocabulario canónico del consumidor con definición y referencia cross-doc. Reemplaza glosarios duplicados en cada documento. |
 | `README.md` de la sección | Recomendado para todos los tipos donde la categoría aplica | — | — | Índice navegable, orden de lectura, prerequisitos y quick-start de cinco líneas. |
 
 ### 2.2 Reglas de inclusión y exclusión por tipo
@@ -81,7 +81,7 @@ El AG-10 mantiene titularidad de los artefactos de 10. Las demás especialidades
 | mobile-app-maui | Opcional | Sólo si hay SDK público | Si hay SDK público | Si hay SDK público | Si hay SDK público | No | Sólo si hay SDK público | Sólo si hay SDK público |
 | worker-service | Opcional | No | No | No | No | No | Runbook breve | No |
 
-El gating de la categoría es de granularidad doble: primero se decide si la categoría existe para el tipo D8; luego, dentro de la categoría, qué artefactos se materializan. El intake registra ambas decisiones en `decisiones-proyecto_v1.0.md`.
+El gating de la categoría es de granularidad doble: primero se decide si la categoría existe para el tipo D8; luego, dentro de la categoría, qué artefactos se materializan. El intake registra ambas decisiones en `Decisiones-Proyecto-v1.0.md`.
 
 ---
 
@@ -89,20 +89,20 @@ El gating de la categoría es de granularidad doble: primero se decide si la cat
 
 ### 3.1 Patrón de nombres
 
-- `conceptos-fundamentales_v<X.Y>.md` para el modelo mental del consumidor.
-- `guia-onboarding-developer_v<X.Y>.md` para el tutorial de primer éxito.
-- `guia-integracion-<sistema-objetivo>_v<X.Y>.md` para cada how-to de integración. El segmento `<sistema-objetivo>` es kebab-case y describe el stack o sistema receptor de la integración (por ejemplo `cli`, `servicio-web`, `aplicacion-de-escritorio`, `pipeline-ci`). No se admite hardcodear un nombre comercial.
-- `referencia-api_v<X.Y>.md` para la referencia de la API pública.
-- `referencia-cli_v<X.Y>.md` para la referencia de la CLI pública.
-- `troubleshooting_v<X.Y>.md` para errores y diagnóstico.
-- `glosario-tecnico_v<X.Y>.md` para el vocabulario canónico.
+- `conceptos-fundamentales-v<X.Y>.md` para el modelo mental del consumidor.
+- `guia-onboarding-developer-v<X.Y>.md` para el tutorial de primer éxito.
+- `guia-integracion-<sistema-objetivo>-v<X.Y>.md` para cada how-to de integración. El segmento `<sistema-objetivo>` es Título-Con-Guiones y describe el stack o sistema receptor de la integración (por ejemplo `cli`, `servicio-web`, `aplicacion-de-escritorio`, `pipeline-ci`). No se admite hardcodear un nombre comercial.
+- `referencia-api-v<X.Y>.md` para la referencia de la API pública.
+- `referencia-cli-v<X.Y>.md` para la referencia de la CLI pública.
+- `troubleshooting-v<X.Y>.md` para errores y diagnóstico.
+- `glosario-tecnico-v<X.Y>.md` para el vocabulario canónico.
 - `README.md` para el índice de la sección.
 
-El sufijo `_v<X.Y>.md` es uniforme y obligatorio para todos los artefactos versionables, incluyendo los de esta categoría. Queda explícitamente corregido el antecedente del fuente SDD 1.0 (`conceptos-fundamentales.md`, `formato-dsl-templates.md`, `guia-integracion-maui.md`, etc.) que omitía el sufijo. Queda prohibido el patrón heredado `.v<X.Y>`. Queda prohibido el sufijo de dominio hardcodeado en el nombre (por ejemplo `guia-integracion-maui_v1.0.md` está vedado; debe parametrizarse como `guia-integracion-<sistema-objetivo>_v<X.Y>.md` con un slug genérico).
+El sufijo `-v<X.Y>.md` es uniforme y obligatorio para todos los artefactos versionables, incluyendo los de esta categoría. Queda explícitamente corregido el antecedente del fuente SDD 1.0 (`conceptos-fundamentales.md`, `formato-dsl-templates.md`, `guia-integracion-maui.md`, etc.) que omitía el sufijo. Queda prohibido el patrón heredado `-v<X.Y>`. Queda prohibido el sufijo de dominio hardcodeado en el nombre (por ejemplo `Guia-Integracion-MAUI-v1.0.md` está vedado; debe parametrizarse como `guia-integracion-<sistema-objetivo>-v<X.Y>.md` con un slug genérico).
 
 ### 3.2 Convenciones de identificadores internos
 
-- Cada concepto fundamental se nombra con un identificador kebab dentro del documento (por ejemplo `concepto-pipeline`, `concepto-binding`) para enlazar desde la referencia y desde 11.
+- Cada concepto fundamental se nombra con un identificador Título-Con-Guiones dentro del documento (por ejemplo `concepto-pipeline`, `concepto-binding`) para enlazar desde la referencia y desde 11.
 - Cada paso del onboarding se numera (Paso 1, Paso 2) y declara el tiempo objetivo en minutos.
 - Cada entrada del troubleshooting se identifica con un código `ISSUE-XX` para que se la pueda referenciar desde el código de error real, desde logs o desde tickets.
 
@@ -132,7 +132,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos uniforme:
 # <Título del documento>
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** <nombre-archivo>_v<X.Y>.md
+**Documento:** <nombre-archivo>-v<X.Y>.md
 **Versión:** <X.Y>
 **Estado:** Borrador | Propuesto | Aprobado | Vigente | Superado | Archivado
 **Fecha:** YYYY-MM-DD
@@ -145,7 +145,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos uniforme:
 
 El campo `Tipo Diátaxis` es obligatorio para esta categoría: declara explícitamente el cuadrante al que pertenece el documento. Mezclar cuadrantes es el anti-patrón principal que estas reglas previenen.
 
-### 4.2 Estructura de `conceptos-fundamentales_v1.0.md` (Explanation)
+### 4.2 Estructura de `Conceptos-Fundamentales-v1.0.md` (Explanation)
 
 1. Concepto central. Qué es el sistema en una a tres oraciones, con foco en qué transforma, qué recibe y qué entrega. Sin jerga interna.
 2. Modelo mental. Diagrama del flujo principal con etapas nombradas, entradas y salidas. Cada etapa se explica en un párrafo corto y una tabla concepto/qué es/ejemplo.
@@ -153,17 +153,17 @@ El campo `Tipo Diátaxis` es obligatorio para esta categoría: declara explícit
 4. Vocabulario. Tabla término/definición operativa/ejemplo. Es el insumo del glosario; aquí aparece sólo el subconjunto crítico para entender el sistema.
 5. Qué NO hace el sistema. Tabla que delimita la responsabilidad del consumidor frente a la del sistema. Evita expectativas falsas.
 
-### 4.3 Estructura de `guia-onboarding-developer_v1.0.md` (Tutorial)
+### 4.3 Estructura de `Guia-Onboarding-Developer-v1.0.md` (Tutorial)
 
 1. Prerequisites. Versión del runtime, herramientas, dependencias, credenciales si aplica. Cada prerequisito con el comando o link para obtenerlo.
 2. Hello world (5 min). Script o snippet mínimo que produce un resultado visible. Copy-paste-ready. Output esperado mostrado textualmente.
 3. Primer caso real (30 min). Caso con datos representativos, no triviales, pero acotados. Cada paso numerado, con código y output esperado.
-4. Integración con un sistema (1 hora). Paso a paso de la integración con el sistema objetivo más común para el proyecto, sirviendo de puente al how-to. Linkea a `guia-integracion-<sistema-objetivo>_v1.0.md` para el detalle completo.
+4. Integración con un sistema (1 hora). Paso a paso de la integración con el sistema objetivo más común para el proyecto, sirviendo de puente al how-to. Linkea a `guia-integracion-<sistema-objetivo>-v1.0.md` para el detalle completo.
 5. Siguientes pasos. Tres rutas posibles: profundizar en conceptos, consultar referencia, ver examples.
 
 El criterio de éxito del onboarding es duro: un developer nuevo debe llegar al final del paso 4 en menos de una hora. Si el tiempo medido supera el objetivo, se reescribe.
 
-### 4.4 Estructura de `guia-integracion-<sistema-objetivo>_v1.0.md` (How-to)
+### 4.4 Estructura de `guia-integracion-<sistema-objetivo>-v1.0.md` (How-to)
 
 1. Objetivo. Una a tres oraciones que declaran qué problema concreto resuelve esta guía y para qué sistema objetivo.
 2. Prerequisites. Estado inicial mínimo del sistema objetivo, dependencias agregadas, configuración previa.
@@ -171,7 +171,7 @@ El criterio de éxito del onboarding es duro: un developer nuevo debe llegar al 
 4. Verificación. Cómo confirmar que la integración funciona. Comandos, checks visibles, criterios de éxito.
 5. Troubleshooting específico. Subset de problemas conocidos para esta integración en particular, con código de issue del troubleshooting global cuando corresponde.
 
-### 4.5 Estructura de `referencia-api_v1.0.md` (Reference)
+### 4.5 Estructura de `Referencia-API-v1.0.md` (Reference)
 
 1. Tipos públicos. Cada tipo con propósito, propiedades, invariantes documentadas.
 2. Métodos. Cada método con firma exacta, parámetros (nombre, tipo, descripción, obligatorio/opcional, default), valor de retorno y excepciones que puede lanzar.
@@ -181,7 +181,7 @@ El criterio de éxito del onboarding es duro: un developer nuevo debe llegar al 
 
 Cuando la API es HTTP, la referencia se genera o se cura desde OpenAPI 3.x y los ejemplos van en formato `curl` y en al menos un cliente HTTP. Los códigos de error siguen RFC 9457 (`application/problem+json`).
 
-### 4.6 Estructura de `referencia-cli_v1.0.md` (Reference)
+### 4.6 Estructura de `Referencia-CLI-v1.0.md` (Reference)
 
 1. Comandos. Tabla con comando principal, descripción de una línea y página completa con el detalle.
 2. Subcomandos. Por comando, los subcomandos disponibles con su descripción y ejemplo invocacional.
@@ -190,16 +190,16 @@ Cuando la API es HTTP, la referencia se genera o se cura desde OpenAPI 3.x y los
 5. Códigos de salida. Tabla código/significado. El cero significa éxito; el resto se documenta exhaustivamente.
 6. Ejemplos. Al menos un ejemplo por subcomando, con input, comando exacto, output esperado en stdout y stderr.
 
-### 4.7 Estructura de `troubleshooting_v1.0.md`
+### 4.7 Estructura de `Troubleshooting-v1.0.md`
 
 1. Errores comunes. Tabla síntoma/causa probable/solución, con identificador `ISSUE-XX`.
 2. Diagnóstico paso-a-paso. Por cada error frecuente, secuencia ordenada de comandos y checks que permiten al consumidor confirmar la causa antes de aplicar la solución.
 3. Logs útiles. Qué logs revisar, en qué nivel y qué patrón buscar. Comando concreto cuando aplica.
 4. Cómo reportar un bug. Plantilla de issue, datos mínimos a adjuntar, dónde se reportan, política de severidad y tiempo de respuesta esperado.
 
-### 4.8 Estructura de `glosario-tecnico_v1.0.md`
+### 4.8 Estructura de `Glosario-Tecnico-v1.0.md`
 
-Tabla con tres columnas: término en kebab-case, definición operativa en una a tres oraciones, referencia cross-doc (al concepto en `conceptos-fundamentales` o al tipo en `referencia-api`). El glosario es la fuente canónica del vocabulario; el resto de los documentos enlaza acá en lugar de redefinir.
+Tabla con tres columnas: término en Título-Con-Guiones, definición operativa en una a tres oraciones, referencia cross-doc (al concepto en `conceptos-fundamentales` o al tipo en `referencia-api`). El glosario es la fuente canónica del vocabulario; el resto de los documentos enlaza acá en lugar de redefinir.
 
 ### 4.9 Tablas tipo y formatos recurrentes
 
@@ -207,35 +207,35 @@ Audiencia, documento y tipo Diátaxis:
 
 | Audiencia | Documento | Tipo Diátaxis |
 | --- | --- | --- |
-| Developer que ingresa por primera vez | `guia-onboarding-developer_v1.0.md` | Tutorial |
-| Developer con tarea concreta de integración | `guia-integracion-<sistema-objetivo>_v1.0.md` | How-to |
-| Developer que necesita el dato exacto de un tipo, método o flag | `referencia-api_v1.0.md`, `referencia-cli_v1.0.md` | Reference |
-| Developer que quiere entender por qué el sistema funciona como funciona | `conceptos-fundamentales_v1.0.md` | Explanation |
-| Developer atascado con un error | `troubleshooting_v1.0.md` | How-to (orientado a diagnóstico) |
-| Cualquier audiencia, lookup terminológico | `glosario-tecnico_v1.0.md` | Reference |
+| Developer que ingresa por primera vez | `Guia-Onboarding-Developer-v1.0.md` | Tutorial |
+| Developer con tarea concreta de integración | `guia-integracion-<sistema-objetivo>-v1.0.md` | How-to |
+| Developer que necesita el dato exacto de un tipo, método o flag | `Referencia-API-v1.0.md`, `Referencia-CLI-v1.0.md` | Reference |
+| Developer que quiere entender por qué el sistema funciona como funciona | `Conceptos-Fundamentales-v1.0.md` | Explanation |
+| Developer atascado con un error | `Troubleshooting-v1.0.md` | How-to (orientado a diagnóstico) |
+| Cualquier audiencia, lookup terminológico | `Glosario-Tecnico-v1.0.md` | Reference |
 
 Tiempo a primer éxito (TTFS) por tarea:
 
 | Tarea del consumidor | TTFS objetivo | Documento que lo soporta |
 | --- | --- | --- |
-| Hello world | < 5 min | `guia-onboarding-developer_v1.0.md` (§2) |
-| Primer caso real | < 30 min | `guia-onboarding-developer_v1.0.md` (§3) |
-| Integración completa con un stack | < 1 hora | `guia-onboarding-developer_v1.0.md` (§4) + `guia-integracion-<sistema-objetivo>_v1.0.md` |
-| Resolver un error frecuente | < 10 min | `troubleshooting_v1.0.md` |
-| Encontrar la firma exacta de un método o flag | < 1 min | `referencia-api_v1.0.md` o `referencia-cli_v1.0.md` |
+| Hello world | < 5 min | `Guia-Onboarding-Developer-v1.0.md` (§2) |
+| Primer caso real | < 30 min | `Guia-Onboarding-Developer-v1.0.md` (§3) |
+| Integración completa con un stack | < 1 hora | `Guia-Onboarding-Developer-v1.0.md` (§4) + `guia-integracion-<sistema-objetivo>-v1.0.md` |
+| Resolver un error frecuente | < 10 min | `Troubleshooting-v1.0.md` |
+| Encontrar la firma exacta de un método o flag | < 1 min | `Referencia-API-v1.0.md` o `Referencia-CLI-v1.0.md` |
 
 Glosario término / definición / referencia cross-doc:
 
 | Término | Definición operativa | Referencia cross-doc |
 | --- | --- | --- |
-| <termino-en-kebab> | <definicion-en-una-a-tres-oraciones> | <ruta-al-concepto-o-tipo> |
+| <Termino> | <definicion-en-una-a-tres-oraciones> | <ruta-al-concepto-o-tipo> |
 
 ### 4.10 Anti-patrones a evitar
 
 | Anti-patrón | Problema | Solución |
 | --- | --- | --- |
-| Documentos sin sufijo de versión | Pierde trazabilidad entre release y documentación; impide convivir con `_legacy/` | Sufijo `_v<X.Y>.md` obligatorio en todos los artefactos (corrección del antecedente SDD 1.0) |
-| Nombre de archivo hardcodeado con un sistema concreto | Atascamiento del template a un stack particular; bloqueo de proyectos con otro objetivo | Parametrizar como `guia-integracion-<sistema-objetivo>_v<X.Y>.md` con slug genérico |
+| Documentos sin sufijo de versión | Pierde trazabilidad entre release y documentación; impide convivir con `_legacy/` | Sufijo `-v<X.Y>.md` obligatorio en todos los artefactos (corrección del antecedente SDD 1.0) |
+| Nombre de archivo hardcodeado con un sistema concreto | Atascamiento del template a un stack particular; bloqueo de proyectos con otro objetivo | Parametrizar como `guia-integracion-<sistema-objetivo>-v<X.Y>.md` con slug genérico |
 | Mezcla de cuadrantes Diátaxis | Un tutorial con explicaciones largas se vuelve ilegible; una referencia con narrativa pierde rigor | Declarar `Tipo Diátaxis` en la cabecera y respetarlo; cada cuadrante con su tono y estructura |
 | Onboarding que supera la hora | El consumidor abandona; el TTFS objetivo no se cumple | Cortar a Hello world en 5 min, primer caso en 30 min, integración completa en 1 hora; medir |
 | Referencia sin ejemplos | La firma sola es ambigua; el consumidor inventa interpretaciones | Cada método o flag complejo con un snippet de tres a diez líneas |
@@ -243,7 +243,7 @@ Glosario término / definición / referencia cross-doc:
 | Pseudo-código en lugar de la API real | El snippet no compila; pérdida de credibilidad | Snippets validados en CI contra la versión documentada |
 | Jerga interna del equipo | El consumidor no entiende los términos | Aplicar el test del developer nuevo; glosario centralizado |
 | Docs desactualizados respecto a la API real | La guía dice X pero la API hace Y | Versionar 10 al ritmo de la API; checks de paridad en CI |
-| Glosarios duplicados por documento | El mismo término con definiciones distintas en cada archivo | Un único `glosario-tecnico_v<X.Y>.md` referenciado desde todos los documentos |
+| Glosarios duplicados por documento | El mismo término con definiciones distintas en cada archivo | Un único `glosario-tecnico-v<X.Y>.md` referenciado desde todos los documentos |
 | Cobertura cero de troubleshooting | El consumidor se traba ante el primer error y abandona | Mínimo cinco entradas `ISSUE-XX` con base en los errores reales reportados |
 | Conceptos fundamentales que documentan la implementación interna | Confunde audiencia y duplica 05 | 10 documenta el modelo mental visible al consumidor; la implementación vive en 05 |
 
@@ -285,25 +285,25 @@ Glosario término / definición / referencia cross-doc:
 
 ## 6. Criterios de aceptación
 
-- [ ] Existe `conceptos-fundamentales_v1.0.md` con concepto central, modelo mental, decisiones de diseño relevantes, vocabulario y delimitación de responsabilidades.
-- [ ] Existe `guia-onboarding-developer_v1.0.md` con prerequisites, Hello world < 5 min, primer caso real < 30 min, integración < 1 hora y siguientes pasos.
-- [ ] Existe al menos una `guia-integracion-<sistema-objetivo>_v1.0.md` con nombre parametrizado (no hardcodeado a un sistema comercial concreto).
-- [ ] Existe `referencia-api_v1.0.md` (library/rest-api) o `referencia-cli_v1.0.md` (cli-tool), con la estructura completa de §4.5 o §4.6.
-- [ ] Existe `troubleshooting_v1.0.md` con al menos cinco entradas `ISSUE-XX`, diagnóstico paso-a-paso y plantilla de reporte de bug.
-- [ ] Existe `glosario-tecnico_v1.0.md` con definición operativa y referencia cross-doc por término.
+- [ ] Existe `Conceptos-Fundamentales-v1.0.md` con concepto central, modelo mental, decisiones de diseño relevantes, vocabulario y delimitación de responsabilidades.
+- [ ] Existe `Guia-Onboarding-Developer-v1.0.md` con prerequisites, Hello world < 5 min, primer caso real < 30 min, integración < 1 hora y siguientes pasos.
+- [ ] Existe al menos una `guia-integracion-<sistema-objetivo>-v1.0.md` con nombre parametrizado (no hardcodeado a un sistema comercial concreto).
+- [ ] Existe `Referencia-API-v1.0.md` (library/rest-api) o `Referencia-CLI-v1.0.md` (cli-tool), con la estructura completa de §4.5 o §4.6.
+- [ ] Existe `Troubleshooting-v1.0.md` con al menos cinco entradas `ISSUE-XX`, diagnóstico paso-a-paso y plantilla de reporte de bug.
+- [ ] Existe `Glosario-Tecnico-v1.0.md` con definición operativa y referencia cross-doc por término.
 - [ ] Existe `README.md` con índice, orden de lectura, prerequisitos y quick-start de cinco a diez líneas.
-- [ ] Todos los archivos llevan sufijo `_v<X.Y>.md` (corrección obligatoria del antecedente SDD 1.0 que omitía el sufijo en esta carpeta).
+- [ ] Todos los archivos llevan sufijo `-v<X.Y>.md` (corrección obligatoria del antecedente SDD 1.0 que omitía el sufijo en esta carpeta).
 - [ ] Ningún nombre de archivo está hardcodeado a un sistema concreto; el slug `<sistema-objetivo>` es genérico (corrección obligatoria del `guia-integracion-maui` del fuente).
 - [ ] Cada documento declara en cabecera su `Tipo Diátaxis`, su audiencia, su nivel y su tiempo estimado de lectura.
 - [ ] Cada documento incluye al pie referencias cruzadas con al menos un enlace a 05.
 - [ ] Los snippets se validan en CI contra la versión documentada (compilan o se ejecutan al copy-paste).
-- [ ] La categoría 10 sólo se genera cuando el tipo D8 lo amerita (obligatoria, recomendada u opcional) y la decisión queda registrada en `decisiones-proyecto_v1.0.md`.
+- [ ] La categoría 10 sólo se genera cuando el tipo D8 lo amerita (obligatoria, recomendada u opcional) y la decisión queda registrada en `Decisiones-Proyecto-v1.0.md`.
 
 ---
 
 ## 7. Ejemplos genéricos
 
-### 7.1 Ejemplo 1 — `guia-onboarding-developer_v1.0.md` para una librería de parsing CSV
+### 7.1 Ejemplo 1 — `Guia-Onboarding-Developer-v1.0.md` para una librería de parsing CSV
 
 Fragmento ilustrativo:
 
@@ -311,7 +311,7 @@ Fragmento ilustrativo:
 # Guía de onboarding — Librería de parsing CSV
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** guia-onboarding-developer_v1.0.md
+**Documento:** Guia-Onboarding-Developer-v1.0.md
 **Versión:** 1.0
 **Tipo Diátaxis:** Tutorial
 **Audiencia:** Developer que integra la librería en su aplicación
@@ -329,15 +329,15 @@ Pegá el snippet en un script vacío. Output esperado: lista de objetos con las 
 Cargá un archivo CSV con encoding UTF-8, separador `;` y comillas dobles. Validá columnas, transformá tipos y reportá errores línea por línea.
 
 ## 4. Integración con un sistema (1 hora)
-Caso de integración con un servicio web que recibe el CSV por upload y devuelve JSON normalizado. Linkea a `guia-integracion-servicio-web_v1.0.md`.
+Caso de integración con un servicio web que recibe el CSV por upload y devuelve JSON normalizado. Linkea a `Guia-Integracion-Servicio-Web-v1.0.md`.
 
 ## 5. Siguientes pasos
-- Profundizar: `conceptos-fundamentales_v1.0.md`.
-- Referencia: `referencia-api_v1.0.md`.
-- Ejemplos: `11_examples/`.
+- Profundizar: `Conceptos-Fundamentales-v1.0.md`.
+- Referencia: `Referencia-API-v1.0.md`.
+- Ejemplos: `11-Examples/`.
 ```
 
-### 7.2 Ejemplo 2 — `referencia-cli_v1.0.md` para un CLI de migración de datos
+### 7.2 Ejemplo 2 — `Referencia-CLI-v1.0.md` para un CLI de migración de datos
 
 Fragmento ilustrativo:
 
@@ -345,7 +345,7 @@ Fragmento ilustrativo:
 # Referencia de CLI — Herramienta de migración de datos
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** referencia-cli_v1.0.md
+**Documento:** Referencia-CLI-v1.0.md
 **Versión:** 1.0
 **Tipo Diátaxis:** Reference
 **Audiencia:** Operador o developer que ejecuta migraciones desde terminal
@@ -392,21 +392,21 @@ Insumos:
 - Upstream: 02 (CU, modelo de datos lógico), 05 (arquitectura, contratos, NFR, puntos de extensión), 08 (estrategia de testing, casos de prueba referenciales).
 
 A generar (según el tipo D8 declarado en el intake):
-- conceptos-fundamentales_v1.0.md
-- guia-onboarding-developer_v1.0.md
-- guia-integracion-<sistema-objetivo>_v1.0.md (parametrizar el slug; una guía por stack objetivo relevante)
-- referencia-api_v1.0.md (library, rest-api)
-- referencia-cli_v1.0.md (cli-tool)
-- troubleshooting_v1.0.md
-- glosario-tecnico_v1.0.md
+- Conceptos-Fundamentales-v1.0.md
+- Guia-Onboarding-Developer-v1.0.md
+- guia-integracion-<sistema-objetivo>-v1.0.md (parametrizar el slug; una guía por stack objetivo relevante)
+- Referencia-API-v1.0.md (library, rest-api)
+- Referencia-CLI-v1.0.md (cli-tool)
+- Troubleshooting-v1.0.md
+- Glosario-Tecnico-v1.0.md
 - README.md de la sección
 
-Reglas de redacción: §4 de 10_rules_developer_guide.md.
-Nomenclatura: sufijo uniforme `_v<X.Y>.md` obligatorio en todos los artefactos (corrección obligatoria del antecedente del fuente SDD 1.0 que omitía el sufijo en esta carpeta). Prohibido hardcodear el nombre del sistema objetivo en el archivo: usar el slug genérico `<sistema-objetivo>`.
+Reglas de redacción: §4 de 10-Rules-Developer-Guide.md.
+Nomenclatura: sufijo uniforme `-v<X.Y>.md` obligatorio en todos los artefactos (corrección obligatoria del antecedente del fuente SDD 1.0 que omitía el sufijo en esta carpeta). Prohibido hardcodear el nombre del sistema objetivo en el archivo: usar el slug genérico `<sistema-objetivo>`.
 Diátaxis: cada documento declara su tipo (Tutorial, How-to, Reference, Explanation) en la cabecera y respeta la estructura del cuadrante.
 TTFS: Hello world < 5 min, primer caso real < 30 min, integración < 1 hora. Si no se cumple, reescribir.
 Trazabilidad: cada documento incluye referencias cruzadas con al menos un enlace a 05; cada concepto aparece en el glosario; cada referencia es consistente con los contratos publicados en 05.
-Criterios de calidad: §6 de 10_rules_developer_guide.md. Aplicar el test del developer nuevo antes de declarar Done.
+Criterios de calidad: §6 de 10-Rules-Developer-Guide.md. Aplicar el test del developer nuevo antes de declarar Done.
 ```
 
 ---
@@ -415,6 +415,6 @@ Criterios de calidad: §6 de 10_rules_developer_guide.md. Aplicar el test del de
 
 | Versión | Fecha | Cambio | Autor |
 | --- | --- | --- | --- |
-| 1.0 | 2026-05-17 | Versión inicial. Define la categoría 10 developer guide, sus artefactos obligatorios y opcionales por tipo D8, su estructura por cuadrante Diátaxis, el TTFS objetivo y los anti-patrones. Corrige los dos déficits del fuente SDD 1.0: impone sufijo `_v<X.Y>.md` uniforme en todos los artefactos de esta carpeta y parametriza el nombre de la guía de integración como `guia-integracion-<sistema-objetivo>_v<X.Y>.md` para evitar atar la plantilla a un stack comercial concreto. | AG-10 Technical Writer / Developer Advocate Senior |
-| 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `proyectos/<nombre-proyecto-kebab>/10_developer_guide/`; la frase de selección de variante y la carpeta target referencian el `project_type` del proyecto en curso (manifiesto). Tablas §1.2 sin reescritura. | Reformulación SDD 2.2D |
-| 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). | Migración SDD 2.2D |
+| 1.0 | 2026-05-17 | Versión inicial. Define la categoría 10 developer guide, sus artefactos obligatorios y opcionales por tipo D8, su estructura por cuadrante Diátaxis, el TTFS objetivo y los anti-patrones. Corrige los dos déficits del fuente SDD 1.0: impone sufijo `-v<X.Y>.md` uniforme en todos los artefactos de esta carpeta y parametriza el nombre de la guía de integración como `guia-integracion-<sistema-objetivo>-v<X.Y>.md` para evitar atar la plantilla a un stack comercial concreto. | AG-10 Technical Writer / Developer Advocate Senior |
+| 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `Proyectos/<Nombre-Proyecto>/10-Developer-Guide/`; la frase de selección de variante y la carpeta target referencian el `project_type` del proyecto en curso (manifiesto). Tablas §1.2 sin reescritura. | Reformulación SDD |
+| 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). | Migración SDD |

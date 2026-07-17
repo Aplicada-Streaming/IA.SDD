@@ -1,12 +1,12 @@
 # Reglas constructivas — 06 Backlog técnico
 
-**Carpeta target (por proyecto):** `/SDD2.2D/docs/proyectos/<nombre-proyecto-kebab>/06_backlog-tecnico/`
+**Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/06-Backlog-Tecnico/`
 **Subagente target del orquestador:** Scrum Master / Agile Coach senior (AG-06)
 **Versión de las reglas:** 1.2
 
 ---
 
-## 0. Posición en la cadena SDD 2.2
+## 0. Posición en la cadena SDD
 
 La categoría 06 es la bisagra entre el diseño y la ejecución dentro de la cadena de trazabilidad D6. Recibe upstream de 01 (necesidades de negocio NB-XX), 02 (CU, RN, modelo conceptual) y 05 (arquitectura de solución, ADRs y modelo lógico). Produce los artefactos que alimentan 07 (sprint plan), 08 (acceptance tests y QA) y 10 (developer guide cuando se trata de onboarding al backlog). Su salida define qué se construye y en qué orden, sin entrar en el detalle de planificación temporal por sprint, que vive en 07. Aplica de manera obligatoria a los ocho tipos D8: ningún tipo está exento de producir un product backlog priorizado, un backlog técnico y una Definition of Ready acotada.
 
@@ -52,11 +52,11 @@ El AG-06 mantiene siempre la titularidad del artefacto; las demás especialidade
 
 | Archivo | Obligatorio para | Recomendado | Omitir para | Descripción |
 | --- | --- | --- | --- | --- |
-| `product-backlog_v1.0.md` | Todos los tipos D8 | — | — | Índice maestro priorizado de historias de usuario con MoSCoW, story points, trazabilidad a CU y a épicas. |
-| `backlog-tecnico_v1.0.md` | Todos los tipos D8 | — | — | Vista del backlog desde la lente técnica, organizada por épicas técnicas y por BT-XX con dependencias, fuente upstream y criterios de aceptación. |
-| `historias-usuario/US-XX-<kebab>_v1.0.md` | Proyectos con más de 20 US | Proyectos con 10 a 20 US | Proyectos con menos de 10 US (US inline en `product-backlog_v1.0.md`) | Un archivo por historia, con criterios BDD, INVEST check, trazabilidad y DoR. |
-| `tareas-tecnicas/BT-XX-<kebab>_v1.0.md` | Proyectos con más de 30 BT | Proyectos con 15 a 30 BT | Proyectos con menos de 15 BT (BT inline en `backlog-tecnico_v1.0.md`) | Un archivo por tarea técnica, con justificación, dependencias, tipo y trazabilidad a US. |
-| `definition-of-ready_v1.0.md` | Todos los tipos D8 | — | — | Criterios DoR para US y para BT, con aprobador y excepciones admitidas. |
+| `Product-Backlog-v1.0.md` | Todos los tipos D8 | — | — | Índice maestro priorizado de historias de usuario con MoSCoW, story points, trazabilidad a CU y a épicas. |
+| `Backlog-Tecnico-v1.0.md` | Todos los tipos D8 | — | — | Vista del backlog desde la lente técnica, organizada por épicas técnicas y por BT-XX con dependencias, fuente upstream y criterios de aceptación. |
+| `historias-usuario/US-XX-<Nombre>-v1.0.md` | Proyectos con más de 20 US | Proyectos con 10 a 20 US | Proyectos con menos de 10 US (US inline en `Product-Backlog-v1.0.md`) | Un archivo por historia, con criterios BDD, INVEST check, trazabilidad y DoR. |
+| `tareas-tecnicas/BT-XX-<Nombre>-v1.0.md` | Proyectos con más de 30 BT | Proyectos con 15 a 30 BT | Proyectos con menos de 15 BT (BT inline en `Backlog-Tecnico-v1.0.md`) | Un archivo por tarea técnica, con justificación, dependencias, tipo y trazabilidad a US. |
+| `Definition-Of-Ready-v1.0.md` | Todos los tipos D8 | — | — | Criterios DoR para US y para BT, con aprobador y excepciones admitidas. |
 | `README.md` de la sección | Recomendado para todos | — | — | Índice navegable del backlog: épicas, US Must Have, BT prioritarias y DoR vigente. |
 
 ### 2.2 Reglas de inclusión y exclusión por tipo
@@ -80,17 +80,17 @@ Los mínimos son piso, no techo. La cantidad real surge del refinamiento iterati
 
 ### 3.1 Patrón de nombres
 
-- `product-backlog_v<X.Y>.md` para el índice maestro de historias.
-- `backlog-tecnico_v<X.Y>.md` para la vista técnica por épicas.
-- `historias-usuario/US-XX-<kebab-lowercase>_v<X.Y>.md` para cada historia individual, con dos dígitos en `XX`, kebab estricto en el slug y guion bajo antes de la versión.
-- `tareas-tecnicas/BT-XX-<kebab-lowercase>_v<X.Y>.md` para cada tarea técnica individual, con dos dígitos en `XX`, kebab estricto y guion bajo antes de la versión.
-- `definition-of-ready_v<X.Y>.md` para la DoR.
+- `product-backlog-v<X.Y>.md` para el índice maestro de historias.
+- `backlog-tecnico-v<X.Y>.md` para la vista técnica por épicas.
+- `historias-usuario/US-XX-<Nombre>-v<X.Y>.md` para cada historia individual, con dos dígitos en `XX`, Título-Con-Guiones en el slug y guion medio antes de la versión.
+- `tareas-tecnicas/BT-XX-<Nombre>-v<X.Y>.md` para cada tarea técnica individual, con dos dígitos en `XX`, Título-Con-Guiones estricto y guion medio antes de la versión.
+- `definition-of-ready-v<X.Y>.md` para la DoR.
 
-Queda prohibido el patrón heredado `product-backlog.v1.0.md`; la versión siempre va con `_v`, jamás con `.v`. El slug siempre va en minúsculas; queda prohibido `US-05-Paciente-Cancela-Turno_v1.0.md` o variantes con mayúsculas o camelCase.
+Queda prohibido el patrón heredado `product-backlog.v1.0.md`; la versión siempre va con guion medio `-v`, jamás con guion bajo `_v` ni con punto `.v`. El slug va en Título-Con-Guiones (cada palabra capitalizada, separadas por guion medio); quedan prohibidas las variantes todo-minúsculas, camelCase, con espacios o con acentos.
 
 ### 3.2 Convención crítica de identificadores de dos dígitos
 
-La auditoría de Fase 0 del bootstrap (`_bootstrap/audit-sdd1.md`) detectó que el fuente Motor DSL usa identificadores heterogéneos: `US-01` con dos dígitos en el product-backlog y `BT-001` con tres dígitos en el backlog técnico. SDD 2.2 corrige esta práctica de manera obligatoria:
+La auditoría de Fase 0 del bootstrap (`Bootstrap/Audit-SDD1.md`) detectó que el fuente Motor DSL usa identificadores heterogéneos: `US-01` con dos dígitos en el product-backlog y `BT-001` con tres dígitos en el backlog técnico. SDD corrige esta práctica de manera obligatoria:
 
 1. Todos los identificadores de US y BT llevan dos dígitos uniformes (`US-01` a `US-99`, `BT-01` a `BT-99`).
 2. Si un proyecto supera 99 US o 99 BT, debe descomponerse en épicas separadas o subdividirse en sub-backlogs por bounded context antes de saltar a tres dígitos.
@@ -103,19 +103,19 @@ Esta convención asegura coherencia visual entre product-backlog y backlog-tecni
 
 - Para proyectos con más de 20 US, cada historia vive en su archivo individual bajo `historias-usuario/`. Esto permite versionar cada US, asignarla a un autor distinto y revisarla por separado.
 - Para proyectos con más de 30 BT, cada tarea técnica vive en su archivo individual bajo `tareas-tecnicas/`. Esto permite trazar dependencias técnicas por archivo y bloquear individualmente sin tocar el backlog completo.
-- Para proyectos por debajo de esos umbrales, las US y BT pueden vivir inline en el `product-backlog_v1.0.md` y el `backlog-tecnico_v1.0.md` respectivamente, sin perder la estructura de secciones obligatoria.
+- Para proyectos por debajo de esos umbrales, las US y BT pueden vivir inline en el `Product-Backlog-v1.0.md` y el `Backlog-Tecnico-v1.0.md` respectivamente, sin perder la estructura de secciones obligatoria.
 - En ambos modos (inline o por archivo), los criterios de aceptación, la trazabilidad y el DoR check deben estar presentes; no se admite "US sin criterios" ni "BT sin justificación" en ningún modo.
 
 ### 3.4 Vinculación cross-doc
 
 - Upstream: cada US referencia al menos un CU de 02 y opcionalmente una NB de 01. Cada BT referencia un componente, una ADR o un contrato de 05; o un CU si la BT lo cubre como tarea técnica derivada.
 - Downstream: cada US alimenta el sprint plan de 07 (asignación a sprint y velocity) y los acceptance tests de 08 (escenarios Given/When/Then).
-- El `product-backlog_v1.0.md` referencia el `backlog-tecnico_v1.0.md` y viceversa.
-- La DoR referencia el `product-backlog_v1.0.md` como filtro de entrada y la Definition of Done de 08 como filtro de salida (sin solaparlas).
+- El `Product-Backlog-v1.0.md` referencia el `Backlog-Tecnico-v1.0.md` y viceversa.
+- La DoR referencia el `Product-Backlog-v1.0.md` como filtro de entrada y la Definition of Done de 08 como filtro de salida (sin solaparlas).
 
 ### 3.5 README de la sección
 
-Recomendado para todos los tipos. Debe listar el `product-backlog_v1.0.md`, el `backlog-tecnico_v1.0.md`, el resumen de épicas vigentes, las US Must Have del MVP, las BT prioritarias y la DoR vigente. Sirve como punto de entrada navegable para revisores externos (AG-02, AG-05, AG-07, AG-08).
+Recomendado para todos los tipos. Debe listar el `Product-Backlog-v1.0.md`, el `Backlog-Tecnico-v1.0.md`, el resumen de épicas vigentes, las US Must Have del MVP, las BT prioritarias y la DoR vigente. Sirve como punto de entrada navegable para revisores externos (AG-02, AG-05, AG-07, AG-08).
 
 ### 3.6 Política de versionado
 
@@ -133,7 +133,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 # US-XX — <Título de la historia>
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** US-XX-<kebab>_v<X.Y>.md
+**Documento:** US-XX-<Nombre>-v<X.Y>.md
 **Versión:** <X.Y>
 **Estado:** Borrador | Ready | En curso | Done | Descartada
 **Fecha:** YYYY-MM-DD
@@ -145,7 +145,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 
 Para `product-backlog`, `backlog-tecnico`, `BT-XX` y `definition-of-ready` aplica la misma cabecera adaptando el título y los campos pertinentes (la BT lleva `Tipo` en vez de `Prioridad MoSCoW`).
 
-### 4.2 Secciones obligatorias de `product-backlog_v1.0.md`
+### 4.2 Secciones obligatorias de `Product-Backlog-v1.0.md`
 
 1. Objetivos del producto. Una a tres oraciones que enuncien el propósito del backlog y el MVP buscado.
 2. Épicas. Tabla con identificador `EP-XX`, nombre, descripción breve y sprints estimados.
@@ -153,13 +153,13 @@ Para `product-backlog`, `backlog-tecnico`, `BT-XX` y `definition-of-ready` aplic
 4. Métricas de avance. Resumen por prioridad (cantidad y SP), porcentaje cerrado, deuda en backlog.
 5. Refinamiento. Cadencia de refinement, responsables y formato (Planning Poker, T-shirt, etc.).
 
-### 4.3 Secciones obligatorias de `backlog-tecnico_v1.0.md`
+### 4.3 Secciones obligatorias de `Backlog-Tecnico-v1.0.md`
 
 1. Épicas técnicas. Cada épica con objetivo, alcance, fuente upstream (ADR, componente o contrato) y BT contenidas.
 2. BT por épica. Tabla con `BT-XX`, título, tipo (spike, feature, refactor, devops, docs), prioridad, estimación, fuente (NB, CU, ADR, contrato), dependencias y criterios de aceptación.
 3. Trazabilidad BT↔US↔CU. Tabla cruzada que permita, para cada BT, identificar las US que la consumen y los CU upstream.
 
-### 4.4 Secciones obligatorias de `US-XX-<kebab>_v1.0.md`
+### 4.4 Secciones obligatorias de `US-XX-<Nombre>-v1.0.md`
 
 1. Historia. Bloque `Como [rol], quiero [acción], para [valor]` con valor explícito.
 2. Contexto. Por qué existe esta historia, qué NB o CU la motivan, qué problema resuelve.
@@ -169,7 +169,7 @@ Para `product-backlog`, `backlog-tecnico`, `BT-XX` y `definition-of-ready` aplic
 6. DoR check. Lista de los criterios DoR vigentes con su estado (cumplido o pendiente).
 7. Notas y supuestos. Aclaraciones que no son criterios pero documentan decisiones de scope o ambigüedades resueltas.
 
-### 4.5 Secciones obligatorias de `BT-XX-<kebab>_v1.0.md`
+### 4.5 Secciones obligatorias de `BT-XX-<Nombre>-v1.0.md`
 
 1. Descripción. Qué se construye, refactoriza o investiga; alcance acotado a una tarea ejecutable en menos de un sprint.
 2. Justificación. Qué NB, CU, ADR o contrato exige esta tarea; sin justificación upstream no hay BT.
@@ -179,7 +179,7 @@ Para `product-backlog`, `backlog-tecnico`, `BT-XX` y `definition-of-ready` aplic
 6. Estimación. Story points o T-shirt, con técnica declarada.
 7. Trazabilidad a US. US que consumen esta BT (mínimo una; BT sin US consumidora debe justificarse como infraestructura compartida).
 
-### 4.6 Secciones obligatorias de `definition-of-ready_v1.0.md`
+### 4.6 Secciones obligatorias de `Definition-Of-Ready-v1.0.md`
 
 1. Criterios DoR para US. Lista enumerada con criterios verificables (mínimo cinco, máximo ocho).
 2. Criterios DoR para BT. Lista enumerada con criterios técnicos (mínimo cuatro, máximo seis).
@@ -232,7 +232,7 @@ Tabla de trazabilidad de la US:
 | US sin valor explícito | La cláusula `para [...]` está vacía o es un sinónimo de la acción | Forzar la verbalización del beneficio para el rol antes de aceptar la US |
 | BT que en realidad es una US | "Implementar parser" disfrazado de tarea técnica oculta el valor de negocio | Reformular como US si tiene valor para un rol; mantener como BT solo si soporta una US declarada |
 | DoR sin criterios verificables | "La historia debe estar clara" no es verificable | Cada criterio DoR debe poder responderse con sí o no de manera objetiva |
-| Estimación sin técnica declarada | Mezcla de SP y horas sin convención | Declarar la técnica en el `product-backlog_v1.0.md` y mantenerla en todas las US |
+| Estimación sin técnica declarada | Mezcla de SP y horas sin convención | Declarar la técnica en el `Product-Backlog-v1.0.md` y mantenerla en todas las US |
 | Backlog sin refinement con cadencia | El backlog envejece sin curaduría; entra trabajo crudo al sprint | Política explícita de refinement (mínimo una sesión por sprint) documentada en §5 del backlog |
 | IDs heterogéneos | `US-01` y `BT-001` rompen búsquedas y matrices de trazabilidad (lección documentada del fuente Motor DSL) | Forzar dos dígitos uniformes en US, BT y EP |
 | Todo Must Have | No hay priorización real; el equipo no puede recortar alcance | Forzar distribución 60/20/20 entre Must, Should y Could como ejercicio mínimo |
@@ -263,7 +263,7 @@ Tabla de trazabilidad de la US:
 
 - ¿Cada US tiene su columna `CU relacionados` poblada sin huérfanas?
 - ¿Cada BT declara al menos una US consumidora o se justifica como infraestructura compartida con ADR?
-- ¿La matriz BT↔US↔CU del `backlog-tecnico_v1.0.md` está completa y al día?
+- ¿La matriz BT↔US↔CU del `Backlog-Tecnico-v1.0.md` está completa y al día?
 - ¿Los criterios de aceptación están alineados con los escenarios previstos en 08?
 
 ### 5.4 Calidad
@@ -276,24 +276,24 @@ Tabla de trazabilidad de la US:
 ### 5.5 Convenciones
 
 - ¿Todos los identificadores usan dos dígitos uniformes? ¿Hay rastros de `BT-001` heredados del fuente?
-- ¿Los slugs están en kebab-lowercase estricto?
-- ¿Los nombres de archivo respetan `_v<X.Y>.md` y no `.v<X.Y>.md`?
+- ¿Los slugs están en Título-Con-Guiones estricto?
+- ¿Los nombres de archivo respetan `-v<X.Y>.md` y no `-v<X.Y>.md`?
 - ¿Las US y BT individuales viven en sus carpetas (`historias-usuario/` y `tareas-tecnicas/`) cuando aplica el umbral?
 
 ---
 
 ## 6. Criterios de aceptación
 
-- [ ] Existe `product-backlog_v1.0.md` con las cinco secciones del §4.2 y una tabla de épicas con identificadores `EP-XX` de dos dígitos.
-- [ ] Existe `backlog-tecnico_v1.0.md` con las tres secciones del §4.3 y la tabla cruzada BT↔US↔CU completa.
-- [ ] Existe `definition-of-ready_v1.0.md` con criterios DoR para US (entre 5 y 8) y para BT (entre 4 y 6), excepciones y aprobador declarado.
+- [ ] Existe `Product-Backlog-v1.0.md` con las cinco secciones del §4.2 y una tabla de épicas con identificadores `EP-XX` de dos dígitos.
+- [ ] Existe `Backlog-Tecnico-v1.0.md` con las tres secciones del §4.3 y la tabla cruzada BT↔US↔CU completa.
+- [ ] Existe `Definition-Of-Ready-v1.0.md` con criterios DoR para US (entre 5 y 8) y para BT (entre 4 y 6), excepciones y aprobador declarado.
 - [ ] Todos los identificadores `US-XX`, `BT-XX` y `EP-XX` usan dos dígitos uniformes; no quedan rastros de `BT-001` heredados del fuente.
 - [ ] Cada US tiene al menos un CU relacionado declarado en la columna `CU relacionados`; no hay US huérfanas.
 - [ ] Cada BT tiene fuente upstream declarada (NB, CU, ADR o contrato) y al menos una US consumidora o justificación de infraestructura compartida.
 - [ ] La distribución MoSCoW no es 100 % Must; hay reparto razonable entre Must, Should y Could.
 - [ ] Cada US Must y Should tiene criterios de aceptación en Given/When/Then con al menos dos escenarios.
 - [ ] Si el proyecto supera 20 US, existen archivos individuales bajo `historias-usuario/`; si supera 30 BT, existen archivos individuales bajo `tareas-tecnicas/`.
-- [ ] Ningún archivo usa el patrón `.v<X.Y>.md`; todos usan `_v<X.Y>.md`.
+- [ ] Ningún archivo usa el patrón `-v<X.Y>.md`; todos usan `-v<X.Y>.md`.
 - [ ] La DoR no se solapa con la Definition of Done de 08; la DoR habla de cuándo empezar, la DoD de cuándo terminar.
 - [ ] No hay menciones a stacks concretos, productos comerciales ni protocolos específicos del dominio fuente.
 
@@ -309,7 +309,7 @@ Fragmento ilustrativo, no documento completo:
 # US-05 — El paciente cancela un turno
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** US-05-paciente-cancela-turno_v1.0.md
+**Documento:** US-05-Paciente-Cancela-Turno-v1.0.md
 **Versión:** 1.0
 **Estado:** Ready
 **Fecha:** 2026-05-17
@@ -359,7 +359,7 @@ Fragmento ilustrativo, no documento completo:
 # BT-12 — Spike de comparación de mecanismos de persistencia
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** BT-12-spike-comparacion-orm_v1.0.md
+**Documento:** BT-12-Spike-Comparacion-Orm-v1.0.md
 **Versión:** 1.0
 **Estado:** Ready
 **Fecha:** 2026-05-17
@@ -410,24 +410,24 @@ Insumos:
 - Upstream: 01 (NB-XX), 02 (CU, RN, modelo conceptual), 05 (arquitectura de solución, ADRs, modelo lógico, contratos).
 
 A generar (según tipo {{TIPO}} de D8):
-- product-backlog_v1.0.md con las cinco secciones obligatorias y la tabla de épicas EP-XX.
-- backlog-tecnico_v1.0.md con épicas técnicas, BT por épica y matriz BT↔US↔CU.
-- historias-usuario/US-XX-<kebab>_v1.0.md si el proyecto supera 20 US; en caso contrario, US inline en el product-backlog.
-- tareas-tecnicas/BT-XX-<kebab>_v1.0.md si el proyecto supera 30 BT; en caso contrario, BT inline en el backlog-tecnico.
-- definition-of-ready_v1.0.md con criterios DoR para US (5-8) y BT (4-6), excepciones y aprobador.
+- Product-Backlog-v1.0.md con las cinco secciones obligatorias y la tabla de épicas EP-XX.
+- Backlog-Tecnico-v1.0.md con épicas técnicas, BT por épica y matriz BT↔US↔CU.
+- historias-usuario/US-XX-<Nombre>-v1.0.md si el proyecto supera 20 US; en caso contrario, US inline en el product-backlog.
+- tareas-tecnicas/BT-XX-<Nombre>-v1.0.md si el proyecto supera 30 BT; en caso contrario, BT inline en el backlog-tecnico.
+- Definition-Of-Ready-v1.0.md con criterios DoR para US (5-8) y BT (4-6), excepciones y aprobador.
 - README.md de la sección (recomendado).
 
-Reglas de redacción: §4 de 06_rules_backlog_tecnico.md.
-Nomenclatura: dos dígitos uniformes para US-XX, BT-XX y EP-XX; slug kebab-lowercase; sufijo `_v1.0.md` con guion bajo.
+Reglas de redacción: §4 de 06-Rules-Backlog-Tecnico.md.
+Nomenclatura: dos dígitos uniformes para US-XX, BT-XX y EP-XX; slug Título-Con-Guiones; sufijo `-v1.0.md` con guion medio.
 Convención crítica: corregir la herencia del antecedente Motor DSL que mezclaba `US-01` con `BT-001`; forzar dos dígitos en todos los identificadores.
 Trazabilidad: cada US referencia al menos un CU; cada BT referencia NB, CU, ADR o contrato; matriz BT↔US↔CU completa.
 INVEST + MoSCoW: cada US Must y Should cumple INVEST y tiene criterios Given/When/Then con al menos dos escenarios.
 Estimación: declarar técnica (Fibonacci, T-shirt u horas ideales) y mantenerla consistente en todo el backlog.
-Criterios de calidad: §6 de 06_rules_backlog_tecnico.md.
+Criterios de calidad: §6 de 06-Rules-Backlog-Tecnico.md.
 
 Restricciones: no introducir stacks concretos, productos comerciales ni protocolos del dominio fuente. Idioma rioplatense técnico, tildes correctas, sin emojis.
 
-Salida: /SDD2.2D/docs/proyectos/{{NOMBRE_PROYECTO_KEBAB}}/06_backlog-tecnico/<estructura>.
+Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/06-Backlog-Tecnico/<estructura>.
 ```
 
 ---
@@ -437,5 +437,5 @@ Salida: /SDD2.2D/docs/proyectos/{{NOMBRE_PROYECTO_KEBAB}}/06_backlog-tecnico/<es
 | Versión | Fecha | Descripción |
 | --- | --- | --- |
 | 1.0 | 2026-05-17 | Versión inicial de las reglas constructivas de la categoría 06. Establece la convención obligatoria de dos dígitos uniformes en US, BT y EP como corrección del antecedente Motor DSL (mezcla `US-01` y `BT-001`), define las cinco secciones del product-backlog, las tres del backlog-tecnico, las siete de cada US individual y las siete de cada BT individual, las variantes por tipo D8, los umbrales de archivos individuales (20 US y 30 BT) y los criterios de aceptación. |
-| 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `proyectos/<nombre-proyecto-kebab>/06_backlog-tecnico/`; la frase de cierre de §1.2 y la ruta de salida del prompt-snippet referencian el `project_type` del proyecto en curso (manifiesto). Tablas §1.2 sin reescritura. |
+| 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `Proyectos/<Nombre-Proyecto>/06-Backlog-Tecnico/`; la frase de cierre de §1.2 y la ruta de salida del prompt-snippet referencian el `project_type` del proyecto en curso (manifiesto). Tablas §1.2 sin reescritura. |
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |

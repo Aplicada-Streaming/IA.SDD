@@ -1,20 +1,20 @@
 # Reglas constructivas — 11 Examples
 
-**Carpeta target (por proyecto):** `/SDD2.2D/docs/proyectos/<nombre-proyecto-kebab>/11_examples/`
+**Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/11-Examples/`
 **Subagente target del orquestador:** Developer Advocate / Sample Engineer Senior (AG-11)
 **Versión de las reglas:** 1.2
 
 ---
 
-## 0. Posición en la cadena SDD 2.2
+## 0. Posición en la cadena SDD
 
-La categoría 11 materializa el sistema en código ejecutable concreto. Es el punto final de la cadena de trazabilidad SDD 2.2 y la primera puerta de entrada práctica para todo desarrollador que consuma el producto. Recibe upstream de 02 (casos de uso que cada sample ilustra), de 05 (arquitectura y contratos públicos que cada sample respeta) y de 10 (developer guide cuyos conceptos cada sample demuestra paso a paso). No tiene downstream metodológico dentro de SDD; sus consumidores son externos al ciclo de especificación: equipos integradores, devs nuevos del proyecto, evaluadores técnicos del cliente.
+La categoría 11 materializa el sistema en código ejecutable concreto. Es el punto final de la cadena de trazabilidad SDD y la primera puerta de entrada práctica para todo desarrollador que consuma el producto. Recibe upstream de 02 (casos de uso que cada sample ilustra), de 05 (arquitectura y contratos públicos que cada sample respeta) y de 10 (developer guide cuyos conceptos cada sample demuestra paso a paso). No tiene downstream metodológico dentro de SDD; sus consumidores son externos al ciclo de especificación: equipos integradores, devs nuevos del proyecto, evaluadores técnicos del cliente.
 
 A diferencia de la categoría 10, que documenta conceptos y guías intercaladas con snippets, la categoría 11 produce proyectos completos y funcionales que se clonan, se ejecutan en un entorno limpio y se modifican como punto de partida. La diferencia es operativa: 10 explica, 11 ejecuta.
 
 Esta categoría es opcional según el tipo D8. Es obligatoria para `library`, `cli-tool`, `mobile-app-maui`, `rest-api`, `desktop-app` y `web-microservices` porque el consumidor del artefacto necesita ejemplos reproducibles para arrancar. Es recomendada para `web-monolith` y `worker-service` cuando el proyecto se expone como referencia para otros equipos. Es omisible cuando el proyecto es estrictamente interno y no hay nuevos consumidores previsibles.
 
-La auditoría de Fase 0 (`_bootstrap/audit-sdd1.md`) detectó dos déficits del fuente SDD 1.0 que SDD 2.2 corrige aquí. Primero, los archivos del fuente nombran los ejemplos por dominio (`ejemplo-02-multa.md`, `ejemplo-03-multaapp-nuget.md`), atando el sample al producto particular y descartando la idea de progresión didáctica. SDD 2.2 obliga a nombrar por nivel de complejidad o por capacidad demostrada (`ejemplo-01-basico`, `ejemplo-02-intermedio`, `ejemplo-03-avanzado`, o variantes por capacidad como `ejemplo-01-cliente-http-basico`, `ejemplo-02-postman-collection`). Segundo, los markdown del fuente no llevan sufijo de versión; SDD 2.2 obliga al sufijo uniforme `_v<X.Y>.md` para todos los archivos versionables de esta categoría, incluyendo `README.md` cuando se considere artefacto versionable (en este caso se mantiene `README.md` sin sufijo por convención de índice).
+La auditoría de Fase 0 (`Bootstrap/Audit-SDD1.md`) detectó dos déficits del fuente SDD 1.0 que SDD corrige aquí. Primero, los archivos del fuente nombran los ejemplos por dominio (`ejemplo-02-multa.md`, `ejemplo-03-multaapp-nuget.md`), atando el sample al producto particular y descartando la idea de progresión didáctica. SDD obliga a nombrar por nivel de complejidad o por capacidad demostrada (`ejemplo-01-basico`, `ejemplo-02-intermedio`, `ejemplo-03-avanzado`, o variantes por capacidad como `ejemplo-01-cliente-http-basico`, `ejemplo-02-postman-collection`). Segundo, los markdown del fuente no llevan sufijo de versión; SDD obliga al sufijo uniforme `-v<X.Y>.md` para todos los archivos versionables de esta categoría, incluyendo `README.md` cuando se considere artefacto versionable (en este caso se mantiene `README.md` sin sufijo por convención de índice).
 
 ---
 
@@ -62,10 +62,10 @@ El AG-11 mantiene titularidad de los artefactos. Las demás especialidades aport
 | Archivo | Obligatorio para | Recomendado | Omitir para | Descripción |
 | --- | --- | --- | --- | --- |
 | `README.md` | library, cli-tool, mobile-app-maui, rest-api, desktop-app, web-microservices | web-monolith, worker-service | Proyectos estrictamente internos sin consumidores externos | Índice de samples con tabla maestra (nivel, tiempo de setup, CU ilustrados, ubicación en `/samples`). |
-| `ejemplo-01-basico_v<X.Y>.md` o `ejemplo-01-<kebab-progresion>_v<X.Y>.md` | library, cli-tool, mobile-app-maui, rest-api, desktop-app, web-microservices | web-monolith, worker-service | — | Markdown explicativo del sample de nivel básico. |
-| `ejemplo-02-intermedio_v<X.Y>.md` o `ejemplo-02-<kebab-progresion>_v<X.Y>.md` | library, cli-tool, mobile-app-maui, rest-api | desktop-app, web-microservices, web-monolith, worker-service | — | Markdown explicativo del sample de nivel intermedio. |
-| `ejemplo-03-avanzado_v<X.Y>.md` o `ejemplo-03-<kebab-progresion>_v<X.Y>.md` | library, cli-tool, mobile-app-maui, rest-api | desktop-app, web-microservices | — | Markdown explicativo del sample de nivel avanzado o de integración. |
-| `imagenes/` (carpeta) | Cuando los markdown referencian screenshots o assets visuales | — | Samples sin UI | Carpeta de assets versionados (PNG, SVG). Sin assets binarios pesados; preferir vectoriales. |
+| `ejemplo-01-basico-v<X.Y>.md` o `ejemplo-01-<Progresion>-v<X.Y>.md` | library, cli-tool, mobile-app-maui, rest-api, desktop-app, web-microservices | web-monolith, worker-service | — | Markdown explicativo del sample de nivel básico. |
+| `ejemplo-02-intermedio-v<X.Y>.md` o `ejemplo-02-<Progresion>-v<X.Y>.md` | library, cli-tool, mobile-app-maui, rest-api | desktop-app, web-microservices, web-monolith, worker-service | — | Markdown explicativo del sample de nivel intermedio. |
+| `ejemplo-03-avanzado-v<X.Y>.md` o `ejemplo-03-<Progresion>-v<X.Y>.md` | library, cli-tool, mobile-app-maui, rest-api | desktop-app, web-microservices | — | Markdown explicativo del sample de nivel avanzado o de integración. |
+| `Imagenes/` (carpeta) | Cuando los markdown referencian screenshots o assets visuales | — | Samples sin UI | Carpeta de assets versionados (PNG, SVG). Sin assets binarios pesados; preferir vectoriales. |
 
 Cada markdown explicativo se acompaña de un proyecto ejecutable en `/samples/<carpeta-correspondiente>/` del repositorio. La categoría 11 documenta el sample; la materialización en código vive en `/samples` y se gobierna desde §16.1 del SOLUTION-INTAKE (materialización de `/samples`).
 
@@ -86,7 +86,7 @@ Estos son pisos. Un proyecto puede agregar samples adicionales para cubrir capac
 
 ### 2.3 Matriz tipo D8 → carpetas en `/samples`
 
-La carpeta `/samples` del repositorio refleja directamente los archivos documentados en `docs/11_examples/`. Hay correspondencia 1:1 entre cada `ejemplo-XX-<kebab>_v<X.Y>.md` y una carpeta ejecutable en `/samples/`.
+La carpeta `/samples` del repositorio refleja directamente los archivos documentados en `docs/11-Examples/`. Hay correspondencia 1:1 entre cada `ejemplo-XX-<Nombre>-v<X.Y>.md` y una carpeta ejecutable en `/samples/`.
 
 | Tipo D8 | Estructura mínima de `/samples` |
 | --- | --- |
@@ -107,33 +107,33 @@ Esta tabla es vinculante: el contenido de `/samples` no se inventa; se deriva de
 
 ### 3.1 Patrón de nombres
 
-- `ejemplo-XX-<kebab-progresion>_v<X.Y>.md` para el markdown explicativo de cada sample.
+- `ejemplo-XX-<Progresion>-v<X.Y>.md` para el markdown explicativo de cada sample.
 - `XX` es el número correlativo en dos dígitos, empezando en `01` y respetando la progresión.
-- `<kebab-progresion>` describe nivel de complejidad o capacidad demostrada, en kebab-case estricto y lowercase. Valores admitidos por nivel: `basico`, `intermedio`, `avanzado`. Valores admitidos por capacidad: `cliente-http-basico`, `postman-collection`, `sdk-tipado-generado`, `plugin-demo`, `tema-custom`, `compose-minimo`, `compose-end-to-end`, `recetas-windows`, `recetas-linux`, `recetas-mac`, `compose-broker`, `productor-de-prueba`, `app-basica`, `sync-offline`, `multiplatform-demo`, `datos-seed`, `con-extensiones`, `integracion-real`.
-- Sufijo `_v<X.Y>.md` obligatorio y uniforme. Queda prohibido el patrón heredado sin versión (por ejemplo `ejemplo-01-simple.md` del fuente). Queda prohibido el sufijo de dominio (por ejemplo `ejemplo-02-multa`, `ejemplo-03-multaapp-nuget`, `ejemplo-04-factura`, `ejemplo-05-recibo`, o cualquier otro nombre atado al producto particular).
+- `<Progresion>` describe nivel de complejidad o capacidad demostrada, en Título-Con-Guiones estricto. Valores admitidos por nivel: `basico`, `intermedio`, `avanzado`. Valores admitidos por capacidad: `cliente-http-basico`, `postman-collection`, `sdk-tipado-generado`, `plugin-demo`, `tema-custom`, `compose-minimo`, `compose-end-to-end`, `recetas-windows`, `recetas-linux`, `recetas-mac`, `compose-broker`, `productor-de-prueba`, `app-basica`, `sync-offline`, `multiplatform-demo`, `datos-seed`, `con-extensiones`, `integracion-real`.
+- Sufijo `-v<X.Y>.md` obligatorio y uniforme. Queda prohibido el patrón heredado sin versión (por ejemplo `ejemplo-01-simple.md` del fuente). Queda prohibido el sufijo de dominio (por ejemplo `ejemplo-02-multa`, `ejemplo-03-multaapp-nuget`, `ejemplo-04-factura`, `ejemplo-05-recibo`, o cualquier otro nombre atado al producto particular).
 - `README.md` de la sección sin sufijo de versión. Es el índice navegable.
 
 ### 3.2 Reglas de progresión
 
 La numeración refleja un orden de lectura recomendado de menor a mayor complejidad. Sample 01 introduce el camino feliz mínimo; sample 02 agrega complejidad típica del caso intermedio (configuración, datos reales, integraciones simples); sample 03 demuestra el caso avanzado o el punto de extensión principal. Si el proyecto opta por progresión por capacidad en lugar de por nivel, cada sample debe igual declarar su nivel implícito en §2 del markdown (básico, intermedio o avanzado).
 
-Está prohibida la numeración por dominio del proyecto. La progresión `multa → multaapp-nuget` del fuente es exactamente lo que SDD 2.2 corrige: ese par mezcla nombre de caso de uso con nombre de mecanismo de distribución, sin transmitir progresión didáctica. SDD 2.2 obliga a que el slug responda a "qué demuestra el sample respecto al anterior", no a "qué dominio modela".
+Está prohibida la numeración por dominio del proyecto. La progresión `multa → multaapp-nuget` del fuente es exactamente lo que SDD corrige: ese par mezcla nombre de caso de uso con nombre de mecanismo de distribución, sin transmitir progresión didáctica. SDD obliga a que el slug responda a "qué demuestra el sample respecto al anterior", no a "qué dominio modela".
 
 ### 3.3 Vinculación cross-doc
 
 - Upstream: cada sample declara qué CU de 02 ilustra, qué bloque arquitectónico de 05 ejercita y qué guía de 10 lo acompaña conceptualmente. La trazabilidad vive en §8 del markdown explicativo.
 - Downstream: el sample en sí no tiene downstream metodológico; sus consumidores son externos (devs integradores, evaluadores técnicos, equipos de adopción).
-- Vinculación con el código: cada markdown apunta a la carpeta concreta de `/samples/XX-<kebab-progresion>/` del repositorio. La estructura del código sigue la misma progresión que la documentación.
+- Vinculación con el código: cada markdown apunta a la carpeta concreta de `/samples/XX-<Progresion>/` del repositorio. La estructura del código sigue la misma progresión que la documentación.
 
 ### 3.4 Política de versionado
 
-Cada markdown se versiona como `_v<X.Y>.md`. La primera emisión es siempre `_v1.0`. Cuando el sample se reescribe sustancialmente (cambia el escenario, el nivel o el conjunto de capacidades demostradas), se promueve a `_v2.0` y la versión anterior se archiva en `_legacy/` con estado `Superado`. Cambios menores que no alteran la progresión ni el escenario (correcciones de typos, refresh de screenshots, ajustes de prerequisitos) van en `_v1.1`, `_v1.2`, etc. dentro de la misma rama mayor.
+Cada markdown se versiona como `-v<X.Y>.md`. La primera emisión es siempre `-v1.0`. Cuando el sample se reescribe sustancialmente (cambia el escenario, el nivel o el conjunto de capacidades demostradas), se promueve a `-v2.0` y la versión anterior se archiva en `_legacy/` con estado `Superado`. Cambios menores que no alteran la progresión ni el escenario (correcciones de typos, refresh de screenshots, ajustes de prerequisitos) van en `-v1.1`, `-v1.2`, etc. dentro de la misma rama mayor.
 
 El código en `/samples/` se versiona junto con el repositorio principal: no lleva sufijo propio, pero su CI debe garantizar que siempre compila contra la versión actual del producto.
 
 ### 3.5 README de la sección
 
-El `README.md` de `/docs/11_examples/` lista los samples vigentes en una tabla maestra con columnas: número, slug, nivel, tiempo de setup estimado, CU ilustrados, ubicación en `/samples`. El README se actualiza cada vez que se agrega, renombra o jubila un sample.
+El `README.md` de `/Docs/11-Examples/` lista los samples vigentes en una tabla maestra con columnas: número, slug, nivel, tiempo de setup estimado, CU ilustrados, ubicación en `/samples`. El README se actualiza cada vez que se agrega, renombra o jubila un sample.
 
 ---
 
@@ -147,13 +147,13 @@ Cada markdown explicativo inicia con un H1 y un bloque de metadatos uniforme:
 # Ejemplo XX — <Nombre descriptivo del sample>
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** ejemplo-XX-<kebab-progresion>_v<X.Y>.md
+**Documento:** ejemplo-XX-<Progresion>-v<X.Y>.md
 **Versión:** <X.Y>
 **Estado:** Borrador | Propuesto | Aprobado | Vigente | Superado | Archivado
 **Fecha:** YYYY-MM-DD
 **Autor:** {{equipo-o-rol}}
 **Nivel:** Básico | Intermedio | Avanzado
-**Ubicación del código:** `/samples/XX-<kebab-progresion>/`
+**Ubicación del código:** `/samples/XX-<Progresion>/`
 ```
 
 ### 4.2 Secciones obligatorias del markdown explicativo
@@ -162,15 +162,15 @@ Cada markdown explicativo inicia con un H1 y un bloque de metadatos uniforme:
 2. **Nivel.** Declaración explícita del nivel (básico, intermedio o avanzado) con justificación breve respecto al sample anterior. Si la progresión es por capacidad, igualmente se declara el nivel implícito.
 3. **Prerequisites.** Lista de herramientas, runtimes, SDKs, credenciales y dependencias externas necesarias para ejecutar el sample. Sin ambigüedad; cada ítem tiene versión mínima cuando aplica.
 4. **Cómo correrlo.** Comandos paso a paso copiables, máximo cinco pasos para llegar a la primera ejecución exitosa. Cada comando se ejecuta en un entorno limpio reproducible.
-5. **Estructura del código.** Árbol resumido de la carpeta `/samples/XX-<kebab-progresion>/` con descripción breve por archivo o subcarpeta relevante.
-6. **Qué esperar.** Output exacto que el desarrollador verá después de ejecutar el sample, ya sea texto en consola, payload HTTP, screenshot de UI o archivo generado. Si hay UI, screenshot bajo `imagenes/`.
+5. **Estructura del código.** Árbol resumido de la carpeta `/samples/XX-<Progresion>/` con descripción breve por archivo o subcarpeta relevante.
+6. **Qué esperar.** Output exacto que el desarrollador verá después de ejecutar el sample, ya sea texto en consola, payload HTTP, screenshot de UI o archivo generado. Si hay UI, screenshot bajo `Imagenes/`.
 7. **Variaciones sugeridas.** Tabla con dos a cuatro variaciones que el desarrollador puede probar modificando el sample, con descripción de qué cambiar y qué resultado esperar. Sirve de puente didáctico hacia el sample siguiente.
 8. **Trazabilidad.** Tabla con los CU, NB, ADR o NFR de 02/05 que el sample ilustra. Cada fila enlaza al artefacto fuente.
 9. **Control de cambios.** Tabla de versiones del propio markdown con fecha, versión y descripción del cambio.
 
 ### 4.3 Estructura del `README.md` de la sección
 
-1. Propósito de la carpeta: qué encuentra el lector en `/docs/11_examples/` y en `/samples/`.
+1. Propósito de la carpeta: qué encuentra el lector en `/Docs/11-Examples/` y en `/samples/`.
 2. Tabla maestra de samples vigentes.
 3. Convenciones de los samples (autocontenidos, ejecutables en entorno limpio, trazabilidad obligatoria, niveles declarados).
 4. Cómo agregar un sample nuevo: referencia al §6 de estas reglas y al template del markdown explicativo.
@@ -182,9 +182,9 @@ Tabla maestra del `README.md`:
 
 | Sample | Nivel | Tiempo de setup | CU ilustrados | Ubicación |
 | --- | --- | --- | --- | --- |
-| `ejemplo-01-basico_v1.0.md` | Básico | < 5 min | CU-01, CU-02 | `/samples/01-basico/` |
-| `ejemplo-02-intermedio_v1.0.md` | Intermedio | 10-15 min | CU-03, CU-04, CU-05 | `/samples/02-intermedio/` |
-| `ejemplo-03-avanzado_v1.0.md` | Avanzado | 20-30 min | CU-06, CU-07, CU-08 | `/samples/03-avanzado/` |
+| `Ejemplo-01-Basico-v1.0.md` | Básico | < 5 min | CU-01, CU-02 | `/samples/01-basico/` |
+| `Ejemplo-02-Intermedio-v1.0.md` | Intermedio | 10-15 min | CU-03, CU-04, CU-05 | `/samples/02-intermedio/` |
+| `Ejemplo-03-Avanzado-v1.0.md` | Avanzado | 20-30 min | CU-06, CU-07, CU-08 | `/samples/03-avanzado/` |
 
 Tabla tipo de proyecto vs estructura de `/samples` (replica resumida de §2.3 al pie del README):
 
@@ -212,7 +212,7 @@ Tabla de trazabilidad por sample (en §8 de cada markdown):
 | Samples no ejecutables o desactualizados | El dev clona y no le compila; la documentación pierde credibilidad | CI que compila y ejecuta cada sample en cada push |
 | Samples que duplican el `/src` sin agregar valor demostrativo | Inflan el repositorio sin enseñar nada nuevo | Cada sample demuestra una capacidad distinta o un punto de extensión |
 | Falta de trazabilidad a CU | El sample existe en el vacío y no se sabe qué requisito ejercita | §8 obligatoria con tabla de upstream |
-| Samples sin versión en el nombre | Hace imposible saber a qué versión del producto pertenecen (lección del fuente: `ejemplo-01-simple.md` sin sufijo) | Sufijo `_v<X.Y>.md` obligatorio en todos los markdown explicativos |
+| Samples sin versión en el nombre | Hace imposible saber a qué versión del producto pertenecen (lección del fuente: `ejemplo-01-simple.md` sin sufijo) | Sufijo `-v<X.Y>.md` obligatorio en todos los markdown explicativos |
 | Más de cinco pasos para correr el sample | Fricción de adopción; el dev abandona antes de ver el resultado | Refactorizar a scripts de bootstrap o usar contenedores |
 | Dependencias externas no documentadas | El sample falla en máquinas limpias y nadie sabe por qué | Prerequisites exhaustivos con versión mínima |
 | Output esperado no documentado | El dev no sabe si su ejecución fue exitosa | §6 con output exacto o screenshot |
@@ -247,7 +247,7 @@ Tabla de trazabilidad por sample (en §8 de cada markdown):
 
 - ¿El código compila en un entorno limpio sin warnings nuevos?
 - ¿El output esperado documentado coincide con la ejecución real?
-- ¿Hay un test en `/samples/XX-<kebab>/tests/` que verifica el output esperado?
+- ¿Hay un test en `/samples/XX-<Nombre>/tests/` que verifica el output esperado?
 - ¿El sample sigue siendo reproducible bajo los OS declarados en §17 P.9 del SOLUTION-INTAKE?
 - ¿La estructura del código respeta las convenciones de §16 del SOLUTION-INTAKE?
 
@@ -263,12 +263,12 @@ Tabla de trazabilidad por sample (en §8 de cada markdown):
 
 - [ ] Existe `README.md` con tabla maestra de samples, columnas nivel, tiempo de setup, CU ilustrados, ubicación.
 - [ ] Existen al menos los samples mínimos declarados en §2.2 para el tipo D8 del proyecto.
-- [ ] Cada sample tiene su markdown explicativo `ejemplo-XX-<kebab-progresion>_v1.0.md` con las nueve secciones obligatorias.
+- [ ] Cada sample tiene su markdown explicativo `ejemplo-XX-<Progresion>-v1.0.md` con las nueve secciones obligatorias.
 - [ ] Cada sample es ejecutable con comandos copiables en entorno limpio en menos o igual a cinco pasos.
 - [ ] Cada sample declara su nivel (básico, intermedio o avanzado) explícitamente en §2.
 - [ ] Cada sample declara trazabilidad a CU, ADR o NFR en §8 con al menos una fila.
 - [ ] Los nombres de archivo usan progresión por nivel o por capacidad, nunca por dominio del proyecto.
-- [ ] Todos los markdown explicativos llevan sufijo `_v<X.Y>.md` (corrección obligatoria respecto al fuente, que omitía la versión).
+- [ ] Todos los markdown explicativos llevan sufijo `-v<X.Y>.md` (corrección obligatoria respecto al fuente, que omitía la versión).
 - [ ] El README de la carpeta lista los samples en tabla con todas las columnas declaradas en §4.4.
 - [ ] Cada sample declara tiempo de setup estimado en la tabla maestra del README.
 - [ ] Cada sample documenta el output esperado en §6 con texto exacto o screenshot.
@@ -280,7 +280,7 @@ Tabla de trazabilidad por sample (en §8 de cada markdown):
 
 ## 7. Ejemplos genéricos
 
-### 7.1 Ejemplo 1 — `ejemplo-02-intermedio-extensibilidad_v1.0.md` para una librería de parsing CSV
+### 7.1 Ejemplo 1 — `Ejemplo-02-Intermedio-Extensibilidad-v1.0.md` para una librería de parsing CSV
 
 Fragmento ilustrativo, no documento completo:
 
@@ -288,7 +288,7 @@ Fragmento ilustrativo, no documento completo:
 # Ejemplo 02 — Parser custom con extensión de tipo
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** ejemplo-02-intermedio-extensibilidad_v1.0.md
+**Documento:** Ejemplo-02-Intermedio-Extensibilidad-v1.0.md
 **Versión:** 1.0
 **Estado:** Vigente
 **Fecha:** 2026-05-17
@@ -361,7 +361,7 @@ Errores de parsing: 0
 | 1.0 | 2026-05-17 | Versión inicial. |
 ```
 
-### 7.2 Ejemplo 2 — `ejemplo-01-basico-cliente-http_v1.0.md` para una REST API de pagos
+### 7.2 Ejemplo 2 — `Ejemplo-01-Basico-Cliente-HTTP-v1.0.md` para una REST API de pagos
 
 Fragmento ilustrativo, no documento completo:
 
@@ -369,7 +369,7 @@ Fragmento ilustrativo, no documento completo:
 # Ejemplo 01 — Cliente HTTP básico con curl
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** ejemplo-01-basico-cliente-http_v1.0.md
+**Documento:** Ejemplo-01-Basico-Cliente-HTTP-v1.0.md
 **Versión:** 1.0
 **Estado:** Vigente
 **Fecha:** 2026-05-17
@@ -458,20 +458,20 @@ Insumos:
 
 A generar (según el `project_type` del proyecto, leído del manifiesto):
 - README.md con tabla maestra de samples.
-- ejemplo-XX-<kebab-progresion>_v1.0.md por cada sample (mínimo según §2.2 de 11_rules_examples.md).
-- Carpeta /samples/XX-<kebab-progresion>/ con código ejecutable, README propio, tests de verificación.
+- ejemplo-XX-<Progresion>-v1.0.md por cada sample (mínimo según §2.2 de 11-Rules-Examples.md).
+- Carpeta /samples/XX-<Progresion>/ con código ejecutable, README propio, tests de verificación.
 
-Reglas de redacción: §4 de 11_rules_examples.md (nueve secciones obligatorias por markdown).
-Nomenclatura: sufijo uniforme `_v<X.Y>.md` (corrección obligatoria del fuente, que omitía la versión). Progresión por nivel (basico/intermedio/avanzado) o por capacidad. Prohibido nombrar por dominio del proyecto (corrección obligatoria respecto al fuente: nada de `multa`, `multaapp-nuget`, `factura`, `recibo`).
+Reglas de redacción: §4 de 11-Rules-Examples.md (nueve secciones obligatorias por markdown).
+Nomenclatura: sufijo uniforme `-v<X.Y>.md` (corrección obligatoria del fuente, que omitía la versión). Progresión por nivel (basico/intermedio/avanzado) o por capacidad. Prohibido nombrar por dominio del proyecto (corrección obligatoria respecto al fuente: nada de `multa`, `multaapp-nuget`, `factura`, `recibo`).
 Trazabilidad: cada sample referencia al menos un CU, ADR o NFR en §8.
 Ejecutabilidad: cada sample arranca en menos o igual a cinco pasos en entorno limpio.
 Output esperado: documentado en §6 con texto exacto o screenshot.
-Estructura de /samples: respetar la matriz §2.3 de 11_rules_examples.md según tipo D8.
-Criterios de calidad: §6 de 11_rules_examples.md.
+Estructura de /samples: respetar la matriz §2.3 de 11-Rules-Examples.md según tipo D8.
+Criterios de calidad: §6 de 11-Rules-Examples.md.
 
 Restricciones: no introducir productos comerciales ni protocolos del dominio fuente. Idioma rioplatense técnico, tildes correctas, sin emojis ni negritas decorativas.
 
-Salida: /SDD2.2D/docs/proyectos/{{NOMBRE_PROYECTO_KEBAB}}/11_examples/<estructura> + /samples/<estructura> en el repo de la solución.
+Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/11-Examples/<estructura> + /samples/<estructura> en el repo de la solución.
 ```
 
 ---
@@ -480,6 +480,6 @@ Salida: /SDD2.2D/docs/proyectos/{{NOMBRE_PROYECTO_KEBAB}}/11_examples/<estructur
 
 | Versión | Fecha | Descripción |
 | --- | --- | --- |
-| 1.0 | 2026-05-17 | Versión inicial de las reglas constructivas de la categoría 11. Define el README de la sección y los markdown explicativos por sample con sufijo uniforme `_v<X.Y>.md`, fija la matriz tipo D8 vs estructura de `/samples`, establece cantidades mínimas de samples por tipo, formaliza las nueve secciones obligatorias del markdown explicativo y corrige dos antecedentes del fuente SDD 1.0: la nomenclatura por dominio (`multa`, `multaapp-nuget`) se reemplaza por progresión de complejidad o capacidad, y la ausencia de sufijo de versión se reemplaza por `_v<X.Y>.md` obligatorio en todos los archivos versionables. |
-| 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `proyectos/<nombre-proyecto-kebab>/11_examples/`; la frase de cierre de §1.2 y la ruta de salida del prompt-snippet referencian el `project_type` del proyecto en curso (manifiesto), y la referencia a la materialización de `/samples` apunta a §4.1 del PROJECT-README. Tablas §1.2 sin reescritura. |
+| 1.0 | 2026-05-17 | Versión inicial de las reglas constructivas de la categoría 11. Define el README de la sección y los markdown explicativos por sample con sufijo uniforme `-v<X.Y>.md`, fija la matriz tipo D8 vs estructura de `/samples`, establece cantidades mínimas de samples por tipo, formaliza las nueve secciones obligatorias del markdown explicativo y corrige dos antecedentes del fuente SDD 1.0: la nomenclatura por dominio (`multa`, `multaapp-nuget`) se reemplaza por progresión de complejidad o capacidad, y la ausencia de sufijo de versión se reemplaza por `-v<X.Y>.md` obligatorio en todos los archivos versionables. |
+| 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `Proyectos/<Nombre-Proyecto>/11-Examples/`; la frase de cierre de §1.2 y la ruta de salida del prompt-snippet referencian el `project_type` del proyecto en curso (manifiesto), y la referencia a la materialización de `/samples` apunta a §4.1 del PROJECT-README. Tablas §1.2 sin reescritura. |
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |

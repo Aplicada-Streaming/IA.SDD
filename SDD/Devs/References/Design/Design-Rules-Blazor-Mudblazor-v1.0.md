@@ -1,13 +1,13 @@
 # Reglas de diseño — Blazor Interactive Server + MudBlazor
 
 **Proyecto:** {{nombre-solucion}}
-**Documento:** design-rules-blazor-mudblazor_v1.0.md
+**Documento:** Design-Rules-Blazor-Mudblazor-v1.0.md
 **Versión:** 1.1
 **Estado:** Vigente
 **Fecha:** 2026-06-19
 **Autor:** {{equipo-o-rol}} (AG-03 UX/UI + Frontend Architect .NET)
 **Ámbito:** Web — Blazor Interactive Server (.NET 8/9) con MudBlazor v9
-**Hereda de:** `design-rules-web-generico_v1.0.md`
+**Hereda de:** `Design-Rules-Web-Generico-v1.0.md`
 **Posición:** Insumo normativo de la categoría 03 para proyectos `project_type = web-monolith` o `web-microservices (con frontend)` cuyo stack declarado en la Parte C del intake sea Blazor + MudBlazor.
 
 ---
@@ -140,7 +140,7 @@ Notas de fidelidad:
 
 ### 4.1 Patrones de configuración dirigida por esquema → MudBlazor
 
-Cuando el proyecto carga la extensión `design-rules-config-esquema` (proyecto con superficies de configuración), sus patrones se realizan así, heredando el theme y la iconografía ya definidos:
+Cuando el proyecto carga la extensión `Design-Rules-Config-Esquema` (proyecto con superficies de configuración), sus patrones se realizan así, heredando el theme y la iconografía ya definidos:
 
 | Patrón de configuración (extensión) | Componentes MudBlazor |
 | --- | --- |
@@ -216,7 +216,7 @@ public static class TablerIcons
 - Theme en `Theme/AppTheme.cs`; íconos custom en `Theme/TablerIcons.cs`. Una sola definición, importada globalmente (`_Imports.razor`).
 - Componentes reutilizables del catálogo (tarjeta de acceso, badge de estado, fila de ABM) como componentes Razor propios que envuelven MudBlazor, para que el patrón viva en un solo lugar.
 - CSS propio mínimo y siempre apoyado en `--mud-palette-*`; nada de hex sueltos.
-- Nomenclatura de archivos y artefactos según D1–D8 del template (kebab-case en docs, PascalCase en código .NET según el perfil de convención de nombres del manifiesto).
+- Nomenclatura de archivos y artefactos según D1–D8 del template (Título-Con-Guiones en docs, PascalCase en código .NET según el perfil de convención de nombres del manifiesto).
 
 ---
 
@@ -238,9 +238,9 @@ Además de los criterios del documento base, una superficie Blazor + MudBlazor c
 
 | Dimensión | Referencia |
 | --- | --- |
-| Documento base | `design-rules-web-generico_v1.0.md` |
+| Documento base | `Design-Rules-Web-Generico-v1.0.md` |
 | Especialidad dueña | AG-03 UX/UI + Frontend Architect .NET |
-| Regla que lo invoca | `devs/rules/03_rules_ux_ui_dx.md` (selección por stack) |
+| Regla que lo invoca | `devs/Rules/03-Rules-UX-UI-DX.md` (selección por stack) |
 | Aplica a `project_type` | web-monolith, web-microservices (con frontend) con stack Blazor + MudBlazor |
 | Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>` del proyecto Blazor |
 
@@ -251,4 +251,4 @@ Además de los criterios del documento base, una superficie Blazor + MudBlazor c
 | Versión | Fecha | Cambios | Autor |
 | --- | --- | --- | --- |
 | 1.0 | 2026-06-19 | Versión inicial. Mapeo del catálogo genérico a MudBlazor v9: theme tipado, render Interactive Server, patrones → componentes, estados, iconografía SVG con íconos custom, accesibilidad. | AG-03 UX/UI + Frontend Architect |
-| 1.1 | 2026-06-20 | Mapeo de los patrones de la extensión `design-rules-config-esquema` a componentes MudBlazor (nueva §4.1): campo dirigido por descriptor, ayuda contextual, divulgación progresiva, presets, explicación en palabras, indicador de simulación y ranura del asistente; estado `info` vía `Color.Info`/`Palette.Info`; previsualización de la propuesta con `MudDialog`. | AG-03 UX/UI + Frontend Architect |
+| 1.1 | 2026-06-20 | Mapeo de los patrones de la extensión `Design-Rules-Config-Esquema` a componentes MudBlazor (nueva §4.1): campo dirigido por descriptor, ayuda contextual, divulgación progresiva, presets, explicación en palabras, indicador de simulación y ranura del asistente; estado `info` vía `Color.Info`/`Palette.Info`; previsualización de la propuesta con `MudDialog`. | AG-03 UX/UI + Frontend Architect |
