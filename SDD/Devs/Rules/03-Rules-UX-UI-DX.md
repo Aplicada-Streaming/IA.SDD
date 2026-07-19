@@ -2,7 +2,7 @@
 
 **Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/03-UX-UI-DX/`
 **Subagente target del orquestador:** Especialista UX/UI o Especialista DX (AG-03), según variante.
-**Versión de las reglas:** 1.5
+**Versión de las reglas:** 1.6
 
 ---
 
@@ -78,6 +78,27 @@ Cuando el proyecto produce artefactos desplegables identificables, el AG-03 carg
 
 El arquetipo de panel de control monolítico de un servicio específico carga las cuatro extensiones a la vez.
 
+### 1.5 Relación con la Fase B2 de validación visual de maqueta
+
+Cuando el proyecto tiene `requiere_maqueta` == true, lo que AG-03 redacta no cierra en su propio audit: se materializa después en una maqueta navegable que el humano valida, y esa validación vuelve. La regla completa de esa fase es `Maqueta-Rules.md`; acá se declara lo que le toca a AG-03.
+
+Antes de la Fase B2. AG-03 escribe sabiendo que sus artefactos van a ser el insumo de una maqueta. En consecuencia:
+
+- Cada `wireframes-<superficie>` corresponde a una superficie maquetable y declara su nombre canónico, que es el que va a llevar el archivo HTML de la maqueta.
+- La tabla de estados de cada wireframe es la lista de estados que la maqueta va a tener que demostrar. Un estado no declarado no se maqueta y por lo tanto no se valida.
+- Los flujos clave de `Experiencia-De-Uso` son las rutas de navegación que la maqueta va a materializar.
+- AG-03 no dibuja la maqueta ni define valores visuales concretos: sigue rigiendo el anti-patrón de wireframe con detalle de CSS del §4.4.
+
+Después de la Fase B2. AG-03 es el receptor de la retroalimentación. Los artefactos afectados suben minor y suman a su control de cambios el motivo `Retroalimentación de la Fase B2 de validación de maqueta`. La categoría 03 incorpora además tres artefactos nuevos que produce la fase y que viven en esta carpeta:
+
+- `Linea-Base-Visual-v1.0.md`: inventario identificado de superficies, componentes, estados y rutas de la maqueta aprobada.
+- `Contrato-Datos-Maqueta-v1.0.md`: los campos del modelo de datos que la maqueta exhibe, con su correspondencia al modelo conceptual de 02.
+- `Bitacora-Validacion-Maqueta-v1.0.md`: registro de las iteraciones de validación.
+
+Los tres son insumo del sensado de deriva (`Deriva-Rules.md`) y quedan bajo la titularidad documental de 03, aunque los emita AG-03M.
+
+Si `requiere_maqueta` == false, esta sección no aplica y la categoría 03 cierra en su audit de Fase B como siempre.
+
 ---
 
 ## 2. Documentos que produce esta categoría
@@ -95,6 +116,9 @@ El arquetipo de panel de control monolítico de un servicio específico carga la
 | `DX-Error-Messages-v1.0.md` | DX | cli-tool, library | rest-api, worker-service | — | Catálogo de mensajes de error y su diagnóstico accionable. |
 | `DX-Portal-Developers-v1.0.md` | DX | rest-api con portal visible, web-microservices con SDK público | library con portal hospedado | Tipos sin portal | Especificación del portal de documentación de developers. |
 | `DX-Operability-v1.0.md` | DX | worker-service | rest-api con SLO estricto | Tipos con UI final | Experiencia del operador: logs estructurados, dashboards, alertas, runbooks. |
+| `Linea-Base-Visual-v1.0.md` | UX/UI | Proyectos con `requiere_maqueta` == true, al aprobarse la maqueta | — | Proyectos sin Fase B2 | Inventario identificado (`SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX`) de lo que el humano aprobó al mirar la maqueta. Lo emite AG-03M; ver `Deriva-Rules.md` §2.1. |
+| `Contrato-Datos-Maqueta-v1.0.md` | UX/UI | Proyectos con `requiere_maqueta` == true, al aprobarse la maqueta | — | Proyectos sin Fase B2 | Campos del modelo de datos que la maqueta exhibe (`DM-XX`), con tipo, ejemplo, superficies y correspondencia al modelo conceptual de 02. Ver `Deriva-Rules.md` §2.2. |
+| `Bitacora-Validacion-Maqueta-v1.0.md` | UX/UI | Proyectos con `requiere_maqueta` == true | — | Proyectos sin Fase B2 | Registro de las iteraciones de validación de la maqueta: vía, observación del humano, cambio aplicado y documento retroalimentado. |
 | `README.md` de la sección | Ambas | Recomendado para todos | — | — | Índice navegable de la sección con estado actual de cada artefacto. |
 
 ### 2.2 Reglas de inclusión y exclusión por tipo
@@ -307,6 +331,9 @@ Tabla de trazabilidad de un artefacto 03:
 | Primer arranque aplicado (predicado de aprovisionamiento, guard en tres capas, destino al completar) | <sí / N/A> |
 | Acceso de operador único aplicado (omisiones declaradas, shell partido, catálogo de resultados, política de sesión) | <sí / N/A> |
 | Identidad de versión aplicada (contrato, ubicaciones del sello, detalle de diagnóstico) | <sí / N/A> |
+| Modelo UX-UI aplicado en la Fase B2 | <Nombre-Modelo de `Modelos-UX-UI/`, "catálogo base" o N/A> |
+| Validación visual de maqueta | <fecha de aprobación humana y ruta de la maqueta, o N/A si `requiere_maqueta` == false> |
+| Línea de base emitida | <`Linea-Base-Visual-v1.0.md` y `Contrato-Datos-Maqueta-v1.0.md`, o N/A> |
 
 ### 4.4 Anti-patrones a evitar
 
@@ -335,6 +362,8 @@ Tabla de trazabilidad de un artefacto 03:
 | Distinguir "usuario inexistente" de "credencial incorrecta", o exponer umbrales de la política en el mensaje | Confirma la existencia de la identidad y filtra parámetros de seguridad | Rechazo indiferenciado con texto único; restricción temporal sin números |
 | Vencimiento silencioso de la sesión | Se manifiesta como un error arbitrario en una acción cualquiera | Devolver al shell de acceso con el estado de sesión vencida declarado |
 | Versión transcrita a mano en la vista, o instancia sin versión visible | Miente en silencio, o vuelve la instancia no diagnosticable | Derivarla de la construcción y exhibirla en las dos ubicaciones obligatorias (ver `Design-Rules-Identidad-De-Version`) |
+| Wireframe cuya superficie no tiene nombre canónico estable | La maqueta de la Fase B2 no puede nombrar su archivo ni la línea de base su `SUP-XX`; la trazabilidad se rompe en la primera iteración | Nombre canónico declarado en la sección 1 del wireframe y reusado por la maqueta y por la línea de base |
+| Aprobar la maqueta y dejar los artefactos de 03 describiendo el diseño anterior | La documentación queda contando un producto que nadie aprobó; es exactamente la deriva que la fase venía a evitar | Retroalimentar 03 y propagar según la matriz de `Maqueta-Rules.md` §3.6 antes de cerrar la fase |
 
 ---
 
@@ -388,6 +417,8 @@ Tabla de trazabilidad de un artefacto 03:
 - [ ] No coexisten versiones distintas del mismo nombre lógico en la carpeta principal; las superadas viven en `_legacy/`.
 - [ ] El glosario de la sección no duplica términos del glosario de 02 con semántica distinta.
 - [ ] No hay menciones a stacks concretos, productos comerciales ni protocolos específicos del dominio fuente.
+- [ ] En proyectos con `requiere_maqueta` == true: cada wireframe declara un nombre canónico de superficie estable, y su tabla de estados enumera todos los estados que la maqueta va a tener que demostrar.
+- [ ] En proyectos con `requiere_maqueta` == true y maqueta ya aprobada: los artefactos afectados por la validación subieron versión con su entrada de control de cambios, y existen `Linea-Base-Visual-v1.0.md`, `Contrato-Datos-Maqueta-v1.0.md` y `Bitacora-Validacion-Maqueta-v1.0.md` en la carpeta de la categoría.
 
 ---
 
@@ -541,3 +572,4 @@ Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/03-UX-UI-DX/<estructura>.
 | 1.3 | 2026-06-19 | Incorporación del catálogo de reglas de diseño (`devs/References/Design/`) como insumo normativo de AG-03: nueva §1.4 (carga del índice, documento base más especialización por stack, tokens y patrones normativos, trazabilidad del catálogo), anti-patrón de tokens ad hoc en §4.4 y fila "Catálogo de diseño aplicado" en la tabla de trazabilidad de §4.3. |
 | 1.4 | 2026-06-20 | Cableado de la extensión por capacidad `Design-Rules-Config-Esquema`: §1.4 extendida (carga cuando hay superficies de configuración, y requisitos sobre `experiencia-de-uso`/`wireframes`: descriptores, ayuda contextual, presets, explicación en palabras, modo simulación, ranura del asistente y frontera `PropuestaDeConfiguracion`), nuevos anti-patrones de configuración por esquema en §4.4 y fila "Configuración dirigida por esquema aplicada" en la trazabilidad de §4.3. |
 | 1.5 | 2026-07-18 | Cableado de tres extensiones por capacidad nuevas (`Design-Rules-Primer-Arranque`, `Design-Rules-Acceso-Monousuario`, `Design-Rules-Identidad-De-Version`), derivadas de la extracción de características de un panel de control monolítico en producción: §1.4 suma la condición de carga y los requisitos sobre `experiencia-de-uso`/`wireframes` de cada una, más la frontera entre configuración de aplicación y de entorno; §4.3 suma tres filas de trazabilidad; §4.4 suma siete anti-patrones (predicado y guard de arranque, wizard multipaso, ceremonias multiusuario arrastradas, rechazo diferenciado y filtrado de política, vencimiento silencioso de sesión, versión transcrita o ausente, parámetro de entorno dibujado). |
+| 1.6 | 2026-07-19 | Enganche con la Fase B2 de validación visual de maqueta: nueva §1.5 (qué le toca a AG-03 antes y después de la fase, y los tres artefactos que la fase deposita en esta categoría), tres artefactos nuevos en la tabla maestra de §2.1 (`Linea-Base-Visual`, `Contrato-Datos-Maqueta`, `Bitacora-Validacion-Maqueta`), tres filas nuevas en la trazabilidad de §4.3 (modelo UX-UI aplicado, validación visual, línea de base emitida), dos anti-patrones nuevos en §4.4 (superficie sin nombre canónico estable, maqueta aprobada sin retroalimentar) y dos criterios de aceptación condicionados a `requiere_maqueta`. La mecánica de la fase no se duplica acá: vive en `Maqueta-Rules.md`. |

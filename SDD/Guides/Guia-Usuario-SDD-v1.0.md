@@ -2,8 +2,8 @@
 
 ```yaml
 Documento: Guia-Usuario-SDD-v1.0.md
-Versión: 1.2
-Fecha: 2026-06-10
+Versión: 1.3
+Fecha: 2026-07-19
 Audiencia: profesionales y estudiantes que usan el template para una solución real
 Idioma: español rioplatense neutro técnico
 Estado: vigente
@@ -11,6 +11,44 @@ Estado: vigente
 
 > Esta guía no enseña la teoría detrás del template (para eso está el marco teórico).
 > Enseña a usarlo paso a paso, con prompts ejemplo, casos aplicados y resolución de problemas frecuentes.
+
+---
+
+## Tabla de contenido
+
+- [§1 ¿Qué es el template SDD?](#1-qué-es-el-template-sdd)
+  - [Solución y proyecto: el modelo de trabajo](#solución-y-proyecto-el-modelo-de-trabajo)
+- [§2 Prerequisitos](#2-prerequisitos)
+- [§3 Cuándo usar este template y cuándo no](#3-cuándo-usar-este-template-y-cuándo-no)
+  - [3.1 Perfilado por tamaño de equipo](#31-perfilado-por-tamaño-de-equipo)
+  - [3.2 Perfilado por complejidad](#32-perfilado-por-complejidad)
+  - [3.3 Perfilado por tipo de proyecto (D8)](#33-perfilado-por-tipo-de-proyecto-d8)
+  - [3.4 Perfilado por plazo](#34-perfilado-por-plazo)
+  - [3.5 Tabla de recomendación combinada](#35-tabla-de-recomendación-combinada)
+- [§4 Recorrido paso a paso de la metodología](#4-recorrido-paso-a-paso-de-la-metodología)
+  - [4.1 Paso 1 — Chat informal en Claude.ai web](#41-paso-1--chat-informal-en-claudeai-web)
+  - [4.2 Paso 2 — Consolidación en un solo documento](#42-paso-2--consolidación-en-un-solo-documento)
+  - [4.3 Paso 3 — Volcado a la plantilla de intake](#43-paso-3--volcado-a-la-plantilla-de-intake)
+  - [4.4 Paso 4 — Preparar el workspace de dos repositorios](#44-paso-4--preparar-el-workspace-de-dos-repositorios)
+  - [4.5 Paso 5 — Ejecutar el master-prompt en Claude Code](#45-paso-5--ejecutar-el-master-prompt-en-claude-code)
+  - [4.6 Paso 5b — Validar la maqueta visual (Fase B2, opcional)](#46-paso-5b--validar-la-maqueta-visual-fase-b2-opcional)
+  - [4.7 Paso 6 — Revisión humana y handoff a codificación](#47-paso-6--revisión-humana-y-handoff-a-codificación)
+- [§5 Ejemplos aplicados](#5-ejemplos-aplicados)
+  - [5.1 Caso "API REST de gestión de turnos médicos"](#51-caso-api-rest-de-gestión-de-turnos-médicos-rest-api-solución-de-un-proyecto)
+  - [5.2 Caso "Librería utilitaria para parsing de archivos CSV"](#52-caso-librería-utilitaria-para-parsing-de-archivos-csv-library-solución-de-un-proyecto)
+  - [5.3 Caso "App móvil de inventario de almacén"](#53-caso-app-móvil-de-inventario-de-almacén-mobile-app-maui-solución-de-un-proyecto)
+  - [5.4 Caso "Solución de gestión de turnos con cuatro proyectos"](#54-caso-solución-de-gestión-de-turnos-con-cuatro-proyectos-solución-multi-proyecto)
+- [§6 Resolución de problemas frecuentes](#6-resolución-de-problemas-frecuentes)
+- [§7 Cómo extender el template](#7-cómo-extender-el-template)
+  - [7.1 Agregar una categoría nueva](#71-agregar-una-categoría-nueva)
+  - [7.2 Agregar un tipo de proyecto nuevo a D8](#72-agregar-un-tipo-de-proyecto-nuevo-a-d8)
+  - [7.3 Agregar una variante de especialidad](#73-agregar-una-variante-de-especialidad)
+  - [7.4 Agregar un modelo UX-UI al catálogo](#74-agregar-un-modelo-ux-ui-al-catálogo)
+- [§8 Cómo regenerar parcialmente](#8-cómo-regenerar-parcialmente)
+- [§9 Hojas de ruta sugeridas](#9-hojas-de-ruta-sugeridas)
+- [§10 Glosario rápido y mapa visual de carpetas](#10-glosario-rápido-y-mapa-visual-de-carpetas)
+- [Resumen ejecutivo](#resumen-ejecutivo)
+- [Control de cambios](#control-de-cambios)
 
 ---
 
@@ -144,7 +182,7 @@ En esos casos, el costo de armar la documentación inicial supera el beneficio. 
 
 ## §4 Recorrido paso a paso de la metodología
 
-El flujo completo del usuario tiene 6 pasos. La narración asume que ya cumpliste los prerequisitos de §2 y que decidiste que el template aplica a tu solución según §3.
+El flujo completo del usuario tiene 6 pasos, más un paso intermedio opcional (el 5b) que aparece solo en proyectos con interfaz visual. La narración asume que ya cumpliste los prerequisitos de §2 y que decidiste que el template aplica a tu solución según §3.
 
 ### 4.1 Paso 1 — Chat informal en Claude.ai web
 
@@ -381,6 +419,7 @@ A partir de ahí, el orquestador despacha subagentes fase por fase. La Fase de v
 - Fase de validación de intake (una vez, previa a A): validación de completitud del `SOLUTION-INTAKE` y derivación del `SOLUTION-MANIFEST` desde §13, con batería de preguntas si falta algo bloqueante y confirmación del manifiesto derivado.
 - Fase A (nivel solución, una vez): 00-Contexto + 01-Necesidades-Negocio + audit A.
 - Fase B (por proyecto): 02-Especificacion-Funcional + 03-UX-UI-DX + 04-Prompts-AI (si aplica) + audit B.
+- Fase B2 (por proyecto, opcional): validación visual de maqueta, solo si el proyecto tiene interfaz visual y vos confirmás el flag `requiere_maqueta`. Es el paso 5b de §4.6.
 - Fase C (por proyecto): 05-Arquitectura-Tecnica + audit C.
 - Fase D (por proyecto): 06-Backlog-Tecnico + 07-Plan-Sprint + audit D.
 - Fase E (por proyecto): 08-Calidad-Y-Pruebas + audit E.
@@ -398,7 +437,48 @@ Si un subagente detecta una ambigüedad legítima (por ejemplo, falta una métri
 
 Tiempo total estimado del paso 5 para un proyecto normal: entre 2 y 6 horas de ejecución del modelo, distribuidas en sesiones. Es perfectamente normal pausar y retomar.
 
-### 4.6 Paso 6 — Revisión humana y handoff a codificación
+### 4.6 Paso 5b — Validar la maqueta visual (Fase B2, opcional)
+
+Este paso aparece solamente en proyectos con interfaz visual. Es opcional: al aprobar el plan inicial vas a ver un flag `requiere_maqueta` por proyecto, y lo confirmás o lo invertís.
+
+Para qué sirve. La especificación de UX y UI que produce la categoría 03 es texto: marco de experiencia, wireframes en ASCII, tablas de estados. Leerlo y decidir si eso es lo que querías es caro y poco confiable. La Fase B2 toma esa especificación y la materializa en una maqueta navegable, con HTML, CSS, Bootstrap 5 y JavaScript, que se abre en tu navegador y se recorre. Validás en minutos lo que en prosa te llevaría una tarde, y aparecen los huecos que el texto esconde.
+
+Además, la maqueta muestra tus modelos de datos con ejemplos concretos, así que sirve para validar dos cosas de una: cómo se ve el producto y si el modelo de datos es el correcto.
+
+Qué pasa, en orden:
+
+1. Al cerrar la Fase B del proyecto, con la documentación de UX y UI ya generada y auditada, el orquestador te pregunta dos cosas juntas: si querés que genere la maqueta, y de qué modelo de diseño partir. La opción por defecto es el catálogo base del template; las alternativas son los modelos capturados de maquetas anteriores, si el catálogo `Modelos-UX-UI/` tiene alguno. Podés declinar acá aunque hayas dejado el flag activo al principio: el flag habilita la fase, esta pregunta la arranca.
+2. Te presenta el plan de maqueta: qué superficies va a construir, qué rutas de navegación, qué campos del modelo va a exhibir y con qué datos de ejemplo, y qué estados va a demostrar por superficie. Aprobás o pedís cambios.
+3. Construye la maqueta en `SDD/Maquetas/<Nombre-Proyecto>/` del repositorio destino.
+4. La abre en tu navegador y te dice qué mirar: navegación, datos, estados y apariencia.
+5. Corregís. Tenés dos vías y las dos valen:
+   - Por prompt: le describís el cambio y lo aplica.
+   - A mano: editás vos los archivos HTML, CSS, JavaScript o las imágenes, y después le decís "revisá la maqueta y tomá las correcciones". El orquestador relee los archivos, te enumera qué cambió y cómo lo interpretó, y espera que confirmes esa lectura antes de propagarla. No te pisa las correcciones manuales en las iteraciones siguientes.
+6. Cuando aprobás la maqueta, retroalimenta la documentación. Esto es obligatorio y es el punto del ejercicio: los documentos de 03 se actualizan con lo aprobado, y si la validación tocó un caso de uso, un campo del modelo, una regla de negocio o el alcance, el cambio se propaga hacia atrás (02, 01, 00) y hacia adelante (05, 06, 07, 08). Si el cambio alcanza a las categorías de nivel solución o al intake, el orquestador se detiene y te avisa antes de tocarlas.
+7. Te ofrece capitalizar el diseño: registrarlo como modelo reutilizable en el catálogo del template, con un nombre que vos elegís, más un ejemplo ejecutable ofuscado en `Templates/`. Si aceptás, ese modelo queda disponible como alternativa en el paso 1 de futuras maquetas. Si no, la fase cierra ahí.
+8. Emite la línea de base del sensado de deriva: un inventario identificado de superficies, componentes, estados y rutas de navegación, más el contrato de los datos que la maqueta exhibe, más una matriz de comprobaciones. Ese material es el que te llevás a la codificación para verificar, sprint a sprint, que lo construido sigue siendo lo aprobado. Ver F-22.
+
+Para abrir la maqueta por tu cuenta, en cualquier momento, tenés tres formas:
+
+1. Desde tu editor, con la extensión de servidor local (en Visual Studio Code, Live Server o equivalente): abrís `SDD/Maquetas/<Nombre-Proyecto>/index.html` con la acción de servir de la extensión. Es la más cómoda para validar, porque recarga el navegador sola cada vez que guardás. Si vas a corregir la maqueta a mano, usá esta.
+2. Abriendo el archivo directo en el navegador: `SDD/Maquetas/<Nombre-Proyecto>/index.html`. No requiere nada instalado, pero algunos navegadores restringen ciertas operaciones sobre archivos locales.
+3. Con un servidor estático de línea de comandos, si no tenés lo anterior a mano:
+   ```bash
+   cd SDD/Maquetas/<Nombre-Proyecto>
+   python3 -m http.server 8080
+   ```
+   y abrís `http://localhost:8080`. Este no recarga solo: refrescás el navegador.
+
+Las tres sirven los mismos archivos. No hay `npm install` ni proceso de compilación: lo que editás es lo que se sirve, y es lo mismo que después relee el orquestador. Esa equivalencia es lo que hace que corregir a mano funcione.
+
+Qué revisar antes de aprobar:
+
+- Recorré cada flujo de punta a punta. ¿Llegás a donde tenés que llegar? ¿Podés volver?
+- Alterná los cuatro estados de cada superficie con la barra de validación. ¿Está definido qué pasa cuando no hay datos y cuando algo falla?
+- Mirá los campos de cada pantalla contra lo que el sistema tiene que mostrar. ¿Falta alguno? ¿Sobra alguno? ¿El formato de las fechas y los números es el que usa tu negocio?
+- Probá navegar con el teclado solo. Si no podés, la accesibilidad va a fallar después en la categoría 08.
+
+### 4.7 Paso 6 — Revisión humana y handoff a codificación
 
 Cuando el orquestador termina la fase H, te presenta el resumen ejecutivo del entregable: documentos generados por categoría, cobertura de la cadena de trazabilidad, ítems del Sprint 1 listos para codear, audits aprobados, decisiones pendientes y flags activos.
 
@@ -1002,6 +1082,45 @@ Por convención `<NombreSolucionCodigo>.<Sufijo>`, donde `<NombreSolucionCodigo>
 
 Uno solo: el `SOLUTION-INTAKE`. Es el intake unificado que reemplaza a las antiguas plantillas `PROJECT-BRIEF` y `PROJECT-README` (deprecadas). En él va todo: negocio (Parte A, §1 a §12), composición de la solución con la tabla de proyectos (Parte B, §13 a §16) y la técnica por proyecto (Parte C, §17, bloque P.1 a P.12 repetido por proyecto). No completás un `SOLUTION-MANIFEST` a mano: el orquestador lo deriva de §13 durante la Fase de validación de intake, lo valida y te lo presenta para confirmación. El manifiesto queda como artefacto derivado, no como plantilla a llenar.
 
+### F-20 — ¿Puedo saltearme la validación de maqueta?
+
+Sí. La Fase B2 es opcional por diseño. Al aprobar el plan inicial vas a ver el flag `requiere_maqueta` por proyecto; lo ponés en `false` y el flujo sigue como siempre, de la Fase B directo a la C. La omisión queda registrada como ADR en la categoría 05 del proyecto, con el motivo que declares.
+
+Conviene saltearla cuando el proyecto no tiene interfaz visual, cuando estás reproduciendo un diseño ya validado en otro proyecto de la misma solución, o cuando el plazo es tan corto que no hay margen para iterar. Conviene hacerla cuando el cliente todavía no tiene claro qué espera ver, cuando el modelo de datos es grande, o cuando el equipo que va a codear no participó del análisis.
+
+### F-21 — Modifiqué la maqueta a mano y el orquestador no toma mis cambios
+
+Tenés que avisarle explícitamente. El orquestador no vigila el sistema de archivos: relee la maqueta cuando se lo pedís. Decile algo como:
+
+```text
+Edité a mano la maqueta. Revisá SDD/Maquetas/<Nombre-Proyecto>/ y tomá las
+correcciones que hice.
+```
+
+Va a releer los archivos, comparar contra el estado que él había dejado, enumerarte las diferencias y decirte cómo las interpretó. Confirmás o corregís esa lectura, y recién ahí las propaga a la documentación. Ese paso de confirmación existe porque una corrección manual mal interpretada que se propaga es peor que no haberla tomado.
+
+Si un cambio que le pedís por prompt entra en conflicto con algo que corregiste a mano, se detiene y pregunta en vez de pisarlo.
+
+### F-22 — ¿Qué hago con la línea de base y la matriz de sensado de deriva?
+
+Son el instrumento de control que te llevás a la codificación, y viven fuera del alcance de SDD, que termina en el handoff.
+
+Qué son. La línea de base es el inventario de lo que aprobaste al mirar la maqueta: cada superficie, componente, estado y ruta de navegación con su identificador (`SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX`), más el contrato de los campos que la maqueta exhibía (`DM-XX`). La matriz (`Matriz-Sensado-Deriva-v1.0.md`, en la categoría 08) convierte ese inventario en una lista de comprobaciones, cada una con su método de verificación, la evidencia que la respalda y el umbral a partir del cual la diferencia deja de ser aceptable.
+
+Cómo se usa. Al cierre de cada sprint, recorrés las filas de la matriz cuyos elementos tocó el sprint y las marcás como `Conforme`, `Deriva menor` o `Deriva mayor`. Una deriva menor se registra y sigue. Una deriva mayor se resuelve de una de dos maneras, nunca por omisión: se corrige el sistema para volver a la línea de base, o se actualiza la línea de base con tu aprobación explícita porque la construcción reveló que la línea de base estaba equivocada. Lo que no vale es que las dos se separen sin que nadie lo declare: eso es la deriva.
+
+Para qué sirve de verdad. Le da a vos y al agente un punto de comparación externo y concreto. Sin él, la única forma de saber si lo construido es lo acordado es leer la documentación y confiar en la memoria. Con él, se abre la maqueta al lado del sistema y se mira.
+
+### F-23 — ¿Qué es un modelo UX-UI y cuándo conviene capturar uno?
+
+Un modelo UX-UI es un diseño completo, capturado de una maqueta que ya validaste y aprobaste, escrito como reglas constructivas para que un agente pueda reproducir algo equivalente en otro proyecto sin haber visto el original. Vive en `../IA.SDD/SDD/Devs/Modelos-UX-UI/` con su ejemplo ejecutable en `../IA.SDD/Templates/`.
+
+No es lo mismo que el catálogo de reglas de diseño de `References/Design/`. Ese catálogo es el piso obligatorio y siempre aplica. Un modelo es opcional, se aplica por encima del piso y sale de la práctica, no del diseño metodológico.
+
+Conviene capturar uno cuando el diseño que aprobaste resuelve bien un problema que se te va a repetir: un panel operativo denso, un flujo de alta guiado, un catálogo de consulta. No conviene cuando el diseño es muy específico del dominio del proyecto, porque entonces las reglas no se pueden formular de manera agnóstica y el modelo no sirve para reusar.
+
+Tené presente que `IA.SDD` es un repositorio público. Cuando aceptás capitalizar un modelo, el orquestador ofusca todo el dominio antes de escribir: reemplaza entidades, campos, valores, textos y assets por equivalentes sintéticos, y preserva solo la forma. Si no puede completar esa verificación con certeza, no escribe nada.
+
 ---
 
 ## §7 Cómo extender el template
@@ -1045,6 +1164,19 @@ Pasos:
 3. Si la activación depende de un flag (por ejemplo `requiere_compliance: true`), citás ese flag de §4 del master-prompt.
 4. Subís minor del archivo de reglas.
 5. El orquestador empieza a leer la variante en la próxima ejecución, sin tocar el master-prompt.
+
+### 7.4 Agregar un modelo UX-UI al catálogo
+
+La vía normal es aceptar la oferta del paso 7 de la Fase B2 (ver §4.6 y F-23): el orquestador extrae las reglas de la maqueta que aprobaste, las ofusca y las registra. No hace falta hacer nada a mano.
+
+Si querés agregar un modelo por fuera de ese flujo, por ejemplo porque tenés un diseño validado en un proyecto anterior a la existencia de la fase:
+
+1. Copiá `../IA.SDD/SDD/Devs/Modelos-UX-UI/Rules-Design-Modelo-Template.md` y completalo como `Rules-Design-<Nombre-Modelo>-v1.0.md` en el mismo directorio. El criterio de qué incluir está en el encabezado de la plantilla: se escriben reglas accionables, no descripciones, y una regla entra si su ausencia haría que un diseño posterior salga distinto de forma perceptible.
+2. Construí el ejemplo ejecutable en `../IA.SDD/Templates/<Nombre-Modelo>/`, derivándolo de `Templates/Modelo-Generico/`, que fija la estructura y el nivel de detalle esperados.
+3. Registrá el modelo en la tabla de `../IA.SDD/SDD/Devs/Modelos-UX-UI/Index-Modelos-UX-UI.md` §2. Un modelo que no está en el índice no existe para el orquestador.
+4. Verificá la ofuscación antes de commitear: ni nombres de clientes, ni datos reales, ni assets del proyecto de origen, ni decisiones que solo tengan sentido en su dominio.
+
+Tiempo estimado: media jornada si partís de una maqueta ya construida.
 
 ---
 
@@ -1201,6 +1333,12 @@ Términos esenciales para usar el template. Para el glosario exhaustivo del marc
 | Ambigüedad legítima | Falta concreta de un dato bloqueante en el intake que dispara detención / pregunta / reanudación. |
 | Handoff a codificación | Punto en el que el orquestador entrega la documentación auditada y espera confirmación humana para arrancar Sprint 1. |
 | Regla constructiva | Archivo `XX-Rules-<Categoria>.md` (o `Root-Rules.md`) que codifica especialidad, documentos, nomenclatura, estructura, criterios y prompt-snippet de la categoría. |
+| Fase B2 | Fase opcional de validación visual de maqueta, por proyecto, entre la Fase B y la Fase C. Se activa con el flag `requiere_maqueta`. Materializa la especificación de 03 en una maqueta navegable, la valida con vos, retroalimenta la documentación y emite la línea de base del sensado de deriva. Su regla es `Maqueta-Rules.md`. |
+| Maqueta | Sitio estático navegable en `SDD/Maquetas/<Nombre-Proyecto>/`: HTML, CSS, Bootstrap 5 y JavaScript, sin proceso de build, con los datos de ejemplo de la documentación hardcodeados. Sirve para validar de una sola vez la experiencia y el modelo de datos. No es el producto ni documentación viva: es la línea de base de un momento, aprobada explícitamente. |
+| Modelo UX-UI | Diseño capturado de una maqueta aprobada, escrito como reglas constructivas en `Modelos-UX-UI/` con su ejemplo ofuscado en `Templates/`. Opcional; se aplica por encima del catálogo base de `References/Design/`, nunca en su reemplazo. |
+| Línea de base visual | Inventario identificado (`SUP-XX` superficies, `CMP-XX` componentes, `EST-XX` estados, `NAV-XX` rutas) de lo aprobado en la maqueta, más el contrato de datos (`DM-XX`) que exhibía. Punto de comparación externo del sensado de deriva. |
+| Sensado de deriva | Mecanismo de control que contrasta lo construido contra la línea de base visual y el contrato de datos, con umbrales declarados de deriva menor y mayor. Se opera con la `Matriz-Sensado-Deriva-v1.0.md` de la categoría 08, sprint a sprint. Su regla es `Deriva-Rules.md`. |
+| Evidencia verificable (D9) | Invariante global: toda afirmación sobre el estado del sistema cita un artefacto localizable, reproducible, contemporáneo e independiente de quien afirma. No aplica a afirmaciones de diseño, de especificación ni de contexto, que necesitan justificación y no evidencia. Rige hacia adelante desde su incorporación. |
 
 ### 10.2 Mapa visual de la estructura de carpetas
 
@@ -1219,6 +1357,8 @@ mi-proyecto/
 │   │   ├── rules/
 │   │   │   ├── Root-Rules.md                            # Reglas del README raíz
 │   │   │   ├── Intake-Rules.md                          # Validación de intake y derivación del manifiesto
+│   │   │   ├── Maqueta-Rules.md                         # Fase B2: validación visual de maqueta
+│   │   │   ├── Deriva-Rules.md                          # Sensado de deriva y evidencia verificable (D9)
 │   │   │   ├── 00-Rules-Contexto.md
 │   │   │   ├── 01-Rules-Necesidades-Negocio.md
 │   │   │   ├── 02-Rules-Especificacion-Funcional.md
@@ -1240,97 +1380,110 @@ mi-proyecto/
 │   │   │       ├── Design-Rules-Primer-Arranque-v1.0.md     # Extensión por capacidad: primer arranque y aprovisionamiento inicial
 │   │   │       ├── Design-Rules-Acceso-Monousuario-v1.0.md  # Extensión por capacidad: acceso de operador único
 │   │   │       └── Design-Rules-Identidad-De-Version-v1.0.md # Extensión por capacidad: identidad de versión y su superficie
+│   │   ├── Modelos-UX-UI/                               # Catálogo de modelos capturados de maquetas aprobadas (Fase B2)
+│   │   │   ├── Index-Modelos-UX-UI.md
+│   │   │   ├── Rules-Design-Modelo-Template.md          # Plantilla para capturar un modelo
+│   │   │   └── Rules-Design-<Nombre-Modelo>-v1.0.md     # Un archivo por modelo capturado
 │   │   └── Bootstrap/                                   # Material de bootstrapping
 │   ├── guides/
 │   │   ├── Guia-Usuario-SDD-v1.0.md                   # Este documento
 │   │   └── Marco-Teorico-SDD-v1.0.md                  # Marco teórico (separado)
-│   └── docs/                                             # Generado por el orquestador
-│       ├── Audit/                                       # Informes de audit por fase
-│       │   ├── FaseA-00-Contexto-v1.0.md
-│       │   ├── FaseA-01-Necesidades-Negocio-v1.0.md
-│       │   ├── FaseB-02-Especificacion-Funcional-v1.0.md
-│       │   └── ...
-│       ├── 00-Contexto/                                  # Nivel solución (Fase A, una vez)
-│       │   ├── README.md
-│       │   ├── Vision-Producto-v1.0.md
-│       │   ├── Alcance-Proyecto-v1.0.md
-│       │   ├── Roadmap-Producto-v1.0.md
-│       │   ├── Compatibilidad-Plataformas-v1.0.md
-│       │   └── Acuerdo-Equipo-v1.0.md
-│       ├── 01-Necesidades-Negocio/                       # Nivel solución (Fase A, una vez)
-│       │   ├── README.md
-│       │   ├── Necesidades-Negocio-v1.0.md
-│       │   └── Necesidades-De-Negocio/
-│       │       ├── NB-01-<Nombre>-v1.0.md
-│       │       ├── NB-02-<Nombre>-v1.0.md
-│       │       └── NB-XX-<Nombre>-v1.0.md
-│       ├── Solucion/                                    # Solo si hay más de un proyecto (Fase H)
-│       │   ├── Vista-Solucion-v1.0.md                    # AG-05: mapa, contratos, grafo
-│       │   └── Pipeline-Solucion-v1.0.md                 # AG-09: build topológico, artefactos
-│       ├── Proyectos/                                    # Un subárbol 02..11 por proyecto
-│       │   └── <Nombre-Proyecto>/                  # Repetido por cada proyecto del manifiesto
-│       │       ├── 02-Especificacion-Funcional/
-│       │       │   ├── README.md
-│       │       │   ├── Especificacion-Funcional-v1.0.md
-│       │       │   ├── Casos-De-Uso/
-│       │       │   │   ├── CU-01-<Nombre>-v1.0.md
-│       │       │   │   └── CU-XX-<Nombre>-v1.0.md
-│       │       │   ├── Reglas-De-Negocio/
-│       │       │   │   └── RN-XX-<Nombre>-v1.0.md
-│       │       │   └── Modelo-Datos/
-│       │       │       └── Modelo-Conceptual-v1.0.md
-│       │       ├── 03-UX-UI-DX/
-│       │       │   ├── README.md
-│       │       │   └── (UX/UI o DX según gating)
-│       │       ├── 04-Prompts-AI/                        # Solo si usa_llm == true
-│       │       │   ├── README.md
-│       │       │   └── prompt-<tarea>-v1.0.md
-│       │       ├── 05-Arquitectura-Tecnica/
-│       │       │   ├── README.md
-│       │       │   ├── Arquitectura-Solucion-v1.0.md
-│       │       │   ├── Decisiones-Arquitectura-v1.0.md
-│       │       │   └── Adrs/
-│       │       │       ├── ADR-001-<Nombre>-v1.0.md
-│       │       │       └── ADR-XX-<Nombre>-v1.0.md
-│       │       ├── 06-Backlog-Tecnico/
-│       │       │   ├── README.md
-│       │       │   ├── Product-Backlog-v1.0.md
-│       │       │   ├── Backlog-Tecnico-v1.0.md
-│       │       │   └── Definition-Of-Ready-v1.0.md
-│       │       ├── 07-Plan-Sprint/
-│       │       │   ├── README.md
-│       │       │   ├── Plan-Iteracion-Sprint-00-v1.0.md
-│       │       │   ├── Plan-Iteracion-Sprint-01-v1.0.md
-│       │       │   ├── Template-Sprint-Review-v1.0.md
-│       │       │   ├── Template-Sprint-Retrospectiva-v1.0.md
-│       │       │   └── Velocidad-Equipo-v1.0.md
-│       │       ├── 08-Calidad-Y-Pruebas/
-│       │       │   ├── README.md
-│       │       │   ├── Estrategia-Calidad-v1.0.md
-│       │       │   ├── Estrategia-Testing-v1.0.md
-│       │       │   ├── Plan-Pruebas-v1.0.md
-│       │       │   ├── Matriz-Cobertura-Pruebas-v1.0.md
-│       │       │   ├── Casos-Prueba-Referenciales-v1.0.md
-│       │       │   ├── Criterios-Validacion-v1.0.md
-│       │       │   └── Definition-Of-Done-v1.0.md
-│       │       ├── 09-Devops/
-│       │       │   ├── README.md
-│       │       │   ├── Pipeline-CI-CD-v1.0.md
-│       │       │   ├── Estrategia-Versionado-v1.0.md
-│       │       │   ├── Entornos-Deploy-v1.0.md
-│       │       │   └── Supply-Chain-Seguridad-v1.0.md
-│       │       ├── 10-Developer-Guide/                   # Según gating y tipo
-│       │       │   ├── README.md
-│       │       │   ├── Conceptos-Fundamentales-v1.0.md
-│       │       │   ├── Guia-Onboarding-Developer-v1.0.md
-│       │       │   ├── Referencia-API-v1.0.md
-│       │       │   └── Troubleshooting-v1.0.md
-│       │       └── 11-Examples/                          # Según gating y tipo
-│       │           ├── README.md
-│       │           ├── ejemplo-01-<Nombre>-v1.0.md
-│       │           ├── ejemplo-02-<Nombre>-v1.0.md
-│       │           └── ejemplo-03-<Nombre>-v1.0.md
-│       └── README.md                                     # README raíz consolidado de la solución
+│   ├── docs/                                             # Generado por el orquestador
+│   │   ├── Audit/                                       # Informes de audit por fase
+│   │   │   ├── FaseA-00-Contexto-v1.0.md
+│   │   │   ├── FaseA-01-Necesidades-Negocio-v1.0.md
+│   │   │   ├── FaseB-02-Especificacion-Funcional-v1.0.md
+│   │   │   └── ...
+│   │   ├── 00-Contexto/                                  # Nivel solución (Fase A, una vez)
+│   │   │   ├── README.md
+│   │   │   ├── Vision-Producto-v1.0.md
+│   │   │   ├── Alcance-Proyecto-v1.0.md
+│   │   │   ├── Roadmap-Producto-v1.0.md
+│   │   │   ├── Compatibilidad-Plataformas-v1.0.md
+│   │   │   └── Acuerdo-Equipo-v1.0.md
+│   │   ├── 01-Necesidades-Negocio/                       # Nivel solución (Fase A, una vez)
+│   │   │   ├── README.md
+│   │   │   ├── Necesidades-Negocio-v1.0.md
+│   │   │   └── Necesidades-De-Negocio/
+│   │   │       ├── NB-01-<Nombre>-v1.0.md
+│   │   │       ├── NB-02-<Nombre>-v1.0.md
+│   │   │       └── NB-XX-<Nombre>-v1.0.md
+│   │   ├── Solucion/                                    # Solo si hay más de un proyecto (Fase H)
+│   │   │   ├── Vista-Solucion-v1.0.md                    # AG-05: mapa, contratos, grafo
+│   │   │   └── Pipeline-Solucion-v1.0.md                 # AG-09: build topológico, artefactos
+│   │   ├── Proyectos/                                    # Un subárbol 02..11 por proyecto
+│   │   │   └── <Nombre-Proyecto>/                  # Repetido por cada proyecto del manifiesto
+│   │   │       ├── 02-Especificacion-Funcional/
+│   │   │       │   ├── README.md
+│   │   │       │   ├── Especificacion-Funcional-v1.0.md
+│   │   │       │   ├── Casos-De-Uso/
+│   │   │       │   │   ├── CU-01-<Nombre>-v1.0.md
+│   │   │       │   │   └── CU-XX-<Nombre>-v1.0.md
+│   │   │       │   ├── Reglas-De-Negocio/
+│   │   │       │   │   └── RN-XX-<Nombre>-v1.0.md
+│   │   │       │   └── Modelo-Datos/
+│   │   │       │       └── Modelo-Conceptual-v1.0.md
+│   │   │       ├── 03-UX-UI-DX/
+│   │   │       │   ├── README.md
+│   │   │       │   └── (UX/UI o DX según gating)
+│   │   │       ├── 04-Prompts-AI/                        # Solo si usa_llm == true
+│   │   │       │   ├── README.md
+│   │   │       │   └── prompt-<tarea>-v1.0.md
+│   │   │       ├── 05-Arquitectura-Tecnica/
+│   │   │       │   ├── README.md
+│   │   │       │   ├── Arquitectura-Solucion-v1.0.md
+│   │   │       │   ├── Decisiones-Arquitectura-v1.0.md
+│   │   │       │   └── Adrs/
+│   │   │       │       ├── ADR-001-<Nombre>-v1.0.md
+│   │   │       │       └── ADR-XX-<Nombre>-v1.0.md
+│   │   │       ├── 06-Backlog-Tecnico/
+│   │   │       │   ├── README.md
+│   │   │       │   ├── Product-Backlog-v1.0.md
+│   │   │       │   ├── Backlog-Tecnico-v1.0.md
+│   │   │       │   └── Definition-Of-Ready-v1.0.md
+│   │   │       ├── 07-Plan-Sprint/
+│   │   │       │   ├── README.md
+│   │   │       │   ├── Plan-Iteracion-Sprint-00-v1.0.md
+│   │   │       │   ├── Plan-Iteracion-Sprint-01-v1.0.md
+│   │   │       │   ├── Template-Sprint-Review-v1.0.md
+│   │   │       │   ├── Template-Sprint-Retrospectiva-v1.0.md
+│   │   │       │   └── Velocidad-Equipo-v1.0.md
+│   │   │       ├── 08-Calidad-Y-Pruebas/
+│   │   │       │   ├── README.md
+│   │   │       │   ├── Estrategia-Calidad-v1.0.md
+│   │   │       │   ├── Estrategia-Testing-v1.0.md
+│   │   │       │   ├── Plan-Pruebas-v1.0.md
+│   │   │       │   ├── Matriz-Cobertura-Pruebas-v1.0.md
+│   │   │       │   ├── Casos-Prueba-Referenciales-v1.0.md
+│   │   │       │   ├── Criterios-Validacion-v1.0.md
+│   │   │       │   └── Definition-Of-Done-v1.0.md
+│   │   │       ├── 09-Devops/
+│   │   │       │   ├── README.md
+│   │   │       │   ├── Pipeline-CI-CD-v1.0.md
+│   │   │       │   ├── Estrategia-Versionado-v1.0.md
+│   │   │       │   ├── Entornos-Deploy-v1.0.md
+│   │   │       │   └── Supply-Chain-Seguridad-v1.0.md
+│   │   │       ├── 10-Developer-Guide/                   # Según gating y tipo
+│   │   │       │   ├── README.md
+│   │   │       │   ├── Conceptos-Fundamentales-v1.0.md
+│   │   │       │   ├── Guia-Onboarding-Developer-v1.0.md
+│   │   │       │   ├── Referencia-API-v1.0.md
+│   │   │       │   └── Troubleshooting-v1.0.md
+│   │   │       └── 11-Examples/                          # Según gating y tipo
+│   │   │           ├── README.md
+│   │   │           ├── ejemplo-01-<Nombre>-v1.0.md
+│   │   │           ├── ejemplo-02-<Nombre>-v1.0.md
+│   │   │           └── ejemplo-03-<Nombre>-v1.0.md
+│   │   └── README.md                                     # README raíz consolidado de la solución
+│   └── Maquetas/                                         # Solo si algún proyecto ejecutó la Fase B2
+│       └── <Nombre-Proyecto>/                            # Una maqueta por proyecto visual
+│           ├── index.html                                # Punto de entrada con la navegación
+│           ├── <Superficie>.html                         # Una superficie por archivo
+│           ├── README.md
+│           └── assets/
+│               ├── css/                                  # Tokens del catálogo como variables CSS
+│               ├── js/                                   # Datos-Maqueta.js (fuente única) y Maqueta.js
+│               └── img/
 ├── src/                                                  # Código de la solución (fase posterior)
 │   ├── <NombreSolucionCodigo>.<Sufijo>/                  # Un proyecto por nombre de código
 │   └── Aplicada.<Paquete>/                               # Redistribuibles con prefijo Aplicada
@@ -1347,13 +1500,15 @@ Notas sobre el árbol:
 - Las categorías `00-Contexto/` y `01-Necesidades-Negocio/` viven a nivel solución (se generan una vez en la Fase A). Las categorías `02` a `11` se repiten bajo `Proyectos/<Nombre-Proyecto>/`, un subárbol por proyecto del manifiesto.
 - La carpeta `Solucion/` y sus dos artefactos (vista de solución y pipeline de solución) se generan solo cuando hay más de un proyecto.
 - Caso degenerado (solución de un solo proyecto): el orquestador aplana el layout. Las categorías `00` a `11` van directo bajo `SDD/Docs/` (sin el subnivel `Proyectos/<Nombre>/` y sin la carpeta `Solucion/`), igual que en el árbol del template de tipo único. El README raíz se genera siempre.
+- `SDD/Maquetas/` aparece solo si algún proyecto ejecutó la Fase B2. Es hermana de `SDD/Docs/` y no está dentro de ella: `SDD/Docs/` es exclusivamente prosa generada por el orquestador, y la maqueta es material ejecutable que vos editás a mano durante la validación.
+- El catálogo de modelos UX-UI (`Devs/Modelos-UX-UI/`) y sus ejemplos ejecutables (`Templates/`, en la raíz del repositorio fuente `IA.SDD`, hermana de `SDD/`) viven del lado del template, no del repositorio destino. Se poblan solo si aceptás capitalizar el diseño de una maqueta aprobada.
 - El árbol mostrado es el caso completo; tu solución va a tener algunas omisiones por proyecto según el `project_type` de cada uno y sus flags.
 
 ---
 
 ## Resumen ejecutivo
 
-Esta guía de usuario está distribuida en 10 capítulos completos según la estructura solicitada, actualizada al modelo de solución más jerarquía de proyectos con intake unificado. Explica que una solución agrupa N proyectos (con N mayor o igual a 1), cada uno con uno de los 8 tipos D8, y que el usuario completa un único documento de intake: el SOLUTION-INTAKE (Parte A negocio §1-§12, Parte B composición con la tabla de proyectos de §13, Parte C técnica por proyecto §17 con bloque P.1-P.12), que reemplaza a las antiguas PROJECT-BRIEF y PROJECT-README. El SOLUTION-MANIFEST ya no lo completa el usuario: el orquestador lo deriva de §13 durante una Fase de validación de intake (previa a la Fase A, dirigida por Intake-Rules.md), que valida la completitud, emite una batería consolidada de preguntas si falta algo bloqueante y presenta el manifiesto derivado para confirmación. Incluye 4 mini-casos aplicados: tres soluciones de un proyecto (rest-api de gestión de turnos médicos, library de parsing CSV, mobile-app-maui de inventario de almacén), enmarcadas como caso degenerado, y una solución multi-proyecto (gestión de turnos con cuatro proyectos: api, domain, notificaciones y un paquete redistribuible) con su tabla de proyectos en §13, su manifiesto derivado, grafo de dependencias y orden topológico. Aporta 19 entradas de FAQ con respuestas concretas y accionables. Ilustra explícitamente los 8 tipos D8 confirmados (library, web-monolith, web-microservices, desktop-app, mobile-app-maui, rest-api, cli-tool, worker-service) y la convención de nombres de código `<NombreSolucionCodigo>.<Sufijo>` con la excepción `Aplicada` para redistribuibles, junto con un mapa visual ASCII completo de la estructura de carpetas (00/01 a nivel solución, `Solucion/`, `Proyectos/<Nombre>/02..11/` y README raíz, con el aplanado del caso degenerado).
+Esta guía de usuario está distribuida en 10 capítulos completos según la estructura solicitada, actualizada al modelo de solución más jerarquía de proyectos con intake unificado. Explica que una solución agrupa N proyectos (con N mayor o igual a 1), cada uno con uno de los 8 tipos D8, y que el usuario completa un único documento de intake: el SOLUTION-INTAKE (Parte A negocio §1-§12, Parte B composición con la tabla de proyectos de §13, Parte C técnica por proyecto §17 con bloque P.1-P.12), que reemplaza a las antiguas PROJECT-BRIEF y PROJECT-README. El SOLUTION-MANIFEST ya no lo completa el usuario: el orquestador lo deriva de §13 durante una Fase de validación de intake (previa a la Fase A, dirigida por Intake-Rules.md), que valida la completitud, emite una batería consolidada de preguntas si falta algo bloqueante y presenta el manifiesto derivado para confirmación. Incluye 4 mini-casos aplicados: tres soluciones de un proyecto (rest-api de gestión de turnos médicos, library de parsing CSV, mobile-app-maui de inventario de almacén), enmarcadas como caso degenerado, y una solución multi-proyecto (gestión de turnos con cuatro proyectos: api, domain, notificaciones y un paquete redistribuible) con su tabla de proyectos en §13, su manifiesto derivado, grafo de dependencias y orden topológico. Documenta además la Fase B2 de validación visual de maqueta, opcional y por proyecto: el orquestador materializa la especificación de la categoría 03 en una maqueta navegable (HTML, CSS, Bootstrap 5 y JavaScript estáticos, sin proceso de build), la abre en el navegador, la corrige por prompt o toma las correcciones manuales del humano, retroalimenta la documentación propagando hacia atrás y hacia adelante, ofrece capitalizar el diseño como modelo UX-UI reutilizable del template, y emite la línea de base del sensado de deriva, el instrumento con el que el equipo verifica sprint a sprint que lo construido sigue siendo lo aprobado. Aporta 23 entradas de FAQ con respuestas concretas y accionables. Ilustra explícitamente los 8 tipos D8 confirmados (library, web-monolith, web-microservices, desktop-app, mobile-app-maui, rest-api, cli-tool, worker-service) y la convención de nombres de código `<NombreSolucionCodigo>.<Sufijo>` con la excepción `Aplicada` para redistribuibles, junto con un mapa visual ASCII completo de la estructura de carpetas (00/01 a nivel solución, `Solucion/`, `Proyectos/<Nombre>/02..11/` y README raíz, con el aplanado del caso degenerado).
 
 ---
 
@@ -1363,6 +1518,7 @@ Esta guía de usuario está distribuida en 10 capítulos completos según la est
 |---|---|---|
 | 1.1 | 2026-06-10 | Actualización del contenido al modelo de solución más jerarquía de proyectos: intake de tres documentos (SOLUTION-MANIFEST + BRIEF + README de solución), generación por proyecto en orden topológico, layout con Proyectos/<Nombre>/ y Solucion/, caso degenerado aplanado, convención de nombres de código, caso aplicado multi-proyecto, FAQ y glosario ampliados. |
 | 1.2 | 2026-06-10 | Actualización al intake unificado: el usuario completa un único documento SOLUTION-INTAKE; el SOLUTION-MANIFEST lo deriva el orquestador en la Fase de validación de intake con confirmación; flujo, casos, árbol, FAQ y glosario ajustados. |
+| 1.3 | 2026-07-19 | Incorporación de la Fase B2 de validación visual de maqueta y del sensado de deriva. Se agrega la tabla de contenido del documento. Nuevo §4.6 (Paso 5b: elección de modelo UX-UI, plan de maqueta, construcción, validación en el navegador, las dos vías de corrección, retroalimentación obligatoria, captura de conocimiento y emisión de la línea de base), con el §4.6 anterior renumerado a §4.7. §4.5 suma la Fase B2 al listado de fases. Nuevo §7.4 (agregar un modelo UX-UI al catálogo). Cuatro entradas de FAQ nuevas (F-20 a F-23: saltear la fase, correcciones manuales no tomadas, uso de la línea de base y de la matriz de sensado, qué es un modelo UX-UI). Seis términos nuevos en el glosario (Fase B2, maqueta, modelo UX-UI, línea de base visual, sensado de deriva, evidencia verificable D9). El árbol de carpetas suma `SDD/Maquetas/`, las reglas `Maqueta-Rules.md` y `Deriva-Rules.md`, y el catálogo `Modelos-UX-UI/` con sus notas. |
 
 ---
 

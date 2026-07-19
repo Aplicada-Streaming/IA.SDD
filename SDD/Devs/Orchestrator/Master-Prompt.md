@@ -1,11 +1,11 @@
 # Master prompt SDD — Orquestador de la solución
 
 **Archivo:** `Master-Prompt.md`
-**Versión:** 3.3
+**Versión:** 3.4
 **Idioma:** Español rioplatense neutro técnico
 **Modo:** plan-then-confirm con subagentes + audit independiente
 **Prerequisitos:** `SDD/Intake/SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md` completo. El `SOLUTION-MANIFEST` lo deriva el orquestador del intake durante la fase de validación (§3); no es un insumo a completar a mano.
-**Salida:** `SDD/Docs/` poblada con la documentación de la solución y de cada proyecto.
+**Salida:** `SDD/Docs/` poblada con la documentación de la solución y de cada proyecto, más `SDD/Maquetas/` cuando algún proyecto ejecuta la Fase B2 de validación visual.
 
 ---
 
@@ -16,7 +16,9 @@ Este prompt se ejecuta una sola vez por solución, sobre un repositorio que ya c
 **Modelo de dos repositorios.** El orquestador trabaja sobre dos repositorios ubicados en un workspace común: el repositorio fuente `IA.SDD` (este template) y el repositorio destino de la solución. La convención de rutas de este prompt es:
 
 - Insumos de solo lectura (reglas, plantillas, prompts, guías y este master-prompt) viven en el repositorio fuente y se referencian como `../IA.SDD/SDD/Devs/...` y `../IA.SDD/SDD/Guides/...`.
-- Los artefactos de la solución viven en el repositorio destino: el intake y el manifiesto derivado en `SDD/Intake/`, y la documentación generada en `SDD/Docs/`. Estas rutas son relativas a la raíz del repositorio destino, donde se ejecuta el orquestador.
+- Los artefactos de la solución viven en el repositorio destino: el intake y el manifiesto derivado en `SDD/Intake/`, la documentación generada en `SDD/Docs/` y las maquetas de validación visual en `SDD/Maquetas/`. Estas rutas son relativas a la raíz del repositorio destino, donde se ejecuta el orquestador.
+
+Hay una única excepción a la regla de que el orquestador solo escribe en el destino: el paso de captura de conocimiento de la Fase B2 (`Maqueta-Rules.md` §3.7), que escribe un modelo UX-UI en `../IA.SDD/SDD/Devs/Modelos-UX-UI/` y su ejemplo ofuscado en `../IA.SDD/Templates/`. Requiere aceptación explícita del humano y la verificación de ofuscación es bloqueante, porque `IA.SDD` es un repositorio público.
 
 El orquestador se invoca desde el repositorio destino (ver `../IA.SDD/PROMPTS/PROMPT-Agente-Bootstrap-SDD.md`). No copia el árbol del template al destino: lee las reglas y plantillas desde `../IA.SDD/` y escribe únicamente en `SDD/Intake/` y `SDD/Docs/` del destino. Esto permite que las mejoras al template se propaguen a nuevas soluciones sin re-copiarlo.
 
@@ -192,6 +194,8 @@ SDD/Docs/
   README.md                    (README raíz de la solución)
 ```
 
+Además de `SDD/Docs/`, los proyectos que ejecutan la Fase B2 producen su maqueta de validación en `SDD/Maquetas/<Nombre-Proyecto>/`, hermana de `SDD/Docs/` y no dentro de ella. La separación es deliberada: `SDD/Docs/` es exclusivamente prosa generada por el orquestador, y la maqueta es material ejecutable que el humano edita a mano durante la validación.
+
 Categorías de nivel solución (se generan una vez, desde el BRIEF de solución y las secciones de solución §1 a §4 del README): 00-Contexto y 01-Necesidades-Negocio. Categorías por proyecto (se generan una vez por proyecto, según su D8 y su bloque técnico §5 P.x del README): 02 a 11. Cierre de nivel solución: la vista de solución de `Solucion/` y el README raíz. La frontera precisa entre nivel solución y nivel proyecto para 02 a 08 la afina la validación de reglas y la vista de solución de las categorías 05.
 
 Caso degenerado (solución de un único proyecto): el orquestador aplana el layout y reproduce exactamente la estructura del template de tipo único. Genera las 12 categorías (00 a 11) directamente bajo `SDD/Docs/` y el README raíz, sin el subnivel `Proyectos/<Nombre-Proyecto>/` ni la carpeta `Solucion/`. En ese caso, las rutas `Proyectos/<Nombre-Proyecto>/<categoria>/` que declaran las reglas por proyecto colapsan a `SDD/Docs/<categoria>/`, y la vista y el pipeline de solución se omiten (no hay jerarquía que documentar). El subnivel `Proyectos/` y la carpeta `Solucion/` aparecen únicamente cuando la solución tiene más de un proyecto. Esta es la garantía de no ruptura: un proyecto existente que se modele como solución de un proyecto obtiene la misma estructura `SDD/Docs/` que producía el template de tipo único.
@@ -214,6 +218,7 @@ A partir del intake, el orquestador deriva flags que condicionan el plan de gene
 | `tiene_persistencia` | proyecto | README §5 P.4 del proyecto | true si declara cualquier motor de persistencia distinto a "No aplica" | Activa `modelo-conceptual` en 02 y `Modelo-Datos-logico` en 05 del proyecto. |
 | `requiere_compliance` | proyecto/solución | SOLUTION-INTAKE §10 (restricciones) y §17 P.5/P.10 del proyecto | true si se mencionan GDPR, PCI, HIPAA, SOC2, ISO 27001 o normativa local | Refuerza secciones de seguridad en 05, 08 y 09 y obliga ADR de compliance. |
 | `tiene_observabilidad_critica` | proyecto | README §5 P.10 del proyecto | true si los NFR declaran SLO de disponibilidad >= 99.9 % o latencia p99 con métrica numérica | Refuerza supply-chain-seguridad y dashboards en 09 y NFR-tests en 08 del proyecto. |
+| `requiere_maqueta` | proyecto | Derivado de `tiene_ui_final`, del `project_type` y de `tiene_portal_developers`; confirmado por el humano | Valor propuesto true si `tiene_ui_final` == true, o si es `library` de componentes visuales, o si es `rest-api` con portal visible. False en cualquier otro caso. El humano confirma o invierte el valor propuesto al aprobar el plan inicial. | Si true, se ejecuta la Fase B2 de validación visual de maqueta para ese proyecto (regla `Maqueta-Rules.md`) y se emiten los artefactos de línea de base del sensado de deriva (regla `Deriva-Rules.md`). Si false en un proyecto con `tiene_ui_final` == true, la omisión se registra como ADR en 05 del proyecto. |
 
 El orquestador publica al usuario el bloque de flags por solución y por proyecto como parte del plan inicial. El usuario puede aceptar, ajustar el valor con justificación o pedir que se completen los intake antes de continuar.
 
@@ -233,6 +238,7 @@ Flags del proyecto <Nombre-Proyecto> (project_type: <valor>):
 - tiene_persistencia: <true|false>
 - requiere_compliance: <true|false>
 - tiene_observabilidad_critica: <true|false>
+- requiere_maqueta: <true|false>   (Fase B2; opcional, confirmable por el humano)
 ```
 
 Reglas operativas sobre los flags:
@@ -265,6 +271,8 @@ El orquestador presenta la siguiente lista con sus valores por defecto y pide al
 | Sufijo de versión | `-v<X.Y>.md` con guion medio, nunca `_v<X.Y>.md` con guion bajo ni `.v<X.Y>.md` con punto | Heredado D4. |
 | Política de control de cambios | Cada documento incluye sección `Control de cambios` con tabla versión / fecha / cambios / autor | Heredado D5. |
 
+| Regla de evidencia verificable (D9) | Toda afirmación sobre el estado del sistema cita evidencia verificable | Invariante global incorporada con el sensado de deriva. Su alcance, su formato de cita y sus excepciones viven en `Deriva-Rules.md` §1. Rige hacia adelante desde su incorporación; no se aplica retroactivamente a documentación previa. |
+
 Si el usuario propone cambios, se registran en un bloque `Invariantes confirmadas de la solución` que el orquestador inyecta como contexto a todos los subagentes en §8.
 
 ---
@@ -280,6 +288,7 @@ A continuación se documenta el plan maestro que el orquestador construye. Las c
 | B | 02-Especificacion-Funcional | proyecto | `Especificacion-Funcional-v1.0.md`, `Casos-De-Uso/CU-XX-<Nombre>-v1.0.md`, `Reglas-De-Negocio/RN-XX-<Nombre>-v1.0.md` (si aplica), `Modelo-Datos/...` (si hay persistencia), `README.md` | Analista Funcional Senior (AG-02) + variante D8 del proyecto | 01/NB-XX, 00; README §5 P.x del proyecto | `02-Rules-Especificacion-Funcional.md` | `SDD/Docs/Proyectos/<Nombre>/02-Especificacion-Funcional/` | Sí |
 | B | 03-UX-UI-DX | proyecto | Variante UX/UI o DX según `tiene_ui_final`, `README.md` | Especialista UX/UI o DX (AG-03) + variante D8 del proyecto | 02 del proyecto, 00 | `03-Rules-UX-UI-DX.md` | `SDD/Docs/Proyectos/<Nombre>/03-UX-UI-DX/` | Sí |
 | B | 04-Prompts-AI | proyecto | Si `usa_llm` del proyecto == true: artefactos de prompts; si false: omitir | Ingeniero de Prompts Senior (AG-04) + variante D8 del proyecto | 01, README §5 del proyecto, 02 del proyecto | `04-Rules-Prompts-AI.md` | `SDD/Docs/Proyectos/<Nombre>/04-Prompts-AI/` (solo si gating positivo) | Sí (si se generó) |
+| B2 | Validación visual de maqueta | proyecto | Solo si `requiere_maqueta` del proyecto == true: maqueta navegable en `SDD/Maquetas/<Nombre>/` (`index.html`, un HTML por superficie clave, `assets/css/`, `assets/js/Datos-Maqueta.js`, `assets/js/Maqueta.js`, `README.md`); retroalimentación de 03 y de las categorías que la matriz de propagación alcance; `Linea-Base-Visual-v1.0.md`, `Contrato-Datos-Maqueta-v1.0.md` y `Bitacora-Validacion-Maqueta-v1.0.md` en 03; `Matriz-Sensado-Deriva-v1.0.md` en 08; si el humano lo acepta, modelo en `../IA.SDD/SDD/Devs/Modelos-UX-UI/` y template ofuscado en `../IA.SDD/Templates/` | Maquetador de validación visual (AG-03M) + variante D8 del proyecto | 03 del proyecto (`Experiencia-De-Uso`, wireframes, representaciones, glosario), 02 del proyecto (CU, RN, modelo conceptual y sus ejemplos), 00 | `Maqueta-Rules.md`, `Deriva-Rules.md`, catálogo `References/Design/`, catálogo `Modelos-UX-UI/` | `SDD/Maquetas/<Nombre>/`, `SDD/Docs/Proyectos/<Nombre>/03-UX-UI-DX/`, `SDD/Docs/Proyectos/<Nombre>/08-Calidad-Y-Pruebas/` | Sí (si se ejecutó) |
 | C | 05-Arquitectura-Tecnica | proyecto + solución | Por proyecto: `Arquitectura-Solucion-v1.0.md`, `Decisiones-Arquitectura-v1.0.md`, `Adrs/ADR-XX-<Nombre>-v1.0.md`, modelo lógico/flujo/contratos/extensibilidad según flags, `README.md`. Nivel solución: vista de solución en `Solucion/` (mapa de proyectos, contratos inter-proyecto, grafo) | Arquitecto de Software Senior (AG-05) + variante D8 del proyecto | 02, RN, modelo conceptual; 04 del proyecto; 00 | `05-Rules-Arquitectura-Tecnica.md` | `SDD/Docs/Proyectos/<Nombre>/05-Arquitectura-Tecnica/` y `SDD/Docs/Solucion/` | Sí |
 | D | 06-Backlog-Tecnico | proyecto | `Product-Backlog-v1.0.md`, `Backlog-Tecnico-v1.0.md`, US/BT individuales según umbrales, `Definition-Of-Ready-v1.0.md`, `README.md` | Scrum Master / Agile Coach (AG-06) + variante D8 del proyecto | 01; 02; 05 del proyecto | `06-Rules-Backlog-Tecnico.md` | `SDD/Docs/Proyectos/<Nombre>/06-Backlog-Tecnico/` | Sí |
 | D | 07-Plan-Sprint | proyecto | Si `equipo_n` > 1: sprint plan completo; si == 1: `Mini-Plan-v1.0.md`, `README.md` | Scrum Master / Gestión Ágil Senior (AG-07) + variante D8 del proyecto | 06 del proyecto; 02; 05 | `07-Rules-Plan-Sprint.md` | `SDD/Docs/Proyectos/<Nombre>/07-Plan-Sprint/` | Sí |
@@ -299,6 +308,8 @@ Notas operativas sobre el plan:
 - Para proyectos que se despliegan por instancia y arrancan sin la configuración mínima que los hace utilizables, el despacho de AG-03 suma `Design-Rules-Primer-Arranque-v1.0.md`, vía el mismo índice.
 - Para proyectos con una sola identidad de operación (sin gestión de usuarios ni roles diferenciados), el despacho de AG-03 suma `Design-Rules-Acceso-Monousuario-v1.0.md`, vía el mismo índice.
 - Para proyectos que producen artefactos desplegables identificables, el despacho de AG-03 suma `Design-Rules-Identidad-De-Version-v1.0.md`, vía el mismo índice. En proyectos sin UI final la capacidad se materializa en la superficie DX correspondiente.
+- Para proyectos con `requiere_maqueta` == true, la Fase B2 corre después del audit de la Fase B y antes de la Fase C. Su mecánica completa (los siete pasos, sus tres detenciones, las dos vías de corrección y la matriz de propagación de la retroalimentación) vive en `Maqueta-Rules.md`; el orquestador la lee, no la duplica. El paso 1 de esa fase ofrece al humano de qué modelo UX-UI partir, leyendo `../IA.SDD/SDD/Devs/Modelos-UX-UI/Index-Modelos-UX-UI.md`: el catálogo base de `References/Design/` es la opción por defecto y los modelos registrados son alternativas que se aplican por encima del base, nunca en su reemplazo.
+- La retroalimentación del paso 6 de la Fase B2 puede alcanzar categorías ya generadas y auditadas. Cuando alcanza a 00 o 01, que son de nivel solución, el orquestador se detiene, informa el alcance real del cambio y pide confirmación antes de tocarlas. Cuando alcanza al `SOLUTION-INTAKE`, aplica §13 de este master-prompt.
 - Las cuatro extensiones por capacidad son ortogonales entre sí y respecto de la especialización por stack: se cargan en cualquier combinación según las condiciones anteriores, y el arquetipo de panel de control monolítico de un servicio específico las carga a las cuatro. Todas son insumo normativo adicional para 03; ninguna altera la mecánica plan-then-confirm ni las fases.
 
 Procedimiento de lectura de las reglas (refuerza el principio de delegación de §1):
@@ -333,6 +344,17 @@ Bucle por proyecto, en orden topológico (niveles 0, 1, 2, ...; proyectos del mi
     2. 03-UX-UI-DX (en paralelo con 04 una vez que 02 está aprobado).
     3. 04-Prompts-AI (solo si `usa_llm` del proyecto == true).
     4. Audit independiente de Fase B del proyecto.
+
+  Fase B2 — Validación visual de maqueta del proyecto (opcional, solo si `requiere_maqueta` == true).
+    1. Oferta explícita de generar la maqueta, al cerrar la Fase B con su audit aprobado, junto con la elección del modelo UX-UI entre el catálogo base y los modelos de `Modelos-UX-UI/` (detención). El flag `requiere_maqueta` habilita la fase; esta pregunta la arranca, y el humano puede declinar acá aunque el flag esté en `true`.
+    2. Plan de maqueta: superficies, rutas de navegación, entidades y campos a exhibir, estados, rutas de salida (detención).
+    3. Construcción de la maqueta en `SDD/Maquetas/<Nombre-Proyecto>/`.
+    4. Lanzamiento en el navegador del humano.
+    5. Ciclo de corrección iterativo, por prompt o por edición manual del humano, hasta aprobación explícita (detención).
+    6. Retroalimentación de la documentación según la matriz de propagación de `Maqueta-Rules.md` §3.6.
+    7. Captura de conocimiento: oferta de registrar el modelo en `Modelos-UX-UI/` y su template ofuscado en `Templates/` (detención).
+    8. Emisión de la línea de base del sensado de deriva según `Deriva-Rules.md` §2.
+    9. Audit independiente de Fase B2 del proyecto.
 
   Fase C — Arquitectura del proyecto.
     1. 05-Arquitectura-Tecnica (del proyecto).
@@ -489,10 +511,12 @@ Perfil del auditor: Arquitecto de Soluciones + QA Senior, sin haber participado 
 Criterios del audit (matriz):
 
 - Conformidad D1 a D8 de cada documento (idioma, encoding, Título-Con-Guiones, versionado con guion medio, política deprecation, trazabilidad D6, prohibición de vocabulario fuente, conjunto D8 cerrado).
+- Conformidad D9 (evidencia verificable) en los artefactos emitidos desde la incorporación de la regla: toda afirmación sobre el estado del sistema cita evidencia en el formato de `Deriva-Rules.md` §1. Una afirmación sin evidencia es P1; una evidencia que no resuelve es P0. La regla no se aplica retroactivamente a documentación previa.
 - Cumplimiento de §6 (criterios de aceptación) del archivo de reglas correspondiente, para el `project_type` del proyecto.
 - Coherencia cross-doc dentro de la fase (referencias entre archivos resuelven, IDs no duplicados, glosario sin contradicciones).
 - Trazabilidad upstream/downstream declarada en cada cabecera y consistente con §3.3 del archivo de reglas, incluyendo el upstream de nivel solución (00, 01) y de proyectos dependientes cuando aplica.
 - Filename y estructura de carpetas correctos, incluyendo la ubicación bajo `Proyectos/<Nombre>/` para las categorías de proyecto.
+- En la Fase B2, además: los criterios de aceptación de `Maqueta-Rules.md` §8 y de `Deriva-Rules.md` §6. Son hallazgos P0 de esa fase la aprobación de la maqueta sin retroalimentación de la documentación, la propagación de una corrección manual sin confirmación de su interpretación, y cualquier literal del dominio del proyecto destino en los artefactos escritos en `IA.SDD`.
 
 Niveles de hallazgo:
 
@@ -572,6 +596,7 @@ Estructura del resumen ejecutivo:
 | Audits aprobados | Lista de los audits (fase A a H, por proyecto cuando aplica) con su veredicto y path al informe. |
 | Decisiones pendientes | Ambigüedades no resueltas, ADRs sin cerrar, secciones `Por confirmar` y bloqueos a despejar antes de codear. |
 | Flags activos | Flags de §4 por solución y por proyecto con su valor final. |
+| Línea de base y sensado de deriva | Por cada proyecto que ejecutó la Fase B2: ruta de la maqueta aprobada, cantidad de elementos de la línea de base por tipo (`SUP`, `CMP`, `EST`, `NAV`, `DM`) y la `Matriz-Sensado-Deriva-v1.0.md` con el estado de cada fila. Es el instrumento que el equipo se lleva al ciclo de codificación para verificar, sprint a sprint, que lo construido sigue siendo lo aprobado. |
 
 Texto obligatorio del orquestador al cerrar:
 
@@ -656,6 +681,12 @@ Términos canónicos del orquestador. Cualquier divergencia con estos términos 
 | Fase | Bloque de generación que produce una o varias categorías relacionadas y termina con audit. Fases A (solución), B a G (por proyecto) y H (consolidación de solución). |
 | Handoff a codificación | Punto en el que el orquestador entrega la documentación auditada y espera confirmación explícita antes de despachar la primera tarea de codificación. |
 | Ambigüedad legítima | Falta concreta de un dato bloqueante en el manifiesto o el intake, detectable por el subagente, que dispara el pattern de §9. |
+| Fase B2 | Fase opcional de validación visual de maqueta, por proyecto, entre la Fase B y la Fase C. Se activa con el flag `requiere_maqueta`. Materializa la especificación de 03 en una maqueta navegable, la valida con el humano, retroalimenta la documentación y emite la línea de base del sensado de deriva. Su regla es `Maqueta-Rules.md`. |
+| Maqueta | Artefacto ejecutable de validación en `SDD/Maquetas/<Nombre-Proyecto>/`: HTML, CSS y JavaScript estáticos servidos tal cual están en disco, sin paso de build, con datos de ejemplo hardcodeados provenientes de la documentación. No es el producto ni documentación viva: es la línea de base de un momento, aprobada explícitamente por el humano. |
+| Modelo UX-UI | Diseño capturado de una maqueta aprobada y registrado en `Modelos-UX-UI/` con su template ofuscado en `Templates/`. Se aplica por encima del catálogo base de `References/Design/`, nunca en su reemplazo. |
+| Línea de base visual | Inventario identificado (`SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX`) de lo que el humano aprobó al mirar la maqueta, más el contrato de datos (`DM-XX`) que exhibe. Punto de comparación externo del sensado de deriva. |
+| Sensado de deriva | Mecanismo de control que contrasta lo construido contra la línea de base visual y el contrato de datos, con umbrales declarados de deriva menor y mayor, en cuatro momentos de sensado. Su regla es `Deriva-Rules.md`. |
+| Evidencia verificable (D9) | Invariante global: toda afirmación sobre el estado del sistema cita un artefacto localizable, reproducible, contemporáneo e independiente de quien afirma. No aplica a afirmaciones de diseño, de especificación ni de contexto. |
 
 ---
 
@@ -673,6 +704,8 @@ Este master-prompt se versiona como cualquier otro artefacto del template. Cualq
 | 3.1 | 2026-06-19 | Incorporación del catálogo de reglas de diseño como insumo del despacho de la categoría 03: las notas operativas de §6 explicitan que, para proyectos con UI (`tiene_ui_final` == true), AG-03 recibe además el índice `References/Design/Index-Design-Rules.md`, el documento base `Design-Rules-Web-Generico-v1.0.md` y la especialización del stack declarado en la Parte C del intake. No cambia la mecánica plan-then-confirm, las fases ni los insumos obligatorios; es un agregado de insumo normativo. | Reformulación SDD (catálogo de diseño) |
 | 3.2 | 2026-06-20 | Incorporación de la extensión por capacidad "configuración dirigida por esquema": las notas operativas de §6 explicitan que, para proyectos con superficies de configuración, AG-03 recibe además `Design-Rules-Config-Esquema-v1.0.md` vía el índice del catálogo. No cambia la mecánica plan-then-confirm, las fases ni los insumos obligatorios; es un agregado de insumo normativo. | Reformulación SDD (configuración por esquema) |
 | 3.3 | 2026-07-18 | Incorporación de tres extensiones por capacidad derivadas de la extracción de características de un panel de control monolítico en producción: las notas operativas de §6 explicitan que AG-03 recibe además `Design-Rules-Primer-Arranque-v1.0.md` cuando el proyecto se despliega por instancia y arranca vacío, `Design-Rules-Acceso-Monousuario-v1.0.md` cuando declara una sola identidad de operación y `Design-Rules-Identidad-De-Version-v1.0.md` cuando produce artefactos desplegables identificables, todas vía el índice del catálogo, y declara la ortogonalidad mutua de las cuatro extensiones. No cambia la mecánica plan-then-confirm, las fases ni los insumos obligatorios; es un agregado de insumo normativo. | Reformulación SDD (arquetipo de panel monolítico) |
+
+| 3.4 | 2026-07-19 | Incorporación de la Fase B2 de validación visual de maqueta y del sensado de deriva. §0 suma `SDD/Maquetas/` a la salida y declara la única excepción de escritura fuera del destino (captura de modelo UX-UI en `IA.SDD`, con aceptación explícita y ofuscación bloqueante); §4 suma el flag `requiere_maqueta` con su regla de derivación y su confirmación por el humano; §5 registra la invariante D9 de evidencia verificable, con alcance acotado y vigencia hacia adelante; §6 suma la fila de la Fase B2 al plan y dos notas operativas (oferta de modelo UX-UI y freno ante propagación a categorías de nivel solución o al intake); §7 detalla los nueve pasos de la fase dentro del bucle por proyecto; §10 suma D9 y los criterios de audit propios de B2; §12 suma la línea de base y la matriz de sensado al resumen ejecutivo del handoff; §15 suma seis términos al glosario. La mecánica de la fase vive en las reglas nuevas `Maqueta-Rules.md` y `Deriva-Rules.md`, por delegación de la especialidad; el master-prompt solo la cablea. La fase es opcional y no altera el flujo de los proyectos sin UI. | Framework SDD (validación visual y sensado de deriva) |
 
 Reglas de versionado:
 

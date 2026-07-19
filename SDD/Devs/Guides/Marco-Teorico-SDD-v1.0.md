@@ -1,9 +1,9 @@
 # Marco Teórico SDD
 
 **Documento:** Marco-Teorico-SDD-v1.0.md
-**Versión:** 1.4
+**Versión:** 1.5
 **Estado:** Aprobado
-**Fecha:** 2026-06-20
+**Fecha:** 2026-07-19
 **Autor:** Equipo Template SDD — UTN
 **Audiencia:** estudiantes universitarios (UTN), docentes, profesionales que adopten el template
 **Idioma:** español rioplatense neutro técnico
@@ -23,7 +23,9 @@
 - [§6 Técnicas de descomposición y planificación](#6-técnicas-de-descomposición-y-planificación)
 - [§7 Estilos arquitectónicos soportados](#7-estilos-arquitectónicos-soportados)
 - [§8 UX/UI/DX como continuo](#8-uxuidx-como-continuo)
+  - [§8.8 La maqueta como instrumento de validación](#88-la-maqueta-como-instrumento-de-validación)
 - [§9 Calidad y pruebas en SDD](#9-calidad-y-pruebas-en-sdd)
+  - [§9.7 Sensado de deriva y evidencia verificable](#97-sensado-de-deriva-y-evidencia-verificable)
 - [§10 DevOps y release engineering](#10-devops-y-release-engineering)
 - [§11 Prompting colaborativo con IA](#11-prompting-colaborativo-con-ia)
 - [§12 Anti-patrones y errores frecuentes](#12-anti-patrones-y-errores-frecuentes)
@@ -1238,6 +1240,18 @@ Además de las especializaciones por stack, el catálogo admite extensiones por 
 
 Tres extensiones más completan el eje, y juntas describen el arquetipo del panel de control monolítico: una instancia propia que arranca vacía, la aprovisiona su único operador y se identifica por la versión que corre. El primer arranque (`Design-Rules-Primer-Arranque`) trata el despliegue sin configurar como una capacidad de primera clase: un predicado único de aprovisionamiento que todas las superficies consultan, un corte redundante en tres capas (ruteo, superficie y acción), una superficie sin chrome de navegación porque todavía no hay a dónde ir, y un acto explícito, indivisible e irreversible que cierra su lazo con un acuse en la pantalla siguiente. El acceso de operador único (`Design-Rules-Acceso-Monousuario`) define un perfil cuyo valor de diseño está en lo que omite: sin registro, sin selector de cuenta, sin recuperación, sin roles visibles, con un shell partido entre acceso y trabajo, mensajes resueltos desde un catálogo de códigos y un rechazo de credenciales deliberadamente indiferenciado. La identidad de versión (`Design-Rules-Identidad-De-Version`) fija que la versión que muestra una instancia se deriva del proceso que la construyó y nunca se transcribe a mano, y que sin ella la instancia no es diagnosticable. Las cuatro extensiones son ortogonales entre sí; un proyecto carga las que su intake habilita.
 
+## 8.8 La maqueta como instrumento de validación
+
+Entre la especificación de experiencia y el código hay una brecha que ningún documento cierra por sí solo. La categoría 03 produce texto: un marco de experiencia, wireframes esquemáticos, tablas de estados. Ese texto es preciso, pero exige del lector humano una simulación mental costosa y poco confiable: leer una descripción de layout y anticipar cómo se va a sentir usarlo es una habilidad que casi nadie tiene y que nadie ejerce bien sobre cuarenta páginas.
+
+El prototipado como técnica de validación es anterior al software y está bien establecido en la literatura de diseño centrado en personas (ISO 9241-210 lo incorpora como actividad del ciclo iterativo). Lo que el template SDD agrega es su encaje con el flujo asistido por IA: el prototipo no lo dibuja una persona a mano, lo materializa un subagente a partir de la especificación que otro subagente redactó, y su función principal no es explorar el diseño sino verificar que la cadena documental produjo lo que se esperaba.
+
+Eso le da a la maqueta un doble rol. Como instrumento de diseño, permite validar navegación, jerarquía y estados en minutos. Como instrumento de control, es la primera vez en todo el flujo en que la especificación se materializa en algo observable y falsable: si la maqueta no es lo que el humano esperaba, el error está en la documentación, no en la maqueta, y se corrige aguas arriba antes de que se convierta en código.
+
+La maqueta valida además una segunda dimensión que el texto expone mal: el modelo de datos. Un modelo conceptual en prosa se aprueba con facilidad porque nada obliga a mirarlo campo por campo. La misma información puesta en una tabla poblada con ejemplos hace evidente lo que falta, lo que sobra y lo que está mal tipado. Por eso los datos de ejemplo de la maqueta salen de la documentación y viven en una fuente única: si estuvieran dispersos en el marcado, la maqueta dejaría de servir para esto.
+
+De la validación se derivan dos capitalizaciones. Hacia el proyecto, la retroalimentación obligatoria de la documentación, propagada hacia atrás y hacia adelante según el alcance de lo aprendido. Hacia el template, la captura opcional del diseño como modelo UX-UI reutilizable, que convierte una decisión de un proyecto en un activo del framework. Esa segunda capitalización es la que hace que el catálogo de diseño crezca por experiencia acumulada y no solo por diseño metodológico.
+
 ---
 
 # §9 Calidad y pruebas en SDD
@@ -1327,6 +1341,18 @@ El DoD (ver §5.8) es el artefacto que materializa los quality gates en una chec
 | Security | SAST + DAST + SCA | Pentesting periódico |
 | Maintainability | Métricas (complejidad, cobertura) | Code review, refactoring continuo |
 | Portability | Tests en ambientes distintos | Containerización + IaC |
+
+## 9.7 Sensado de deriva y evidencia verificable
+
+La deriva de un agente es la separación progresiva entre lo que produce y lo que se especificó, sin manifestación en el momento en que ocurre. Es distinta de un error puntual: es acumulativa, cada paso parece razonable en su contexto local, y se descubre tarde, cuando revertir es caro.
+
+El template tenía dos defensas y ninguna alcanza. La trazabilidad D6 verifica que las referencias entre documentos cierren, pero un grafo de referencias puede estar íntegro y los nodos haber cambiado de significado. La auditoría entre fases verifica conformidad estructural contra las reglas, pero un documento puede cumplir cada criterio de forma y describir un producto distinto del acordado. Las dos son verificaciones internas: comparan el sistema documental consigo mismo.
+
+Lo que falta es un referente externo. La epistemología de la verificación es clara al respecto: una afirmación solo se puede falsar contra algo que no dependa de quien la emite. La maqueta aprobada cumple ese papel porque un humano la miró y la aprobó explícitamente, en un momento datable, y porque su contenido es observable elemento por elemento. Convertida en inventario identificado (superficies, componentes, estados, rutas, campos), pasa de artefacto a línea de base.
+
+De ahí se sigue la regla de evidencia verificable, que el template incorpora como invariante global D9: toda afirmación sobre el estado del sistema debe estar respaldada por evidencia localizable, reproducible, contemporánea e independiente de quien afirma. Su alcance está deliberadamente acotado a las afirmaciones en modo indicativo, las que dicen que algo ya es. Las afirmaciones de diseño, de especificación o de contexto necesitan justificación, no evidencia; exigirles cita produciría un ritual de referencias vacías que ahoga la señal que la regla busca preservar. Por la misma razón, D9 rige hacia adelante y no se aplica retroactivamente.
+
+El mecanismo operativo son los umbrales. Sin umbrales declarados por dimensión, toda diferencia entre la línea de base y lo construido cuenta como deriva, el instrumento produce ruido y el equipo lo abandona en dos iteraciones. Distinguir deriva menor (se registra) de deriva mayor (obliga a decidir) es lo que lo hace sostenible. Y la decisión ante una deriva mayor es siempre binaria y explícita: se corrige el sistema, o se actualiza la línea de base con aprobación humana. Lo que queda prohibido es que ambas se separen sin declaración, que es exactamente la definición del problema.
 
 ---
 
@@ -1908,6 +1934,7 @@ W3C. (2024). *ARIA — Accessible Rich Internet Applications*. https://www.w3.or
 | 1.2 | 2026-06-10 | Actualización al intake unificado: un único documento `SOLUTION-INTAKE` reemplaza a `PROJECT-BRIEF` y `PROJECT-README`; el `SOLUTION-MANIFEST` pasa a artefacto derivado del §13 del intake; se incorpora la fundamentación de la Fase de validación de intake (validación de completitud semántica, batería de preguntas, derivación y confirmación del manifiesto). Conjunto D8 sin cambios. |
 | 1.3 | 2026-06-10 | Higiene (resolución de P3): el archivo se renombra a `Marco-Teorico-SDD-v1.0.md` para alinear el marcador de variante con `guia-usuario-SDD` (se actualizan metadato y auto-referencias). Se agrega en §3.9 la aclaración del alcance de D3: el casing Título-Con-Guiones gobierna los artefactos generados; los identificadores de variante de la metodología (`SDD1.0`, `SDD`, `SDD2.1M`, `SDD2.1R`) y los prefijos de organización quedan fuera de su alcance. | Reformulación SDD |
 | 1.4 | 2026-06-20 | Auditoría de reflexión de la configuración dirigida por esquema: §1.5 (eje por capacidad en `references/`), §2.5 (descriptor como contrato + frontera validable + simulación + propone/confirma/valida como encaje con IA), §4.2 (AG-03 carga la extensión; AG-05 el motor de la frontera; AG-04 el asistente como tool definitions), §7.5 (`PropuestaDeConfiguracion` como patrón transversal agnóstico de D8), §8.3 (divulgación progresiva ligada a Hick/Miller y ayuda contextual a la heurística 10), §11.1 (propone/confirma/valida como instancia de plan-then-confirm con human-in-the-loop), §12.3 (anti-patrones nuevos) y §13 (nueve términos de glosario). | Reformulación SDD (auditoría config-esquema) |
+| 1.5 | 2026-07-19 | Fundamentación de la Fase B2 de validación visual de maqueta y del sensado de deriva: §8.8 (la maqueta como instrumento de diseño y de control, su doble validación de experiencia y de modelo de datos, y sus dos capitalizaciones hacia el proyecto y hacia el template) y §9.7 (la deriva como separación acumulativa, la insuficiencia de la trazabilidad D6 y de la auditoría estructural por ser verificaciones internas, la línea de base como referente externo falsable, la invariante D9 de evidencia verificable con su alcance acotado y su vigencia hacia adelante, y los umbrales como condición de sostenibilidad del instrumento). | Framework SDD (validación visual y sensado de deriva) |
 
 ---
 

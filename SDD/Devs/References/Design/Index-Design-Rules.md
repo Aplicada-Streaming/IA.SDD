@@ -2,9 +2,9 @@
 
 **Proyecto:** Template SDD
 **Documento:** Index-Design-Rules.md
-**Versión:** 1.2
+**Versión:** 1.3
 **Estado:** Vigente
-**Fecha:** 2026-07-18
+**Fecha:** 2026-07-19
 **Autor:** AG-ROOT (Arquitecto de Soluciones)
 
 ---
@@ -74,6 +74,21 @@ El arquetipo de panel de control monolítico de un servicio específico carga la
 
 Ante conflicto entre el base y una especialización, manda la regla base salvo limitación técnica explícita y justificada en el documento hijo.
 
+## 4.1 Tercer eje: los modelos UX-UI capturados
+
+Además de este catálogo, el template mantiene el catálogo de modelos UX-UI en `Devs/Modelos-UX-UI/`, con su propio índice `Index-Modelos-UX-UI.md`. Son modelos completos de diseño capturados de maquetas reales validadas y aprobadas por un humano en la Fase B2 de validación visual (`Rules/Maqueta-Rules.md`).
+
+La diferencia con este catálogo es de origen y de obligatoriedad. Este catálogo es material metodológico diseñado, y su documento base es piso obligatorio. Los modelos UX-UI son experiencia extraída de la práctica, y son opcionales: el humano elige uno, o ninguno, en el paso 1 de la Fase B2.
+
+Los tres ejes son ortogonales y se apilan en este orden:
+
+1. Documento base de este catálogo. Siempre.
+2. Especialización por stack de este catálogo, si existe para el stack declarado.
+3. Extensiones por capacidad de este catálogo, las que correspondan según §4.
+4. Modelo UX-UI de `Modelos-UX-UI/`, si el humano eligió uno.
+
+Un modelo UX-UI nunca reemplaza al documento base. Ante conflicto entre un modelo y el base, manda el base, salvo que el modelo documente la desviación con su justificación, que es la misma regla que rige a las especializaciones por stack.
+
 ## 5. Control de cambios
 
 | Versión | Fecha | Cambios | Autor |
@@ -81,3 +96,4 @@ Ante conflicto entre el base y una especialización, manda la regla base salvo l
 | 1.0 | 2026-06-19 | Índice inicial del catálogo de reglas de diseño. Registra el documento base web genérico y la especialización Blazor + MudBlazor, el roadmap de especializaciones previstas (HTML, MAUI, Blazor en MAUI) y el criterio de selección por stack y `project_type`. | AG-ROOT |
 | 1.1 | 2026-06-20 | Incorporación del eje de extensiones por capacidad transversal: §1 distingue especializaciones por stack de extensiones por capacidad; §2 registra `Design-Rules-Config-Esquema-v1.0.md` en una subtabla propia; §4 agrega el criterio de carga de la extensión cuando el proyecto tiene superficies de configuración; §3 nota el panel de asistente de IA previsto a futuro. | AG-ROOT |
 | 1.2 | 2026-07-18 | Incorporación de tres extensiones por capacidad derivadas de la extracción de características de un panel de control monolítico en producción: §2 registra `Design-Rules-Primer-Arranque-v1.0.md`, `Design-Rules-Acceso-Monousuario-v1.0.md` y `Design-Rules-Identidad-De-Version-v1.0.md` con la nota del arquetipo que las agrupa; §4 reemplaza el criterio de carga en prosa por una tabla con la condición de carga de cada extensión y declara su ortogonalidad mutua. | AG-ROOT |
+| 1.3 | 2026-07-19 | Nueva §4.1: registro del catálogo de modelos UX-UI de `Devs/Modelos-UX-UI/` como tercer eje del sistema de diseño del template, con su diferencia de origen y obligatoriedad respecto de este catálogo, el orden de apilado de las cuatro capas y la regla de conflicto. Incorporado junto con la Fase B2 de validación visual de maqueta. | AG-ROOT |

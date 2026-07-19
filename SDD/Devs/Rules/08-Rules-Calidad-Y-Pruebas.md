@@ -2,7 +2,7 @@
 
 **Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/08-Calidad-Y-Pruebas/`
 **Subagente target del orquestador:** Ingeniero QA / SDET Senior (AG-08)
-**Versión de las reglas:** 1.2
+**Versión de las reglas:** 1.3
 
 ---
 
@@ -67,6 +67,7 @@ El AG-08 mantiene titularidad de los artefactos. Las demás especialidades aport
 | `criterios-validacion-v<X.Y>.md` | Todos los tipos D8 | — | — | Criterios numéricos que permiten declarar al sistema validado para release. |
 | `definition-of-done-v<X.Y>.md` | Todos los tipos D8 | — | — | DoD por capa (US, BT, sprint, release) con criterios verificables y excepciones admitidas. |
 | `guia-testing-extensibilidad-v<X.Y>.md` | library con plugins, web-microservices con plugins | cli-tool con plugins, rest-api con handlers externos | Tipos sin puntos de extensión | Cómo testear plugins, extensiones y handlers externos sin modificar el núcleo. |
+| `Matriz-Sensado-Deriva-v<X.Y>.md` | Proyectos con `requiere_maqueta` == true | — | Proyectos que no ejecutaron la Fase B2 | Lista de comprobaciones que contrasta lo construido contra la línea de base visual y el contrato de datos de la maqueta aprobada, con método de verificación, evidencia esperada y umbral de deriva por fila. La emite AG-03M al cerrar la Fase B2; AG-08 la incorpora a la estrategia de testing resolviendo qué filas se cubren con test automatizado y cuáles quedan como inspección. Ver `Deriva-Rules.md` §2.3 y §4. |
 | `README.md` de la sección | Recomendado para todos | — | — | Índice navegable de los artefactos de calidad. |
 
 ### 2.2 Reglas de inclusión y exclusión por tipo
@@ -298,6 +299,7 @@ Cobertura por capa:
 - [ ] Si el tipo D8 admite plugins, existe `Guia-Testing-Extensibilidad-v1.0.md`.
 - [ ] Ningún archivo lleva sufijo de dominio (`-motor` u otros marcadores temáticos); todos siguen el patrón `-v<X.Y>.md`.
 - [ ] Cada NFR con objetivo numérico tiene un test asociado en la matriz.
+- [ ] Si el proyecto ejecutó la Fase B2, existe `Matriz-Sensado-Deriva-v1.0.md` con una fila por elemento de la línea de base visual y del contrato de datos, cada una con método de verificación resuelto (test automatizado o inspección), evidencia esperada y umbral de deriva menor y mayor declarados.
 - [ ] Cada caso de prueba referencia explícitamente al menos un CU, RN o NFR.
 - [ ] La DoD no se redefine en sprint plans; los sprint plans referencian este documento.
 - [ ] La cobertura se reporta por capa, no como número global único.
@@ -451,3 +453,4 @@ Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/08-Calidad-Y-Pruebas/<estructura>
 | 1.0 | 2026-05-17 | Versión inicial de las reglas constructivas de la categoría 08. Define los siete artefactos obligatorios para todo tipo D8 y el opcional `guia-testing-extensibilidad`, fija la pirámide objetivo por tipo D8, establece la matriz de cobertura con tres tablas obligatorias, formaliza la DoD como documento canónico no redefinible por sprint y corrige el antecedente del fuente SDD 1.0 eliminando el sufijo de dominio en los nombres de archivo en favor del patrón uniforme `-v<X.Y>.md`. |
 | 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `Proyectos/<Nombre-Proyecto>/08-Calidad-Y-Pruebas/`; la frase de cierre de §1.2 y la ruta de salida del prompt-snippet referencian el `project_type` del proyecto en curso (manifiesto). Tablas §1.2 sin reescritura. |
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |
+| 1.3 | 2026-07-19 | Incorporación de `Matriz-Sensado-Deriva-v<X.Y>.md` a la tabla maestra de §2.1, condicionada al flag `requiere_maqueta`, y del criterio de aceptación correspondiente en §6. La matriz la emite AG-03M al cerrar la Fase B2 y AG-08 la incorpora a la estrategia de testing resolviendo el método de verificación de cada fila. Su regla completa vive en `Deriva-Rules.md`. |
