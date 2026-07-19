@@ -2,9 +2,9 @@
 
 **Proyecto:** {{nombre-solucion}}
 **Documento:** Design-Rules-Blazor-Mudblazor-v1.0.md
-**Versión:** 1.1
+**Versión:** 1.2
 **Estado:** Vigente
-**Fecha:** 2026-06-19
+**Fecha:** 2026-07-18
 **Autor:** {{equipo-o-rol}} (AG-03 UX/UI + Frontend Architect .NET)
 **Ámbito:** Web — Blazor Interactive Server (.NET 8/9) con MudBlazor v9
 **Hereda de:** `Design-Rules-Web-Generico-v1.0.md`
@@ -157,6 +157,28 @@ Notas de fidelidad:
 - La previsualización y confirmación de una `PropuestaDeConfiguracion` (lado UX) se arma con `MudDialog` (vía `IDialogService`) mostrando la explicación en palabras + alcance afectado antes de aplicar. El motor de validación y aplicación es de la categoría 05, no de la UI.
 - La ranura del asistente no dispara nada hoy: es un `MudPaper` deshabilitado. La IA se conecta después contra la frontera de propuesta, sin tocar componentes del dominio.
 
+### 4.2 Patrones de primer arranque, acceso monousuario e identidad de versión → MudBlazor
+
+Cuando el proyecto carga las extensiones `Design-Rules-Primer-Arranque`, `Design-Rules-Acceso-Monousuario` o `Design-Rules-Identidad-De-Version`, sus patrones se realizan así:
+
+| Patrón (extensión) | Componentes MudBlazor |
+| --- | --- |
+| Shell partido — superficie sin chrome | Layout propio sin `MudAppBar` ni `MudDrawer`, con `MudMainContent` sobre el lienzo; el shell completo de §3 rige recién con sesión |
+| Tarjeta de aprovisionamiento / de acceso | `MudPaper Outlined Elevation="0"` de ancho acotado, anclado a la franja superior; acción primaria `MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary"` |
+| Redirección con estado de resolución | `MudProgressLinear Indeterminate="true"` mientras se resuelve el predicado; navegación con `NavigationManager.NavigateTo(destino, replace: true)` |
+| Banda de resultado por código | `MudAlert Severity="Severity.Error"` (con `role="alert"`) o `Severity.Success` (con `role="status"`), resuelta desde el catálogo de códigos |
+| Requisito declarado antes del intento | `HelperText` del campo, alimentado desde la política; asociado por `aria-describedby` |
+| Barra de identidad | `MudAppBar Dense="true"` con la identidad como `MudText` y dos `MudButton` con `StartIcon` para cambio de secreto y cierre de sesión |
+| Orientación posterior al aprovisionamiento | grilla de `MudPaper Outlined Elevation="0"` con `MudAvatar` + título + `Typo.caption` + botón de apertura (tarjeta de acceso del base §4.2) |
+| Sello de versión | `MudText Typo="Typo.caption"` al pie, en `color.text.tertiary`; distintivo de preliminar como `MudChip Color="Color.Warning" Size="Size.Small"` |
+| Detalle de diagnóstico | `MudExpansionPanel` o `MudDialog` con filas clave/valor y `MudButton` de copiado; confirmación por `ISnackbar` |
+
+Notas de fidelidad:
+- Los formularios de identidad y aprovisionamiento se envían por POST a endpoints de autenticación, no por interactividad de componente: la credencial de sesión se emite en el ciclo de request, fuera del circuito de render interactivo. Los campos usan `input` nativos con `autocomplete` declarado y `AntiforgeryToken`, y el formulario se marca para que el enhanced navigation no lo intercepte.
+- Por la misma razón, el cierre de sesión es un `form` POST con el botón dentro, no un `NavLink`.
+- El estado de restricción temporal de acceso se materializa con `MudAlert Severity="Severity.Error"`, sin componente de cuenta regresiva: exponer el temporizador filtraría el parámetro de la política.
+- El sello de versión toma su valor del contrato resuelto en el punto de composición del host; el componente no lo compone ni lo lee de una constante de la vista.
+
 ---
 
 ## 5. Estados y feedback en MudBlazor
@@ -242,6 +264,7 @@ Además de los criterios del documento base, una superficie Blazor + MudBlazor c
 | Especialidad dueña | AG-03 UX/UI + Frontend Architect .NET |
 | Regla que lo invoca | `devs/Rules/03-Rules-UX-UI-DX.md` (selección por stack) |
 | Aplica a `project_type` | web-monolith, web-microservices (con frontend) con stack Blazor + MudBlazor |
+| Extensiones por capacidad que mapea | `Design-Rules-Config-Esquema-v1.0.md` (§4.1); `Design-Rules-Primer-Arranque-v1.0.md`, `Design-Rules-Acceso-Monousuario-v1.0.md` e `Design-Rules-Identidad-De-Version-v1.0.md` (§4.2) |
 | Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>` del proyecto Blazor |
 
 ---
@@ -252,3 +275,4 @@ Además de los criterios del documento base, una superficie Blazor + MudBlazor c
 | --- | --- | --- | --- |
 | 1.0 | 2026-06-19 | Versión inicial. Mapeo del catálogo genérico a MudBlazor v9: theme tipado, render Interactive Server, patrones → componentes, estados, iconografía SVG con íconos custom, accesibilidad. | AG-03 UX/UI + Frontend Architect |
 | 1.1 | 2026-06-20 | Mapeo de los patrones de la extensión `Design-Rules-Config-Esquema` a componentes MudBlazor (nueva §4.1): campo dirigido por descriptor, ayuda contextual, divulgación progresiva, presets, explicación en palabras, indicador de simulación y ranura del asistente; estado `info` vía `Color.Info`/`Palette.Info`; previsualización de la propuesta con `MudDialog`. | AG-03 UX/UI + Frontend Architect |
+| 1.2 | 2026-07-18 | Mapeo de los patrones de las extensiones `Design-Rules-Primer-Arranque`, `Design-Rules-Acceso-Monousuario` e `Design-Rules-Identidad-De-Version` a componentes MudBlazor (nueva §4.2): shell partido sin `MudAppBar`/`MudDrawer`, tarjeta de aprovisionamiento y de acceso, redirección con `MudProgressLinear` y `replace: true`, banda de resultado con `MudAlert`, barra de identidad, orientación posterior, sello de versión y detalle de diagnóstico. Nota de fidelidad sobre formularios de identidad por POST a endpoints (fuera del circuito interactivo) con `AntiforgeryToken` y `autocomplete` declarado. §11 registra las extensiones mapeadas. | AG-03 UX/UI + Frontend Architect |

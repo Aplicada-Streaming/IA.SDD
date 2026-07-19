@@ -1,7 +1,7 @@
 # Master prompt SDD — Orquestador de la solución
 
 **Archivo:** `Master-Prompt.md`
-**Versión:** 3.2
+**Versión:** 3.3
 **Idioma:** Español rioplatense neutro técnico
 **Modo:** plan-then-confirm con subagentes + audit independiente
 **Prerequisitos:** `SDD/Intake/SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md` completo. El `SOLUTION-MANIFEST` lo deriva el orquestador del intake durante la fase de validación (§3); no es un insumo a completar a mano.
@@ -296,6 +296,10 @@ Notas operativas sobre el plan:
 - La columna `Documentos a generar` se reescribe textualmente como input al subagente correspondiente; no se interpreta libremente.
 - Para la categoría 03 de proyectos con UI (`tiene_ui_final` == true), el despacho de AG-03 suma como insumo el catálogo de reglas de diseño: el índice `References/Design/Index-Design-Rules.md`, el documento base `Design-Rules-Web-Generico-v1.0.md` y, si existe, la especialización del stack declarado en la Parte C del intake (por ejemplo `Design-Rules-Blazor-Mudblazor-v1.0.md`). Es un insumo normativo adicional para 03; no altera la mecánica plan-then-confirm ni las fases.
 - Para proyectos con superficies de configuración (parámetros que el usuario fija), el despacho de AG-03 suma además la extensión por capacidad del catálogo `Design-Rules-Config-Esquema-v1.0.md`, vía el mismo índice. Es ortogonal a la especialización por stack y sigue siendo un insumo normativo; no altera la mecánica plan-then-confirm ni las fases.
+- Para proyectos que se despliegan por instancia y arrancan sin la configuración mínima que los hace utilizables, el despacho de AG-03 suma `Design-Rules-Primer-Arranque-v1.0.md`, vía el mismo índice.
+- Para proyectos con una sola identidad de operación (sin gestión de usuarios ni roles diferenciados), el despacho de AG-03 suma `Design-Rules-Acceso-Monousuario-v1.0.md`, vía el mismo índice.
+- Para proyectos que producen artefactos desplegables identificables, el despacho de AG-03 suma `Design-Rules-Identidad-De-Version-v1.0.md`, vía el mismo índice. En proyectos sin UI final la capacidad se materializa en la superficie DX correspondiente.
+- Las cuatro extensiones por capacidad son ortogonales entre sí y respecto de la especialización por stack: se cargan en cualquier combinación según las condiciones anteriores, y el arquetipo de panel de control monolítico de un servicio específico las carga a las cuatro. Todas son insumo normativo adicional para 03; ninguna altera la mecánica plan-then-confirm ni las fases.
 
 Procedimiento de lectura de las reglas (refuerza el principio de delegación de §1):
 
@@ -668,6 +672,7 @@ Este master-prompt se versiona como cualquier otro artefacto del template. Cualq
 | 3.0 | 2026-06-10 | Unificación del intake (ST-03/ST-04). El orquestador deja de leer tres documentos (`SOLUTION-MANIFEST` + `PROJECT-BRIEF` + `PROJECT-README`) y pasa a leer un único `SOLUTION-INTAKE` (cambio de insumos obligatorios, por eso sube major). §0 prerrequisitos y §2 lectura apuntan al intake único; §3 se convierte en la Fase de validación de intake previa a la Fase A: valida el intake con `rules/Intake-Rules.md`, emite la batería consolidada de preguntas, deriva el `SOLUTION-MANIFEST` desde §13 del intake y lo presenta para confirmación; §7 incorpora esa fase; §4 (flags), §6 y §8 (insumos), §11, §13 (no-modificación) y §15 (glosario) referencian el intake unificado. El manifiesto deja de completarse a mano: es artefacto derivado y confirmado. El comportamiento de generación y el caso degenerado no cambian. | Reformulación SDD (unificación de intake) |
 | 3.1 | 2026-06-19 | Incorporación del catálogo de reglas de diseño como insumo del despacho de la categoría 03: las notas operativas de §6 explicitan que, para proyectos con UI (`tiene_ui_final` == true), AG-03 recibe además el índice `References/Design/Index-Design-Rules.md`, el documento base `Design-Rules-Web-Generico-v1.0.md` y la especialización del stack declarado en la Parte C del intake. No cambia la mecánica plan-then-confirm, las fases ni los insumos obligatorios; es un agregado de insumo normativo. | Reformulación SDD (catálogo de diseño) |
 | 3.2 | 2026-06-20 | Incorporación de la extensión por capacidad "configuración dirigida por esquema": las notas operativas de §6 explicitan que, para proyectos con superficies de configuración, AG-03 recibe además `Design-Rules-Config-Esquema-v1.0.md` vía el índice del catálogo. No cambia la mecánica plan-then-confirm, las fases ni los insumos obligatorios; es un agregado de insumo normativo. | Reformulación SDD (configuración por esquema) |
+| 3.3 | 2026-07-18 | Incorporación de tres extensiones por capacidad derivadas de la extracción de características de un panel de control monolítico en producción: las notas operativas de §6 explicitan que AG-03 recibe además `Design-Rules-Primer-Arranque-v1.0.md` cuando el proyecto se despliega por instancia y arranca vacío, `Design-Rules-Acceso-Monousuario-v1.0.md` cuando declara una sola identidad de operación y `Design-Rules-Identidad-De-Version-v1.0.md` cuando produce artefactos desplegables identificables, todas vía el índice del catálogo, y declara la ortogonalidad mutua de las cuatro extensiones. No cambia la mecánica plan-then-confirm, las fases ni los insumos obligatorios; es un agregado de insumo normativo. | Reformulación SDD (arquetipo de panel monolítico) |
 
 Reglas de versionado:
 

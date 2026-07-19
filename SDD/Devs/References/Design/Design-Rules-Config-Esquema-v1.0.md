@@ -2,9 +2,9 @@
 
 **Proyecto:** {{nombre-solucion}}
 **Documento:** Design-Rules-Config-Esquema-v1.0.md
-**Versión:** 1.0
+**Versión:** 1.1
 **Estado:** Vigente
-**Fecha:** 2026-06-20
+**Fecha:** 2026-07-18
 **Autor:** {{equipo-o-rol}} (AG-03 UX/UI)
 **Ámbito:** Capacidad transversal — superficies de configuración (agnóstico de framework)
 **Hereda de:** `Design-Rules-Web-Generico-v1.0.md`
@@ -54,6 +54,21 @@ Reglas de uso del contrato:
 - La `leyenda` y los `ejemplos` se escriben una vez, en el descriptor, no por pantalla.
 - El control que se renderiza se deriva de `tipo` + `unidad` + límites; no se elige a mano contradiciendo el descriptor.
 
+### 2.1 La frontera entre configuración de aplicación y configuración de entorno
+
+No todo parámetro pertenece a la superficie. Un sistema desplegable tiene dos clases de configuración, y confundirlas produce superficies que prometen lo que no pueden cumplir.
+
+| Clase | Quién la fija | Cuándo tiene efecto | Dónde vive | En la UI |
+| --- | --- | --- | --- | --- |
+| Configuración de aplicación | El usuario que opera el sistema | En caliente, sin reiniciar | Estado persistente del sistema | Tiene descriptor y superficie |
+| Configuración de entorno | Quien despliega la instancia | Al arrancar el proceso | Fuera del estado del sistema (entorno, archivo de despliegue) | No se dibuja; se documenta |
+
+Reglas de la frontera:
+- Un parámetro que la superficie no puede cambiar no se dibuja en la superficie, ni siquiera deshabilitado. Mostrar un control que no manda es peor que no mostrarlo: el usuario cree haber configurado algo que sigue igual.
+- La frontera se declara explícitamente en `experiencia-de-uso`: qué se administra desde el sistema y qué se fija al desplegarlo. Es una decisión de diseño, no un residuo de la implementación.
+- Un descriptor puede existir sin superficie. El descriptor es el contrato del parámetro, no la promesa de una pantalla; los parámetros que el sistema usa pero el usuario no gobierna conservan su descriptor y no se renderizan.
+- Cuando un parámetro de entorno condiciona el efecto de una superficie de aplicación, la superficie declara esa dependencia como información, sin ofrecer cambiarla.
+
 ---
 
 ## 3. Los cuatro consumidores del descriptor
@@ -86,6 +101,7 @@ Los parámetros comunes quedan visibles en la vista; los avanzados se ocultan en
 
 ### 4.4 Presets / recetas
 Un preset es una configuración completa lista para aplicar: un conjunto de valores coherentes para los descriptores de la superficie. Anatomía: lista o grupo de presets con nombre y una línea de propósito. Comportamiento: el usuario elige un preset, lo ajusta si quiere y lo aterriza en simulación (no se aplica directo). Un preset es una forma rápida de llenar una propuesta (§6); pasa por la misma previsualización y confirmación que cualquier cambio manual.
+Derivación de los valores: los presets se componen a partir de los `ejemplos` y el `default` de cada descriptor, no de literales escritos en la pantalla. El preset equilibrado es el conjunto de `default`; los presets que se apartan del equilibrio toman los `ejemplos` del extremo correspondiente de cada descriptor. Así, cuando un descriptor cambia sus valores admitidos, los presets se mueven con él en vez de quedar apuntando a valores que dejaron de ser representativos. Un preset con valores propios, ajenos a los `ejemplos`, es una tercera fuente de verdad y está prohibido.
 
 ### 4.5 Explicación en lenguaje natural ("en palabras")
 Bloque que describe en prosa la configuración actual o propuesta, armado por plantilla a partir de los descriptores y los valores ("en palabras: cuando el parámetro X supera N, el sistema hace Y"). Anatomía: bloque con barra de acento lateral, texto corrido legible. Comportamiento: se regenera al cambiar un valor; no se escribe a mano. Es la operación inversa del prompt futuro: hoy traduce valores → palabras para que el usuario entienda una configuración sin IA; mañana la IA hace palabras → valores. Sirve también como texto de previsualización en la confirmación (§6).
@@ -154,7 +170,7 @@ Con esas cuatro piezas, el motor de IA se enchufa después contra la frontera: g
 
 ## 9. Criterios de aceptación del diseño
 
-Una superficie de configuración cumple esta extensión cuando: cada parámetro configurable tiene su descriptor y la pantalla no hardcodea defaults, límites, leyendas ni ejemplos; la ayuda contextual y la explicación "en palabras" se derivan del descriptor y no se escriben a mano por campo; los parámetros avanzados están en divulgación progresiva; los presets, cuando existen, aterrizan en simulación y no se aplican directo; toda propuesta se previsualiza y se confirma antes de aplicar (la UI nunca aplica directo); el modo simulación está declarado; la ranura del asistente queda reservada y deshabilitada; y los patrones nuevos cumplen accesibilidad AA (disclosure por teclado, `aria-expanded`, `aria-describedby`, estado de la ranura anunciado).
+Una superficie de configuración cumple esta extensión cuando: cada parámetro configurable tiene su descriptor y la pantalla no hardcodea defaults, límites, leyendas ni ejemplos; la ayuda contextual y la explicación "en palabras" se derivan del descriptor y no se escriben a mano por campo; los parámetros avanzados están en divulgación progresiva; los presets, cuando existen, derivan sus valores de los `ejemplos` y el `default` de los descriptores, aterrizan en simulación y no se aplican directo; la frontera entre configuración de aplicación y de entorno está declarada y ningún parámetro que la superficie no gobierna se dibuja en ella; toda propuesta se previsualiza y se confirma antes de aplicar (la UI nunca aplica directo); el modo simulación está declarado; la ranura del asistente queda reservada y deshabilitada; y los patrones nuevos cumplen accesibilidad AA (disclosure por teclado, `aria-expanded`, `aria-describedby`, estado de la ranura anunciado).
 
 ---
 
@@ -167,6 +183,9 @@ Una superficie de configuración cumple esta extensión cuando: cada parámetro 
 | Explicación "en palabras" escrita a mano | Se desfasa de los valores reales; no es la inversa del prompt | Generarla por plantilla a partir de descriptores + valores |
 | Aplicar cambios sin previsualización ni simulación | El usuario no ve el efecto antes de comprometerlo; sin red de seguridad | Previsualizar (en palabras + alcance) y simular antes de confirmar |
 | Dar a la IA capacidad de ejecutar en vez de proponer | Saca al humano del lazo; cambios sin control | La IA llena una `PropuestaDeConfiguracion`; el humano confirma, el sistema valida |
+| Preset con valores propios escritos en la pantalla | Tercera fuente de verdad que se desfasa de los descriptores | Componer el preset con los `ejemplos` y el `default` de cada descriptor |
+| Dibujar en la superficie un parámetro de entorno | El control no manda: el usuario cree haber configurado algo que sigue igual | Declarar la frontera y no renderizar lo que la superficie no gobierna |
+| Mostrar deshabilitado un parámetro que solo se fija al desplegar | Sugiere que algún día se habilitará desde ahí | Documentarlo como configuración de entorno, fuera de la superficie |
 
 ---
 
@@ -177,9 +196,11 @@ Una superficie de configuración cumple esta extensión cuando: cada parámetro 
 | Especialidad dueña | AG-03 UX/UI |
 | Hereda de | `Design-Rules-Web-Generico-v1.0.md` |
 | Mapeado por | especializaciones por stack (por ejemplo `Design-Rules-Blazor-Mudblazor-v1.0.md`) |
+| Extensión hermana | `Design-Rules-Primer-Arranque-v1.0.md` (la configuración de entorno se fija antes de la primera pantalla) |
 | Regla que lo invoca | `devs/Rules/03-Rules-UX-UI-DX.md` (cuando el proyecto tiene superficies de configuración) |
 | Cross-ref técnico | categoría 05 (motor, registro de descriptores, validación, salidas estructuradas / tool calling, plan-and-apply) |
 | Cross-ref funcional | categoría 02 (qué funcional de los parámetros y de la operación de configurar) |
+| Cross-ref de despliegue | categoría 09 (configuración de entorno: parámetros que se fijan al desplegar la instancia) |
 | Marco teórico | `Guides/Marco-Teorico-SDD-v1.0.md`, cap. UX/UI/DX |
 | Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>` de las superficies de configuración del proyecto |
 
@@ -190,3 +211,4 @@ Una superficie de configuración cumple esta extensión cuando: cada parámetro 
 | Versión | Fecha | Cambios | Autor |
 | --- | --- | --- | --- |
 | 1.0 | 2026-06-20 | Versión inicial. Extensión por capacidad: configuración dirigida por esquema. Contrato del descriptor de parámetro y sus cuatro consumidores, patrones de componente (campo dirigido por descriptor, ayuda contextual, divulgación progresiva, presets, explicación en palabras, indicador de simulación, ranura del asistente), estados y validación, frontera `PropuestaDeConfiguracion` (lado UX), enganche de IA forward-compat, accesibilidad AA y anti-patrones. Agnóstico de framework, sin literales de dominio. | AG-03 UX/UI |
+| 1.1 | 2026-07-18 | Incorporación de hallazgos de la extracción de características de un panel monolítico en producción: §2.1 fija la frontera entre configuración de aplicación y configuración de entorno (con la regla de no dibujar lo que la superficie no gobierna y la de descriptor sin superficie); §4.4 declara la derivación de los presets a partir de los `ejemplos` y el `default` de los descriptores; §9 suma ambos criterios de aceptación; §10 suma tres anti-patrones (preset con valores propios, parámetro de entorno dibujado, parámetro de entorno deshabilitado); §11 registra la extensión hermana de primer arranque y el cross-ref de despliegue. | AG-03 UX/UI |

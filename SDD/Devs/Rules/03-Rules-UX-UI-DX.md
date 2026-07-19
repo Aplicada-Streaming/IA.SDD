@@ -2,7 +2,7 @@
 
 **Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/03-UX-UI-DX/`
 **Subagente target del orquestador:** Especialista UX/UI o Especialista DX (AG-03), según variante.
-**Versión de las reglas:** 1.4
+**Versión de las reglas:** 1.5
 
 ---
 
@@ -68,7 +68,15 @@ Los tokens, patrones, estados y la iconografía SVG del catálogo son normativos
 
 Trazabilidad: cada artefacto 03 con UI declara, en su tabla de trazabilidad, el o los documentos del catálogo de diseño aplicados.
 
-Cuando el proyecto tiene superficies de configuración (parámetros que el usuario fija), el AG-03 carga además, vía el índice, la extensión por capacidad `Design-Rules-Config-Esquema`. En esas superficies, los artefactos `experiencia-de-uso` y `wireframes` deben: describir cada parámetro configurable por su descriptor (etiqueta, leyenda, default, límites, ejemplos); colgar la ayuda contextual de cada campo del descriptor; incluir presets cuando apliquen; incluir la explicación en lenguaje natural ("en palabras"); declarar el modo simulación; y reservar la ranura del asistente de IA (forward-compat) sin construirla. La frontera `PropuestaDeConfiguracion` se previsualiza y se confirma antes de aplicar: la UI propone, el humano confirma, el sistema valida.
+Cuando el proyecto tiene superficies de configuración (parámetros que el usuario fija), el AG-03 carga además, vía el índice, la extensión por capacidad `Design-Rules-Config-Esquema`. En esas superficies, los artefactos `experiencia-de-uso` y `wireframes` deben: describir cada parámetro configurable por su descriptor (etiqueta, leyenda, default, límites, ejemplos); colgar la ayuda contextual de cada campo del descriptor; incluir presets cuando apliquen; incluir la explicación en lenguaje natural ("en palabras"); declarar el modo simulación; y reservar la ranura del asistente de IA (forward-compat) sin construirla. La frontera `PropuestaDeConfiguracion` se previsualiza y se confirma antes de aplicar: la UI propone, el humano confirma, el sistema valida. Además, el AG-03 declara la frontera entre configuración de aplicación (la que el usuario gobierna desde el sistema) y configuración de entorno (la que se fija al desplegar la instancia), y no dibuja en la superficie ningún parámetro que esta no gobierne, ni siquiera deshabilitado.
+
+Cuando el proyecto se despliega por instancia y arranca sin la configuración mínima que lo hace utilizable, el AG-03 carga además la extensión `Design-Rules-Primer-Arranque`. En ese caso, `experiencia-de-uso` y `wireframes` deben: declarar el predicado único de aprovisionamiento y el artefacto mínimo que lo satisface; describir el corte en las tres capas (ruteo, superficie y acción) contra ese mismo predicado; dibujar la superficie de aprovisionamiento sin chrome de navegación y sin acción de cancelar; declarar explícitamente el destino al completar; y describir la orientación posterior que sugiere los pasos siguientes sin bloquear.
+
+Cuando el proyecto declara una sola identidad de operación, el AG-03 carga además la extensión `Design-Rules-Acceso-Monousuario`. En ese caso, `experiencia-de-uso` y `wireframes` deben: declarar de forma explícita las omisiones del perfil (registro, selector de cuenta, recuperación, persistencia opcional de sesión, roles visibles), que no se dibujan ni siquiera deshabilitadas; describir el shell partido de acceso y de trabajo; resolver los mensajes desde un catálogo de códigos de resultado con rechazo de credenciales indiferenciado y sin exponer parámetros de la política; y declarar la duración de la sesión, su vencimiento y el efecto de cada acto de identidad sobre la sesión en curso.
+
+Cuando el proyecto produce artefactos desplegables identificables, el AG-03 carga además la extensión `Design-Rules-Identidad-De-Version`. En ese caso, `experiencia-de-uso` y `wireframes` deben: declarar el contrato de identidad de versión que la superficie consume; ubicar el sello en las dos ubicaciones obligatorias (superficie de acceso y superficie del sistema en funcionamiento); y describir el distintivo de artefacto preliminar, el marcador de origen indeterminado y el detalle de diagnóstico con copiado en un solo gesto. La versión se deriva del proceso de construcción; la vista no la compone ni la transcribe.
+
+El arquetipo de panel de control monolítico de un servicio específico carga las cuatro extensiones a la vez.
 
 ---
 
@@ -296,6 +304,9 @@ Tabla de trazabilidad de un artefacto 03:
 | Tests previstos | <referencia tentativa a 08> |
 | Catálogo de diseño aplicado | <Design-Rules-Web-Generico y especialización por stack, o N/A para variante DX> |
 | Configuración dirigida por esquema aplicada (descriptores, presets, modo simulación, ranura del asistente) | <sí / N/A> |
+| Primer arranque aplicado (predicado de aprovisionamiento, guard en tres capas, destino al completar) | <sí / N/A> |
+| Acceso de operador único aplicado (omisiones declaradas, shell partido, catálogo de resultados, política de sesión) | <sí / N/A> |
+| Identidad de versión aplicada (contrato, ubicaciones del sello, detalle de diagnóstico) | <sí / N/A> |
 
 ### 4.4 Anti-patrones a evitar
 
@@ -317,6 +328,13 @@ Tabla de trazabilidad de un artefacto 03:
 | Explicación "en palabras" de una configuración escrita a mano | Se desfasa de los valores reales | Generarla por plantilla a partir de descriptores + valores |
 | Aplicar cambios de configuración sin previsualización ni modo simulación | El usuario no ve el efecto antes de comprometerlo | Previsualizar (en palabras + alcance) y simular antes de confirmar |
 | Dar a la IA capacidad de ejecutar cambios de configuración en vez de proponerlos | Saca al humano del lazo; cambios sin control | La IA llena una `PropuestaDeConfiguracion`; el humano confirma, el sistema valida |
+| Dibujar en la superficie de configuración un parámetro que solo se fija al desplegar | El control no manda: el usuario cree haber configurado algo que sigue igual | Declarar la frontera aplicación/entorno y no renderizar lo que la superficie no gobierna |
+| Varias banderas de "ya configurado" o guard de primer arranque en una sola capa | El sistema queda en un estado que ninguna superficie sabe leer, o el corte se esquiva por URL o por envío tardío | Predicado único de aprovisionamiento y corte en las tres capas (ver `Design-Rules-Primer-Arranque`) |
+| Wizard multipaso para el primer arranque | Ceremonia abandonable a la mitad que deja el sistema en estado parcial | Una superficie, un acto indivisible; el resto se configura después con el sistema en marcha |
+| Arrastrar ceremonias multiusuario a un sistema de un solo operador | Registro, selector o recuperación llevan a lugares que no existen | Omitirlas y declarar la omisión (ver `Design-Rules-Acceso-Monousuario`) |
+| Distinguir "usuario inexistente" de "credencial incorrecta", o exponer umbrales de la política en el mensaje | Confirma la existencia de la identidad y filtra parámetros de seguridad | Rechazo indiferenciado con texto único; restricción temporal sin números |
+| Vencimiento silencioso de la sesión | Se manifiesta como un error arbitrario en una acción cualquiera | Devolver al shell de acceso con el estado de sesión vencida declarado |
+| Versión transcrita a mano en la vista, o instancia sin versión visible | Miente en silencio, o vuelve la instancia no diagnosticable | Derivarla de la construcción y exhibirla en las dos ubicaciones obligatorias (ver `Design-Rules-Identidad-De-Version`) |
 
 ---
 
@@ -522,3 +540,4 @@ Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/03-UX-UI-DX/<estructura>.
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |
 | 1.3 | 2026-06-19 | Incorporación del catálogo de reglas de diseño (`devs/References/Design/`) como insumo normativo de AG-03: nueva §1.4 (carga del índice, documento base más especialización por stack, tokens y patrones normativos, trazabilidad del catálogo), anti-patrón de tokens ad hoc en §4.4 y fila "Catálogo de diseño aplicado" en la tabla de trazabilidad de §4.3. |
 | 1.4 | 2026-06-20 | Cableado de la extensión por capacidad `Design-Rules-Config-Esquema`: §1.4 extendida (carga cuando hay superficies de configuración, y requisitos sobre `experiencia-de-uso`/`wireframes`: descriptores, ayuda contextual, presets, explicación en palabras, modo simulación, ranura del asistente y frontera `PropuestaDeConfiguracion`), nuevos anti-patrones de configuración por esquema en §4.4 y fila "Configuración dirigida por esquema aplicada" en la trazabilidad de §4.3. |
+| 1.5 | 2026-07-18 | Cableado de tres extensiones por capacidad nuevas (`Design-Rules-Primer-Arranque`, `Design-Rules-Acceso-Monousuario`, `Design-Rules-Identidad-De-Version`), derivadas de la extracción de características de un panel de control monolítico en producción: §1.4 suma la condición de carga y los requisitos sobre `experiencia-de-uso`/`wireframes` de cada una, más la frontera entre configuración de aplicación y de entorno; §4.3 suma tres filas de trazabilidad; §4.4 suma siete anti-patrones (predicado y guard de arranque, wizard multipaso, ceremonias multiusuario arrastradas, rechazo diferenciado y filtrado de política, vencimiento silencioso de sesión, versión transcrita o ausente, parámetro de entorno dibujado). |

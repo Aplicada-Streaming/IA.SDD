@@ -2,9 +2,9 @@
 
 **Proyecto:** {{nombre-solucion}}
 **Documento:** Design-Rules-Web-Generico-v1.0.md
-**Versión:** 1.1
+**Versión:** 1.2
 **Estado:** Vigente
-**Fecha:** 2026-06-19
+**Fecha:** 2026-07-18
 **Autor:** {{equipo-o-rol}} (AG-03 UX/UI)
 **Ámbito:** Web genérico (agnóstico de framework)
 **Posición:** Insumo normativo de la categoría 03. Base del catálogo `References/Design/`. No es un artefacto operativo de `docs/`.
@@ -245,6 +245,8 @@ Una superficie cumple el catálogo cuando: usa solo tokens del sistema (cero lit
 | Botón "Enviar/Aceptar" genérico | No comunica la acción | Nombrar el verbo real ("Guardar", "Publicar") |
 | Animación ambiental permanente | Distrae y delata diseño automático | Movimiento al servicio del estado, con `reduced-motion` |
 | Default hardcodeado en la pantalla o ayuda escrita a mano por campo | Se desincroniza del parámetro; dos fuentes de verdad | Derivar default, límites y ayuda del descriptor (ver `Design-Rules-Config-Esquema`) |
+| Chrome de navegación en superficies sin sesión ni sistema operable | Ofrece puertas que todavía no abren | Shell partido: lienzo vacío hasta que hay a dónde ir (ver `Design-Rules-Primer-Arranque` y `Design-Rules-Acceso-Monousuario`) |
+| Instancia desplegada sin versión visible | No es diagnosticable: todo reporte empieza por averiguar qué instancia es | Sello de versión derivado de la construcción (ver `Design-Rules-Identidad-De-Version`) |
 
 ---
 
@@ -256,6 +258,9 @@ Una superficie cumple el catálogo cuando: usa solo tokens del sistema (cero lit
 | Regla que lo invoca | `devs/Rules/03-Rules-UX-UI-DX.md` |
 | Documentos hijos | `Design-Rules-Blazor-Mudblazor-v1.0.md` y futuros por stack |
 | Extensión por capacidad | `Design-Rules-Config-Esquema-v1.0.md` (configuración dirigida por esquema) |
+| Extensión por capacidad | `Design-Rules-Primer-Arranque-v1.0.md` (primer arranque y aprovisionamiento inicial) |
+| Extensión por capacidad | `Design-Rules-Acceso-Monousuario-v1.0.md` (acceso de operador único en panel monolítico) |
+| Extensión por capacidad | `Design-Rules-Identidad-De-Version-v1.0.md` (identidad de versión y su superficie) |
 | Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>`, `representacion-<concepto>` por proyecto |
 | Marco teórico | `Guides/Marco-Teorico-SDD-v1.0.md`, cap. UX/UI/DX |
 
@@ -267,3 +272,4 @@ Una superficie cumple el catálogo cuando: usa solo tokens del sistema (cero lit
 | --- | --- | --- | --- |
 | 1.0 | 2026-06-19 | Versión inicial. Tokens, layout, catálogo de patrones, estados, iconografía SVG, accesibilidad AA, responsive y anti-patrones. Base del catálogo `References/Design/`. | AG-03 UX/UI |
 | 1.1 | 2026-06-20 | Configuración dirigida por esquema: principio rector 8, estado semántico `info` (`color.text/background/border.info`) en §2.1 con confirmación de que `warning` corresponde a Atención, anti-patrón de default/ayuda hardcodeados en §10 y registro de la extensión por capacidad `Design-Rules-Config-Esquema` en §11. | AG-03 UX/UI |
+| 1.2 | 2026-07-18 | Registro en §11 de tres extensiones por capacidad nuevas (`Design-Rules-Primer-Arranque`, `Design-Rules-Acceso-Monousuario`, `Design-Rules-Identidad-De-Version`) y dos anti-patrones en §10: chrome de navegación en superficies sin sesión ni sistema operable, e instancia desplegada sin versión visible. | AG-03 UX/UI |

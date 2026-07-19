@@ -1236,7 +1236,10 @@ mi-proyecto/
 │   │   │       ├── Index-Design-Rules.md
 │   │   │       ├── Design-Rules-Web-Generico-v1.0.md
 │   │   │       ├── Design-Rules-Blazor-Mudblazor-v1.0.md
-│   │   │       └── Design-Rules-Config-Esquema-v1.0.md      # Extensión por capacidad: configuración dirigida por esquema
+│   │   │       ├── Design-Rules-Config-Esquema-v1.0.md      # Extensión por capacidad: configuración dirigida por esquema
+│   │   │       ├── Design-Rules-Primer-Arranque-v1.0.md     # Extensión por capacidad: primer arranque y aprovisionamiento inicial
+│   │   │       ├── Design-Rules-Acceso-Monousuario-v1.0.md  # Extensión por capacidad: acceso de operador único
+│   │   │       └── Design-Rules-Identidad-De-Version-v1.0.md # Extensión por capacidad: identidad de versión y su superficie
 │   │   └── Bootstrap/                                   # Material de bootstrapping
 │   ├── guides/
 │   │   ├── Guia-Usuario-SDD-v1.0.md                   # Este documento
