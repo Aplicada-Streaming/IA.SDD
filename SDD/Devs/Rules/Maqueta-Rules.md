@@ -157,14 +157,32 @@ AG-03M construye la maqueta según §4. Reglas duras de este paso:
 
 ### 3.4 Paso 4 — Lanzamiento en el navegador
 
-El orquestador abre la maqueta en el navegador del humano y le indica qué mirar. Método de relanzado en §7.
+Terminada la construcción, el orquestador no se limita a avisar que la maqueta existe: intenta abrirla. El procedimiento tiene tres tramos y ninguno puede bloquear la fase.
+
+1. Levanta un servidor estático local en segundo plano sobre `SDD/Maquetas/<Nombre-Proyecto>/`, en un puerto libre a partir de 8080, y registra el puerto y el identificador del proceso para poder apagarlo al cerrar la fase.
+2. Intenta abrir la URL en el navegador del humano con el abridor del sistema operativo: `xdg-open` en Linux, `start` en Windows, `open` en macOS. Si el entorno declara un navegador preferido para la validación, lo usa; si no, respeta el navegador por defecto del sistema.
+3. Si el paso 2 no puede completarse (no hay entorno gráfico alcanzable desde donde corre el orquestador, no hay abridor disponible, o el comando falla), no se detiene ni lo trata como error: informa la URL y el comando para abrirla a mano, y sigue.
+
+El tramo 3 no es un caso de borde. El orquestador puede estar ejecutándose en una shell sin sesión gráfica alcanzable (contenedor, sesión remota, entorno restringido) aunque el humano tenga su navegador ahí nomás. Una fase que dependiera del auto-lanzado sería frágil por diseño; el auto-lanzado es una comodidad, y la URL informada es el contrato.
+
+Cuando el humano va a corregir a mano (vía B del §3.5), el orquestador le recomienda explícitamente el servidor liviano del editor en lugar del servidor que él levantó, porque recarga sola en cada guardado. Ver §7.
 
 Bloque de salida obligatorio:
 
 ```text
 Maqueta del proyecto <Nombre-Proyecto> lista en SDD/Maquetas/<Nombre-Proyecto>/index.html
 Superficies: <lista>
-Para abrirla: <comando de §7>
+
+<si el auto-lanzado funcionó>
+La abrí en tu navegador: http://localhost:<puerto>
+<si no>
+No pude abrir el navegador desde acá (<motivo>). Abrila con:
+  <comando de §7.1>
+</si>
+
+Si vas a corregirla a mano, conviene servirla desde el editor (en Visual Studio
+Code, Live Server o equivalente): recarga sola en cada guardado. También podés
+activar "Recarga automática" en la barra de validación de la propia maqueta.
 
 Qué revisar:
 - Navegación: ¿los recorridos entre superficies son los que esperabas?
@@ -247,6 +265,8 @@ proyecto.
 
 Si el humano acepta, AG-03M produce los dos artefactos según §5 y §6. Si no, la fase cierra.
 
+Al cerrar la fase, el orquestador apaga el servidor estático que había levantado en el paso 4 y lo informa. Un servidor olvidado ocupando un puerto es una molestia que el humano descubre días después sin saber de dónde salió.
+
 Nota operativa: los dos artefactos se escriben en el repositorio fuente `IA.SDD`, que es el único caso en todo el flujo en que el orquestador escribe fuera del repositorio destino. Por eso requiere aceptación explícita y por eso el paso de ofuscación de §6 es bloqueante: `IA.SDD` es un repositorio público.
 
 ---
@@ -273,6 +293,14 @@ Nota operativa: los dos artefactos se escriben en el repositorio fuente `IA.SDD`
 Toda superficie demuestra como mínimo los estados vacío, cargando, con datos y error, más los que declare su wireframe.
 
 La maqueta incluye una barra de validación visible que permite al humano alternar los estados de la superficie en curso sin recargar ni tocar código. Esa barra es un instrumento de la maqueta, no una parte del producto: se rotula explícitamente como tal ("Barra de validación de maqueta — no forma parte del producto") y no se traslada a la especificación ni al código.
+
+La barra incluye además un interruptor de recarga automática, apagado por defecto. Encendido, consulta periódicamente los archivos de la maqueta y refresca la página cuando alguno cambió, de modo que quien corrige a mano vea el efecto sin refrescar. Requisitos de su implementación:
+
+- Apagado por defecto y con su estado persistido en el navegador, para que no sorprenda a quien solo viene a mirar y para que quien lo prendió no tenga que volver a prenderlo en cada superficie.
+- Detección por comparación de un identificador de versión del recurso, no por descarga completa de los archivos.
+- Intervalo de consulta de entre dos y cinco segundos, y suspensión cuando la pestaña no está visible.
+- Degradación silenciosa: sobre `file://` la consulta no funciona, y el interruptor se muestra deshabilitado con la razón, en lugar de fallar.
+- Nada de esto se traslada al producto: es parte del mismo instrumento que la barra.
 
 ### 4.4 Cobertura mínima por tipo
 
@@ -356,18 +384,21 @@ La maqueta es un sitio estático servido tal cual está en el disco. No tiene pr
 
 ### 7.1 Métodos soportados
 
-En orden de preferencia:
+Los cuatro sirven exactamente los mismos archivos. La maqueta no depende de ninguno en particular.
 
-1. **Servidor liviano del editor.** Es el método recomendado cuando el humano valida desde su editor, que es el caso normal. En Visual Studio Code, la extensión de servidor local (Live Server o equivalente) sirve la carpeta y recarga el navegador sola en cada guardado: se abre `index.html` con la acción de servir de la extensión y queda un ciclo de editar, guardar y ver. Es el mejor ajuste para la vía B, porque el humano corrige el HTML o el CSS y ve el efecto sin ningún paso intermedio.
-2. **Abrir el archivo directamente.** `SDD/Maquetas/<Nombre-Proyecto>/index.html` en el navegador, sin nada instalado. Sirve para una revisión rápida, pero algunos navegadores restringen ciertas operaciones sobre `file://`, así que no es el método por defecto para una sesión de validación larga.
+1. **Auto-lanzado del orquestador.** Es lo que ocurre en el paso 4 sin que el humano haga nada: servidor estático en segundo plano más apertura del navegador con el abridor del sistema. Es el camino por defecto y el más cómodo para la primera mirada.
+2. **Servidor liviano del editor.** El recomendado cuando el humano va a corregir a mano. En Visual Studio Code, la extensión de servidor local (Live Server o equivalente) sirve la carpeta y recarga el navegador sola en cada guardado, así que el ciclo de editar, guardar y ver no tiene paso intermedio. El orquestador no puede dispararla por su cuenta: no hay una vía soportada para ejecutar comandos dentro de una ventana de editor ya abierta, de modo que la inicia el humano. Si se quiere que abra un navegador determinado, se configura en la extensión.
 3. **Servidor estático de línea de comandos.** Cuando no hay editor con extensión de servidor a mano:
    ```bash
    cd SDD/Maquetas/<Nombre-Proyecto>
    python3 -m http.server 8080
    ```
-   y abrir `http://localhost:8080`. No recarga sola: hay que refrescar el navegador.
+   y abrir `http://localhost:8080`. No recarga sola.
+4. **Abrir el archivo directamente.** `SDD/Maquetas/<Nombre-Proyecto>/index.html` en el navegador, sin nada. Sirve para una mirada rápida, pero algunos navegadores restringen operaciones sobre `file://`, así que no es el método para una sesión de validación larga. Con este método la recarga automática de la propia maqueta (§4.3) no funciona.
 
-Los tres métodos sirven exactamente los mismos archivos. La maqueta no depende de ninguno en particular y su `README.md` documenta el que el proyecto haya adoptado.
+Para los métodos 1, 2 y 3 la maqueta ofrece además su propia recarga automática, en la barra de validación (§4.3). Cubre el caso de quien no usa la extensión del editor y no quiere refrescar a mano.
+
+El `README.md` de cada maqueta documenta el método que el proyecto haya adoptado.
 
 ### 7.2 Sin proceso de build
 
@@ -394,7 +425,10 @@ Si un proyecto futuro necesitara compilar para maquetar (por ejemplo, una librer
 - [ ] Los datos de ejemplo viven exclusivamente en `assets/js/Datos-Maqueta.js` y ningún HTML los hardcodea.
 - [ ] Todo valor visual sale del catálogo de diseño o del modelo elegido, materializado como token; no hay literales visuales ad hoc.
 - [ ] La maqueta cumple WCAG 2.2 AA en los mínimos verificables del §4.5.
-- [ ] La maqueta abre sin toolchain, con el método 1 del §7.
+- [ ] La maqueta abre sin toolchain, con cualquiera de los métodos del §7.1.
+- [ ] El paso 4 intentó el auto-lanzado y, si no pudo, informó la URL y el comando sin tratar el fallo como error ni detener la fase.
+- [ ] La barra de validación ofrece el interruptor de recarga automática, apagado por defecto y degradado con su razón cuando la maqueta se abre desde `file://`.
+- [ ] Al cerrar la fase, el servidor estático levantado por el orquestador quedó apagado y se lo informó.
 - [ ] Las dos vías de corrección del §3.5 se ofrecieron explícitamente al humano, y las correcciones manuales fueron releídas, interpretadas y confirmadas antes de propagarse.
 - [ ] `Bitacora-Validacion-Maqueta-v1.0.md` tiene una entrada por iteración, con vía, observación, cambio y documento retroalimentado.
 - [ ] La aprobación de la maqueta es explícita del humano; no se infiere del silencio.
@@ -420,6 +454,7 @@ Si un proyecto futuro necesitara compilar para maquetar (por ejemplo, una librer
 | Maqueta con estilos ad hoc en vez de tokens del catálogo | El diseño se desalinea del resto de la solución y no se puede capitalizar | Heredar tokens; un token nuevo se promueve al catálogo |
 | Capturar el modelo UX-UI como descripción en vez de como reglas | Un agente futuro no puede reproducir el diseño leyéndolo | Reglas accionables, una por decisión, con el criterio de inclusión del §5 |
 | Publicar en `IA.SDD` un template con literales del dominio del cliente | Se filtra información de un cliente en un repositorio público | Ofuscación bloqueante del §6 con verificación declarada |
+| Hacer que la fase dependa del auto-lanzado del navegador | El orquestador puede correr sin sesión gráfica alcanzable y la validación queda bloqueada por una comodidad | El auto-lanzado es comodidad; la URL informada es el contrato (§3.4) |
 | Maqueta sin accesibilidad porque "es solo una maqueta" | Se valida y se aprueba una superficie inaccesible; el problema se descubre en 08 | WCAG 2.2 AA como piso también en la maqueta |
 | Tratar la maqueta aprobada como documentación viva del producto | Se desactualiza y contradice al código sin que nadie lo note | La maqueta es la línea de base de un momento; lo que vive es la especificación retroalimentada y la matriz de sensado de deriva |
 
@@ -453,6 +488,7 @@ Reglas constructivas: §4 de Maqueta-Rules.md.
 Tecnología: HTML5 semántico, CSS con tokens, JavaScript vanilla, Bootstrap 5.0 por CDN.
 Sin proceso de build ni node_modules: lo que se edita es lo que se sirve (§7).
 Estados: vacío, cargando, con datos y error como mínimo, conmutables desde la barra de validación.
+Barra de validación: incluye el interruptor de recarga automática, apagado por defecto (§4.3).
 Datos: salen de los ejemplos de 02; si falta un ejemplo, emitir ambigüedad (§9 del master-prompt),
 no inventar. Nunca datos reales del cliente.
 Accesibilidad: WCAG 2.2 nivel AA como piso, con los mínimos verificables de §4.5.
@@ -474,4 +510,4 @@ Devolución:
 
 | Versión | Fecha | Cambios |
 | --- | --- | --- |
-| 1.0 | 2026-07-19 | Reglas iniciales de la Fase B2 de validación visual de maqueta. Define el subagente AG-03M y sus variantes por D8, el flag `requiere_maqueta`, los artefactos de maqueta en `SDD/Maquetas/<Nombre-Proyecto>/` y los tres documentos de 03 que la fase produce, la secuencia de siete pasos con sus detenciones, las dos vías de corrección (por prompt y manual con relectura e interpretación confirmada), la matriz de propagación de la retroalimentación, las reglas constructivas de la maqueta, la captura del modelo UX-UI en `Modelos-UX-UI/`, la generación del template ofuscado en `Templates/` con verificación bloqueante, el método de lanzado y relanzado (servidor liviano del editor como recomendado, archivo directo y servidor de línea de comandos) con la decisión de no incorporar un paso de build, criterios de aceptación, anti-patrones y prompt-snippet. |
+| 1.0 | 2026-07-19 | Reglas iniciales de la Fase B2 de validación visual de maqueta. Define el subagente AG-03M y sus variantes por D8, el flag `requiere_maqueta`, los artefactos de maqueta en `SDD/Maquetas/<Nombre-Proyecto>/` y los tres documentos de 03 que la fase produce, la secuencia de siete pasos con sus detenciones, las dos vías de corrección (por prompt y manual con relectura e interpretación confirmada), la matriz de propagación de la retroalimentación, las reglas constructivas de la maqueta, la captura del modelo UX-UI en `Modelos-UX-UI/`, la generación del template ofuscado en `Templates/` con verificación bloqueante, el lanzado automático del paso 4 con degradación a URL informada, el método de relanzado con sus cuatro formas soportadas, la recarga automática propia de la barra de validación y la decisión de no incorporar un paso de build, criterios de aceptación, anti-patrones y prompt-snippet. |

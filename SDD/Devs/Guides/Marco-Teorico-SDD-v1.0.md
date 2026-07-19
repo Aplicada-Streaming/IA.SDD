@@ -1,7 +1,7 @@
 # Marco Teórico SDD
 
 **Documento:** Marco-Teorico-SDD-v1.0.md
-**Versión:** 1.5
+**Versión:** 1.6
 **Estado:** Aprobado
 **Fecha:** 2026-07-19
 **Autor:** Equipo Template SDD — UTN
@@ -321,7 +321,7 @@ La separación es deliberada: las reglas, plantillas y prompts maestros quedan f
 
 ## 3.6 Paso 5 — Ejecución del master-prompt
 
-El humano ejecuta en Claude Code el prompt orquestador maestro, en su versión v3.0. Antes de generar artefacto alguno, este prompt corre una Fase de validación de intake (previa a la Fase A de generación) y, recién con el intake validado y el manifiesto confirmado, despacha la generación.
+El humano ejecuta en Claude Code el prompt orquestador maestro, en su versión vigente (3.4). Antes de generar artefacto alguno, este prompt corre una Fase de validación de intake (previa a la Fase A de generación) y, recién con el intake validado y el manifiesto confirmado, despacha la generación.
 
 ### 3.6.1 Fase de validación de intake (previa a la Fase A)
 
@@ -383,11 +383,11 @@ A partir de este punto, el equipo opera en nivel Spec-Anchored: cualquier cambio
 |    +-----------------------------------------+                     |
 |             |                                                      |
 |             v                                                      |
-|    PASO 4: Bootstrap en repo local + Claude Code                   |
-|    Copia ../IA.SDD/SDD/Devs/ al repo, abre Claude Code                  |
+|    PASO 4: Workspace de dos repositorios + Claude Code             |
+|    IA.SDD (fuente, solo lectura) y repo destino, hermanos          |
 |             |                                                      |
 |             v                                                      |
-|    PASO 5: Ejecucion del master-prompt (v3.0)                      |
+|    PASO 5: Ejecucion del master-prompt (3.4)                       |
 |    +------------------+                                            |
 |    |   Orquestador    |                                            |
 |    +--------+---------+                                            |
@@ -408,10 +408,17 @@ A partir de este punto, el equipo opera en nivel Spec-Anchored: cualquier cambio
 |    +----+----+----+----+----+----+----+----+----+----+----+----+   |
 |             |                                                      |
 |             v                                                      |
+|    FASE B2 (opcional, por proyecto visual)                         |
+|    dirigida por rules/Maqueta-Rules.md                             |
+|    - materializa la especificacion de 03 en maqueta navegable     |
+|    - el humano valida en el navegador y corrige                   |
+|    - retroalimenta la documentacion y emite linea de base         |
+|             |                                                      |
+|             v                                                      |
 |    Consolidacion + validacion cruzada                              |
 |             |                                                      |
 |             v                                                      |
-|    SDD/Docs/ poblado                                          |
+|    SDD/Docs/ poblado (+ SDD/Maquetas/ si hubo Fase B2)        |
 |             |                                                      |
 |             v                                                      |
 |    PASO 6: Confirmacion humana                                     |
@@ -522,6 +529,8 @@ El template asigna una especialidad por carpeta de `/Docs/` siguiendo una premis
 2. **Trazabilidad RACI.** Para cada documento existe un responsable (R) y un aprobador (A) explícitos. Esto evita el clásico "alguien debería actualizar esto" que termina sin actualizar.
 
 Trece especialidades no implican trece personas. En equipos pequeños una persona cubre varios roles. Lo que el template fija es el perfil profesional necesario para cumplir el rol, no la dotación de personal.
+
+Las 13 especialidades son las que producen artefactos documentales: una por cada una de las 12 categorías de `Docs/` más AG-ROOT. La Fase B2 de validación visual (§8.8) incorpora un subagente adicional, AG-03M, que no altera ese número porque no es titular de ninguna categoría: materializa en una maqueta la especificación que AG-03 redactó, y los documentos que emite quedan bajo la titularidad documental de las categorías 03 y 08. Es un subagente de fase, no de categoría. La distinción importa porque es la que mantiene el criterio de un responsable por artefacto: si AG-03M fuera titular de la experiencia, habría dos especialidades decidiendo sobre el mismo documento.
 
 Las 13 especialidades siguen siendo válidas sin cambios en el modelo de solución más jerarquía de proyectos (§3.10). Lo que se precisa es el alcance de cada una: AG-00 (Product Manager) y AG-01 (Analista de Negocio) operan a nivel solución, porque el negocio es uno por solución; las especialidades AG-02 a AG-11 operan por proyecto, porque la técnica se especializa según el tipo D8 de cada proyecto. Las variantes por tipo D8 que cada especialidad documenta más abajo se aplican, por lo tanto, por proyecto: en una solución con varios proyectos de tipos distintos, una misma especialidad puede producir artefactos con foco distinto en cada proyecto.
 
@@ -663,6 +672,7 @@ Las 13 especialidades siguen siendo válidas sin cambios en el modelo de soluci�
 | AG-09 | DevOps | `09-Devops/` | Pipeline, versionado | Siempre |
 | AG-10 | Technical Writer | `10-Developer-Guide/` | Guías de consumo | Siempre |
 | AG-11 | Developer Advocate | `11-Examples/` | Ejemplos ejecutables | Siempre |
+| AG-03M | Maquetador de validación visual | Sin categoría propia; escribe en `SDD/Maquetas/` y aporta a `03-UX-UI/` y `08-Calidad-Y-Pruebas/` | Maqueta navegable, línea de base visual | Solo si `requiere_maqueta` (Fase B2) |
 
 ## 4.4 Flujo de trazabilidad entre especialidades
 
@@ -1804,6 +1814,14 @@ Términos canónicos del template SDD. Cada uno con definición operativa en una
 | **Vertical slicing** | Técnica de descomposición que corta features verticalmente atravesando todas las capas. |
 | **Walking skeleton** | Esqueleto mínimo del sistema que atraviesa todas las capas y se despliega lo antes posible. |
 | **WCAG 2.2** | Web Content Accessibility Guidelines 2.2. Estándar W3C de accesibilidad web. |
+| **AG-03M** | Subagente maquetador de validación visual. Actúa en la Fase B2. No es titular de ninguna categoría: materializa la especificación de 03 y sus documentos quedan bajo la titularidad de 03 y 08. |
+| **D9** | Invariante de evidencia verificable: toda afirmación sobre el estado del sistema cita evidencia localizable, reproducible, contemporánea e independiente de quien afirma. No aplica a afirmaciones de diseño, de especificación ni de contexto. |
+| **Deriva (de agente)** | Separación progresiva entre lo que un agente produce y lo que se especificó, sin manifestación en el momento en que ocurre. Acumulativa y de descubrimiento tardío. |
+| **Fase B2** | Fase opcional de validación visual de maqueta, por proyecto, entre la Fase B y la Fase C. Su regla es `Maqueta-Rules.md`. |
+| **Línea de base visual** | Inventario identificado (`SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX`, `DM-XX`) de lo que el humano aprobó al mirar la maqueta. Referente externo del sensado de deriva. |
+| **Maqueta** | Sitio estático navegable que materializa la especificación de 03 con datos de ejemplo de la documentación. Instrumento de validación, no producto ni documentación viva. |
+| **Modelo UX-UI** | Diseño capturado de una maqueta aprobada y registrado en `Modelos-UX-UI/` como reglas constructivas reutilizables, con su ejemplo ofuscado en `Templates/`. |
+| **Sensado de deriva** | Mecanismo de control que contrasta lo construido contra la línea de base visual y el contrato de datos, con umbrales declarados de deriva menor y mayor. |
 
 ---
 
@@ -1934,7 +1952,8 @@ W3C. (2024). *ARIA — Accessible Rich Internet Applications*. https://www.w3.or
 | 1.2 | 2026-06-10 | Actualización al intake unificado: un único documento `SOLUTION-INTAKE` reemplaza a `PROJECT-BRIEF` y `PROJECT-README`; el `SOLUTION-MANIFEST` pasa a artefacto derivado del §13 del intake; se incorpora la fundamentación de la Fase de validación de intake (validación de completitud semántica, batería de preguntas, derivación y confirmación del manifiesto). Conjunto D8 sin cambios. |
 | 1.3 | 2026-06-10 | Higiene (resolución de P3): el archivo se renombra a `Marco-Teorico-SDD-v1.0.md` para alinear el marcador de variante con `guia-usuario-SDD` (se actualizan metadato y auto-referencias). Se agrega en §3.9 la aclaración del alcance de D3: el casing Título-Con-Guiones gobierna los artefactos generados; los identificadores de variante de la metodología (`SDD1.0`, `SDD`, `SDD2.1M`, `SDD2.1R`) y los prefijos de organización quedan fuera de su alcance. | Reformulación SDD |
 | 1.4 | 2026-06-20 | Auditoría de reflexión de la configuración dirigida por esquema: §1.5 (eje por capacidad en `references/`), §2.5 (descriptor como contrato + frontera validable + simulación + propone/confirma/valida como encaje con IA), §4.2 (AG-03 carga la extensión; AG-05 el motor de la frontera; AG-04 el asistente como tool definitions), §7.5 (`PropuestaDeConfiguracion` como patrón transversal agnóstico de D8), §8.3 (divulgación progresiva ligada a Hick/Miller y ayuda contextual a la heurística 10), §11.1 (propone/confirma/valida como instancia de plan-then-confirm con human-in-the-loop), §12.3 (anti-patrones nuevos) y §13 (nueve términos de glosario). | Reformulación SDD (auditoría config-esquema) |
-| 1.5 | 2026-07-19 | Fundamentación de la Fase B2 de validación visual de maqueta y del sensado de deriva: §8.8 (la maqueta como instrumento de diseño y de control, su doble validación de experiencia y de modelo de datos, y sus dos capitalizaciones hacia el proyecto y hacia el template) y §9.7 (la deriva como separación acumulativa, la insuficiencia de la trazabilidad D6 y de la auditoría estructural por ser verificaciones internas, la línea de base como referente externo falsable, la invariante D9 de evidencia verificable con su alcance acotado y su vigencia hacia adelante, y los umbrales como condición de sostenibilidad del instrumento). | Framework SDD (validación visual y sensado de deriva) |
+| 1.5 | 2026-07-18 | Incorporación del arquetipo de panel de control monolítico: §8.7 suma las tres extensiones por capacidad nuevas (primer arranque, acceso de operador único, identidad de versión) y su lectura conjunta como perfil del arquetipo. Fila agregada a posteriori: el cambio de contenido se había incorporado sin subir versión ni registrar entrada, en incumplimiento de la política de versionado D5 del propio template. | Reformulación SDD (arquetipo de panel monolítico) |
+| 1.6 | 2026-07-19 | Fundamentación de la Fase B2 de validación visual de maqueta y del sensado de deriva: §8.8 (la maqueta como instrumento de diseño y de control, su doble validación de experiencia y de modelo de datos, y sus dos capitalizaciones hacia el proyecto y hacia el template) y §9.7 (la deriva como separación acumulativa, la insuficiencia de la trazabilidad D6 y de la auditoría estructural por ser verificaciones internas, la línea de base como referente externo falsable, la invariante D9 de evidencia verificable con su alcance acotado y su vigencia hacia adelante, y los umbrales como condición de sostenibilidad del instrumento). | Framework SDD (validación visual y sensado de deriva) |
 
 ---
 

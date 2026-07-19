@@ -117,7 +117,10 @@
 
   function fijarEstado(clave) {
     estadoActual = clave;
-    $$('.mq-boton-estado').forEach(function (boton) {
+    /* Se acota a los botones con data-estado: la barra tiene además el
+       interruptor de recarga automática, que comparte estilo pero no es
+       un botón de estado y no debe reescribirse acá. */
+    $$('.mq-boton-estado[data-estado]').forEach(function (boton) {
       boton.setAttribute('aria-pressed', String(boton.dataset.estado === clave));
     });
     suscriptores.forEach(function (cb) { cb(clave); });
@@ -149,6 +152,118 @@
 
     contenedor.appendChild(aviso);
     contenedor.appendChild(controles);
+    contenedor.appendChild(construirRecargaAutomatica());
+  }
+
+  /* ----------------------------------------------------------------------
+     Recarga automática. Instrumento de la maqueta, no del producto.
+     Consulta periódicamente los recursos de la maqueta y refresca la página
+     cuando alguno cambió, para que quien corrige a mano vea el efecto sin
+     refrescar. Apagada por defecto; su estado se persiste en el navegador.
+     Sobre file:// las consultas no funcionan, así que se deshabilita con su
+     razón visible en vez de fallar en silencio.
+     ---------------------------------------------------------------------- */
+
+  var CLAVE_RECARGA = 'maqueta.recargaAutomatica';
+  var INTERVALO_RECARGA_MS = 3000;
+  var RECURSOS_VIGILADOS = [
+    'assets/css/Estilos-Maqueta.css',
+    'assets/js/Datos-Maqueta.js',
+    'assets/js/Maqueta.js'
+  ];
+
+  var temporizadorRecarga = null;
+  var huellasIniciales = null;
+
+  function soportaRecarga() {
+    return window.location.protocol !== 'file:';
+  }
+
+  function leerPreferenciaRecarga() {
+    try {
+      return window.localStorage.getItem(CLAVE_RECARGA) === 'true';
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function guardarPreferenciaRecarga(valor) {
+    try {
+      window.localStorage.setItem(CLAVE_RECARGA, String(valor));
+    } catch (e) {
+      /* almacenamiento no disponible: la preferencia dura lo que la pestaña */
+    }
+  }
+
+  function huellaDe(recurso) {
+    var url = recurso + '?sonda=' + encodeURIComponent(String(contadorSonda));
+    return fetch(url, { method: 'HEAD', cache: 'no-store' }).then(function (respuesta) {
+      if (!respuesta.ok) { return null; }
+      return (respuesta.headers.get('etag') || '') + '|' +
+             (respuesta.headers.get('last-modified') || '') + '|' +
+             (respuesta.headers.get('content-length') || '');
+    }).catch(function () { return null; });
+  }
+
+  var contadorSonda = 0;
+
+  function tomarHuellas() {
+    contadorSonda += 1;
+    return Promise.all(RECURSOS_VIGILADOS.map(huellaDe));
+  }
+
+  function sondear() {
+    if (document.hidden) { return; }
+    tomarHuellas().then(function (actuales) {
+      if (!huellasIniciales) { huellasIniciales = actuales; return; }
+      var cambio = actuales.some(function (huella, i) {
+        return huella !== null && huellasIniciales[i] !== null && huella !== huellasIniciales[i];
+      });
+      if (cambio) { window.location.reload(); }
+    });
+  }
+
+  function fijarRecargaAutomatica(activa, interruptor) {
+    interruptor.setAttribute('aria-pressed', String(activa));
+    guardarPreferenciaRecarga(activa);
+
+    if (temporizadorRecarga) {
+      window.clearInterval(temporizadorRecarga);
+      temporizadorRecarga = null;
+    }
+    huellasIniciales = null;
+
+    if (activa) {
+      tomarHuellas().then(function (iniciales) { huellasIniciales = iniciales; });
+      temporizadorRecarga = window.setInterval(sondear, INTERVALO_RECARGA_MS);
+    }
+  }
+
+  function construirRecargaAutomatica() {
+    var grupo = crear('div', 'mq-barra-validacion__controles');
+    grupo.appendChild(crear('span', 'mq-barra-validacion__etiqueta', 'Recarga automática:'));
+
+    var interruptor = crear('button', 'mq-boton-estado');
+    interruptor.type = 'button';
+    interruptor.innerHTML = icono('reintentar', 14) + '<span>Al guardar</span>';
+
+    if (!soportaRecarga()) {
+      interruptor.disabled = true;
+      interruptor.setAttribute('aria-pressed', 'false');
+      grupo.appendChild(interruptor);
+      grupo.appendChild(crear('span', 'mq-caption',
+        'No disponible al abrir el archivo directo. Servila desde el editor o con un servidor local.'));
+      return grupo;
+    }
+
+    var activa = leerPreferenciaRecarga();
+    interruptor.addEventListener('click', function () {
+      activa = !activa;
+      fijarRecargaAutomatica(activa, interruptor);
+    });
+    grupo.appendChild(interruptor);
+    fijarRecargaAutomatica(activa, interruptor);
+    return grupo;
   }
 
   /* ======================================================================

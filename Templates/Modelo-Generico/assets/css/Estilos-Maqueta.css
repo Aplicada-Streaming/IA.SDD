@@ -227,6 +227,15 @@ textarea:focus-visible,
   color: #FFFFFF;
 }
 
+.mq-boton-estado:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mq-boton-estado:disabled:hover {
+  border-color: var(--color-border-secondary);
+}
+
 /* --------------------------------------------------------------------------
    4. Shell: barra superior de navegación
    El catálogo describe un shell de barra lateral; en viewport angosto colapsa

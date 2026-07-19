@@ -450,7 +450,7 @@ Qué pasa, en orden:
 1. Al cerrar la Fase B del proyecto, con la documentación de UX y UI ya generada y auditada, el orquestador te pregunta dos cosas juntas: si querés que genere la maqueta, y de qué modelo de diseño partir. La opción por defecto es el catálogo base del template; las alternativas son los modelos capturados de maquetas anteriores, si el catálogo `Modelos-UX-UI/` tiene alguno. Podés declinar acá aunque hayas dejado el flag activo al principio: el flag habilita la fase, esta pregunta la arranca.
 2. Te presenta el plan de maqueta: qué superficies va a construir, qué rutas de navegación, qué campos del modelo va a exhibir y con qué datos de ejemplo, y qué estados va a demostrar por superficie. Aprobás o pedís cambios.
 3. Construye la maqueta en `SDD/Maquetas/<Nombre-Proyecto>/` del repositorio destino.
-4. La abre en tu navegador y te dice qué mirar: navegación, datos, estados y apariencia.
+4. La abre en tu navegador y te dice qué mirar: navegación, datos, estados y apariencia. Levanta un servidor local y lanza el navegador solo; si desde donde corre no alcanza tu entorno gráfico, no falla: te deja la URL y el comando para abrirla vos.
 5. Corregís. Tenés dos vías y las dos valen:
    - Por prompt: le describís el cambio y lo aplica.
    - A mano: editás vos los archivos HTML, CSS, JavaScript o las imágenes, y después le decís "revisá la maqueta y tomá las correcciones". El orquestador relee los archivos, te enumera qué cambió y cómo lo interpretó, y espera que confirmes esa lectura antes de propagarla. No te pisa las correcciones manuales en las iteraciones siguientes.
@@ -458,18 +458,21 @@ Qué pasa, en orden:
 7. Te ofrece capitalizar el diseño: registrarlo como modelo reutilizable en el catálogo del template, con un nombre que vos elegís, más un ejemplo ejecutable ofuscado en `Templates/`. Si aceptás, ese modelo queda disponible como alternativa en el paso 1 de futuras maquetas. Si no, la fase cierra ahí.
 8. Emite la línea de base del sensado de deriva: un inventario identificado de superficies, componentes, estados y rutas de navegación, más el contrato de los datos que la maqueta exhibe, más una matriz de comprobaciones. Ese material es el que te llevás a la codificación para verificar, sprint a sprint, que lo construido sigue siendo lo aprobado. Ver F-22.
 
-Para abrir la maqueta por tu cuenta, en cualquier momento, tenés tres formas:
+Para abrirla por tu cuenta, en cualquier momento, tenés cuatro formas:
 
-1. Desde tu editor, con la extensión de servidor local (en Visual Studio Code, Live Server o equivalente): abrís `SDD/Maquetas/<Nombre-Proyecto>/index.html` con la acción de servir de la extensión. Es la más cómoda para validar, porque recarga el navegador sola cada vez que guardás. Si vas a corregir la maqueta a mano, usá esta.
-2. Abriendo el archivo directo en el navegador: `SDD/Maquetas/<Nombre-Proyecto>/index.html`. No requiere nada instalado, pero algunos navegadores restringen ciertas operaciones sobre archivos locales.
-3. Con un servidor estático de línea de comandos, si no tenés lo anterior a mano:
+1. La que ya hizo el orquestador: el servidor que levantó sigue en pie mientras dure la fase, en la URL que te informó.
+2. Desde tu editor, con la extensión de servidor local (en Visual Studio Code, Live Server o equivalente): abrís `SDD/Maquetas/<Nombre-Proyecto>/index.html` con la acción de servir de la extensión. **Si vas a corregir la maqueta a mano, usá esta**: recarga el navegador sola cada vez que guardás. El orquestador no puede dispararla por vos, así que ese clic es tuyo.
+3. Con un servidor estático de línea de comandos:
    ```bash
    cd SDD/Maquetas/<Nombre-Proyecto>
    python3 -m http.server 8080
    ```
-   y abrís `http://localhost:8080`. Este no recarga solo: refrescás el navegador.
+   y abrís `http://localhost:8080`.
+4. Abriendo el archivo directo en el navegador. No requiere nada, pero algunos navegadores restringen operaciones sobre archivos locales, y con esta forma la recarga automática de la propia maqueta no funciona.
 
-Las tres sirven los mismos archivos. No hay `npm install` ni proceso de compilación: lo que editás es lo que se sirve, y es lo mismo que después relee el orquestador. Esa equivalencia es lo que hace que corregir a mano funcione.
+Si usás la 1 o la 3, que no recargan solas, prendé **Recarga automática** en la barra de validación de la maqueta: consulta los archivos cada pocos segundos y refresca cuando cambian. Viene apagada.
+
+Las cuatro sirven los mismos archivos. No hay `npm install` ni proceso de compilación: lo que editás es lo que se sirve, y es lo mismo que después relee el orquestador. Esa equivalencia es lo que hace que corregir a mano funcione.
 
 Qué revisar antes de aprobar:
 

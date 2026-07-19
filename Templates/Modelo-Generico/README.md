@@ -46,7 +46,9 @@ python3 -m http.server 8080
 
 Y abrir `http://localhost:8080/` en el navegador. No recarga solo.
 
-**Opción 3 — abrir el archivo directo.** Doble clic en `index.html`. Funciona todo salvo el paso de parámetro por URL entre listado y detalle en algunos navegadores con restricciones de `file://`.
+**Opción 3 — abrir el archivo directo.** Doble clic en `index.html`. Funciona todo salvo el paso de parámetro por URL entre listado y detalle en algunos navegadores con restricciones de `file://`. Con esta opción la recarga automática queda deshabilitada, porque las consultas de archivo no funcionan sobre `file://`.
+
+Con las opciones 2 y 3, que no recargan solas, la barra de validación ofrece un interruptor **Recarga automática** (apagado por defecto): consulta los recursos de la maqueta cada pocos segundos y refresca la página cuando alguno cambia. Su estado se recuerda entre superficies y se suspende cuando la pestaña no está visible.
 
 Bootstrap se toma del CDN, así que hace falta conexión a internet para ver los estilos base. El CSS propio se carga después de Bootstrap y sobreescribe lo que corresponda con los tokens del catálogo.
 
