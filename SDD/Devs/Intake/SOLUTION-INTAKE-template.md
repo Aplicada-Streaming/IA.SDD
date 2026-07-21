@@ -9,6 +9,7 @@ Estructura en tres partes:
 - Parte A — Negocio de la solución (§1 a §12). El qué y el porqué, en lenguaje del cliente. Es de nivel solución: el negocio es uno.
 - Parte B — Composición de la solución (§13 a §16). La jerarquía de proyectos tipados, el estilo de solución, la descomposición y la estructura de repositorio. El §13 es la fuente de la que el orquestador deriva el manifiesto.
 - Parte C — Técnica por proyecto (§17 a §18). Las decisiones de construcción, en un bloque repetible por cada proyecto declarado en §13.
+- Parte D — Anexos de datos (§20 a §21). Los escenarios y ejemplos de instancia (JSON completos, matrices de cobertura) que las Partes A y B citan por identificador. Es el único lugar del intake donde vive el dato crudo: el cuerpo referencia por ID, el anexo lo reproduce completo. **No es obligatoria: existe solo si las fuentes del intake aportan esos ejemplos. Pero si los aportan, el intake debe transcribirlos aquí en su totalidad, nunca dejar una referencia a un archivo externo que el orquestador después no pueda resolver.**
 
 ## Guía de uso de esta plantilla
 
@@ -16,8 +17,9 @@ Estructura en tres partes:
 2. Completar la cabecera y recorrer §1 a §19 en orden. Las preguntas guía marcadas con `(*)` son bloqueantes: el orquestador no avanza sin ellas.
 3. Replicar el bloque técnico de §17 una vez por cada proyecto declarado en §13.
 4. Borrar los bloques `Ejemplo` y `Lo que NO va en esta sección` una vez completado cada apartado.
-5. Validar el §19 (checklist) antes de pasar el intake al orquestador.
-6. Versionar siempre como `-v1.0` en la primera emisión.
+5. Regla de autocontención: cuando una sección del cuerpo se apoye en un ejemplo de instancia (un escenario, un payload, un caso con datos), citarlo por identificador en el cuerpo (`E-1`, `E-2`, …) y transcribir su JSON completo en la Parte D (§20). Si las fuentes aportan esos ejemplos, la Parte D es obligatoria y debe contenerlos enteros; si no aportan ninguno, la Parte D se declara vacía con una línea que lo diga. **Prohibido dejar en el intake final una referencia a un archivo o repositorio externo como único respaldo de un dato: el orquestador aguas abajo no puede resolverla.**
+6. Validar el §19 (checklist) antes de pasar el intake al orquestador.
+7. Versionar siempre como `-v1.0` en la primera emisión.
 
 Para una solución de un solo proyecto (caso degenerado), §13 tiene una sola fila y §17 se replica una vez: el orquestador aplana el layout y reproduce el comportamiento del template de tipo único.
 
@@ -445,6 +447,40 @@ Lo que NO va en esta sección:
 
 ---
 
+# Parte D — Anexos de datos
+
+Parte opcional y condicional: se incluye únicamente si las fuentes del intake aportan escenarios o ejemplos de instancia. Cuando existen, esta parte es su hogar canónico dentro del intake. El cuerpo (Partes A y B) los cita por identificador; aquí se reproducen completos. Regla de resolución: **todo identificador citado en el cuerpo debe existir en la Parte D, y todo anexo de la Parte D debe estar citado desde el cuerpo** (sin referencias colgantes ni anexos huérfanos).
+
+## §20 Anexo A — Escenarios con ejemplos completos
+
+Instrucción: Transcribir, uno por subsección, cada escenario de instancia que el cuerpo cita por identificador (`E-1`, `E-2`, …), con su JSON completo y sin recortar. Cada subsección declara la procedencia del dato (archivo fuente y rango de líneas) y su estado (`verificado` si proviene de una medición documentada, `propuesto`/`reconstruido` si es un valor de fixture). Es el único apartado del intake donde se admite payload crudo. No se inventan datos: si un escenario citado no existe en las fuentes, no se crea; se resuelve como ambigüedad antes de emitir el intake.
+
+Formato por escenario:
+
+### §20.[ID] · [Título del escenario]
+
+Procedencia: `[archivo fuente]`, líneas [N–M]. Estado: [verificado / propuesto / reconstruido].
+
+​```json
+{ ...JSON completo del escenario, transcripto de la fuente sin recortes... }
+​```
+
+(repetir la subsección `§20.[ID]` una vez por cada escenario aportado por las fuentes)
+
+Lo que NO va en esta sección:
+- Referencias a un archivo externo en lugar del JSON (rompe la autocontención: el orquestador no las resuelve).
+- Escenarios no citados desde el cuerpo (un anexo huérfano es ruido).
+- Datos sintéticos presentados como medidos: un valor reconstruido para una fixture se marca como tal.
+
+## §21 Anexo B — Cobertura de campos y trazabilidad de los ejemplos
+
+Instrucción: Reproducir, si la fuente la provee, la matriz que cruza cada área del modelo (o cada invariante / flujo end-to-end) contra el escenario de §20 que lo ejercita. Sirve para demostrar que los ejemplos anexados cubren el modelo y los invariantes que el intake declara. Se deriva de §20 y de las fuentes; es opcional y se incluye solo si aporta trazabilidad real.
+
+Lo que NO va en esta sección:
+- Invariantes o reglas nuevas no presentes en las fuentes.
+
+---
+
 ## §19 Checklist de completitud del intake
 
 Verificar antes de pasar el intake al orquestador. Todos los ítems deben estar tildados.
@@ -473,6 +509,11 @@ Técnica por proyecto (Parte C):
 - [ ] §17 está completo para cada proyecto de §13 (identidad + P.1 a P.12).
 - [ ] Cada proyecto: P.6 declara cobertura mínima numérica; P.7 adopta SemVer y Conventional Commits; P.8 enumera quality gates bloqueantes; P.9 declara plataformas y versiones mínimas; P.10 expresa NFR con métricas numéricas.
 
+Anexos de datos (Parte D — solo si las fuentes aportan ejemplos de instancia):
+- [ ] Todo identificador de escenario citado en el cuerpo (§6, §7, u otras) tiene su JSON completo en §20, y ningún escenario de §20 queda huérfano.
+- [ ] Ningún dato del intake se respalda únicamente en una referencia a un archivo externo: todo lo citado está transcripto.
+- [ ] Cada escenario de §20 declara procedencia (archivo + líneas) y estado (verificado / propuesto / reconstruido).
+
 General:
 - [ ] No hay vocabulario del dominio fuente del bootstrap ni stacks hardcodeados en el texto normativo (D7).
 - [ ] El control de cambios refleja la versión y fecha del documento.
@@ -491,6 +532,7 @@ Este documento alimenta las siguientes secciones SDD. La parte de negocio (A) es
 | §16 estructura | `05-Arquitectura-Tecnica/`, `10-Developer-Guide/` | árbol, README de carpeta |
 | §17 P.x (técnica por proyecto) | `05`, `08`, `09`, `00` (según P) por proyecto | ADRs, estrategia testing, pipeline, NFR |
 | §18 samples | `11-Examples/` | `Ejemplo-XX-v1.0.md` |
+| §20–§21 anexos de datos | `02-Especificacion-Funcional/`, `11-Examples/`, `SDD/Maquetas/` | modelo conceptual con ejemplos, fixtures de prueba, `Datos-Maqueta.js` |
 
 ---
 
@@ -499,3 +541,4 @@ Este documento alimenta las siguientes secciones SDD. La parte de negocio (A) es
 | Versión | Fecha | Cambios | Autor |
 |---|---|---|---|
 | 1.0 | [YYYY-MM-DD] | Intake unificado inicial de la solución | [Autor] |
+| 1.1 | 2026-07-20 | Se agrega la Parte D — Anexos de datos (§20 escenarios con JSON completo, §21 cobertura), la regla de autocontención en la guía de uso (paso 5), los ítems de checklist de la Parte D y la fila de trazabilidad downstream. Objetivo: que el intake transcriba los ejemplos de instancia en lugar de referenciar archivos externos que el orquestador no puede resolver. | Orquestador SDD (Claude Code) |

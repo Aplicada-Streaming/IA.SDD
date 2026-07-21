@@ -3,6 +3,14 @@
 Todos los cambios relevantes de este repositorio (`IA.SDD`) se documentan acá.
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/).
 
+## [2.3] - 2026-07-20
+
+Desacople de la ubicación del repositorio fuente respecto del destino y autocontención de los ejemplos de instancia en el intake.
+
+### Cambiado
+- `PROMPTS/PROMPT-Agente-Bootstrap-SDD.md` (2.0 → 2.1): la ubicación del repositorio fuente deja de asumirse hermana del destino. Se introducen los placeholders `<RUTA-FUENTE>` (derivada del path de la invocación, quitando el sufijo `/PROMPTS/PROMPT-Agente-Bootstrap-SDD.md`) y `<RUTA-DESTINO>` (la ruta indicada tras «en el repositorio:»), y se declara `../IA.SDD/` como alias de `<RUTA-FUENTE>/`, lo que cubre las ocurrencias del master-prompt y de las reglas sin editarlas. §1 introduce ambos placeholders y el bloque de invocación; §2 prerrequisito 1 pasa de «clonado como hermano» a «accesible en `<RUTA-FUENTE>`», verificable; §3 invoca al orquestador con las rutas derivadas. Habilita workspaces donde fuente y destino no son hermanas (p. ej. `IA/IA.SDD` y `DEV/<solución>`).
+- `SDD/Devs/Intake/SOLUTION-INTAKE-template.md` (1.0 → 1.1): se agrega la **Parte D — Anexos de datos** (§20 escenarios con JSON completo y su procedencia y estado, §21 matriz de cobertura y trazabilidad), la **regla de autocontención** en la guía de uso (paso 5), los ítems de checklist de la Parte D y la fila de trazabilidad downstream. Objetivo: que el intake transcriba los ejemplos de instancia en lugar de referenciar archivos externos que el orquestador aguas abajo no puede resolver. La Parte D es opcional y condicional (existe solo si las fuentes aportan ejemplos), pero cuando existen es su hogar canónico: el cuerpo cita por identificador (`E-1`, `E-2`, …) y el anexo reproduce el dato completo, sin referencias colgantes ni anexos huérfanos.
+
 ## [2.2] - 2026-07-19
 
 Incorporación de la Fase B2 de validación visual de maqueta y del mecanismo de sensado de deriva.
