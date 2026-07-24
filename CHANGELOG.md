@@ -13,6 +13,7 @@ Reorganización de las guías de usuario: convención de nombres en inglés y nu
 
 ### Cambiado
 - `SDD/Guides/Guia-Usuario-SDD-v1.0.md` → `SDD/Guides/SDD-User-Guide.md`: renombrado a la convención de nombres en inglés, sin cambios de contenido (se mantiene la v1.3).
+- `README.md` raíz: se corrige el enlace de la guía de usuario al nombre nuevo (`SDD/Guides/SDD-User-Guide.md`), que había quedado roto tras el rename.
 
 ## [2.3] - 2026-07-20
 

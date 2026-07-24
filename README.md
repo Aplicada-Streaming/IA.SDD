@@ -1,6 +1,6 @@
 # Diseño y desarrollo asistido por IA utilizando Spec-Driven Development (SDD)
 
-[Guía de usuario](SDD/Guides/Guia-Usuario-SDD-v1.0.md)
+[Guía de usuario](SDD/Guides/SDD-User-Guide.md)
 
 [Marco teórico](SDD/Devs/Guides/Marco-Teorico-SDD-v1.0.md)
 
