@@ -3,6 +3,17 @@
 Todos los cambios relevantes de este repositorio (`IA.SDD`) se documentan acá.
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/).
 
+## [2.4] - 2026-07-24
+
+Reorganización de las guías de usuario: convención de nombres en inglés y nueva guía de arranque rápido.
+
+### Añadido
+- `SDD/Guides/SDD-Getting-Started-Guide.md` (1.0): guía de arranque rápido para primeros pasos con el template, con front-matter estructurado (`doc_id`, `traces` a `SDD-User-Guide.md` y `PROMPT-Agente-Bootstrap-SDD.md`) y orientada a desarrolladores primerizos, analistas, líderes técnicos y agentes de IA.
+- `PROMPTS/README.md`: descripción del agente orquestador (borrador inicial).
+
+### Cambiado
+- `SDD/Guides/Guia-Usuario-SDD-v1.0.md` → `SDD/Guides/SDD-User-Guide.md`: renombrado a la convención de nombres en inglés, sin cambios de contenido (se mantiene la v1.3).
+
 ## [2.3] - 2026-07-20
 
 Desacople de la ubicación del repositorio fuente respecto del destino y autocontención de los ejemplos de instancia en el intake.
