@@ -432,12 +432,12 @@ A generar (obligatorio para todos los tipos D8):
 - Guia-Testing-Extensibilidad-v1.0.md (sólo si el tipo D8 admite plugins o handlers externos)
 - README.md de la sección (recomendado)
 
-Reglas de redacción: §4 de 08-Rules-Calidad-Y-Pruebas.md.
+Reglas de redacción: §4 de Rules-Calidad-Y-Pruebas.md.
 Nomenclatura: sufijo uniforme `-v<X.Y>.md`. Prohibido el sufijo `-motor` o cualquier marcador de dominio en el nombre del archivo (corrección obligatoria del antecedente del fuente).
 Trazabilidad: cada TC referencia al menos un CU, RN o NFR. La matriz tiene las tres tablas obligatorias (CU↔Tests, NFR↔Tests, RN↔Tests) más la tabla de cobertura por capa.
 Pirámide objetivo: la declarada en §2.2 para el tipo D8 del proyecto, con justificación cuando se aparta de ella.
 DoD canónica: Definition-Of-Done-v1.0.md es la única fuente. Los sprint plans referencian, no redefinen.
-Criterios de calidad: §6 de 08-Rules-Calidad-Y-Pruebas.md.
+Criterios de calidad: §6 de Rules-Calidad-Y-Pruebas.md.
 
 Restricciones: no introducir productos comerciales ni protocolos del dominio fuente. Idioma rioplatense técnico, tildes correctas, sin emojis ni negritas decorativas.
 

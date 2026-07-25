@@ -21,18 +21,18 @@ El master-prompt está completo, coherente y operativamente ejecutable. Cubre la
 | `../IA.SDD/SDD/Devs/Intake/PROJECT-BRIEF-<Nombre>-v1.0.md` | Plantilla `PROJECT-BRIEF-template.md` presente; el master-prompt usa nombre derivado en runtime | 7, 18, 73, 301, 371, 485 | OK (plantilla de origen presente; instanciación es runtime) |
 | `../IA.SDD/SDD/Devs/Intake/PROJECT-README-<Nombre>-v1.0.md` | Plantilla `PROJECT-README-template.md` presente | 7, 19, 74, 302, 372, 485 | OK |
 | `../IA.SDD/SDD/Devs/Rules/Root-Rules.md` | Sí | 214, 498, 506, 508 | OK |
-| `../IA.SDD/SDD/Devs/Rules/00-Rules-Contexto.md` | Sí | 58, 202 | OK |
-| `../IA.SDD/SDD/Devs/Rules/01-Rules-Necesidades-Negocio.md` | Sí | 203 | OK |
-| `../IA.SDD/SDD/Devs/Rules/02-Rules-Especificacion-Funcional.md` | Sí | 204, 359, 373 | OK |
-| `../IA.SDD/SDD/Devs/Rules/03-Rules-UX-UI-DX.md` | Sí | 205 | OK |
-| `../IA.SDD/SDD/Devs/Rules/04-Rules-Prompts-AI.md` | Sí | 206 | OK |
-| `../IA.SDD/SDD/Devs/Rules/05-Rules-Arquitectura-Tecnica.md` | Sí | 207 | OK |
-| `../IA.SDD/SDD/Devs/Rules/06-Rules-Backlog-Tecnico.md` | Sí | 208 | OK |
-| `../IA.SDD/SDD/Devs/Rules/07-Rules-Plan-Sprint.md` | Sí | 137, 209 | OK |
-| `../IA.SDD/SDD/Devs/Rules/08-Rules-Calidad-Y-Pruebas.md` | Sí | 210 | OK |
-| `../IA.SDD/SDD/Devs/Rules/09-Rules-Devops.md` | Sí | 211 | OK |
-| `../IA.SDD/SDD/Devs/Rules/10-Rules-Developer-Guide.md` | Sí | 212 | OK |
-| `../IA.SDD/SDD/Devs/Rules/11-Rules-Examples.md` | Sí | 213 | OK |
+| `../IA.SDD/SDD/Devs/Rules/Rules-Contexto.md` | Sí | 58, 202 | OK |
+| `../IA.SDD/SDD/Devs/Rules/Rules-Necesidades-Negocio.md` | Sí | 203 | OK |
+| `../IA.SDD/SDD/Devs/Rules/Rules-Especificacion-Funcional.md` | Sí | 204, 359, 373 | OK |
+| `../IA.SDD/SDD/Devs/Rules/Rules-UX-UI-DX.md` | Sí | 205 | OK |
+| `../IA.SDD/SDD/Devs/Rules/Rules-Prompts-AI.md` | Sí | 206 | OK |
+| `../IA.SDD/SDD/Devs/Rules/Rules-Arquitectura-Tecnica.md` | Sí | 207 | OK |
+| `../IA.SDD/SDD/Devs/Rules/Rules-Backlog-Tecnico.md` | Sí | 208 | OK |
+| `../IA.SDD/SDD/Devs/Rules/Rules-Plan-Sprint.md` | Sí | 137, 209 | OK |
+| `../IA.SDD/SDD/Devs/Rules/Rules-Calidad-Y-Pruebas.md` | Sí | 210 | OK |
+| `../IA.SDD/SDD/Devs/Rules/Rules-Devops.md` | Sí | 211 | OK |
+| `../IA.SDD/SDD/Devs/Rules/Rules-Developer-Guide.md` | Sí | 212 | OK |
+| `../IA.SDD/SDD/Devs/Rules/Rules-Examples.md` | Sí | 213 | OK |
 | `../IA.SDD/SDD/Devs/Bootstrap/Audit-SDD1.md` | Sí | 330 | OBSERVADO (acoplamiento bootstrap, ver §9) |
 | `../IA.SDD/SDD/Devs/Bootstrap/Audit-Fase-2.md` | Sí | 330, 460 | OBSERVADO (acoplamiento bootstrap, ver §9) |
 
@@ -88,7 +88,7 @@ Todos los archivos de reglas (13) y las plantillas de intake existen. No hay pat
   2. L58 — "Si cambia la especialidad ... se modifica un único archivo de reglas y el orquestador no requiere cambios."
   3. L59 — "Permite que el catálogo de especialidades evolucione sin re-publicar el master-prompt."
   4. L60 — "Mantiene al orquestador delgado y delegativo, lo cual baja el riesgo de inconsistencia entre fases."
-- Cita textual rectora (L53): "El master-prompt **no asigna** las especialidades de los subagentes. Las **lee** desde la sección §1 de cada `XX-Rules-<Categoria>.md`".
+- Cita textual rectora (L53): "El master-prompt **no asigna** las especialidades de los subagentes. Las **lee** desde la sección §1 de cada `Rules-<Categoria>.md`".
 - Cita operativa (L62): "toda invocación a un subagente se construye copiando el bloque de §1.2 correspondiente, completando los placeholders y citando el archivo de reglas como fuente".
 - Reforzado operativamente en:
   - §6 — procedimiento de lectura de las reglas (L222-231) que enuncia los 7 pasos de copia textual.

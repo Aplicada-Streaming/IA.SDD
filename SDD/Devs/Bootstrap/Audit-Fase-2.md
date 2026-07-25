@@ -10,7 +10,7 @@
 
 ## 1. Resumen ejecutivo
 
-Las 13 reglas constructivas de la Fase 2 del bootstrap SDD están redactadas con consistencia metodológica, respetan la cadena de trazabilidad D6 declarada y aplican explícitamente las lecciones del Audit-SDD1.md (Fase 0). La conformidad con D1–D8 es alta y la coherencia cross-doc entre las 13 reglas es satisfactoria. Se detectan pocos defectos, todos de severidad baja o media: una mención de `.NET MAUI` que cae dentro de la excepción admitida (mobile-app-maui), referencias formales (no canónicas) al fuente Motor DSL como justificación de correcciones heredadas y dos archivos (`Root-Rules`, `00-Rules-Contexto`) con cabecera ligeramente incompleta (sin §0 explícito). Total: 0 P0, 5 P1, 6 P2.
+Las 13 reglas constructivas de la Fase 2 del bootstrap SDD están redactadas con consistencia metodológica, respetan la cadena de trazabilidad D6 declarada y aplican explícitamente las lecciones del Audit-SDD1.md (Fase 0). La conformidad con D1–D8 es alta y la coherencia cross-doc entre las 13 reglas es satisfactoria. Se detectan pocos defectos, todos de severidad baja o media: una mención de `.NET MAUI` que cae dentro de la excepción admitida (mobile-app-maui), referencias formales (no canónicas) al fuente Motor DSL como justificación de correcciones heredadas y dos archivos (`Root-Rules`, `Rules-Contexto`) con cabecera ligeramente incompleta (sin §0 explícito). Total: 0 P0, 5 P1, 6 P2.
 
 Veredicto: APROBADO CON OBSERVACIONES.
 
@@ -21,18 +21,18 @@ Veredicto: APROBADO CON OBSERVACIONES.
 | Archivo | D1 | D2 | D3 | D4 | D5 | D6 | D7 | D8 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Root-Rules | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| 00-Rules-Contexto | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| 01-Rules-Necesidades-Negocio | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| 02-Rules-Especificacion-Funcional | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| 03-Rules-UX-UI-DX | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| 04-Rules-Prompts-AI | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| 05-Rules-Arquitectura-Tecnica | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| 06-Rules-Backlog-Tecnico | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| 07-Rules-Plan-Sprint | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| 08-Rules-Calidad-Y-Pruebas | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | parcial | ✓ |
-| 09-Rules-Devops | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | parcial | ✓ |
-| 10-Rules-Developer-Guide | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| 11-Rules-Examples | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Rules-Contexto | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Rules-Necesidades-Negocio | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Rules-Especificacion-Funcional | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Rules-UX-UI-DX | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Rules-Prompts-AI | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Rules-Arquitectura-Tecnica | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Rules-Backlog-Tecnico | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Rules-Plan-Sprint | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Rules-Calidad-Y-Pruebas | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | parcial | ✓ |
+| Rules-Devops | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | parcial | ✓ |
+| Rules-Developer-Guide | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Rules-Examples | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 
 Observaciones:
 - 08 menciona `.NET MAUI` una vez en la fila `mobile-app-maui` de §1.2 como stack-hint del propio tipo. La excepción aceptable de C4 lo admite, pero se marca como `parcial` para señalar que es la única instancia de mención literal del SDK fuera de la etiqueta `mobile-app-maui`.
@@ -45,18 +45,18 @@ Observaciones:
 | Archivo | Cab | §1 | §2 | §3 | §4 | §5 | §6 | §7 | §8 | §9 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Root-Rules | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (10 ítems) | ✓ (2 ej.) | ✓ | ✓ |
-| 00-Rules-Contexto | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (11 ítems) | ✓ (2 ej.) | ✓ | ✓ |
-| 01-Rules-Necesidades-Negocio | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (14 ítems) | ✓ (2 ej.) | ✓ | ✓ |
-| 02-Rules-Especificacion-Funcional | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (12 ítems) | ✓ (3 ej.) | ✓ | ✓ |
-| 03-Rules-UX-UI-DX | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (12 ítems) | ✓ (2 ej.) | ✓ | ✓ |
-| 04-Rules-Prompts-AI | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (12 ítems) | ✓ (3 ej.) | ✓ | ✓ |
-| 05-Rules-Arquitectura-Tecnica | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (13 ítems) | ✓ (2 ej.) | ✓ | ✓ |
-| 06-Rules-Backlog-Tecnico | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (12 ítems) | ✓ (2 ej.) | ✓ | ✓ |
-| 07-Rules-Plan-Sprint | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (12 ítems) | ✓ (2 ej.) | ✓ | ✓ |
-| 08-Rules-Calidad-Y-Pruebas | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (14 ítems) | ✓ (2 ej.) | ✓ | ✓ |
-| 09-Rules-Devops | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (12 ítems) | ✓ (2 ej.) | ✓ | ✓ |
-| 10-Rules-Developer-Guide | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (13 ítems) | ✓ (2 ej.) | ✓ | ✓ |
-| 11-Rules-Examples | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (14 ítems) | ✓ (2 ej.) | ✓ | ✓ |
+| Rules-Contexto | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (11 ítems) | ✓ (2 ej.) | ✓ | ✓ |
+| Rules-Necesidades-Negocio | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (14 ítems) | ✓ (2 ej.) | ✓ | ✓ |
+| Rules-Especificacion-Funcional | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (12 ítems) | ✓ (3 ej.) | ✓ | ✓ |
+| Rules-UX-UI-DX | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (12 ítems) | ✓ (2 ej.) | ✓ | ✓ |
+| Rules-Prompts-AI | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (12 ítems) | ✓ (3 ej.) | ✓ | ✓ |
+| Rules-Arquitectura-Tecnica | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (13 ítems) | ✓ (2 ej.) | ✓ | ✓ |
+| Rules-Backlog-Tecnico | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (12 ítems) | ✓ (2 ej.) | ✓ | ✓ |
+| Rules-Plan-Sprint | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (12 ítems) | ✓ (2 ej.) | ✓ | ✓ |
+| Rules-Calidad-Y-Pruebas | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (14 ítems) | ✓ (2 ej.) | ✓ | ✓ |
+| Rules-Devops | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (12 ítems) | ✓ (2 ej.) | ✓ | ✓ |
+| Rules-Developer-Guide | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (13 ítems) | ✓ (2 ej.) | ✓ | ✓ |
+| Rules-Examples | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (14 ítems) | ✓ (2 ej.) | ✓ | ✓ |
 
 Observaciones:
 - Todas las reglas tienen cabecera, las 9 secciones obligatorias, criterios verificables y prompt-snippet ejecutable.
@@ -178,18 +178,18 @@ Veredicto D7: cumplimiento estricto. Todas las menciones aparentes caen bajo exc
 | Archivo | Ítems `- [ ]` | Verificables | Observaciones |
 | --- | --- | --- | --- |
 | Root-Rules | 10 | Sí | Todos objetivos (12 categorías, tipo D8 reflejado, 3 audiencias, 10 términos glosario, líneas 200-400, enum estados). |
-| 00-Rules-Contexto | 11 | Sí | Cada ítem nombra umbrales numéricos o existencia verificable. |
-| 01-Rules-Necesidades-Negocio | 14 | Sí | Incluye regex de filename validable mecánicamente. |
-| 02-Rules-Especificacion-Funcional | 12 | Sí | Mínimo de CU, secciones exactas, prohibido `.v`. |
-| 03-Rules-UX-UI-DX | 12 | Sí | WCAG 2.2 AA piso, Diátaxis explícito, snippets ejecutables. |
-| 04-Rules-Prompts-AI | 12 | Sí | Gating positivo verificable, few-shot mínimo, JSON Schema. |
-| 05-Rules-Arquitectura-Tecnica | 13 | Sí | Mínimo 3 ADRs individuales, NFR con número y mecanismo. |
-| 06-Rules-Backlog-Tecnico | 12 | Sí | 2 dígitos uniformes, distribución MoSCoW, INVEST. |
-| 07-Rules-Plan-Sprint | 12 | Sí | Mínimo 2 sprints, sprint goal en una frase, mini-plan para 1 dev. |
-| 08-Rules-Calidad-Y-Pruebas | 14 | Sí | DoD por capa, matriz CU↔Tests/NFR↔Tests/RN↔Tests, sin `-motor`. |
-| 09-Rules-Devops | 12 | Sí | SBOM, firma, modelo ambientes por tipo D8, patrón parametrizado. |
-| 10-Rules-Developer-Guide | 13 | Sí | Sufijo `-v<X.Y>.md` obligatorio, slug genérico, gating por tipo. |
-| 11-Rules-Examples | 14 | Sí | Materialización /samples, progresión por nivel/capacidad, 5 pasos máx. |
+| Rules-Contexto | 11 | Sí | Cada ítem nombra umbrales numéricos o existencia verificable. |
+| Rules-Necesidades-Negocio | 14 | Sí | Incluye regex de filename validable mecánicamente. |
+| Rules-Especificacion-Funcional | 12 | Sí | Mínimo de CU, secciones exactas, prohibido `.v`. |
+| Rules-UX-UI-DX | 12 | Sí | WCAG 2.2 AA piso, Diátaxis explícito, snippets ejecutables. |
+| Rules-Prompts-AI | 12 | Sí | Gating positivo verificable, few-shot mínimo, JSON Schema. |
+| Rules-Arquitectura-Tecnica | 13 | Sí | Mínimo 3 ADRs individuales, NFR con número y mecanismo. |
+| Rules-Backlog-Tecnico | 12 | Sí | 2 dígitos uniformes, distribución MoSCoW, INVEST. |
+| Rules-Plan-Sprint | 12 | Sí | Mínimo 2 sprints, sprint goal en una frase, mini-plan para 1 dev. |
+| Rules-Calidad-Y-Pruebas | 14 | Sí | DoD por capa, matriz CU↔Tests/NFR↔Tests/RN↔Tests, sin `-motor`. |
+| Rules-Devops | 12 | Sí | SBOM, firma, modelo ambientes por tipo D8, patrón parametrizado. |
+| Rules-Developer-Guide | 13 | Sí | Sufijo `-v<X.Y>.md` obligatorio, slug genérico, gating por tipo. |
+| Rules-Examples | 14 | Sí | Materialización /samples, progresión por nivel/capacidad, 5 pasos máx. |
 
 Todos los archivos superan el mínimo de 8 ítems y los criterios son objetivos (sin opiniones).
 

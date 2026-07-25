@@ -209,7 +209,7 @@ Una superficie de primer arranque cumple esta extensión cuando: existe un únic
 | Hereda de | `Design-Rules-Web-Generico-v1.0.md` |
 | Mapeado por | especializaciones por stack (por ejemplo `Design-Rules-Blazor-Mudblazor-v1.0.md`) |
 | Extensión hermana | `Design-Rules-Acceso-Monousuario-v1.0.md` (comparte el shell partido y el catálogo de códigos de resultado) |
-| Regla que lo invoca | `devs/Rules/03-Rules-UX-UI-DX.md` (cuando el proyecto se despliega por instancia y arranca vacío) |
+| Regla que lo invoca | `devs/Rules/Rules-UX-UI-DX.md` (cuando el proyecto se despliega por instancia y arranca vacío) |
 | Cross-ref técnico | categoría 05 (predicado, guard de ruteo, transaccionalidad e idempotencia del alta) |
 | Cross-ref funcional | categoría 02 (qué funcional del artefacto mínimo y del acto de aprovisionar) |
 | Cross-ref de despliegue | categoría 09 (instalación, empaquetado, parámetros de entorno previos a la primera pantalla) |

@@ -182,7 +182,7 @@ Una superficie cumple esta extensión cuando: la versión que se muestra se deri
 | Hereda de | `Design-Rules-Web-Generico-v1.0.md` |
 | Mapeado por | especializaciones por stack (por ejemplo `Design-Rules-Blazor-Mudblazor-v1.0.md`) |
 | Extensión hermana | `Design-Rules-Acceso-Monousuario-v1.0.md` (aloja el sello en la superficie de acceso) |
-| Regla que lo invoca | `devs/Rules/03-Rules-UX-UI-DX.md` (cuando el proyecto produce artefactos desplegables identificables) |
+| Regla que lo invoca | `devs/Rules/Rules-UX-UI-DX.md` (cuando el proyecto produce artefactos desplegables identificables) |
 | Cross-ref de entrega | categoría 09 (cálculo de la versión, sellado en binarios, etiquetado de artefactos, notas de publicación) |
 | Cross-ref técnico | categoría 05 (decisiones de compatibilidad que la versión comunica, punto de composición del contrato) |
 | Cross-ref funcional | categoría 02 (qué funcional de identificar una instancia) |

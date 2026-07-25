@@ -21,7 +21,7 @@ Resultado de la línea base:
 | Nivel | Cantidad | Documentos |
 |---|---|---|
 | P0 (bloqueante) | 0 | — |
-| P1 (importante) | 1 | `00-Rules-Contexto.md` |
+| P1 (importante) | 1 | `Rules-Contexto.md` |
 | P2 (menor) | 2 | `Master-Prompt.md`, `Guia-Usuario-SDD-v1.0.md` |
 | P3 / limpio | 22 | resto del corpus |
 
@@ -39,7 +39,7 @@ Nota de método: la evaluación se delegó en seis subagentes lectores que devol
 |---|---|---|
 | Orquestador | `devs/Orchestrator/Master-Prompt.md` | 1 |
 | Intake | `devs/Intake/PROJECT-BRIEF-template.md`, `devs/Intake/PROJECT-README-template.md` | 2 |
-| Reglas constructivas | `devs/Rules/Root-Rules.md` + `00`–`11` (`devs/Rules/XX-Rules-<Categoria>.md`) | 13 |
+| Reglas constructivas | `devs/Rules/Root-Rules.md` + `00`–`11` (`devs/Rules/Rules-<Categoria>.md`) | 13 |
 | Guías | `Devs/Guides/Marco-Teorico-SDD-v1.0.md`, `Guides/Guia-Usuario-SDD-v1.0.md` | 2 |
 | Bootstrap (histórico) | `devs/Bootstrap/audit-fase-1..4.md`, `Audit-Final.md`, `Audit-SDD1.md`, `Bootstrap-Changelog.md` | 7 |
 | Total | | 25 |
@@ -73,18 +73,18 @@ Convención: «Cumple objetivo» en Sí / Parcial / No; «D1–D8» en Conforme 
 | `PROJECT-BRIEF-template.md` | Plantilla de intake de negocio sin decisiones técnicas | Sí | No | Conforme | Sí | — | limpio |
 | `PROJECT-README-template.md` | Plantilla de intake técnico; §1 fija el tipo de proyecto | Sí | No | Conforme | Sí | — (ver §6) | limpio |
 | `Root-Rules.md` | Reglas del README raíz (AG-ROOT) | Sí | No | Conforme | Sí | — | limpio |
-| `00-Rules-Contexto.md` | Reglas de la categoría 00 Contexto (AG-00) | Sí | No | Desvío D7 | Sí | H-02 | P1 |
-| `01-Rules-Necesidades-Negocio.md` | Reglas de la categoría 01 Necesidades de negocio (AG-01) | Sí | No | Conforme | Sí | H-03 | limpio |
-| `02-Rules-Especificacion-Funcional.md` | Reglas de la categoría 02 Especificación funcional (AG-02) | Sí | No | Conforme | Sí | H-04 | limpio |
-| `03-Rules-UX-UI-DX.md` | Reglas de la categoría 03 UX/UI/DX (AG-03) | Sí | No | Conforme | Sí | — | limpio |
-| `04-Rules-Prompts-AI.md` | Reglas de la categoría 04 Prompts AI, gated por `usa_llm` (AG-04) | Sí | No | Conforme | Sí | H-05 | limpio |
-| `05-Rules-Arquitectura-Tecnica.md` | Reglas de la categoría 05 Arquitectura técnica (AG-05) | Sí | No | Conforme | Sí | H-06 | limpio |
-| `06-Rules-Backlog-Tecnico.md` | Reglas de la categoría 06 Backlog técnico (AG-06) | Sí | No | Conforme | Sí | — | limpio |
-| `07-Rules-Plan-Sprint.md` | Reglas de la categoría 07 Plan de sprint (AG-07) | Sí | No | Conforme | Sí | H-07 | limpio |
-| `08-Rules-Calidad-Y-Pruebas.md` | Reglas de la categoría 08 Calidad y pruebas (AG-08) | Sí | No | Conforme | Sí | H-08 | limpio |
-| `09-Rules-Devops.md` | Reglas de la categoría 09 DevOps (AG-09) | Sí | No | Conforme | Sí | — | limpio |
-| `10-Rules-Developer-Guide.md` | Reglas de la categoría 10 Developer guide (AG-10) | Sí | No | Conforme | Sí | — | limpio |
-| `11-Rules-Examples.md` | Reglas de la categoría 11 Examples (AG-11) | Sí | No | Conforme | Sí | — | limpio |
+| `Rules-Contexto.md` | Reglas de la categoría 00 Contexto (AG-00) | Sí | No | Desvío D7 | Sí | H-02 | P1 |
+| `Rules-Necesidades-Negocio.md` | Reglas de la categoría 01 Necesidades de negocio (AG-01) | Sí | No | Conforme | Sí | H-03 | limpio |
+| `Rules-Especificacion-Funcional.md` | Reglas de la categoría 02 Especificación funcional (AG-02) | Sí | No | Conforme | Sí | H-04 | limpio |
+| `Rules-UX-UI-DX.md` | Reglas de la categoría 03 UX/UI/DX (AG-03) | Sí | No | Conforme | Sí | — | limpio |
+| `Rules-Prompts-AI.md` | Reglas de la categoría 04 Prompts AI, gated por `usa_llm` (AG-04) | Sí | No | Conforme | Sí | H-05 | limpio |
+| `Rules-Arquitectura-Tecnica.md` | Reglas de la categoría 05 Arquitectura técnica (AG-05) | Sí | No | Conforme | Sí | H-06 | limpio |
+| `Rules-Backlog-Tecnico.md` | Reglas de la categoría 06 Backlog técnico (AG-06) | Sí | No | Conforme | Sí | — | limpio |
+| `Rules-Plan-Sprint.md` | Reglas de la categoría 07 Plan de sprint (AG-07) | Sí | No | Conforme | Sí | H-07 | limpio |
+| `Rules-Calidad-Y-Pruebas.md` | Reglas de la categoría 08 Calidad y pruebas (AG-08) | Sí | No | Conforme | Sí | H-08 | limpio |
+| `Rules-Devops.md` | Reglas de la categoría 09 DevOps (AG-09) | Sí | No | Conforme | Sí | — | limpio |
+| `Rules-Developer-Guide.md` | Reglas de la categoría 10 Developer guide (AG-10) | Sí | No | Conforme | Sí | — | limpio |
+| `Rules-Examples.md` | Reglas de la categoría 11 Examples (AG-11) | Sí | No | Conforme | Sí | — | limpio |
 | `Marco-Teorico-SDD-v1.0.md` | Explicar el porqué metodológico del template | Sí | No | Conforme | Sí | H-09 | limpio |
 | `Guia-Usuario-SDD-v1.0.md` | Guiar el uso del template paso a paso | Sí | No | Desvío menor | Sí | H-10, H-11 | P2 |
 | `Audit-Fase-1.md` | Registro: audit de los intake (Fase 1) | Sí | n/a | Histórico | n/a | — | limpio |
@@ -109,38 +109,38 @@ Lectura: acoplamiento residual del prompt operativo a archivos del bootstrap. Ya
 Recomendación: inlinear el listado D7 en el master-prompt o en las reglas constructivas, de modo que la operación no dependa de leer artefactos de `Bootstrap/`. Puede atenderse en ST-04 (reformulación del orquestador), que de todos modos toca §8.
 Estado: RESUELTO el 2026-06-09 en ST-04. El `Master-Prompt.md` v2.0 delega la guía de vocabulario prohibido por D7 a las reglas y ya no remite a `Bootstrap/Audit-SDD1.md` ni `Bootstrap/Audit-Fase-2.md` en §8 ni §10. Se conserva el hallazgo en esta línea base para la comparación de no regresión de ST-09.
 
-H-02 — P1 — `00-Rules-Contexto.md` §6 (línea 252).
+H-02 — P1 — `Rules-Contexto.md` §6 (línea 252).
 Evidencia: «Ningún documento contiene emojis, negritas decorativas ni referencias hardcoded a stack, frameworks o ejemplos del dominio Motor DSL.» El criterio nombra literalmente el dominio fuente del bootstrap.
 Lectura: desviación de higiene D7 en texto normativo. Es la única regla que nombra «Motor DSL» dentro de un criterio de aceptación (no como lección histórica). Una lectura estricta de «P0 = viola D1–D8» la elevaría a P0; se la fija en P1 porque la cláusula es autorreferencial (prohíbe el término, no contamina la salida generada) y no rompe estructura ni trazabilidad.
 Recomendación: reemplazar «ejemplos del dominio Motor DSL» por «ejemplos del dominio fuente del bootstrap». Corrección de una línea, atendible en ST-06 (validación de reglas) o de inmediato.
-Estado: RESUELTO el 2026-06-08. `00-Rules-Contexto.md` subió a v1.1 con la cláusula corregida y entrada en su control de cambios. Se conserva el hallazgo en esta línea base para la comparación de no regresión de ST-09.
+Estado: RESUELTO el 2026-06-08. `Rules-Contexto.md` subió a v1.1 con la cláusula corregida y entrada en su control de cambios. Se conserva el hallazgo en esta línea base para la comparación de no regresión de ST-09.
 
-H-03 — P3 — `01-Rules-Necesidades-Negocio.md` §5.4 (línea 242).
+H-03 — P3 — `Rules-Necesidades-Negocio.md` §5.4 (línea 242).
 Evidencia: la enumeración del vocabulario prohibido por D7 (DSL, ESC-POS, MAUI literal, Bluetooth, NuGet, .NET 10, impresora térmica) vive en una pregunta-guía.
 Lectura: no es defecto; es deseable que la regla enumere lo prohibido. Observación: podría además referenciarse desde §4 para que el redactor lo encuentre en la estructura de redacción, no solo en las preguntas-guía.
 Recomendación: opcional. Sin impacto operativo.
 
-H-04 — P3 — `02-Rules-Especificacion-Funcional.md` §3.1 (línea 89).
+H-04 — P3 — `Rules-Especificacion-Funcional.md` §3.1 (línea 89).
 Evidencia: el ejemplo de anti-patrón de nombre `CU-01-Cargar-Plantilla-v1.0.md` ilustra la prohibición de mayúsculas/camelCase.
 Lectura: «Plantilla» es una palabra genérica, no vocabulario del dominio fuente; el ejemplo cumple su función (mostrar el anti-patrón de capitalización). No es desvío D7.
 Recomendación: opcional, elegir un sustantivo aún más neutro si se busca higiene total. Sin impacto operativo.
 
-H-05 — P3 — `04-Rules-Prompts-AI.md` §2.1.
+H-05 — P3 — `Rules-Prompts-AI.md` §2.1.
 Evidencia: el gating `usa_llm` se origina en dos lugares del intake (PROJECT-README §15 y §13 NFR) y la regla no fija precedencia.
 Lectura: la precedencia ya está resuelta aguas arriba: `Master-Prompt.md` §4 calcula `usa_llm` como verdadero si cualquiera de las dos fuentes lo activa (lógica OR). No hay ambigüedad operativa.
 Recomendación: opcional, citar esa lógica OR en la regla para autonomía. Sin impacto operativo.
 
-H-06 — P3 — `05-Rules-Arquitectura-Tecnica.md` §3.6.
+H-06 — P3 — `Rules-Arquitectura-Tecnica.md` §3.6.
 Evidencia: los ADR son inmutables (no se versionan en el mismo archivo; se superan con un ADR nuevo y ambos coexisten en `Adrs/`), mientras el resto de los artefactos sigue la regla general de una versión vigente con archivado en `_legacy/`.
 Lectura: es la convención estándar de ADR (Nygard), explícita y coherente en el documento. No es una inconsistencia; un subagente lector la reportó como P0 por error de interpretación y se descarta (ver §4.3).
 Recomendación: ninguna.
 
-H-07 — P3 — `07-Rules-Plan-Sprint.md` §2.2 frente a `06-Rules-Backlog-Tecnico.md`.
+H-07 — P3 — `Rules-Plan-Sprint.md` §2.2 frente a `Rules-Backlog-Tecnico.md`.
 Evidencia: la regla «si `equipo_n` == 1 se produce únicamente `Mini-Plan-v1.0.md`» vive en 07; 06 no la replica.
 Lectura: no es desvío. El backlog de 06 no varía por tamaño de equipo; la conmutación por `equipo_n` es competencia de 07 y del flag de `Master-Prompt.md` §4. No corresponde duplicarla en 06.
 Recomendación: ninguna.
 
-H-08 — P3 — `08-Rules-Calidad-Y-Pruebas.md` §4.8 frente a `06-Rules-Backlog-Tecnico.md` §3.4.
+H-08 — P3 — `Rules-Calidad-Y-Pruebas.md` §4.8 frente a `Rules-Backlog-Tecnico.md` §3.4.
 Evidencia: 08 declara la DoD como fuente canónica; 06 §3.4 ya diferencia DoR (filtro de entrada) de DoD de 08 (filtro de salida) «sin solaparlas».
 Lectura: la diferenciación existe y es correcta. Una mención recíproca explícita en 08 sería un agregado de claridad, no una corrección.
 Recomendación: opcional. Sin impacto operativo.
@@ -169,9 +169,9 @@ Las reglas 05 (§3.3, §4.5), 06 (§3.2, §4.8) y 07 (§4.1, §3.1) nombran «el
 
 ### §4.3 Hallazgos descartados tras verificación
 
-D-01 — Reportado como P0, descartado. `02-Rules-Especificacion-Funcional.md` §3.1 línea 89, ejemplo `CU-01-Cargar-Plantilla`. Verificado: el ejemplo ilustra el anti-patrón de mayúsculas/camelCase; «Plantilla» es genérico. No es desvío D7. Reclasificado a observación P3 (H-04).
+D-01 — Reportado como P0, descartado. `Rules-Especificacion-Funcional.md` §3.1 línea 89, ejemplo `CU-01-Cargar-Plantilla`. Verificado: el ejemplo ilustra el anti-patrón de mayúsculas/camelCase; «Plantilla» es genérico. No es desvío D7. Reclasificado a observación P3 (H-04).
 
-D-02 — Reportado como P0, descartado. `05-Rules-Arquitectura-Tecnica.md` §3.6, supuesta «inconsistencia crítica» entre el versionado de ADRs y el del resto de artefactos. Verificado: es la convención Nygard, explícita y coherente. No hay contradicción. Reclasificado a observación P3 (H-06).
+D-02 — Reportado como P0, descartado. `Rules-Arquitectura-Tecnica.md` §3.6, supuesta «inconsistencia crítica» entre el versionado de ADRs y el del resto de artefactos. Verificado: es la convención Nygard, explícita y coherente. No hay contradicción. Reclasificado a observación P3 (H-06).
 
 D-03 — Reportado como P0/P1 reiterado por un subagente. La exigencia de que cada regla reliste el vocabulario D7 dentro de su §4. Descartado como defecto: por diseño, el listado canónico vive en `Bootstrap/Audit-SDD1.md`, y el `Master-Prompt.md` §8 dirige a los subagentes a esa fuente. No relistarlo en cada regla no rompe coherencia. Se conserva solo la observación opcional H-03.
 
@@ -196,7 +196,7 @@ ST-01 no evalúa la aptitud para la jerarquía de proyectos. A título de insumo
 | Pregunta bloqueante de tipo único y regla «no mezclar tipos» | `PROJECT-README-template.md` §1 | Declarar el tipo por proyecto; centralizar la enumeración en el manifiesto (ST-03) |
 | Sub-proyectos como comentario inline | `PROJECT-README-template.md` §5 | Derivar la estructura de la jerarquía declarada (ST-03) |
 | Matriz de adaptabilidad por repositorio | `Master-Prompt.md` §14 | Aplicarla una vez por proyecto, en orden topológico (ST-04, ST-07) |
-| Vista de arquitectura por proyecto | `05-Rules-Arquitectura-Tecnica.md` | Añadir una vista de solución por encima (ST-05) |
+| Vista de arquitectura por proyecto | `Rules-Arquitectura-Tecnica.md` | Añadir una vista de solución por encima (ST-05) |
 | Convención de nombres de código no formalizada | `PROJECT-README-template.md` §5 (solo por ejemplo) | Formalizar `<NombreSolucionCodigo>.<Sufijo>` y excepción `Aplicada` (ST-03) |
 
 Las tablas §1.2 de las reglas ya están indexadas por D8; el modelo objetivo las invoca una vez por proyecto sin reescribirlas. El caso degenerado (solución de un proyecto) debe reproducir el comportamiento actual; ST-09 verificará que así sea.
@@ -208,7 +208,7 @@ Las tablas §1.2 de las reglas ya están indexadas por D8; el modelo objetivo la
 APROBADO CON OBSERVACIONES.
 
 - 0 hallazgos P0: la cadena de la reformulación puede avanzar a ST-02.
-- 1 hallazgo P1 (H-02): desviación de higiene D7 en `00-Rules-Contexto.md`, corrección de una línea; se recomienda atenderla en ST-06 o de inmediato, no bloquea ST-02.
+- 1 hallazgo P1 (H-02): desviación de higiene D7 en `Rules-Contexto.md`, corrección de una línea; se recomienda atenderla en ST-06 o de inmediato, no bloquea ST-02.
 - 2 hallazgos P2 (H-01, H-10/H-11): acoplamiento residual del orquestador al bootstrap y marca de versión en la guía de usuario; se atienden en las subtareas que tocan esos artefactos (ST-04, ST-08).
 - El resto del corpus está limpio o con observaciones P3 sin impacto operativo.
 

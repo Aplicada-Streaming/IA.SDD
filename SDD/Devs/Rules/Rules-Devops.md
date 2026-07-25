@@ -452,12 +452,12 @@ A generar (obligatorio para todos los tipos D8):
 - Supply-Chain-Seguridad-v1.0.md
 - README.md de la sección (recomendado)
 
-Reglas de redacción: §4 de 09-Rules-Devops.md.
+Reglas de redacción: §4 de Rules-Devops.md.
 Nomenclatura: sufijo uniforme `-v<X.Y>.md`. Prohibido hardcodear gestor de paquetes en el nombre genérico de la categoría; el patrón es `guia-publicacion-<tipo-artefacto>-v<X.Y>.md` con <tipo-artefacto> parametrizado (corrección obligatoria del antecedente del fuente).
 Trazabilidad: cada quality gate referencia el criterio DoD de 08 o el NFR de 05 que verifica. La DoD no se redefine acá; se ejecuta como gates.
 Modelo de ambientes: la tabla §2.2 fija el modelo por tipo D8. Confundir publicación con despliegue (aplicar DEV/QA/STAGING/PROD a una librería) es anti-patrón explícito.
 Supply chain: SBOM, firma, nivel SLSA objetivo, dependency scanning, SAST/DAST y política de CVE son obligatorios en todo tipo D8.
-Criterios de calidad: §6 de 09-Rules-Devops.md.
+Criterios de calidad: §6 de Rules-Devops.md.
 
 Restricciones: no introducir productos comerciales ni protocolos del dominio fuente. Idioma rioplatense técnico, tildes correctas, sin emojis ni negritas decorativas.
 
@@ -477,7 +477,7 @@ A generar:
 - Solucion/Pipeline-Solucion-v1.0.md con las ocho secciones del §4.9.
 
 Reglas: el orden de construcción respeta el grafo del manifiesto (dependencias antes que dependientes; redistribuibles antes que consumidores); la matriz refleja §2.2 aplicada por proyecto; cada artefacto publicable referencia la guia-publicacion del proyecto productor; no duplicar el pipeline interno de cada proyecto.
-Criterios de calidad: §6 de 09-Rules-Devops.md (criterios de nivel solución).
+Criterios de calidad: §6 de Rules-Devops.md (criterios de nivel solución).
 
 Salida: SDD/Docs/Solucion/Pipeline-Solucion-v1.0.md.
 ```

@@ -355,7 +355,7 @@ ls ../IA.SDD/SDD/Devs/Orchestrator/   # Master-Prompt.md, en la fuente
 ls ../IA.SDD/SDD/Devs/Rules/          # reglas de la fuente
 ```
 
-Debería listar el `Master-Prompt.md` en `Orchestrator/` de la fuente, los archivos de reglas `00-Rules-*.md` a `11-Rules-*.md`, `Root-Rules.md` y `Intake-Rules.md` en `Rules/` de la fuente, y tu intake personalizado en `SDD/Intake/` del destino (el único `SOLUTION-INTAKE` de la solución). El `SOLUTION-MANIFEST` no lo creás vos: lo deriva el orquestador y lo escribe también en `SDD/Intake/` del destino.
+Debería listar el `Master-Prompt.md` en `Orchestrator/` de la fuente, los doce archivos de reglas por categoría `Rules-*.md` (de `Rules-Contexto.md` a `Rules-Examples.md`), más `Root-Rules.md` y `Intake-Rules.md` en `Rules/` de la fuente, y tu intake personalizado en `SDD/Intake/` del destino (el único `SOLUTION-INTAKE` de la solución). El `SOLUTION-MANIFEST` no lo creás vos: lo deriva el orquestador y lo escribe también en `SDD/Intake/` del destino.
 
 ### 4.5 Paso 5 — Ejecutar el master-prompt en Claude Code
 
@@ -948,13 +948,13 @@ Pasos:
 
 ### F-02 — Generó un documento que no aplica al tipo de un proyecto, ¿cómo lo saco?
 
-Revisá primero el `project_type` del proyecto en §13 del `SOLUTION-INTAKE` (la tabla de proyectos). Si el tipo está mal, corregilo en §13 del intake; el orquestador re-deriva el manifiesto y regenera lo afectado de ese proyecto. Si está bien, abrí el archivo de reglas correspondiente (`XX-Rules-<Categoria>.md`), verificá §2.1 y §2.2 (tabla maestra de documentos y reglas por tipo). Si el documento estaba marcado como "Omitir" para ese tipo y aun así se generó, es un bug del subagente. Pedile al orquestador que regenere esa categoría para ese proyecto con instrucciones explícitas.
+Revisá primero el `project_type` del proyecto en §13 del `SOLUTION-INTAKE` (la tabla de proyectos). Si el tipo está mal, corregilo en §13 del intake; el orquestador re-deriva el manifiesto y regenera lo afectado de ese proyecto. Si está bien, abrí el archivo de reglas correspondiente (`Rules-<Categoria>.md`), verificá §2.1 y §2.2 (tabla maestra de documentos y reglas por tipo). Si el documento estaba marcado como "Omitir" para ese tipo y aun así se generó, es un bug del subagente. Pedile al orquestador que regenere esa categoría para ese proyecto con instrucciones explícitas.
 
 Si simplemente decidiste que no querés ese documento aunque la regla lo recomiende, eliminalo a mano y registrá un ADR en `SDD/Docs/05-Arquitectura-Tecnica/` documentando la omisión.
 
 ### F-03 — Quiero forzar un cambio en una regla de categoría, ¿dónde lo modifico?
 
-Las reglas viven en `../IA.SDD/SDD/Devs/Rules/`. Cada categoría tiene su archivo `XX-Rules-<Categoria>.md`. Para cambiar comportamiento de una categoría:
+Las reglas viven en `../IA.SDD/SDD/Devs/Rules/`. Cada categoría tiene su archivo `Rules-<Categoria>.md`. Para cambiar comportamiento de una categoría:
 
 1. Editás el archivo de reglas correspondiente.
 2. Si es un cambio editorial menor, subís minor (`v1.0` → `v1.1`).
@@ -1032,7 +1032,7 @@ Segundo paso: si el subagente realmente se desvió, pedile al orquestador que re
 
 ```text
 Regenerá CU-04-Cancelar-Turno-v1.0.md respetando estrictamente la
-estructura de §4.2 de ../IA.SDD/SDD/Devs/Rules/02-Rules-Especificacion-Funcional.md.
+estructura de §4.2 de ../IA.SDD/SDD/Devs/Rules/Rules-Especificacion-Funcional.md.
 El documento actual omite la sección de criterios Given/When/Then.
 ```
 
@@ -1136,7 +1136,7 @@ Imaginemos que querés agregar una categoría `12-Observabilidad/` para proyecto
 
 Pasos:
 
-1. Creá la carpeta `../IA.SDD/SDD/Devs/Rules/12-Rules-Observabilidad.md` siguiendo la estructura de las reglas existentes (§1 Especialidad, §2 Documentos, §3 Nomenclatura, §4 Estructura, §5 Preguntas guía, §6 Criterios, §7 Anti-patrones, §8 Prompt-snippet).
+1. Creá la carpeta `../IA.SDD/SDD/Devs/Rules/Rules-Observabilidad.md` siguiendo la estructura de las reglas existentes (§1 Especialidad, §2 Documentos, §3 Nomenclatura, §4 Estructura, §5 Preguntas guía, §6 Criterios, §7 Anti-patrones, §8 Prompt-snippet).
 2. Definí la especialidad base (por ejemplo, "Site Reliability Engineer Senior") y las variantes por tipo D8.
 3. Listá los documentos a producir: `Estrategia-Observabilidad-v1.0.md`, `Dashboards-v1.0.md`, `Alertas-v1.0.md`, `runbooks/RB-XX-<Nombre>-v1.0.md`, `README.md`.
 4. Actualizá `../IA.SDD/SDD/Devs/Orchestrator/Master-Prompt.md` §6 (plan de generación por categoría) para incluir la nueva categoría. Subí minor del master-prompt.
@@ -1158,7 +1158,7 @@ Es un cambio de mayor envergadura, no se hace casual. Conviene mantener D8 estab
 
 ### 7.3 Agregar una variante de especialidad
 
-Caso más simple: dentro de una categoría existente, querés una variante adicional. Por ejemplo, en `00-Rules-Contexto.md` querés agregar "Product Manager + Compliance Officer" como variante para proyectos regulados.
+Caso más simple: dentro de una categoría existente, querés una variante adicional. Por ejemplo, en `Rules-Contexto.md` querés agregar "Product Manager + Compliance Officer" como variante para proyectos regulados.
 
 Pasos:
 
@@ -1243,7 +1243,7 @@ Si nunca usaste SDD ni un template parecido, este es el orden de lectura recomen
 2. La plantilla `SOLUTION-INTAKE-template.md`. Leela completa, recorriendo sus tres partes: negocio (§1 a §12), composición con la tabla de proyectos de §13 (tipo D8 por proyecto) que define la jerarquía, y técnica por proyecto (§17, bloque P.1 a P.12). Mirá el ejemplo aplicado multi-proyecto y el caso degenerado. Tiempo estimado: 1 hora.
 3. La regla `Intake-Rules.md`. Es la que dirige la Fase de validación de intake: cómo se valida la completitud del intake y cómo se deriva el `SOLUTION-MANIFEST` de §13. Tiempo estimado: 20 minutos.
 4. La plantilla `SOLUTION-MANIFEST-template.md`. Leela como referencia del formato del artefacto que el orquestador deriva (no es una plantilla a llenar a mano). Tiempo estimado: 15 minutos.
-5. Tres archivos de reglas a elección: `00-Rules-Contexto.md`, `02-Rules-Especificacion-Funcional.md` y `05-Rules-Arquitectura-Tecnica.md`. Tiempo estimado: 1 hora.
+5. Tres archivos de reglas a elección: `Rules-Contexto.md`, `Rules-Especificacion-Funcional.md` y `Rules-Arquitectura-Tecnica.md`. Tiempo estimado: 1 hora.
 6. El master-prompt completo. Tiempo estimado: 45 minutos.
 
 Ejercicios sugeridos:
@@ -1335,7 +1335,7 @@ Términos esenciales para usar el template. Para el glosario exhaustivo del marc
 | Invariante | Decisión que no se renegocia durante la generación. Hay invariantes globales (D1 a D8) y propias del proyecto. |
 | Ambigüedad legítima | Falta concreta de un dato bloqueante en el intake que dispara detención / pregunta / reanudación. |
 | Handoff a codificación | Punto en el que el orquestador entrega la documentación auditada y espera confirmación humana para arrancar Sprint 1. |
-| Regla constructiva | Archivo `XX-Rules-<Categoria>.md` (o `Root-Rules.md`) que codifica especialidad, documentos, nomenclatura, estructura, criterios y prompt-snippet de la categoría. |
+| Regla constructiva | Archivo `Rules-<Categoria>.md` (o `Root-Rules.md`) que codifica especialidad, documentos, nomenclatura, estructura, criterios y prompt-snippet de la categoría. |
 | Fase B2 | Fase opcional de validación visual de maqueta, por proyecto, entre la Fase B y la Fase C. Se activa con el flag `requiere_maqueta`. Materializa la especificación de 03 en una maqueta navegable, la valida con vos, retroalimenta la documentación y emite la línea de base del sensado de deriva. Su regla es `Maqueta-Rules.md`. |
 | Maqueta | Sitio estático navegable en `SDD/Maquetas/<Nombre-Proyecto>/`: HTML, CSS, Bootstrap 5 y JavaScript, sin proceso de build, con los datos de ejemplo de la documentación hardcodeados. Sirve para validar de una sola vez la experiencia y el modelo de datos. No es el producto ni documentación viva: es la línea de base de un momento, aprobada explícitamente. |
 | Modelo UX-UI | Diseño capturado de una maqueta aprobada, escrito como reglas constructivas en `Modelos-UX-UI/` con su ejemplo ofuscado en `Templates/`. Opcional; se aplica por encima del catálogo base de `References/Design/`, nunca en su reemplazo. |
@@ -1362,18 +1362,18 @@ mi-proyecto/
 │   │   │   ├── Intake-Rules.md                          # Validación de intake y derivación del manifiesto
 │   │   │   ├── Maqueta-Rules.md                         # Fase B2: validación visual de maqueta
 │   │   │   ├── Deriva-Rules.md                          # Sensado de deriva y evidencia verificable (D9)
-│   │   │   ├── 00-Rules-Contexto.md
-│   │   │   ├── 01-Rules-Necesidades-Negocio.md
-│   │   │   ├── 02-Rules-Especificacion-Funcional.md
-│   │   │   ├── 03-Rules-UX-UI-DX.md
-│   │   │   ├── 04-Rules-Prompts-AI.md
-│   │   │   ├── 05-Rules-Arquitectura-Tecnica.md
-│   │   │   ├── 06-Rules-Backlog-Tecnico.md
-│   │   │   ├── 07-Rules-Plan-Sprint.md
-│   │   │   ├── 08-Rules-Calidad-Y-Pruebas.md
-│   │   │   ├── 09-Rules-Devops.md
-│   │   │   ├── 10-Rules-Developer-Guide.md
-│   │   │   └── 11-Rules-Examples.md
+│   │   │   ├── Rules-Contexto.md
+│   │   │   ├── Rules-Necesidades-Negocio.md
+│   │   │   ├── Rules-Especificacion-Funcional.md
+│   │   │   ├── Rules-UX-UI-DX.md
+│   │   │   ├── Rules-Prompts-AI.md
+│   │   │   ├── Rules-Arquitectura-Tecnica.md
+│   │   │   ├── Rules-Backlog-Tecnico.md
+│   │   │   ├── Rules-Plan-Sprint.md
+│   │   │   ├── Rules-Calidad-Y-Pruebas.md
+│   │   │   ├── Rules-Devops.md
+│   │   │   ├── Rules-Developer-Guide.md
+│   │   │   └── Rules-Examples.md
 │   │   ├── references/                                  # Catálogo de reglas de diseño por stack, insumo de AG-03
 │   │   │   └── design/
 │   │   │       ├── Index-Design-Rules.md

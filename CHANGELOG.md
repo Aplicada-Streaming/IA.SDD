@@ -3,6 +3,16 @@
 Todos los cambios relevantes de este repositorio (`IA.SDD`) se documentan acá.
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/).
 
+## [2.5] - 2026-07-25
+
+Normalización de la nomenclatura de los archivos de reglas: se elimina el prefijo numérico de las doce reglas por categoría.
+
+### Cambiado
+- `SDD/Devs/Rules/`: las doce reglas por categoría pierden el prefijo numérico y pasan a `Rules-<Categoria>.md` (`00-Rules-Contexto.md` → `Rules-Contexto.md`, …, `11-Rules-Examples.md` → `Rules-Examples.md`). Las cuatro reglas meta (`Root-Rules.md`, `Intake-Rules.md`, `Maqueta-Rules.md`, `Deriva-Rules.md`) ya cumplían la convención y no cambian. Sin cambios de contenido normativo: no se sube versión de ninguna regla. La numeración de las categorías se mantiene donde sí es semántica: títulos de las reglas (`# Reglas constructivas — 05 Arquitectura técnica`), carpetas destino (`SDD/Docs/05-Arquitectura-Tecnica/`) y fases del orquestador.
+- Referencias actualizadas en los 20 markdown del repositorio que citaban los nombres anteriores: `SDD/Devs/Orchestrator/Master-Prompt.md`, `SDD/Guides/SDD-User-Guide.md`, `SDD/Devs/Guides/Coherencia-Auditoria-Marco-v1.0.md`, los nueve documentos de `SDD/Devs/References/Design/`, los cuatro de `SDD/Devs/Bootstrap/`, los tres de `SDD/Devs/Reformulacion/`, las propias reglas y las entradas históricas de este changelog.
+- El patrón placeholder `XX-Rules-<Categoria>.md` pasa a `Rules-<Categoria>.md` en `Master-Prompt.md` (§1 y §6), `SDD-User-Guide.md` (§6 y §10 glosario), `Audit-Fase-3.md` y `Matriz-Coherencia-Template-v1.0.md` §2.1.
+- `SDD-User-Guide.md` §4.4: la verificación del listado de `Rules/` deja de expresarse como rango `00-Rules-*.md` a `11-Rules-*.md` y pasa a "los doce archivos de reglas por categoría `Rules-*.md` (de `Rules-Contexto.md` a `Rules-Examples.md`)".
+
 ## [2.4] - 2026-07-24
 
 Reorganización de las guías de usuario: convención de nombres en inglés y nueva guía de arranque rápido.
@@ -36,8 +46,8 @@ Incorporación de la Fase B2 de validación visual de maqueta y del mecanismo de
 
 ### Cambiado
 - `Master-Prompt.md` (3.3 → 3.4): flag `requiere_maqueta` en §4, invariante D9 en §5, fila de la Fase B2 y dos notas operativas en §6, los nueve pasos de la fase en §7, criterios de audit propios de B2 y de D9 en §10, línea de base y matriz de sensado en el resumen ejecutivo del handoff en §12, seis términos nuevos en §15. Se declara la única excepción de escritura fuera del repositorio destino (captura del modelo UX-UI en `IA.SDD`, con aceptación explícita y ofuscación bloqueante).
-- `03-Rules-UX-UI-DX.md` (1.5 → 1.6): nueva §1.5 con lo que le toca a AG-03 antes y después de la fase, tres artefactos nuevos en la tabla maestra, tres filas de trazabilidad, dos anti-patrones y dos criterios de aceptación condicionados a `requiere_maqueta`.
-- `08-Rules-Calidad-Y-Pruebas.md` (1.2 → 1.3): `Matriz-Sensado-Deriva-v<X.Y>.md` en la tabla maestra y su criterio de aceptación. AG-08 resuelve el método de verificación de cada fila al generar la Fase E.
+- `Rules-UX-UI-DX.md` (1.5 → 1.6): nueva §1.5 con lo que le toca a AG-03 antes y después de la fase, tres artefactos nuevos en la tabla maestra, tres filas de trazabilidad, dos anti-patrones y dos criterios de aceptación condicionados a `requiere_maqueta`.
+- `Rules-Calidad-Y-Pruebas.md` (1.2 → 1.3): `Matriz-Sensado-Deriva-v<X.Y>.md` en la tabla maestra y su criterio de aceptación. AG-08 resuelve el método de verificación de cada fila al generar la Fase E.
 - `Index-Design-Rules.md` (1.2 → 1.3): nueva §4.1 con el registro del catálogo de modelos UX-UI como tercer eje, el orden de apilado de las cuatro capas y la regla de conflicto.
 - `Guia-Usuario-SDD-v1.0.md` (1.2 → 1.3): se agrega la tabla de contenido del documento. Nuevo §4.6 (Paso 5b) con el recorrido completo de la fase; el §4.6 anterior pasa a §4.7. Nuevo §7.4 (agregar un modelo UX-UI). Cuatro entradas de FAQ nuevas (F-20 a F-23). Seis términos nuevos en el glosario. Árbol de carpetas con `SDD/Maquetas/`, las dos reglas nuevas y el catálogo de modelos.
 - `Marco-Teorico-SDD-v1.0.md` (1.4 → 1.6): §8.8 (la maqueta como instrumento de diseño y de control) y §9.7 (la deriva como separación acumulativa, la línea de base como referente externo falsable y la fundamentación de D9 y de sus umbrales). Además, puesta al día con el framework vigente: §3.6 y §3.8 corrigen la referencia al master-prompt (v3.0 → 3.4) y el rastro del modelo anterior a los dos repositorios, e incorporan la Fase B2 al diagrama del flujo; §4.1 y §4.3 registran a AG-03M como subagente de fase que no altera el catálogo de 13 especialidades; §13 suma ocho términos. Se agrega la fila 1.5 que el cambio de 2.1 había omitido, en incumplimiento de la política de versionado D5.
@@ -62,7 +72,7 @@ Incorporación del arquetipo de panel de control monolítico al catálogo de reg
 
 ### Cambiado
 - `Design-Rules-Config-Esquema-v1.0.md` (1.0 → 1.1): frontera entre configuración de aplicación y configuración de entorno, y derivación de los presets a partir de los `ejemplos` y el `default` de los descriptores.
-- `Design-Rules-Web-Generico-v1.0.md` (1.1 → 1.2), `Index-Design-Rules.md` (1.1 → 1.2), `03-Rules-UX-UI-DX.md` (1.4 → 1.5) y `Master-Prompt.md` (3.2 → 3.3): registro, criterio de carga, requisitos de artefacto, trazabilidad, anti-patrones e inyección de las extensiones nuevas en el despacho de AG-03.
+- `Design-Rules-Web-Generico-v1.0.md` (1.1 → 1.2), `Index-Design-Rules.md` (1.1 → 1.2), `Rules-UX-UI-DX.md` (1.4 → 1.5) y `Master-Prompt.md` (3.2 → 3.3): registro, criterio de carga, requisitos de artefacto, trazabilidad, anti-patrones e inyección de las extensiones nuevas en el despacho de AG-03.
 - `Marco-Teorico-SDD-v1.0.md` §8.7 y `Guia-Usuario-SDD-v1.0.md` §10.2: descripción del arquetipo y árbol del plano `devs/` actualizados.
 
 ## [2.0] - 2026-07-17

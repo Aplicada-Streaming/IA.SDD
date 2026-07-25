@@ -382,7 +382,7 @@ A generar (según tamaño de equipo):
 - Mini-Plan-v1.0.md si el proyecto es de un solo dev (sustituye a los anteriores).
 - README.md de la sección (recomendado).
 
-Reglas de redacción: §4 de 07-Rules-Plan-Sprint.md.
+Reglas de redacción: §4 de Rules-Plan-Sprint.md.
 Nomenclatura: `plan-iteracion-sprint-XX-v<X.Y>.md` con un único separador antes de la versión (`_v`).
 Convención crítica: prohibido el patrón `plan-iteracion_sprint-XX-v<X.Y>.md` con doble separador; prohibido abrir el archivo con `--` previo al H1.
 Sprint goal: una sola frase orientada a valor, sin bullets ni listas.

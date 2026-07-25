@@ -262,7 +262,7 @@ Además de los criterios del documento base, una superficie Blazor + MudBlazor c
 | --- | --- |
 | Documento base | `Design-Rules-Web-Generico-v1.0.md` |
 | Especialidad dueña | AG-03 UX/UI + Frontend Architect .NET |
-| Regla que lo invoca | `devs/Rules/03-Rules-UX-UI-DX.md` (selección por stack) |
+| Regla que lo invoca | `devs/Rules/Rules-UX-UI-DX.md` (selección por stack) |
 | Aplica a `project_type` | web-monolith, web-microservices (con frontend) con stack Blazor + MudBlazor |
 | Extensiones por capacidad que mapea | `Design-Rules-Config-Esquema-v1.0.md` (§4.1); `Design-Rules-Primer-Arranque-v1.0.md`, `Design-Rules-Acceso-Monousuario-v1.0.md` e `Design-Rules-Identidad-De-Version-v1.0.md` (§4.2) |
 | Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>` del proyecto Blazor |

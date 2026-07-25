@@ -33,7 +33,7 @@ Pase de verificación en lectura sobre la incorporación del catálogo de reglas
 
 | Archivo | Cambios | Versión |
 | --- | --- | --- |
-| `devs/Rules/03-Rules-UX-UI-DX.md` | Nueva §1.4 (insumos normativos de diseño por stack), fila de anti-patrón en §4.4, fila "Catálogo de diseño aplicado" en la tabla de trazabilidad de §4.3, control de cambios. | 1.2 → 1.3 |
+| `devs/Rules/Rules-UX-UI-DX.md` | Nueva §1.4 (insumos normativos de diseño por stack), fila de anti-patrón en §4.4, fila "Catálogo de diseño aplicado" en la tabla de trazabilidad de §4.3, control de cambios. | 1.2 → 1.3 |
 | `devs/Orchestrator/Master-Prompt.md` | Nota operativa en §6 sobre el insumo del catálogo para AG-03 en proyectos con UI, fila en la tabla de versionado §16. | 3.0 → 3.1 |
 | `Devs/Guides/Marco-Teorico-SDD-v1.0.md` | `references/` sumado al mapa de carpetas del plano `devs/` (§1.5), nueva subsección §8.7 sobre el catálogo. | sin marca de versión interna; solo edición |
 | `Guides/Guia-Usuario-SDD-v1.0.md` | Subárbol `References/Design/` sumado al mapa de carpetas del plano `devs/` (§10.2). | sin marca de versión interna; solo edición |
@@ -58,7 +58,7 @@ No se modificó `docs/`. No se sobrescribió ninguna plantilla.
 | Eslabón | Resultado | Evidencia |
 | --- | --- | --- |
 | El índice referencia los dos documentos | Cumple | Tabla del catálogo en `Index-Design-Rules.md` §2 lista `Design-Rules-Web-Generico-v1.0.md` y `Design-Rules-Blazor-Mudblazor-v1.0.md` con su relación base→especialización. |
-| La regla 03 referencia el índice | Cumple | §1.4 de `03-Rules-UX-UI-DX.md` indica cargar el catálogo a través de `Index-Design-Rules.md`. |
+| La regla 03 referencia el índice | Cumple | §1.4 de `Rules-UX-UI-DX.md` indica cargar el catálogo a través de `Index-Design-Rules.md`. |
 | El marco teórico referencia el subárbol | Cumple | §1.5 (mapa de carpetas) y §8.7 de `Marco-Teorico-SDD-v1.0.md` mencionan `devs/References/Design/` y el modelo base→especialización. |
 | La guía de usuario referencia el subárbol | Cumple | §10.2 de `Guia-Usuario-SDD-v1.0.md` incluye `References/Design/` en el árbol del plano `devs/` con su línea de propósito. |
 | El master-prompt incluye el insumo | Cumple | Nota operativa de §6 de `Master-Prompt.md` suma el catálogo como insumo de AG-03 para proyectos con UI. |

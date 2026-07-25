@@ -362,10 +362,10 @@ Documentos a generar:
 - NB-XX-<Nombre>-v1.0.md (uno por necesidad, mínimo 3, en subcarpeta Necesidades-De-Negocio/).
 - README.md de la sección si el proyecto tiene más de 5 NB.
 
-Reglas de redacción: §4 de 01-Rules-Necesidades-Negocio.md.
+Reglas de redacción: §4 de Rules-Necesidades-Negocio.md.
 Nomenclatura: respetar el patrón NB-XX-<Nombre>-v1.0.md.
 Trazabilidad esperada: cada NB declara las CU previstas en 02-Especificacion-Funcional con estado a generar / en redacción / aprobada.
-Criterios de calidad: §6 de 01-Rules-Necesidades-Negocio.md (14 ítems verificables).
+Criterios de calidad: §6 de Rules-Necesidades-Negocio.md (14 ítems verificables).
 Restricciones: respetar D1 a D8; no incluir emojis, negritas decorativas, ni términos del dominio prohibido por D7.
 
 Salida: SDD/Docs/01-Necesidades-Negocio/<archivos>.

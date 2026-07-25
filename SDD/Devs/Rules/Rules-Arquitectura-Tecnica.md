@@ -458,12 +458,12 @@ A generar (según tipo {{TIPO}} de D8):
 - Extensibilidad-v1.0.md si el tipo D8 tiene puntos de extensión.
 - README.md de la sección (recomendado).
 
-Reglas de redacción: §4 de 05-Rules-Arquitectura-Tecnica.md.
+Reglas de redacción: §4 de Rules-Arquitectura-Tecnica.md.
 Nomenclatura: `ADR-XX-<Nombre>-v1.0.md` con guion medio `-v` (no `_v` ni `.v`); slug en Título-Con-Guiones estricto.
 Convención crítica: cada ADR es un archivo individual bajo Adrs/. Prohibido consolidar todas las decisiones en un único archivo (corrección del antecedente Motor DSL).
 Inmutabilidad: ADR aceptada no se edita; si la decisión cambia, se crea ADR-YY nueva y la anterior pasa a `Superado por ADR-YY`.
 Trazabilidad: cada ADR referencia NB, CU, RN o NFR que la motivan; cada componente lista CU cubiertos.
-Criterios de calidad: §6 de 05-Rules-Arquitectura-Tecnica.md.
+Criterios de calidad: §6 de Rules-Arquitectura-Tecnica.md.
 
 Restricciones: no introducir stacks concretos, productos comerciales ni protocolos del dominio fuente. Idioma rioplatense técnico, tildes correctas, sin emojis.
 
@@ -485,7 +485,7 @@ A generar:
 - Solucion/Adrs/ADR-XX-<Nombre>-v1.0.md por cada decisión que afecte a más de un proyecto.
 
 Reglas: el mapa y el grafo reflejan el manifiesto sin divergencias; cada contrato inter-proyecto corresponde a una arista de dependencia; no duplicar la arquitectura interna de cada proyecto, referenciarla.
-Criterios de calidad: §6 de 05-Rules-Arquitectura-Tecnica.md (criterios de nivel solución).
+Criterios de calidad: §6 de Rules-Arquitectura-Tecnica.md (criterios de nivel solución).
 
 Salida: SDD/Docs/Solucion/<estructura>.
 ```

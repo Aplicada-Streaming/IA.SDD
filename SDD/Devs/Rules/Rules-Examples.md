@@ -458,16 +458,16 @@ Insumos:
 
 A generar (según el `project_type` del proyecto, leído del manifiesto):
 - README.md con tabla maestra de samples.
-- ejemplo-XX-<Progresion>-v1.0.md por cada sample (mínimo según §2.2 de 11-Rules-Examples.md).
+- ejemplo-XX-<Progresion>-v1.0.md por cada sample (mínimo según §2.2 de Rules-Examples.md).
 - Carpeta /samples/XX-<Progresion>/ con código ejecutable, README propio, tests de verificación.
 
-Reglas de redacción: §4 de 11-Rules-Examples.md (nueve secciones obligatorias por markdown).
+Reglas de redacción: §4 de Rules-Examples.md (nueve secciones obligatorias por markdown).
 Nomenclatura: sufijo uniforme `-v<X.Y>.md` (corrección obligatoria del fuente, que omitía la versión). Progresión por nivel (basico/intermedio/avanzado) o por capacidad. Prohibido nombrar por dominio del proyecto (corrección obligatoria respecto al fuente: nada de `multa`, `multaapp-nuget`, `factura`, `recibo`).
 Trazabilidad: cada sample referencia al menos un CU, ADR o NFR en §8.
 Ejecutabilidad: cada sample arranca en menos o igual a cinco pasos en entorno limpio.
 Output esperado: documentado en §6 con texto exacto o screenshot.
-Estructura de /samples: respetar la matriz §2.3 de 11-Rules-Examples.md según tipo D8.
-Criterios de calidad: §6 de 11-Rules-Examples.md.
+Estructura de /samples: respetar la matriz §2.3 de Rules-Examples.md según tipo D8.
+Criterios de calidad: §6 de Rules-Examples.md.
 
 Restricciones: no introducir productos comerciales ni protocolos del dominio fuente. Idioma rioplatense técnico, tildes correctas, sin emojis ni negritas decorativas.
 

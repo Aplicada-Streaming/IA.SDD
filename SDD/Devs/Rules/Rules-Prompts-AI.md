@@ -417,10 +417,10 @@ A generar (si la categoría está activa):
 - Dataset-Evaluacion-v1.0.md (recomendado).
 - README.md de la sección (recomendado).
 
-Reglas de redacción: §4 de 04-Rules-Prompts-AI.md.
+Reglas de redacción: §4 de Rules-Prompts-AI.md.
 Nomenclatura: `prompt-<Tarea>-v1.0.md` con guion medio `-v` (no `_v` ni `.v`); slug en Título-Con-Guiones estricto.
 Trazabilidad: cada prompt debe enlazar a una NB y a un CU consumidor.
-Criterios de calidad: §6 de 04-Rules-Prompts-AI.md.
+Criterios de calidad: §6 de Rules-Prompts-AI.md.
 Política de versionado: §3.5; una sola versión vigente; anteriores a `_legacy/` con estado Superado.
 
 Restricciones: no introducir stacks concretos, productos comerciales del dominio fuente ni protocolos específicos de impresión. Idioma rioplatense técnico, tildes correctas, sin emojis.

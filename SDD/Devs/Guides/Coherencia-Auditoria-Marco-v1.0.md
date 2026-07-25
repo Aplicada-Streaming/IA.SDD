@@ -59,7 +59,7 @@ Secciones sin cambio: §8.7 ya reflejaba el núcleo de la mejora (Cumple en el d
 | Eslabón | Resultado | Evidencia |
 | --- | --- | --- |
 | Marco → catálogo de diseño | Cumple | §1.5, §2.5, §4.2, §7.5, §8.3, §11.1 y §12.3 referencian `Design-Rules-Config-Esquema` y/o la frontera `PropuestaDeConfiguracion`; §8.7 ya la documentaba. |
-| Marco → regla 03 | Cumple | §4.2 (AG-03) refleja la carga de la extensión cuando hay superficies de configuración, consistente con `03-Rules-UX-UI-DX.md` v1.4 §1.4. |
+| Marco → regla 03 | Cumple | §4.2 (AG-03) refleja la carga de la extensión cuando hay superficies de configuración, consistente con `Rules-UX-UI-DX.md` v1.4 §1.4. |
 | Marco → master-prompt | Cumple | La responsabilidad de AG-03 de cargar la extensión (marco §4.2) es coherente con la nota operativa de §6 del master-prompt (insumo de AG-03 para proyectos con superficies de configuración). |
 | Reparto de responsabilidades UX/arquitectura/IA | Cumple | §4.2 separa AG-03 (lado UX), AG-05 (motor de la frontera) y AG-04 (asistente como tool definitions), sin solapamiento; coincide con el límite 05/02 del documento de capacidad. |
 | Terminología uniforme | Cumple | `PropuestaDeConfiguracion`, descriptor, modo simulación, plan-and-apply, human-in-the-loop y divulgación progresiva se usan con el mismo sentido en todas las secciones editadas y quedan definidos en §13. |

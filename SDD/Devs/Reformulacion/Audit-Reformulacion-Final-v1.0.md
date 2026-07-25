@@ -22,7 +22,7 @@ Veredicto: APROBADO. 0 hallazgos P0.
 - Dimensión trazabilidad: la cadena cierra sin huérfanos. Se aplicaron dos correcciones menores de claridad (nombres de artefacto y fila de Fase H del plan).
 - Dimensión caso degenerado: se detectó y resolvió una inconsistencia P1 real de layout (ver §4). Tras la corrección, una solución de un proyecto reproduce exactamente la estructura del template de tipo único.
 
-Las dos observaciones de la línea base que seguían abiertas se resolvieron durante la reformulación: H-02 (higiene D7 en `00-Rules-Contexto.md`) en ST-06, y H-01 (acoplamiento del orquestador al bootstrap) en ST-04. No se introdujeron regresiones.
+Las dos observaciones de la línea base que seguían abiertas se resolvieron durante la reformulación: H-02 (higiene D7 en `Rules-Contexto.md`) en ST-06, y H-01 (acoplamiento del orquestador al bootstrap) en ST-04. No se introdujeron regresiones.
 
 ---
 
@@ -36,7 +36,7 @@ ST-09 delegó la evaluación en tres auditores independientes, uno por dimensió
 
 | Hallazgo de la línea base | Nivel en ST-01 | Estado en ST-09 | Evidencia |
 |---|---|---|---|
-| H-02 — `00-Rules-Contexto.md` §6 nombra «Motor DSL» en un criterio normativo | P1 | RESUELTO en ST-06 | `00-Rules-Contexto.md` v1.1 (2026-06-08): la cláusula pasa a «ejemplos del dominio fuente del bootstrap». |
+| H-02 — `Rules-Contexto.md` §6 nombra «Motor DSL» en un criterio normativo | P1 | RESUELTO en ST-06 | `Rules-Contexto.md` v1.1 (2026-06-08): la cláusula pasa a «ejemplos del dominio fuente del bootstrap». |
 | H-01 — `Master-Prompt.md` §8/§10 remite a `Bootstrap/` como fuente del vocabulario D7 | P2 | RESUELTO en ST-04 | `Master-Prompt.md` v2.0: la guía D7 se delega a las reglas; sin referencias a `Bootstrap/Audit-SDD1.md` en §8 ni §10. |
 | H-10/H-11 — `guia-usuario-sdd2.0` con marca de versión desactualizada y numeración «D1..D8» de tipos | P2 | RESUELTO el 2026-06-10 (higiene posterior al cierre) | Rename a `Guia-Usuario-SDD-v1.0.md` (`git mv`), metadato y referencias internas actualizados, lista de tipos renumerada a 1..8. |
 | Coherencia general del corpus | 0 P0 | Mantenida | Ninguna regresión D1–D8 introducida por ST-02 a ST-08. |
@@ -106,18 +106,18 @@ Consecuencia: la estructura `SDD/Docs/` de una solución de un proyecto es idén
 | `intake/PROJECT-BRIEF-template.md` | Ajuste mínimo (ST-03) | 1.1 |
 | `orchestrator/Master-Prompt.md` | Reformulado (ST-04, ST-07, ST-09) | 2.2 |
 | `rules/Root-Rules.md` | Reformulado (ST-06, ST-08) | 1.2 |
-| `rules/00-Rules-Contexto.md` | Higiene D7 + validación (ST-01, ST-06) | 1.2 |
-| `rules/01-Rules-Necesidades-Negocio.md` | Validación (ST-06) | 1.1 |
-| `rules/02-Rules-Especificacion-Funcional.md` | Validación (ST-06) | 1.1 |
-| `rules/03-Rules-UX-UI-DX.md` | Validación (ST-06) | 1.1 |
-| `rules/04-Rules-Prompts-AI.md` | Validación (ST-06) | 1.1 |
-| `rules/05-Rules-Arquitectura-Tecnica.md` | Reformulado, vista de solución (ST-05) | 1.1 |
-| `rules/06-Rules-Backlog-Tecnico.md` | Validación (ST-06) | 1.1 |
-| `rules/07-Rules-Plan-Sprint.md` | Validación (ST-06) | 1.1 |
-| `rules/08-Rules-Calidad-Y-Pruebas.md` | Validación (ST-06) | 1.1 |
-| `rules/09-Rules-Devops.md` | Reformulado, pipeline de solución (ST-06, ST-07) | 1.2 |
-| `rules/10-Rules-Developer-Guide.md` | Validación (ST-06) | 1.1 |
-| `rules/11-Rules-Examples.md` | Validación (ST-06) | 1.1 |
+| `rules/Rules-Contexto.md` | Higiene D7 + validación (ST-01, ST-06) | 1.2 |
+| `rules/Rules-Necesidades-Negocio.md` | Validación (ST-06) | 1.1 |
+| `rules/Rules-Especificacion-Funcional.md` | Validación (ST-06) | 1.1 |
+| `rules/Rules-UX-UI-DX.md` | Validación (ST-06) | 1.1 |
+| `rules/Rules-Prompts-AI.md` | Validación (ST-06) | 1.1 |
+| `rules/Rules-Arquitectura-Tecnica.md` | Reformulado, vista de solución (ST-05) | 1.1 |
+| `rules/Rules-Backlog-Tecnico.md` | Validación (ST-06) | 1.1 |
+| `rules/Rules-Plan-Sprint.md` | Validación (ST-06) | 1.1 |
+| `rules/Rules-Calidad-Y-Pruebas.md` | Validación (ST-06) | 1.1 |
+| `rules/Rules-Devops.md` | Reformulado, pipeline de solución (ST-06, ST-07) | 1.2 |
+| `rules/Rules-Developer-Guide.md` | Validación (ST-06) | 1.1 |
+| `rules/Rules-Examples.md` | Validación (ST-06) | 1.1 |
 | `Reformulacion/Matriz-Coherencia-Template-v1.0.md` | Entregable ST-01 | 1.0 |
 | `Reformulacion/Propuesta-Modelo-Solucion-Jerarquia-v1.0.md` | Entregable ST-02 | 1.1 |
 | `Reformulacion/Audit-Reformulacion-Final-v1.0.md` | Entregable ST-09 (este) | 1.0 |

@@ -348,9 +348,9 @@ Documentos a generar (según tipo de proyecto {{TIPO}} y reglas de §2.2):
 - Acuerdo-Equipo-v1.0.md (si equipo > 2 personas)
 - README.md de la sección 00 (recomendado, sin versión)
 
-Reglas de redacción: §4 de 00-Rules-Contexto.md.
+Reglas de redacción: §4 de Rules-Contexto.md.
 Trazabilidad esperada: declarar upstream a SOLUTION-INTAKE y downstream a 01, 02, 03, 05, 07, 11.
-Criterios de calidad: §6 de 00-Rules-Contexto.md (11 ítems verificables).
+Criterios de calidad: §6 de Rules-Contexto.md (11 ítems verificables).
 Restricciones: idioma rioplatense técnico, UTF-8 LF, sin emojis, sin negritas decorativas, sin referencias a stack en visión y alcance.
 
 Salida: SDD/Docs/00-Contexto/<archivos>-v1.0.md.

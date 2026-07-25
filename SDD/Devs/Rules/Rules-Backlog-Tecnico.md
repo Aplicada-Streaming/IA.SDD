@@ -417,13 +417,13 @@ A generar (según tipo {{TIPO}} de D8):
 - Definition-Of-Ready-v1.0.md con criterios DoR para US (5-8) y BT (4-6), excepciones y aprobador.
 - README.md de la sección (recomendado).
 
-Reglas de redacción: §4 de 06-Rules-Backlog-Tecnico.md.
+Reglas de redacción: §4 de Rules-Backlog-Tecnico.md.
 Nomenclatura: dos dígitos uniformes para US-XX, BT-XX y EP-XX; slug Título-Con-Guiones; sufijo `-v1.0.md` con guion medio.
 Convención crítica: corregir la herencia del antecedente Motor DSL que mezclaba `US-01` con `BT-001`; forzar dos dígitos en todos los identificadores.
 Trazabilidad: cada US referencia al menos un CU; cada BT referencia NB, CU, ADR o contrato; matriz BT↔US↔CU completa.
 INVEST + MoSCoW: cada US Must y Should cumple INVEST y tiene criterios Given/When/Then con al menos dos escenarios.
 Estimación: declarar técnica (Fibonacci, T-shirt u horas ideales) y mantenerla consistente en todo el backlog.
-Criterios de calidad: §6 de 06-Rules-Backlog-Tecnico.md.
+Criterios de calidad: §6 de Rules-Backlog-Tecnico.md.
 
 Restricciones: no introducir stacks concretos, productos comerciales ni protocolos del dominio fuente. Idioma rioplatense técnico, tildes correctas, sin emojis.
 

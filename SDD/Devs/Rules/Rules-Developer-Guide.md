@@ -401,12 +401,12 @@ A generar (según el tipo D8 declarado en el intake):
 - Glosario-Tecnico-v1.0.md
 - README.md de la sección
 
-Reglas de redacción: §4 de 10-Rules-Developer-Guide.md.
+Reglas de redacción: §4 de Rules-Developer-Guide.md.
 Nomenclatura: sufijo uniforme `-v<X.Y>.md` obligatorio en todos los artefactos (corrección obligatoria del antecedente del fuente SDD 1.0 que omitía el sufijo en esta carpeta). Prohibido hardcodear el nombre del sistema objetivo en el archivo: usar el slug genérico `<sistema-objetivo>`.
 Diátaxis: cada documento declara su tipo (Tutorial, How-to, Reference, Explanation) en la cabecera y respeta la estructura del cuadrante.
 TTFS: Hello world < 5 min, primer caso real < 30 min, integración < 1 hora. Si no se cumple, reescribir.
 Trazabilidad: cada documento incluye referencias cruzadas con al menos un enlace a 05; cada concepto aparece en el glosario; cada referencia es consistente con los contratos publicados en 05.
-Criterios de calidad: §6 de 10-Rules-Developer-Guide.md. Aplicar el test del developer nuevo antes de declarar Done.
+Criterios de calidad: §6 de Rules-Developer-Guide.md. Aplicar el test del developer nuevo antes de declarar Done.
 ```
 
 ---

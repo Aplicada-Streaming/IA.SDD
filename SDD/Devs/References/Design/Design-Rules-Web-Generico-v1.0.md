@@ -255,7 +255,7 @@ Una superficie cumple el catálogo cuando: usa solo tokens del sistema (cero lit
 | Dimensión | Referencia |
 | --- | --- |
 | Especialidad dueña | AG-03 UX/UI |
-| Regla que lo invoca | `devs/Rules/03-Rules-UX-UI-DX.md` |
+| Regla que lo invoca | `devs/Rules/Rules-UX-UI-DX.md` |
 | Documentos hijos | `Design-Rules-Blazor-Mudblazor-v1.0.md` y futuros por stack |
 | Extensión por capacidad | `Design-Rules-Config-Esquema-v1.0.md` (configuración dirigida por esquema) |
 | Extensión por capacidad | `Design-Rules-Primer-Arranque-v1.0.md` (primer arranque y aprovisionamiento inicial) |

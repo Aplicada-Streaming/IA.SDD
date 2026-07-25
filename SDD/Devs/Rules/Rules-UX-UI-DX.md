@@ -548,7 +548,7 @@ A generar (según variante):
 - Variante DX: DX-Developer-Experience-v1.0.md, Guia-Onboarding-Developer-v1.0.md, DX-Error-Messages-v1.0.md (cli-tool, library), DX-Portal-Developers-v1.0.md (rest-api con portal), DX-Operability-v1.0.md (worker-service).
 - README.md de la sección (recomendado).
 
-Reglas de redacción: §4 de 03-Rules-UX-UI-DX.md.
+Reglas de redacción: §4 de Rules-UX-UI-DX.md.
 Nomenclatura: `<nombre>-v1.0.md` con guion medio antes de `v`; slug en Título-Con-Guiones estricto.
 Trazabilidad: cada artefacto declara persona objetivo, CU origen y US a generar.
 Accesibilidad: WCAG 2.2 nivel AA como piso mínimo en todo artefacto UX.

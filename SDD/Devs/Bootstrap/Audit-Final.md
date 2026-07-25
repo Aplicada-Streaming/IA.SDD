@@ -34,7 +34,7 @@ Inventario contra la especificación del prompt orquestador:
 |---|---|---|---|
 | `../IA.SDD/SDD/Devs/Bootstrap/` | 5 audits + audit-final + changelog | 5 audits presentes (audit-sdd1, audit-fase-1, audit-fase-2, audit-fase-3, audit-fase-4) + audit-final y bootstrap-changelog generados por esta fase | Conforme |
 | `../IA.SDD/SDD/Devs/Intake/` | 2 archivos | `PROJECT-BRIEF-template.md` (373 líneas), `PROJECT-README-template.md` (552 líneas) | Conforme |
-| `../IA.SDD/SDD/Devs/Rules/` | 13 archivos (12 numerados + `Root-Rules.md`) | `Root-Rules.md` (346) + `00-Rules-Contexto.md` (364) + `01-Rules-Necesidades-Negocio.md` (382) + `02-Rules-Especificacion-Funcional.md` (427) + `03-Rules-UX-UI-DX.md` (502) + `04-Rules-Prompts-AI.md` (438) + `05-Rules-Arquitectura-Tecnica.md` (434) + `06-Rules-Backlog-Tecnico.md` (440) + `07-Rules-Plan-Sprint.md` (405) + `08-Rules-Calidad-Y-Pruebas.md` (452) + `09-Rules-Devops.md` (435) + `10-Rules-Developer-Guide.md` (419) + `11-Rules-Examples.md` (484) | Conforme: 13 archivos |
+| `../IA.SDD/SDD/Devs/Rules/` | 13 archivos (12 numerados + `Root-Rules.md`) | `Root-Rules.md` (346) + `Rules-Contexto.md` (364) + `Rules-Necesidades-Negocio.md` (382) + `Rules-Especificacion-Funcional.md` (427) + `Rules-UX-UI-DX.md` (502) + `Rules-Prompts-AI.md` (438) + `Rules-Arquitectura-Tecnica.md` (434) + `Rules-Backlog-Tecnico.md` (440) + `Rules-Plan-Sprint.md` (405) + `Rules-Calidad-Y-Pruebas.md` (452) + `Rules-Devops.md` (435) + `Rules-Developer-Guide.md` (419) + `Rules-Examples.md` (484) | Conforme: 13 archivos |
 | `../IA.SDD/SDD/Devs/Orchestrator/` | `Master-Prompt.md` | `Master-Prompt.md` (621 líneas) | Conforme |
 | `../IA.SDD/SDD/Devs/Guides/` | `Marco-Teorico-SDD-v1.0.md` | `Marco-Teorico-SDD-v1.0.md` (1747 líneas) | Conforme |
 | `../IA.SDD/SDD/Guides/` | `Guia-Usuario-SDD-v1.0.md` | `Guia-Usuario-SDD-v1.0.md` (1206 líneas) | Conforme |
@@ -56,18 +56,18 @@ Resumen por archivo del template (excluyendo audits del bootstrap, que cumplen l
 |---|---|---|
 | `PROJECT-BRIEF-template.md` | 0 | OK. |
 | `PROJECT-README-template.md` | `mobile-app-maui` (literal D8 múltiples veces); `.NET MAUI` en lista de stack-hints orientativos del tipo `mobile-app-maui`; `NuGet` no detectado fuera de literal | (a) literal D8 — válido. La aparición de `.NET MAUI` en la celda de stack-hint corresponde al propio tipo D8 `mobile-app-maui` y ya fue evaluada en audit Fase 1 como excepción aceptable C4 tras la corrección del P0-001 que sustituyó las menciones MAUI canónicas. |
-| `00-Rules-Contexto.md` | `Motor DSL` (1 mención, criterio de aceptación negativa) | (b) referencia formal — válida. |
-| `01-Rules-Necesidades-Negocio.md` | `DSL, ESC-POS, MAUI literal fuera del valor del tipo D8, Bluetooth, NuGet, .NET 10, impresora térmica` (1 línea de criterio de exclusión) | (b) referencia formal — válida. |
-| `02-Rules-Especificacion-Funcional.md` | 0 | OK. |
-| `03-Rules-UX-UI-DX.md` | 0 | OK. |
-| `04-Rules-Prompts-AI.md` | 0 | OK. |
-| `05-Rules-Arquitectura-Tecnica.md` | `Motor DSL` (3 líneas en justificación de la convención de ADRs individuales) | (b) referencia formal — válida. Acotada como "antecedente" / "lección documentada del fuente". |
-| `06-Rules-Backlog-Tecnico.md` | `Motor DSL` (3 líneas en justificación de IDs uniformes) | (b) referencia formal — válida. |
-| `07-Rules-Plan-Sprint.md` | `Motor DSL` (2 líneas en justificación de patrón de nombres) | (b) referencia formal — válida. |
-| `08-Rules-Calidad-Y-Pruebas.md` | 0 | OK. |
-| `09-Rules-Devops.md` | `paquete-nuget` dentro de enumeraciones >3 package managers (npm/pypi/cargo/maven/gem/composer/nuget/github-packages); `guia-publicacion-nuget` referido como filename heredado prohibido | Excepción C4 — válida. |
-| `10-Rules-Developer-Guide.md` | 0 | OK. |
-| `11-Rules-Examples.md` | `multa`, `multaapp-nuget` (referencias textuales a los filenames prohibidos del fuente como antipatrón) | (b) referencia formal — válida. |
+| `Rules-Contexto.md` | `Motor DSL` (1 mención, criterio de aceptación negativa) | (b) referencia formal — válida. |
+| `Rules-Necesidades-Negocio.md` | `DSL, ESC-POS, MAUI literal fuera del valor del tipo D8, Bluetooth, NuGet, .NET 10, impresora térmica` (1 línea de criterio de exclusión) | (b) referencia formal — válida. |
+| `Rules-Especificacion-Funcional.md` | 0 | OK. |
+| `Rules-UX-UI-DX.md` | 0 | OK. |
+| `Rules-Prompts-AI.md` | 0 | OK. |
+| `Rules-Arquitectura-Tecnica.md` | `Motor DSL` (3 líneas en justificación de la convención de ADRs individuales) | (b) referencia formal — válida. Acotada como "antecedente" / "lección documentada del fuente". |
+| `Rules-Backlog-Tecnico.md` | `Motor DSL` (3 líneas en justificación de IDs uniformes) | (b) referencia formal — válida. |
+| `Rules-Plan-Sprint.md` | `Motor DSL` (2 líneas en justificación de patrón de nombres) | (b) referencia formal — válida. |
+| `Rules-Calidad-Y-Pruebas.md` | 0 | OK. |
+| `Rules-Devops.md` | `paquete-nuget` dentro de enumeraciones >3 package managers (npm/pypi/cargo/maven/gem/composer/nuget/github-packages); `guia-publicacion-nuget` referido como filename heredado prohibido | Excepción C4 — válida. |
+| `Rules-Developer-Guide.md` | 0 | OK. |
+| `Rules-Examples.md` | `multa`, `multaapp-nuget` (referencias textuales a los filenames prohibidos del fuente como antipatrón) | (b) referencia formal — válida. |
 | `Root-Rules.md` | 0 | OK. |
 | `Master-Prompt.md` | 0 (literal `mobile-app-maui` solo como literal D8) | OK. |
 | `Marco-Teorico-SDD-v1.0.md` | `Motor DSL` (1 mención en §1.6 acotada explícitamente como "caso de estudio histórico"); `NuGet` (2 menciones dentro de enumeraciones >3 package managers); `MAUI` (1 mención en tabla comparativa SDD 1.0 vs 2.0 contraponiendo "específico .NET / MAUI / NuGet" vs "stack-agnóstico") | (b) referencia formal — válidas todas. |

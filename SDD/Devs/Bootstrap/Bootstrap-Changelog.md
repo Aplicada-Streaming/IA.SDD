@@ -51,18 +51,18 @@ El bootstrap incorporó auditoría sistemática entre fases (5 audits intermedio
 | Archivo | Líneas | Categoría |
 |---|---|---|
 | `Root-Rules.md` | 346 | Reglas raíz transversales: invariantes D1–D8, nomenclatura, idioma, checklist genérica, cadena D6 conceptual. |
-| `00-Rules-Contexto.md` | 364 | Contexto del proyecto, glosario, stakeholders, visión. |
-| `01-Rules-Necesidades-Negocio.md` | 382 | Necesidades de negocio y reglas de negocio. |
-| `02-Rules-Especificacion-Funcional.md` | 427 | Casos de uso y especificación funcional. |
-| `03-Rules-UX-UI-DX.md` | 502 | UX, UI y DX. |
-| `04-Rules-Prompts-AI.md` | 438 | Prompts de IA y artefactos prompt-engineered. |
-| `05-Rules-Arquitectura-Tecnica.md` | 434 | Arquitectura técnica y ADRs (corrección obligatoria: ADRs individuales). |
-| `06-Rules-Backlog-Tecnico.md` | 440 | Backlog técnico, US y BT (corrección obligatoria: IDs uniformes de 2 dígitos). |
-| `07-Rules-Plan-Sprint.md` | 405 | Plan de iteración y sprints. |
-| `08-Rules-Calidad-Y-Pruebas.md` | 452 | Calidad y pruebas. |
-| `09-Rules-Devops.md` | 435 | DevOps, CI/CD y publicación de artefactos (stack-agnóstico). |
-| `10-Rules-Developer-Guide.md` | 419 | Guía de desarrollador del proyecto. |
-| `11-Rules-Examples.md` | 484 | Samples y ejemplos por nivel/capacidad (corrección obligatoria: prohibido nombrar por dominio). |
+| `Rules-Contexto.md` | 364 | Contexto del proyecto, glosario, stakeholders, visión. |
+| `Rules-Necesidades-Negocio.md` | 382 | Necesidades de negocio y reglas de negocio. |
+| `Rules-Especificacion-Funcional.md` | 427 | Casos de uso y especificación funcional. |
+| `Rules-UX-UI-DX.md` | 502 | UX, UI y DX. |
+| `Rules-Prompts-AI.md` | 438 | Prompts de IA y artefactos prompt-engineered. |
+| `Rules-Arquitectura-Tecnica.md` | 434 | Arquitectura técnica y ADRs (corrección obligatoria: ADRs individuales). |
+| `Rules-Backlog-Tecnico.md` | 440 | Backlog técnico, US y BT (corrección obligatoria: IDs uniformes de 2 dígitos). |
+| `Rules-Plan-Sprint.md` | 405 | Plan de iteración y sprints. |
+| `Rules-Calidad-Y-Pruebas.md` | 452 | Calidad y pruebas. |
+| `Rules-Devops.md` | 435 | DevOps, CI/CD y publicación de artefactos (stack-agnóstico). |
+| `Rules-Developer-Guide.md` | 419 | Guía de desarrollador del proyecto. |
+| `Rules-Examples.md` | 484 | Samples y ejemplos por nivel/capacidad (corrección obligatoria: prohibido nombrar por dominio). |
 
 ### ../IA.SDD/SDD/Devs/Orchestrator/
 
@@ -108,7 +108,7 @@ Carpeta vacía con `.gitkeep`. Destino del orquestador del proyecto cuando un us
 ### Fase 2 — Reglas constructivas (13)
 
 - Subagentes despachados: 13 (uno por categoría) + auditor independiente.
-- Productos: `Root-Rules.md` + `00-Rules-Contexto.md` a `11-Rules-Examples.md`.
+- Productos: `Root-Rules.md` + `Rules-Contexto.md` a `Rules-Examples.md`.
 - Métricas: ~5.628 líneas en total, 9 secciones por regla, §1.2 + §8 verificados en los 13 archivos.
 - Defectos detectados: 0 P0, 5 P1 (cobertura D8 incompleta en §7, neutralidad de stack-hints, otros), 6 P2.
 - Lecciones aplicadas del fuente: 9 lecciones de `Audit-SDD1.md` aplicadas explícitamente (IDs uniformes en US/BT, ADRs individuales, nombrado de samples por nivel, sufijo `-v<X.Y>.md`, etc.).

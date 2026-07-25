@@ -218,7 +218,7 @@ Una superficie de acceso cumple esta extensión cuando: existe una sola identida
 | Hereda de | `Design-Rules-Web-Generico-v1.0.md` |
 | Mapeado por | especializaciones por stack (por ejemplo `Design-Rules-Blazor-Mudblazor-v1.0.md`) |
 | Extensión hermana | `Design-Rules-Primer-Arranque-v1.0.md` (crea la identidad única y comparte el shell de acceso) |
-| Regla que lo invoca | `devs/Rules/03-Rules-UX-UI-DX.md` (cuando el proyecto declara acceso de operador único) |
+| Regla que lo invoca | `devs/Rules/Rules-UX-UI-DX.md` (cuando el proyecto declara acceso de operador único) |
 | Cross-ref técnico | categoría 05 (esquema de credenciales, credencial de sesión, protección de formulario, control de intentos) |
 | Cross-ref funcional | categoría 02 (qué funcional de autenticar, cambiar el secreto y cerrar sesión) |
 | Cross-ref de operación | categoría 09 (provisión y rotación operativa del secreto) |

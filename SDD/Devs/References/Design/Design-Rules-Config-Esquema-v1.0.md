@@ -197,7 +197,7 @@ Una superficie de configuración cumple esta extensión cuando: cada parámetro 
 | Hereda de | `Design-Rules-Web-Generico-v1.0.md` |
 | Mapeado por | especializaciones por stack (por ejemplo `Design-Rules-Blazor-Mudblazor-v1.0.md`) |
 | Extensión hermana | `Design-Rules-Primer-Arranque-v1.0.md` (la configuración de entorno se fija antes de la primera pantalla) |
-| Regla que lo invoca | `devs/Rules/03-Rules-UX-UI-DX.md` (cuando el proyecto tiene superficies de configuración) |
+| Regla que lo invoca | `devs/Rules/Rules-UX-UI-DX.md` (cuando el proyecto tiene superficies de configuración) |
 | Cross-ref técnico | categoría 05 (motor, registro de descriptores, validación, salidas estructuradas / tool calling, plan-and-apply) |
 | Cross-ref funcional | categoría 02 (qué funcional de los parámetros y de la operación de configurar) |
 | Cross-ref de despliegue | categoría 09 (configuración de entorno: parámetros que se fijan al desplegar la instancia) |

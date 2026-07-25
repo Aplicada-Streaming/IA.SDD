@@ -264,9 +264,9 @@ Las variantes §1.2 por D8 se siguen aplicando por proyecto dentro de su propia 
 |---|---|
 | ST-03 | `SOLUTION-MANIFEST-template.md` (§4); reestructurar `PROJECT-README-template.md` a documento de solución: encabezado de solución, §1 con tabla de proyectos y su D8 (mirror del manifiesto), y bloque técnico repetible por proyecto (condensa §2 a §16 actuales); §5 deriva la estructura de la jerarquía y de la convención de nombres (§5); `PROJECT-BRIEF` se mantiene a nivel solución con ajuste mínimo para nombrar la solución |
 | ST-04 | `Master-Prompt.md`: §3 lee el manifiesto y deriva la lista de proyectos tipados y sus nombres de código; §6 plan por proyecto; §7 bucle topológico; §8 inyecta contexto de proyecto; §14 matriz por proyecto |
-| ST-05 | Vista de solución (§9) por encima de `05-Rules-Arquitectura-Tecnica.md`; contratos inter-proyecto y grafo de dependencias |
+| ST-05 | Vista de solución (§9) por encima de `Rules-Arquitectura-Tecnica.md`; contratos inter-proyecto y grafo de dependencias |
 | ST-06 | Validar que las §1.2 de las 13 reglas se aplican por proyecto sin reescritura; ajuste mínimo del texto que asuma tipo único por repositorio |
-| ST-07 | `09-Rules-Devops.md`: build y publicación multi-proyecto en orden topológico; artefactos publicables por proyecto |
+| ST-07 | `Rules-Devops.md`: build y publicación multi-proyecto en orden topológico; artefactos publicables por proyecto |
 | ST-08 | README raíz: presenta la solución, la jerarquía y la tabla de proyectos con su D8, rol y dependencias |
 | ST-09 | Re-evaluar coherencia; verificar D1–D8, trazabilidad a nivel solución y proyecto, y el caso degenerado contra la línea base de ST-01 |
 

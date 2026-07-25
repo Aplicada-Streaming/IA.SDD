@@ -29,7 +29,7 @@ Pase de verificación en lectura sobre la incorporación de la extensión por ca
 | `Devs/References/Design/Design-Rules-Web-Generico-v1.0.md` | Principio rector 8, estado semántico `info` en §2.1 (con confirmación de `warning` = Atención), anti-patrón en §10, extensión por capacidad en §11, control de cambios. | 1.0 → 1.1 |
 | `devs/References/Design/Index-Design-Rules.md` | §1 distingue especializaciones por stack de extensiones por capacidad; §2 registra el documento de capacidad en subtabla propia; §4 criterio de carga; §3 nota de roadmap; control de cambios. | 1.0 → 1.1 |
 | `Devs/References/Design/Design-Rules-Blazor-Mudblazor-v1.0.md` | Nueva §4.1: mapeo de los patrones de configuración por esquema a componentes MudBlazor; control de cambios. | 1.0 → 1.1 |
-| `devs/Rules/03-Rules-UX-UI-DX.md` | §1.4 extendida (carga de la extensión y requisitos sobre `experiencia-de-uso`/`wireframes`), anti-patrones en §4.4, fila de trazabilidad en §4.3, control de cambios. | 1.3 → 1.4 |
+| `devs/Rules/Rules-UX-UI-DX.md` | §1.4 extendida (carga de la extensión y requisitos sobre `experiencia-de-uso`/`wireframes`), anti-patrones en §4.4, fila de trazabilidad en §4.3, control de cambios. | 1.3 → 1.4 |
 | `Devs/Guides/Marco-Teorico-SDD-v1.0.md` | Párrafo en §8.7 sobre el eje de configuración dirigida por esquema. | sin marca de versión interna; solo edición |
 | `Guides/Guia-Usuario-SDD-v1.0.md` | `Design-Rules-Config-Esquema-v1.0.md` sumado al árbol del plano `devs/` en §10.2. | sin marca de versión interna; solo edición |
 | `devs/Orchestrator/Master-Prompt.md` | Nota operativa en §6 sobre la extensión como insumo de AG-03; fila 3.2 en §16 (y corrección del orden de las filas 3.0/3.1); cabecera. | 3.1 → 3.2 |
@@ -56,7 +56,7 @@ No se modificó `docs/`. No se sobrescribió ninguna plantilla.
 | Índice → documento de capacidad | Cumple | `Index-Design-Rules.md` §2 registra `Design-Rules-Config-Esquema-v1.0.md` en la subtabla de extensiones por capacidad; §4 fija su criterio de carga. |
 | Documento de capacidad → base | Cumple | La cabecera declara "Hereda de `Design-Rules-Web-Generico-v1.0.md`" y §0/§11 lo confirman; el base lo registra en §11 (extensión por capacidad) y lo remite desde el principio 8. |
 | Especialización Blazor → documento de capacidad | Cumple | `Design-Rules-Blazor-Mudblazor-v1.0.md` §4.1 mapea los patrones de la extensión a componentes MudBlazor. |
-| Regla 03 → índice / extensión | Cumple | `03-Rules-UX-UI-DX.md` §1.4 indica cargar `Design-Rules-Config-Esquema` vía el índice cuando hay superficies de configuración. |
+| Regla 03 → índice / extensión | Cumple | `Rules-UX-UI-DX.md` §1.4 indica cargar `Design-Rules-Config-Esquema` vía el índice cuando hay superficies de configuración. |
 | Marco teórico → subárbol | Cumple | `Marco-Teorico-SDD-v1.0.md` §8.7 describe el eje de extensiones por capacidad y la configuración dirigida por esquema. |
 | Guía de usuario → árbol | Cumple | `Guia-Usuario-SDD-v1.0.md` §10.2 incluye `Design-Rules-Config-Esquema-v1.0.md` en el árbol del plano `devs/`. |
 | Master-prompt → insumo | Cumple | `Master-Prompt.md` §6 suma la extensión como insumo de AG-03 para proyectos con superficies de configuración; §16 lo registra en la fila 3.2. |
