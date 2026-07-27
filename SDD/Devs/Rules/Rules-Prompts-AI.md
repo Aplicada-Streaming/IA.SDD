@@ -2,7 +2,7 @@
 
 **Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/04-Prompts-AI/`
 **Subagente target del orquestador:** Ingeniero de Prompts / AI Specialist (AG-04)
-**Versión de las reglas:** 1.2
+**Versión de las reglas:** 1.4
 
 ---
 
@@ -22,7 +22,7 @@ Ingeniero de Prompts senior, equivalente AG-04 del catálogo SDD. Perfil profesi
 
 | Tipo | Especialidad específica | Justificación |
 | --- | --- | --- |
-| library | Ingeniero de Prompts + ML Specialist | Solo aplica si la librería expone una interfaz LLM o un cliente AI. La librería no debe esconder costos ni guardrails al consumidor. |
+| library | Ingeniero de Prompts + ML Specialist | Solo aplica si la librería expone una interfaz LLM o un cliente AI. La librería no debe esconder costos ni guardrails al integrador. |
 | web-monolith | Ingeniero de Prompts + UX Conversacional | El prompt forma parte de un flujo humano; la latencia y el tono importan tanto como la precisión. |
 | web-microservices | Ingeniero de Prompts + ML Platform Engineer | Múltiples servicios pueden invocar al LLM; se requiere abstracción del proveedor y observabilidad por servicio. |
 | desktop-app | Ingeniero de Prompts + UX Conversacional | Considerar modo offline degradado y manejo explícito de errores de conectividad. |
@@ -71,7 +71,7 @@ Queda prohibido producir documentos de 04 sin el flag positivo. Queda prohibido 
 
 | Tipo D8 | Política | Prompts mínimos | Evaluación | Dataset | Comentario |
 | --- | --- | --- | --- | --- | --- |
-| library | Obligatoria si expone superficie LLM | 1 por método LLM público | Obligatoria | Recomendado | La librería documenta costos esperados al consumidor. |
+| library | Obligatoria si expone superficie LLM | 1 por método LLM público | Obligatoria | Recomendado | La librería documenta costos esperados al integrador. |
 | web-monolith | Obligatoria | 1 por feature LLM | Obligatoria | Recomendado | Considerar latencia perceptual del usuario. |
 | web-microservices | Obligatoria | 1 por servicio AI | Obligatoria | Recomendado | Observabilidad por servicio. |
 | desktop-app | Obligatoria | 1 por feature LLM | Obligatoria | Recomendado | Modo offline declarado. |
@@ -144,6 +144,10 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 ```
 
 Para la política, la evaluación y el dataset aplica la misma cabecera adaptando título y descripción.
+
+**Tabla de contenido.** Todo documento generado que supere las tres secciones de primer nivel incluye una tabla de contenido inmediatamente después de la cabecera de metadatos, con enlaces ancla a cada sección de primer y de segundo nivel. La tabla de contenido no cuenta como sección de contenido ni altera la estructura obligatoria del documento: se ubica entre la cabecera y la primera sección, y las secciones obligatorias siguen siendo las que declara §4.2. Los documentos breves —fichas de una sola sección, entradas de índice— quedan exceptuados.
+
+El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente de IA que recorre la cadena de especificación acumulando contexto, y para ese lector la tabla de contenido es indiferente. Existe para el agente humano que entra a consultar un punto concreto sin haber leído el documento entero.
 
 ### 4.2 Secciones obligatorias de un prompt
 
@@ -308,6 +312,7 @@ Tabla de trazabilidad del prompt:
 - [ ] Ningún archivo usa el patrón `-v<X.Y>.md`; todos usan `-v<X.Y>.md`.
 - [ ] Ningún slug contiene mayúsculas, espacios, acentos ni caracteres no permitidos.
 - [ ] No coexisten versiones distintas del mismo nombre lógico en la carpeta principal; las superadas viven en `_legacy/`.
+- [ ] Todo documento con más de tres secciones de primer nivel incluye tabla de contenido inmediatamente después de la cabecera, con enlaces ancla a las secciones de primer y de segundo nivel. Los documentos breves quedan exceptuados.
 
 ---
 
@@ -437,3 +442,5 @@ Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/04-Prompts-AI/<estructura>.
 | 1.0 | 2026-05-17 | Reglas iniciales generadas durante bootstrap SDD. Categoría opcional con gating explícito por PROJECT-README. |
 | 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `Proyectos/<Nombre-Proyecto>/04-Prompts-AI/` (cuando `usa_llm` del proyecto es true); la ruta de salida del prompt-snippet referencia el proyecto en curso del manifiesto. Tablas §1.2 sin reescritura. |
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |
+| 1.3 | 2026-07-26 | Normalización del vocabulario de actores: «consumidor» pasa a «integrador» donde designa el rol que consume la librería. Se conserva el término donde designa el componente que consume la salida de un prompt o el caso de uso que lo invoca, usos técnicos en los que no refiere a un actor. |
+| 1.4 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |

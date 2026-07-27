@@ -2,7 +2,7 @@
 
 **Carpeta target (por proyecto visual):** `SDD/Maquetas/<Nombre-Proyecto>/` del repositorio destino
 **Subagente target del orquestador:** Maquetador de validación visual (AG-03M)
-**Versión de las reglas:** 1.0
+**Versión de las reglas:** 1.1
 
 ---
 
@@ -364,7 +364,7 @@ El documento nuevo se registra en `Index-Modelos-UX-UI.md` en la misma operació
 
 En la misma operación de §5, AG-03M genera `../IA.SDD/Templates/<Nombre-Modelo>/` con la estructura declarada en `../IA.SDD/Templates/README.md`.
 
-El template es un ejemplo ejecutable del modelo: reproduce las formas constructivas del HTML, del CSS y del JavaScript de la maqueta aprobada, para que un agente futuro no tenga que inferirlas de la prosa. Es al documento de reglas lo que un sample de `11-Examples` es a la referencia de API.
+El template es un ejemplo ejecutable del modelo: reproduce las formas constructivas del HTML, del CSS y del JavaScript de la maqueta aprobada, para que un agente futuro no tenga que inferirlas de la prosa. Es al documento de reglas lo que un sample de `10-Examples` es a la referencia de API.
 
 Regla de ofuscación, bloqueante:
 
@@ -511,3 +511,4 @@ Devolución:
 | Versión | Fecha | Cambios |
 | --- | --- | --- |
 | 1.0 | 2026-07-19 | Reglas iniciales de la Fase B2 de validación visual de maqueta. Define el subagente AG-03M y sus variantes por D8, el flag `requiere_maqueta`, los artefactos de maqueta en `SDD/Maquetas/<Nombre-Proyecto>/` y los tres documentos de 03 que la fase produce, la secuencia de siete pasos con sus detenciones, las dos vías de corrección (por prompt y manual con relectura e interpretación confirmada), la matriz de propagación de la retroalimentación, las reglas constructivas de la maqueta, la captura del modelo UX-UI en `Modelos-UX-UI/`, la generación del template ofuscado en `Templates/` con verificación bloqueante, el lanzado automático del paso 4 con degradación a URL informada, el método de relanzado con sus cuatro formas soportadas, la recarga automática propia de la barra de validación y la decisión de no incorporar un paso de build, criterios de aceptación, anti-patrones y prompt-snippet. |
+| 1.1 | 2026-07-26 | Intercambio de categorías 10 ↔ 11: la analogía de §3.7 entre el template y un sample pasa a referenciar `10-Examples`. |

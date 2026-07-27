@@ -1,7 +1,7 @@
 # Marco Teórico SDD
 
 **Documento:** Marco-Teorico-SDD-v1.0.md
-**Versión:** 1.6
+**Versión:** 1.8
 **Estado:** Aprobado
 **Fecha:** 2026-07-19
 **Autor:** Equipo Template SDD — UTN
@@ -96,7 +96,7 @@ El template se organiza en dos planos paralelos, repartidos en dos repositorios 
 ```text
 workspace/
 ├── IA.SDD/                          Repositorio fuente (solo lectura)
-│   ├── PROMPTs/                     Prompt de entrada del orquestador
+│   ├── PROMPTS/                     Prompt de entrada del orquestador
 │   └── SDD/
 │       ├── Devs/                    Plano metodológico (marco teórico, plantillas, reglas)
 │       │   ├── Guides/              Marco teórico (este documento)
@@ -127,8 +127,8 @@ workspace/
         │   │       ├── 07-Plan-Sprint/         AG-07  Scrum Master (planificación)
         │   │       ├── 08-Calidad-Y-Pruebas/          AG-08  QA / SDET
         │   │       ├── 09-Devops/              AG-09  DevOps Engineer
-        │   │       ├── 10-Developer-Guide/     AG-10  Technical Writer
-        │   │       └── 11-Examples/            AG-11  Developer Advocate
+        │   │       ├── 10-Examples/            AG-10  Developer Advocate
+        │   │       └── 11-Documentacion/       AG-11  Technical Writer
         │   └── README.md            AG-ROOT  Arquitecto de Soluciones
         └── README.md
 ```
@@ -301,7 +301,7 @@ El intake se organiza en tres partes:
 
 - Parte A — Negocio (§1 a §12): visión del producto, problema, usuarios, alcance, stakeholders, criterios de éxito y exclusiones. Es el insumo de negocio de AG-00 (Product Manager) y AG-01 (Analista de Negocio). Se carga una vez, porque el negocio es uno por solución (intake a nivel solución, ver §3.10.5).
 - Parte B — Composición (§13 a §16): la tabla de proyectos tipados (§13), el estilo de solución (§14), la descomposición (§15) y la estructura (§16). La tabla de proyectos tipados del §13 declara, para cada proyecto, su tipo D8, su rol y sus dependencias; es la fuente desde la que se deriva el SOLUTION-MANIFEST (ver §3.10.3). En una solución de un único proyecto, la tabla tiene una sola fila y la composición se comporta igual que en el modelo de tipo único.
-- Parte C — Técnica por proyecto (§17): un bloque repetible P.1 a P.12 por cada proyecto, con el stack tentativo, las decisiones D1–D8 que ese proyecto adopta y las secciones del SDD que aplican y las que no.
+- Parte C — Técnica por proyecto (§17): un bloque repetible P.1 a P.12 por cada proyecto, con el stack tentativo, las decisiones D1–D9 que ese proyecto adopta y las secciones del SDD que aplican y las que no.
 
 El documento se cierra con §18 (samples) y §19 (checklist de completitud).
 
@@ -317,7 +317,7 @@ En el modelo reformulado, el humano no copia el árbol del template dentro del r
 - Los prompts del orquestador y de los subagentes (`../IA.SDD/SDD/Devs/Orchestrator/`) y el prompt de entrada (`../IA.SDD/PROMPTS/`) viven en la fuente.
 - Este marco teórico (`../IA.SDD/SDD/Devs/Guides/Marco-Teorico-SDD-v1.0.md`) vive en la fuente.
 
-La separación es deliberada: las reglas, plantillas y prompts maestros quedan fuera del repositorio destino, de modo que las mejoras al template se propaguen a nuevas soluciones sin re-copiarlo; los artefactos generados del SDD quedan del lado del repositorio destino. El humano verifica que el intake está bien cargado (no hay placeholders sin completar) y que las decisiones D1–D8 están explícitas. El SOLUTION-MANIFEST no se completa en este paso: es un artefacto derivado que el orquestador construye en la Fase de validación de intake (ver §3.6) a partir del §13 del intake y escribe en `SDD/Intake/` del destino.
+La separación es deliberada: las reglas, plantillas y prompts maestros quedan fuera del repositorio destino, de modo que las mejoras al template se propaguen a nuevas soluciones sin re-copiarlo; los artefactos generados del SDD quedan del lado del repositorio destino. El humano verifica que el intake está bien cargado (no hay placeholders sin completar) y que las decisiones D1–D9 están explícitas. El SOLUTION-MANIFEST no se completa en este paso: es un artefacto derivado que el orquestador construye en la Fase de validación de intake (ver §3.6) a partir del §13 del intake y escribe en `SDD/Intake/` del destino.
 
 ## 3.6 Paso 5 — Ejecución del master-prompt
 
@@ -642,7 +642,7 @@ Las 13 especialidades siguen siendo válidas sin cambios en el modelo de soluci�
 ### AG-10 — Technical Writer
 
 **Alias.** Documentation Engineer.
-**Responsabilidad principal.** Documentación orientada al consumidor (desarrollador integrador o usuario final), tutorial, referencia, troubleshooting.
+**Responsabilidad principal.** Documentación orientada a quien interviene sobre el producto terminado (integrador, mantenedor u operador), tutorial, referencia, troubleshooting.
 **Documentos que produce.** Quick start, conceptos fundamentales, referencia de API, guías de integración, troubleshooting.
 **Variantes por tipo de proyecto.** En library el target es desarrollador integrador; en web/mobile incluye también usuario final.
 **Interacciones cross-rol.** Consume todo (necesita ver el panorama completo), alimenta a AG-11.
@@ -670,8 +670,8 @@ Las 13 especialidades siguen siendo válidas sin cambios en el modelo de soluci�
 | AG-07 | SM Sprints | `07-Plan-Sprint/` | Sprint plans | Siempre |
 | AG-08 | QA / SDET | `08-Calidad-Y-Pruebas/` | Estrategia testing, DoD | Siempre |
 | AG-09 | DevOps | `09-Devops/` | Pipeline, versionado | Siempre |
-| AG-10 | Technical Writer | `10-Developer-Guide/` | Guías de consumo | Siempre |
-| AG-11 | Developer Advocate | `11-Examples/` | Ejemplos ejecutables | Siempre |
+| AG-10 | Developer Advocate | `10-Examples/` | Ejemplos ejecutables y verificables | Siempre |
+| AG-11 | Technical Writer | `11-Documentacion/` | Cuerpo documental de entrega | Siempre |
 | AG-03M | Maquetador de validación visual | Sin categoría propia; escribe en `SDD/Maquetas/` y aporta a `03-UX-UI/` y `08-Calidad-Y-Pruebas/` | Maqueta navegable, línea de base visual | Solo si `requiere_maqueta` (Fase B2) |
 
 ## 4.4 Flujo de trazabilidad entre especialidades
@@ -1220,8 +1220,8 @@ El template SDD organiza los artefactos por modo Diátaxis:
 
 | Artefacto | Modo Diátaxis |
 |---|---|
-| `docs/10-Developer-Guide/quick-start.md` | Tutorial |
-| `docs/10-Developer-Guide/troubleshooting.md` | How-to |
+| `docs/11-Documentacion/quick-start.md` | Tutorial |
+| `docs/11-Documentacion/troubleshooting.md` | How-to |
 | `docs/05-Arquitectura-Tecnica/contratos-*.md` | Reference |
 | `docs/05-Arquitectura-Tecnica/ADR-XX-*.md` | Explanation |
 
@@ -1403,7 +1403,7 @@ No es un rol. No es un equipo. No es una herramienta. Es una disciplina que se e
 
 Suffixes opcionales: `-alpha.1`, `-beta.2`, `-rc.1` para pre-releases; `+build.123` para metadata de build.
 
-**Regla nuclear.** Un breaking change en API pública exige bump MAJOR. Si MAJOR está en 0, la API se considera inestable y cualquier cambio puede romper consumidores.
+**Regla nuclear.** Un breaking change en API pública exige bump MAJOR. Si MAJOR está en 0, la API se considera inestable y cualquier cambio puede romper a sus integradores.
 
 ## 10.5 Conventional Commits
 
@@ -1469,7 +1469,7 @@ A partir de 2022 (Log4Shell, SolarWinds) la cadena de suministro de software se 
 | **Preview** | Early adopters, testers | A cada merge a main | `1.2.3-preview.42` |
 | **Stable** | Producción | Manual / planificado | `1.2.3` |
 
-El feed preview permite que consumidores integren cambios temprano y reporten problemas antes del release estable.
+El feed preview permite que los integradores incorporen cambios temprano y reporten problemas antes del release estable.
 
 ## 10.10 Observabilidad — Logs, métricas, trazas
 
@@ -1546,9 +1546,9 @@ Todo prompt destinado a generar artefactos comienza con una lista explícita de 
 
 ```text
 Antes de escribir nada, leé en orden:
-1. devs/Intake/SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md
-2. devs/Rules/decisiones-D1-D8.md
-3. Devs/Guides/Marco-Teorico-SDD-v1.0.md (sección §4 si el rol que asumis es AG-XX)
+1. SDD/Intake/SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md (en el repositorio destino)
+2. SDD/Devs/Rules/Rules-<Categoria>.md (la regla de la categoría que vas a generar)
+3. SDD/Devs/Guides/Marco-Teorico-SDD-v1.0.md (sección §4 si el rol que asumis es AG-XX)
 
 Respondeme solo con:
 - Los puntos clave que entendiste del contexto
@@ -1954,6 +1954,8 @@ W3C. (2024). *ARIA — Accessible Rich Internet Applications*. https://www.w3.or
 | 1.4 | 2026-06-20 | Auditoría de reflexión de la configuración dirigida por esquema: §1.5 (eje por capacidad en `references/`), §2.5 (descriptor como contrato + frontera validable + simulación + propone/confirma/valida como encaje con IA), §4.2 (AG-03 carga la extensión; AG-05 el motor de la frontera; AG-04 el asistente como tool definitions), §7.5 (`PropuestaDeConfiguracion` como patrón transversal agnóstico de D8), §8.3 (divulgación progresiva ligada a Hick/Miller y ayuda contextual a la heurística 10), §11.1 (propone/confirma/valida como instancia de plan-then-confirm con human-in-the-loop), §12.3 (anti-patrones nuevos) y §13 (nueve términos de glosario). | Reformulación SDD (auditoría config-esquema) |
 | 1.5 | 2026-07-18 | Incorporación del arquetipo de panel de control monolítico: §8.7 suma las tres extensiones por capacidad nuevas (primer arranque, acceso de operador único, identidad de versión) y su lectura conjunta como perfil del arquetipo. Fila agregada a posteriori: el cambio de contenido se había incorporado sin subir versión ni registrar entrada, en incumplimiento de la política de versionado D5 del propio template. | Reformulación SDD (arquetipo de panel monolítico) |
 | 1.6 | 2026-07-19 | Fundamentación de la Fase B2 de validación visual de maqueta y del sensado de deriva: §8.8 (la maqueta como instrumento de diseño y de control, su doble validación de experiencia y de modelo de datos, y sus dos capitalizaciones hacia el proyecto y hacia el template) y §9.7 (la deriva como separación acumulativa, la insuficiencia de la trazabilidad D6 y de la auditoría estructural por ser verificaciones internas, la línea de base como referente externo falsable, la invariante D9 de evidencia verificable con su alcance acotado y su vigencia hacia adelante, y los umbrales como condición de sostenibilidad del instrumento). | Framework SDD (validación visual y sensado de deriva) |
+| 1.7 | 2026-07-26 | Intercambio de categorías 10 ↔ 11: el mapa visual de §1.5, el catálogo de especialidades de §4.2 y la tabla Diátaxis de §8.5 pasan a declarar `10-Examples/` con titular AG-10 Developer Advocate y `11-Documentacion/` con titular AG-11 Technical Writer. §4.2 reformula la responsabilidad de la categoría de documentación en términos de los tres roles de intervención sobre el producto terminado. Normalización del vocabulario de actores. Se corrige el nombre de la carpeta de prompts de entrada en el árbol de §1.5.  Reformulación SDD |
+| 1.8 | 2026-07-26 | Normalización de la nomenclatura de invariantes a D1–D9 en §3 y §11. Se corrige el bloque de ejemplo de §11.2, que citaba `devs/Rules/decisiones-D1-D8.md`, un archivo inexistente en el layout vigente, y rutas en minúsculas del modelo previo al repositorio de tres niveles. | Reformulación SDD |
 
 ---
 

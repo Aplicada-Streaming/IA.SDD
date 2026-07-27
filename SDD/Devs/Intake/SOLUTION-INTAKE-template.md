@@ -1,5 +1,9 @@
 # SOLUTION-INTAKE-template
 
+**Versión de la plantilla:** 1.3
+
+Este campo versiona la **plantilla**. El campo `| Versión |` de la cabecera de abajo pertenece al documento de intake que la plantilla genera, y arranca en 1.0 en cada solución nueva.
+
 Plantilla metodológica SDD para producir el documento `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md`: el único documento de intake de una solución. Reúne el negocio (lo que el cliente quiere), la composición (qué proyectos componen la solución y cómo dependen entre sí) y la técnica de construcción (decisiones por proyecto). El orquestador lo lee, valida su completitud en la fase de validación de intake, deriva de él el `SOLUTION-MANIFEST` canónico (con tu confirmación) y recién entonces despacha la generación.
 
 Reemplaza a las dos plantillas anteriores (`PROJECT-BRIEF-template.md` y `PROJECT-README-template.md`), que quedan deprecadas. El usuario completa un solo documento.
@@ -299,7 +303,7 @@ Instrucción: Describir a alto nivel cómo se componen los proyectos entre sí: 
 Preguntas guía:
 - (*) ¿Cómo se relacionan los proyectos y qué contrato expone cada uno a sus dependientes?
 - (*) ¿Por qué esta descomposición y no otra (un monolito, más microservicios)?
-- ¿Qué proyecto es el punto de entrada para el consumidor final? ¿Hay proyectos compartidos (dominio, validaciones)?
+- ¿Qué proyecto es el punto de entrada para el usuario final? ¿Hay proyectos compartidos (dominio, validaciones)?
 
 Lo que NO va en esta sección:
 - Detalle de capas internas de cada proyecto (va a §17 P.2 y a 05).
@@ -352,14 +356,14 @@ Instrucción: Describir cómo se materializan los samples según el tipo D8 de c
 
 | Tipo D8 | Qué hay en `/samples` |
 |---|---|
-| `library` | Consumidores progresivos vía package manager |
+| `library` | Apps integradoras progresivas vía package manager |
 | `rest-api` | Cliente HTTP de referencia, colección de pruebas, SDK |
 | `cli-tool` | Recetas de uso por OS |
 | `worker-service` | Productor de prueba + compose con broker |
 | (otros tipos) | Según la tabla de adaptabilidad del orquestador |
 
 Lo que NO va en esta sección:
-- Contenido detallado de los samples (va a `11-Examples/`).
+- Contenido detallado de los samples (va a `10-Examples/`).
 
 ---
 
@@ -443,7 +447,7 @@ Preguntas guía:
 - ¿Hay un sample que demuestre el punto de extensión principal?
 
 Lo que NO va en esta sección:
-- Tutoriales conceptuales (van a `10-Developer-Guide/`).
+- Tutoriales conceptuales (van a `11-Documentacion/`).
 
 ---
 
@@ -529,10 +533,10 @@ Este documento alimenta las siguientes secciones SDD. La parte de negocio (A) es
 | §1 a §12 (negocio) | `00-Contexto/`, `01-Necesidades-Negocio/` | visión, alcance, NB-XX |
 | §13 (proyectos) | `SOLUTION-MANIFEST` derivado; todas las categorías por proyecto | manifiesto canónico; selector de variantes D8 |
 | §14 estilo de solución | `05-Arquitectura-Tecnica/` (vista de solución) | `Arquitectura-Solucion-v1.0.md` |
-| §16 estructura | `05-Arquitectura-Tecnica/`, `10-Developer-Guide/` | árbol, README de carpeta |
+| §16 estructura | `05-Arquitectura-Tecnica/`, `11-Documentacion/` | árbol, README de carpeta |
 | §17 P.x (técnica por proyecto) | `05`, `08`, `09`, `00` (según P) por proyecto | ADRs, estrategia testing, pipeline, NFR |
-| §18 samples | `11-Examples/` | `Ejemplo-XX-v1.0.md` |
-| §20–§21 anexos de datos | `02-Especificacion-Funcional/`, `11-Examples/`, `SDD/Maquetas/` | modelo conceptual con ejemplos, fixtures de prueba, `Datos-Maqueta.js` |
+| §18 samples | `10-Examples/` | `Ejemplo-XX-v1.0.md` |
+| §20–§21 anexos de datos | `02-Especificacion-Funcional/`, `10-Examples/`, `SDD/Maquetas/` | modelo conceptual con ejemplos, fixtures de prueba, `Datos-Maqueta.js` |
 
 ---
 
@@ -542,3 +546,5 @@ Este documento alimenta las siguientes secciones SDD. La parte de negocio (A) es
 |---|---|---|---|
 | 1.0 | [YYYY-MM-DD] | Intake unificado inicial de la solución | [Autor] |
 | 1.1 | 2026-07-20 | Se agrega la Parte D — Anexos de datos (§20 escenarios con JSON completo, §21 cobertura), la regla de autocontención en la guía de uso (paso 5), los ítems de checklist de la Parte D y la fila de trazabilidad downstream. Objetivo: que el intake transcriba los ejemplos de instancia en lugar de referenciar archivos externos que el orquestador no puede resolver. | Orquestador SDD (Claude Code) |
+| 1.2 | 2026-07-26 | Intercambio de categorías 10 ↔ 11: los destinos declarados en §17 P.11, §18 y la tabla de mapeo intake → documentación pasan a `10-Examples/` para los samples y `11-Documentacion/` para el cuerpo documental de entrega. Normalización del vocabulario de actores. | Reformulación SDD |
+| 1.3 | 2026-07-26 | La plantilla declara su propia versión en cabecera, con la aclaración de que el campo `Versión` del cuerpo pertenece al documento generado y no a la plantilla. Corrige una aplicación incompleta de D6 sobre las plantillas.  Reformulación SDD |

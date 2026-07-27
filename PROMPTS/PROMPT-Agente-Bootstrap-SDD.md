@@ -4,7 +4,7 @@
 > - `Leer y Ejecutar /IA/IA.SDD/PROMPTS/PROMPT-Agente-Bootstrap-SDD.md en el repositorio: /<Repositorio-Destino>`
 
 **Archivo:** `PROMPT-Agente-Bootstrap-SDD.md`
-**Versión:** 2.1
+**Versión:** 2.2
 **Idioma:** Español rioplatense neutro técnico
 **Modo de ejecución:** Local en Claude Code. La invocación declara dos rutas: la del prompt de entrada (de la que se deriva la raíz del repositorio fuente `IA.SDD`) y la del repositorio destino de la solución. Su ubicación relativa en el workspace es indistinta.
 **Resultado esperado:** Documentación de especificación de la solución generada y auditada en `SDD/Docs/` del repositorio destino, lista para el handoff a codificación.
@@ -32,7 +32,7 @@ El trabajo ocurre sobre dos repositorios de un workspace común. Su posición re
 ```text
 workspace/
 ├── <RUTA-FUENTE>/          # repositorio fuente (solo lectura): este template
-│   ├── PROMPTs/            # este prompt de entrada
+│   ├── PROMPTS/            # este prompt de entrada
 │   └── SDD/
 │       ├── Devs/           # Rules, Intake (plantillas), Orchestrator, Guides, References, Bootstrap
 │       └── Guides/         # Guía de usuario
@@ -95,3 +95,4 @@ Toda la mecánica (despacho de subagentes, criterios de aceptación, manejo de a
 | --- | --- | --- | --- |
 | 2.0 | 2026-07-17 | Reescritura como prompt de entrada del modelo de dos repositorios. Reemplaza el contenido anterior (meta-prompt de bootstrap SDD 1.0 → 2.0, hoy histórico y conservado en `../IA.SDD/SDD/Devs/Bootstrap/`). Fija el modelo fuente/destino, los prerrequisitos verificables y la invocación que delega en `Master-Prompt.md`. | Refactorización SDD |
 | 2.1 | 2026-07-20 | La ubicación del repositorio fuente deja de asumirse hermana del destino: `<RUTA-FUENTE>` se deriva del path de la invocación y `<RUTA-DESTINO>` de «en el repositorio:». §1 introduce ambos placeholders y declara `../IA.SDD/` como alias de `<RUTA-FUENTE>/` (cubre las ocurrencias del master-prompt y las reglas sin editarlas); §2 prerrequisito 1 pasa de «clonado como hermano» a «accesible en `<RUTA-FUENTE>`», verificable; §3 invoca al orquestador con las rutas derivadas. Habilita workspaces donde fuente y destino no son hermanas (p. ej. `IA/IA.SDD` y `DEV/<solucion>`). | Refactorización SDD |
+| 2.2 | 2026-07-26 | Preservación de la autosuficiencia del repositorio: el árbol de §1 nombra la carpeta de prompts de entrada como `PROMPTS/`, que es su nombre real en el repositorio fuente. | Reformulación SDD |

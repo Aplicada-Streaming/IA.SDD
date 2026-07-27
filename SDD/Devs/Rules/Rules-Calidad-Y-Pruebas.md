@@ -2,7 +2,7 @@
 
 **Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/08-Calidad-Y-Pruebas/`
 **Subagente target del orquestador:** Ingeniero QA / SDET Senior (AG-08)
-**Versión de las reglas:** 1.3
+**Versión de las reglas:** 1.7
 
 ---
 
@@ -14,6 +14,9 @@ Esta categoría es **obligatoria para los ocho tipos D8**. Ningún proyecto est�
 
 La auditoría de Fase 0 (`Bootstrap/Audit-SDD1.md`) detectó dos déficits del fuente SDD 1.0 que SDD corrige aquí. Primero, los artefactos del fuente usan un sufijo de dominio (por ejemplo `estrategia-testing-<dominio>-v1.0.md`, `criterios-validacion-<dominio>-v1.0.md`, `estrategia-calidad-<dominio>-v1.0.md`) que ata el nombre al producto particular. SDD unifica todos los nombres con el sufijo `-v<X.Y>.md` sin marcador de dominio. Segundo, el material teórico de calidad estaba ausente en `/References/` y debía deducirse de los `docs/`; estas reglas formalizan el marco.
 
+**Dos clases de sonda en la matriz de sensado.** Esta categoría es dueña operativa de `Matriz-Sensado-Deriva-v<X.Y>.md`, cuya mecánica define `Deriva-Rules.md`. La matriz se puebla con dos clases de sonda de origen distinto: las **visuales**, que emite AG-03M al cerrar la Fase B2 y miden si lo construido se parece a lo que el humano aprobó mirando; y las de **contrato y comportamiento** (`VER-XX`), que aporta la categoría 10 desde sus contratos de verificación y miden si el sistema sigue haciendo lo que la especificación dice. Las segundas no dependen de la maqueta, así que un proyecto sin interfaz visual también tiene matriz.
+
+**Frontera con la categoría 11.** Esta categoría es dueña de la estrategia de testing, de los casos de prueba y de la matriz de sensado de deriva. La categoría 11 **cita** esa estrategia para explicarle al mantenedor cómo correr los tests y qué deberían devolver, en su `Guia-Contribucion`. **No la redefine.** Un procedimiento de testing que aparece descripto en 08 y en 11 con criterios distintos es un hallazgo: el de 08 es el que rige.
 ---
 
 ## 1. Especialidad asignada
@@ -33,7 +36,7 @@ Combina dos facetas que históricamente estaban separadas. La cara QA define qu�
 | web-microservices | QA + Contract Testing Specialist | Pact o equivalente para contract testing consumer-driven entre servicios. E2E reducidos a journeys críticos. Tests de integración por servicio con dependencias mockeadas en el contrato. |
 | desktop-app | QA + UI Testing Specialist | Automatización con framework adecuado al runtime de escritorio: Appium para multi-plataforma, FlaUI o equivalente para Windows. Snapshot testing de vistas relevantes. |
 | mobile-app-maui | QA + Mobile Testing Specialist | UI testing con el framework móvil correspondiente, incluyendo .NET MAUI UI Testing cuando el tipo lo amerita. Snapshot de pantallas críticas, pruebas de orientación y de ciclo de vida. |
-| rest-api | QA + API Testing Specialist | REST Assured o cliente HTTP equivalente, validación de OpenAPI contra implementación, Schemathesis o fuzz testing de endpoints, contract tests con consumidores. |
+| rest-api | QA + API Testing Specialist | REST Assured o cliente HTTP equivalente, validación de OpenAPI contra implementación, Schemathesis o fuzz testing de endpoints, contract tests con integradores. |
 | cli-tool | QA + CLI Testing | bats o framework equivalente, snapshot del output de stdout y stderr, validación de exit codes, tests por subcomando y por combinación de flags. |
 | worker-service | QA + Event Testing | Consumer tests por tipo de mensaje, validación de idempotencia, simulación de replay y de mensajes envenenados, tests de dead-letter y de orden cuando aplica. |
 
@@ -47,7 +50,7 @@ La categoría 08 colabora con varias especialidades durante la redacción y la r
 - AG-05 Arquitecto, para validar que cada NFR con objetivo numérico tiene un test que lo verifica (latencia, throughput, disponibilidad).
 - AG-06 Scrum Master, para que la Definition of Done quede referenciada desde el backlog y desde el DoR, sin redefinirse en cada sprint.
 - AG-09 DevOps, para que los quality gates declarados en 08 se materialicen como stages del pipeline en 09.
-- AG-10 Technical Writer, para que la guía de testing del repositorio en 10 cite y respete la estrategia definida acá.
+- AG-11 Technical Writer / Documentation Lead, para que la guía de testing del repositorio en 11 cite y respete la estrategia definida acá.
 
 El AG-08 mantiene titularidad de los artefactos. Las demás especialidades aportan revisión sectorial y consumen los criterios.
 
@@ -67,7 +70,7 @@ El AG-08 mantiene titularidad de los artefactos. Las demás especialidades aport
 | `criterios-validacion-v<X.Y>.md` | Todos los tipos D8 | — | — | Criterios numéricos que permiten declarar al sistema validado para release. |
 | `definition-of-done-v<X.Y>.md` | Todos los tipos D8 | — | — | DoD por capa (US, BT, sprint, release) con criterios verificables y excepciones admitidas. |
 | `guia-testing-extensibilidad-v<X.Y>.md` | library con plugins, web-microservices con plugins | cli-tool con plugins, rest-api con handlers externos | Tipos sin puntos de extensión | Cómo testear plugins, extensiones y handlers externos sin modificar el núcleo. |
-| `Matriz-Sensado-Deriva-v<X.Y>.md` | Proyectos con `requiere_maqueta` == true | — | Proyectos que no ejecutaron la Fase B2 | Lista de comprobaciones que contrasta lo construido contra la línea de base visual y el contrato de datos de la maqueta aprobada, con método de verificación, evidencia esperada y umbral de deriva por fila. La emite AG-03M al cerrar la Fase B2; AG-08 la incorpora a la estrategia de testing resolviendo qué filas se cubren con test automatizado y cuáles quedan como inspección. Ver `Deriva-Rules.md` §2.3 y §4. |
+| `Matriz-Sensado-Deriva-v<X.Y>.md` | Proyectos con `requiere_maqueta` == true, y proyectos con categoría 10 | — | Proyectos sin Fase B2 y sin categoría 10 | Lista de comprobaciones que contrasta lo construido contra sus líneas de base. Con Fase B2 se puebla con las sondas visuales (`SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX`, `DM-XX`); con categoría 10 se puebla además con las sondas de contrato y comportamiento (`VER-XX`) tomadas de los contratos de verificación de los samples. Cada fila lleva método de verificación, evidencia esperada y umbral de deriva. La mecánica vive en `Deriva-Rules.md`; esta categoría es su dueña operativa. |
 | `README.md` de la sección | Recomendado para todos | — | — | Índice navegable de los artefactos de calidad. |
 
 ### 2.2 Reglas de inclusión y exclusión por tipo
@@ -141,6 +144,10 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos uniforme:
 **Fecha:** YYYY-MM-DD
 **Autor:** {{equipo-o-rol}}
 ```
+
+**Tabla de contenido.** Todo documento generado que supere las tres secciones de primer nivel incluye una tabla de contenido inmediatamente después de la cabecera de metadatos, con enlaces ancla a cada sección de primer y de segundo nivel. La tabla de contenido no cuenta como sección de contenido ni altera la estructura obligatoria del documento: se ubica entre la cabecera y la primera sección, y las secciones obligatorias siguen siendo las que declara §4.2. Los documentos breves —fichas de una sola sección, entradas de índice— quedan exceptuados.
+
+El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente de IA que recorre la cadena de especificación acumulando contexto, y para ese lector la tabla de contenido es indiferente. Existe para el agente humano que entra a consultar un punto concreto sin haber leído el documento entero.
 
 ### 4.2 Estructura de `Estrategia-Calidad-v1.0.md`
 
@@ -299,10 +306,13 @@ Cobertura por capa:
 - [ ] Si el tipo D8 admite plugins, existe `Guia-Testing-Extensibilidad-v1.0.md`.
 - [ ] Ningún archivo lleva sufijo de dominio (`-motor` u otros marcadores temáticos); todos siguen el patrón `-v<X.Y>.md`.
 - [ ] Cada NFR con objetivo numérico tiene un test asociado en la matriz.
-- [ ] Si el proyecto ejecutó la Fase B2, existe `Matriz-Sensado-Deriva-v1.0.md` con una fila por elemento de la línea de base visual y del contrato de datos, cada una con método de verificación resuelto (test automatizado o inspección), evidencia esperada y umbral de deriva menor y mayor declarados.
+- [ ] Si el proyecto ejecutó la Fase B2, la matriz tiene una fila por elemento de la línea de base visual y del contrato de datos, cada una con método de verificación resuelto (test automatizado o inspección), evidencia esperada y umbral de deriva menor y mayor declarados.
+- [ ] Si el proyecto tiene categoría 10, la matriz tiene una fila `VER-XX` por cada contrato de verificación declarado en `10-Examples`, con el comando del contrato como método de verificación. **Un proyecto con categoría 10 emite matriz aunque no haya ejecutado la Fase B2**: un proyecto sin interfaz visual también tiene contratos que pueden derivar.
+- [ ] No existe `Matriz-Sensado-Deriva-v1.0.md` sin filas. Una matriz vacía es un proyecto sin instrumento de sensado, no un proyecto conforme.
 - [ ] Cada caso de prueba referencia explícitamente al menos un CU, RN o NFR.
 - [ ] La DoD no se redefine en sprint plans; los sprint plans referencian este documento.
 - [ ] La cobertura se reporta por capa, no como número global único.
+- [ ] Todo documento con más de tres secciones de primer nivel incluye tabla de contenido inmediatamente después de la cabecera, con enlaces ancla a las secciones de primer y de segundo nivel. Los documentos breves quedan exceptuados.
 
 ---
 
@@ -454,3 +464,7 @@ Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/08-Calidad-Y-Pruebas/<estructura>
 | 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `Proyectos/<Nombre-Proyecto>/08-Calidad-Y-Pruebas/`; la frase de cierre de §1.2 y la ruta de salida del prompt-snippet referencian el `project_type` del proyecto en curso (manifiesto). Tablas §1.2 sin reescritura. |
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |
 | 1.3 | 2026-07-19 | Incorporación de `Matriz-Sensado-Deriva-v<X.Y>.md` a la tabla maestra de §2.1, condicionada al flag `requiere_maqueta`, y del criterio de aceptación correspondiente en §6. La matriz la emite AG-03M al cerrar la Fase B2 y AG-08 la incorpora a la estrategia de testing resolviendo el método de verificación de cada fila. Su regla completa vive en `Deriva-Rules.md`. |
+| 1.4 | 2026-07-26 | Intercambio de categorías 10 ↔ 11: la colaboración multi-especialidad de §1.3 pasa a nombrar a AG-11 Technical Writer / Documentation Lead y a la categoría 11 como destino de la guía de testing del repositorio. Normalización del vocabulario de actores. |
+| 1.5 | 2026-07-26 | Se declara en §0 la frontera con la categoría 11: la estrategia de testing y la matriz de sensado son propiedad de esta categoría; la 11 las cita para el mantenedor y no las redefine. Sin cambios de artefactos ni de gating. |
+| 1.6 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |
+| 1.7 | 2026-07-26 | Corrección de coherencia con `Deriva-Rules.md` 1.1: la matriz de sensado dejaba de emitirse en proyectos sin Fase B2, contradiciendo la extensión del sensado a contratos y comportamiento. §0 declara las dos clases de sonda y su origen; §2.1 hace que la matriz también sea obligatoria para proyectos con categoría 10; §6 separa el criterio en dos, uno por clase de sonda, y agrega la prohibición de matriz vacía. |

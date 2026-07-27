@@ -2,7 +2,7 @@
 
 **Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/03-UX-UI-DX/` para la línea de base, `SDD/Docs/Proyectos/<Nombre-Proyecto>/08-Calidad-Y-Pruebas/` para la matriz de sensado
 **Subagente target del orquestador:** el subagente de la categoría que emite la afirmación; el auditor independiente para la verificación
-**Versión de las reglas:** 1.0
+**Versión de las reglas:** 1.1
 
 ---
 
@@ -63,6 +63,8 @@ D9 rige desde su incorporación hacia adelante. No se aplica retroactivamente a 
 
 La línea de base se emite al cierre de la Fase B2, con la maqueta aprobada. Son tres artefactos y cada uno tiene su sistema de identificadores, porque un elemento sin identificador no se puede rastrear.
 
+A esos tres se suma una cuarta fuente de sondas que no proviene de la maqueta: los contratos de verificación de la categoría 10, descriptos en §2.4. La distinción importa porque cubren dimensiones distintas. Las sondas de maqueta miden si el sistema construido se parece a lo que el humano aprobó mirando; las sondas de verificación miden si el sistema construido sigue haciendo lo que la especificación dice que hace. Un proyecto sin interfaz visual no tiene línea de base de maqueta y aun así tiene deriva que sensar.
+
 ### 2.1 `Linea-Base-Visual-v1.0.md`
 
 Ubicación: `SDD/Docs/Proyectos/<Nombre-Proyecto>/03-UX-UI-DX/`.
@@ -103,9 +105,9 @@ La matriz es el instrumento operativo: convierte la línea de base en una lista 
 | Columna | Contenido |
 | --- | --- |
 | ID | `SD-XX` |
-| Elemento de línea de base | El identificador que se verifica: `SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX` o `DM-XX` |
+| Elemento de línea de base | El identificador que se verifica: `SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX`, `DM-XX` o `VER-XX` |
 | Afirmación a verificar | Qué tendría que ser cierto en el sistema construido |
-| Método de verificación | Cómo se comprueba: inspección visual contra la maqueta, test automatizado de 08, inspección del esquema de datos, revisión de una ruta |
+| Método de verificación | Cómo se comprueba: inspección visual contra la maqueta, test automatizado de 08, inspección del esquema de datos, revisión de una ruta, o el comando declarado en el contrato de verificación cuando la sonda es `VER-XX` |
 | Evidencia esperada | Qué artefacto o ejecución produce la evidencia, en el formato de §1 |
 | Umbral de deriva | Qué diferencia se considera aceptable y cuál no |
 | Estado | `Sin verificar`, `Conforme`, `Deriva menor`, `Deriva mayor` |
@@ -113,6 +115,24 @@ La matriz es el instrumento operativo: convierte la línea de base en una lista 
 
 La matriz vive en 08 y no en 03 porque es un instrumento de verificación, y 08 es la categoría dueña de la verificación. La emite AG-03M al cerrar la Fase B2, y AG-08 la incorpora a la estrategia de testing del proyecto cuando genera la Fase E.
 
+Cuando el proyecto no ejecuta Fase B2 pero sí tiene categoría 10, la matriz se emite igual: la abre AG-08 en la Fase E, poblada solo con sondas `VER-XX` tomadas de los contratos de verificación. Una matriz sin filas es un proyecto sin instrumento de sensado, y eso hay que evitarlo, no documentarlo.
+
+
+### 2.4 Contratos de verificación de la categoría 10 (`VER-XX`)
+
+Ubicación: dentro de cada `ejemplo-XX-<Progresion>-v<X.Y>.md` de `SDD/Docs/Proyectos/<Nombre-Proyecto>/10-Examples/`, en su sección 9. Los define `Rules-Examples.md` §4.6; esta regla solo declara cómo entran al sensado.
+
+| Prefijo | Elemento | Qué registra cada sonda |
+| --- | --- | --- |
+| `VER-XX` | Contrato de verificación de un sample | Los `CU-XX` y `US-XX` que ejercita, el comando exacto, las precondiciones, el criterio de aceptación como aserción evaluable y la evidencia de la última corrida con su fecha |
+
+Estas sondas extienden el alcance de la matriz de superficies visuales a **contratos y comportamiento**. Tres consecuencias que hay que tener presentes:
+
+- **No requieren maqueta.** Un proyecto con `requiere_maqueta` en `false` no emite `Linea-Base-Visual` ni `Contrato-Datos-Maqueta`, pero sí emite `Matriz-Sensado-Deriva` si tiene categoría 10, poblada exclusivamente con sondas `VER-XX`. Antes de esta extensión, esos proyectos quedaban sin ningún instrumento de sensado.
+- **Su método de verificación es siempre automatizable.** A diferencia de una sonda `SUP-XX`, que suele resolverse por inspección visual, una `VER-XX` trae su propio comando y su propia aserción. La columna «Método de verificación» de la matriz se completa con el comando del contrato.
+- **Su evidencia ya existe.** El campo `evidencia` del contrato es la evidencia que D9 exige. No hay que producirla aparte: la matriz la cita por identificador.
+
+Un contrato en estado `No verificado — sin código` entra a la matriz con estado `Sin verificar`, igual que cualquier otra sonda antes de la primera corrida.
 ---
 
 ## 3. Umbrales de deriva
@@ -127,6 +147,7 @@ No toda diferencia entre la maqueta y el sistema construido es un problema. La m
 | Navegación | Cambia el disparador visual de una ruta | Falta una ruta, aparece un callejón sin salida, se pierde lo que debía preservarse al volver |
 | Modelo de datos | Cambia el orden de los campos en la presentación | Falta un campo, cambia el tipo, cambia la obligatoriedad, cambia el formato de presentación acordado |
 | Accesibilidad | Cambia el orden de foco dentro de un grupo | Se pierde el recorrido por teclado, se pierde el foco visible, cae el contraste bajo el piso |
+| Contratos y comportamiento (`VER-XX`) | Cambia el texto de un mensaje de salida sin cambiar su semántica, cambia el formato de un log | El `criterio_aceptacion` falla, cambia el comando de ejecución sin actualizar el contrato, aparecen precondiciones no declaradas, o el CU que la sonda ejercita dejó de estar cubierto |
 
 Toda deriva mayor detectada se resuelve por una de dos vías, nunca por omisión:
 
@@ -139,16 +160,19 @@ La vía 2 es legítima y frecuente. Lo que no es legítimo es que la línea de b
 
 ## 4. Puntos de sensado
 
-El sensado no es un evento único al final. Son cuatro momentos, cada uno con su alcance:
+El sensado no es un evento único al final. Son cinco momentos, cada uno con su alcance:
 
 | Momento | Quién lo corre | Alcance | Salida |
 | --- | --- | --- | --- |
-| Al cerrar la Fase B2 | AG-03M | Emisión de la línea de base y de la matriz con todo en `Sin verificar` | Los tres artefactos del §2 |
-| Al cerrar la Fase E (08) | AG-08 | Incorporación de la matriz a la estrategia de testing: qué filas se cubren con test automatizado y cuáles quedan como inspección | Matriz con método de verificación resuelto por fila |
-| Al cerrar cada sprint de codificación | El humano, asistido por el orquestador | Verificación de las filas cuyos elementos toca el sprint | Matriz con estado y fecha actualizados, derivas mayores escaladas |
+| Al cerrar la Fase B2 | AG-03M | Emisión de la línea de base y de la matriz con todo en `Sin verificar` | Los artefactos de §2.1 a §2.3 |
+| Al cerrar la fase que genera la categoría 10 | AG-10 | Alta de una sonda `VER-XX` por cada contrato de verificación declarado en la pasada de diseño, todas en `Sin verificar` | Matriz con las filas de contratos incorporadas |
+| Al cerrar la Fase E (08) | AG-08 | Incorporación de la matriz a la estrategia de testing: qué filas se cubren con test automatizado y cuáles quedan como inspección. Las filas `VER-XX` ya traen su comando, así que se resuelven como automatizadas salvo justificación | Matriz con método de verificación resuelto por fila |
+| Al cerrar cada sprint de codificación | El humano, asistido por el orquestador | Verificación de las filas cuyos elementos toca el sprint. En las `VER-XX` esto significa correr el comando del contrato y volcar la salida real al campo `evidencia` del sample | Matriz con estado y fecha actualizados, derivas mayores escaladas |
 | Ante una regeneración parcial | El orquestador | Revalidación de las filas que dependen de lo regenerado | Filas afectadas devueltas a `Sin verificar` |
 
-El tercer momento es el que da valor a todo lo anterior y es el único que ocurre fuera del alcance de SDD, que termina en el handoff a codificación. Por eso el resumen ejecutivo del handoff (§12 del master-prompt) entrega la matriz explícitamente: es el instrumento que el equipo se lleva al ciclo de desarrollo.
+El cuarto momento es el que da valor a todo lo anterior. Ocurre durante la codificación, y es el punto donde las dos clases de sonda se comportan distinto: una `SUP-XX` exige que alguien mire y compare, mientras que una `VER-XX` se corre sola y devuelve un veredicto. Esa asimetría es deliberada, y es la razón por la que conviene que todo proyecto tenga sondas de comportamiento aunque no tenga superficie visual.
+
+Por eso el resumen ejecutivo del handoff (§12 del master-prompt) entrega la matriz explícitamente: es el instrumento que el equipo se lleva al ciclo de desarrollo.
 
 ---
 
@@ -170,7 +194,7 @@ Reglas de uso:
 
 ## 6. Criterios de aceptación
 
-- [ ] Existen `Linea-Base-Visual-v1.0.md` y `Contrato-Datos-Maqueta-v1.0.md` en 03 del proyecto, con los identificadores `SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX` y `DM-XX` de dos dígitos uniformes.
+- [ ] En proyectos con Fase B2: existen `Linea-Base-Visual-v1.0.md` y `Contrato-Datos-Maqueta-v1.0.md` en 03 del proyecto, con los identificadores `SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX` y `DM-XX` de dos dígitos uniformes.
 - [ ] Toda superficie de la maqueta aprobada tiene su `SUP-XX`, y toda superficie con `SUP-XX` existe en la maqueta.
 - [ ] Todo campo que la maqueta exhibe tiene su `DM-XX` con su correspondencia al modelo conceptual de 02.
 - [ ] Los campos del modelo conceptual que ninguna superficie exhibe están declarados con su motivo.
@@ -179,6 +203,10 @@ Reglas de uso:
 - [ ] Toda afirmación sobre el estado del sistema en los artefactos de la fase cita evidencia en el formato del §1.
 - [ ] Ninguna evidencia citada apunta a una ruta, identificador o comando que no resuelve.
 - [ ] El resumen ejecutivo del handoff incluye la matriz de sensado con el estado de cada fila.
+- [ ] En proyectos con categoría 10: la matriz tiene una fila `VER-XX` por cada contrato de verificación declarado en `10-Examples`, sin contratos huérfanos ni filas sin contrato que las respalde.
+- [ ] Ningún proyecto con categoría 10 queda sin `Matriz-Sensado-Deriva-v1.0.md`, aunque no haya ejecutado Fase B2.
+- [ ] El método de verificación de cada fila `VER-XX` es el comando declarado en su contrato, o su desvío está justificado en la propia fila.
+- [ ] La evidencia de cada fila `VER-XX` cita el campo `evidencia` del sample por identificador, con su fecha, y no se transcribe duplicada en la matriz.
 
 ---
 
@@ -197,6 +225,10 @@ Reglas de uso:
 | Reauditar retroactivamente toda la documentación previa contra D9 | Volumen de hallazgos que ahoga a los reales | D9 rige hacia adelante desde su incorporación |
 | Tratar la maqueta como contrato pixel a pixel | Bloqueo permanente por diferencias irrelevantes | Umbrales de deriva menor y mayor |
 | Emitir línea de base sin Fase B2 | No hay nada que el humano haya mirado y aprobado; la línea de base es una afirmación más | La línea de base se emite solo desde una maqueta aprobada explícitamente |
+| Dejar sin matriz a un proyecto sin interfaz visual | Se lo deja sin instrumento de sensado por no tener maqueta, cuando sí tiene contratos que pueden derivar | Si hay categoría 10, la matriz se emite con sondas `VER-XX` aunque no haya Fase B2 |
+| Sonda `VER-XX` con método de verificación manual | Desaprovecha lo único que la distingue: que trae su comando y su aserción | El método es el comando del contrato, salvo justificación escrita en la fila |
+| Transcribir la evidencia del contrato dentro de la matriz | Dos copias de la misma salida que divergen en la corrida siguiente | La matriz cita el `VER-XX` y su fecha; la salida vive en el sample |
+| Confundir deriva de superficie con deriva de comportamiento | Se aplica el umbral equivocado y se escala mal | `SUP-XX` a `DM-XX` miden parecido con lo aprobado; `VER-XX` mide si el sistema sigue haciendo lo especificado |
 
 ---
 
@@ -240,3 +272,4 @@ Devolución:
 | Versión | Fecha | Cambios |
 | --- | --- | --- |
 | 1.0 | 2026-07-19 | Reglas iniciales del sensado de deriva. Define la regla de evidencia verificable D9 con su alcance acotado a las afirmaciones sobre el estado del sistema, las cuatro condiciones de una evidencia y su formato de cita `EV-XX`; los tres artefactos de línea de base (`Linea-Base-Visual`, `Contrato-Datos-Maqueta`, `Matriz-Sensado-Deriva`) con sus sistemas de identificadores; los umbrales de deriva menor y mayor por dimensión; los cuatro puntos de sensado; el uso de la línea de base como guía tutora para el humano y para el agente; criterios de aceptación, anti-patrones y prompt-snippet. |
+| 1.1 | 2026-07-26 | Extensión del sensado de deriva a contratos y comportamiento (S2). Nuevo §2.4 con las sondas `VER-XX` aportadas por los contratos de verificación de la categoría 10, que no dependen de la maqueta y traen su propio comando y su propia evidencia. §2.3 admite `VER-XX` en la columna de elemento de línea de base y en la de método de verificación, y declara que un proyecto con categoría 10 emite matriz aunque no ejecute Fase B2. §3 suma la dimensión de contratos y comportamiento con sus dos umbrales. §4 pasa de cuatro a cinco puntos de sensado, con el alta de sondas al cerrar la fase que genera la categoría 10. §6 suma cuatro criterios de aceptación. |

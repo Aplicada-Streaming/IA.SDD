@@ -2,7 +2,7 @@
 
 **Carpeta target:** `SDD/Docs/01-Necesidades-Negocio/`
 **Subagente target del orquestador:** Analista de Negocio Senior (AG-01)
-**Versión de las reglas:** 1.2
+**Versión de las reglas:** 1.4
 
 ---
 
@@ -16,12 +16,12 @@ Analista de Negocio Senior, equivalente al AG-01 del catálogo de especialidades
 
 | Tipo de proyecto (D8) | Especialidad específica | Justificación |
 | --- | --- | --- |
-| library | Analista de Negocio + Curador de API | El consumidor de una librería es un desarrollador; las NB deben articular dolores de integración, ergonomía de la API y compatibilidad. |
+| library | Analista de Negocio + Curador de API | El integrador de una librería es un desarrollador; las NB deben articular dolores de integración, ergonomía de la API y compatibilidad. |
 | web-monolith | Analista de Negocio Senior | Estructura clásica de levantamiento de necesidades organizacionales sobre un sistema único. |
 | web-microservices | Analista de Negocio + Domain Modeler (DDD) | Cada NB debe poder asociarse a un bounded context candidato para evitar mezclar dominios. |
 | desktop-app | Analista de Negocio + UX Researcher | Las NB de aplicaciones de escritorio dependen fuertemente del trabajo del usuario final con la interfaz. |
 | mobile-app-maui | Analista de Negocio + Mobile Product Analyst | Las NB incorporan supuestos de movilidad, conectividad intermitente y permisos del dispositivo. |
-| rest-api | Analista de Negocio + API Product Analyst | El consumidor primario es un sistema cliente; las NB deben hablar en términos de capacidades expuestas y contratos. |
+| rest-api | Analista de Negocio + API Product Analyst | El integrador primario es un sistema cliente; las NB deben hablar en términos de capacidades expuestas y contratos. |
 | cli-tool | Analista de Negocio + Developer Experience Analyst | Las NB se redactan desde la mirada del desarrollador que invoca la herramienta en su pipeline. |
 | worker-service | Analista de Negocio + Operations Analyst | Las NB se centran en throughput, latencia funcional y resiliencia operativa del proceso de fondo. |
 
@@ -47,7 +47,7 @@ El AG-01 se combina sistemáticamente con dos roles aledaños. Con AG-00 (Produc
 
 La categoría 01 es obligatoria para los 8 tipos D8: ningún proyecto avanza al diseño funcional sin tener al menos 3 NB documentadas. Lo que varía es el foco temático:
 
-- `library`: las NB se redactan desde la mirada del desarrollador consumidor (consumibilidad, estabilidad de API, ergonomía).
+- `library`: las NB se redactan desde la mirada del desarrollador integrador (consumibilidad, estabilidad de API, ergonomía).
 - `web-monolith`: NB centradas en el flujo organizacional y la operación cotidiana del usuario final.
 - `web-microservices`: cada NB se asocia a un bounded context candidato; evitar NB transversales sin dueño.
 - `desktop-app`: NB con fuerte componente de experiencia de uso y compatibilidad con sistemas operativos del usuario.
@@ -133,6 +133,10 @@ Cada archivo `NB-XX-<Nombre>-v1.0.md` arranca con el siguiente bloque, completan
 ```
 
 El bloque equivalente para el índice `Necesidades-Negocio-v1.0.md` agrega los campos `Cantidad de NB` y `Versión del catálogo de NB`.
+
+**Tabla de contenido.** Todo documento generado que supere las tres secciones de primer nivel incluye una tabla de contenido inmediatamente después de la cabecera de metadatos, con enlaces ancla a cada sección de primer y de segundo nivel. La tabla de contenido no cuenta como sección de contenido ni altera la estructura obligatoria del documento: se ubica entre la cabecera y la primera sección, y las secciones obligatorias siguen siendo las que declara §4.2. Los documentos breves —fichas de una sola sección, entradas de índice— quedan exceptuados.
+
+El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente de IA que recorre la cadena de especificación acumulando contexto, y para ese lector la tabla de contenido es indiferente. Existe para el agente humano que entra a consultar un punto concreto sin haber leído el documento entero.
 
 ### 4.2 Secciones obligatorias del archivo `NB-XX-<Nombre>-v1.0.md`
 
@@ -258,6 +262,7 @@ Tabla D (solo para el índice maestro): Resumen de NB.
 - [ ] Si el proyecto tiene más de 5 NB, existe el `README.md` de la sección con la tabla de §3.4 completa.
 - [ ] El estado declarado en la cabecera de cada NB pertenece al enum cerrado: Borrador, Propuesto, Aprobado, Vigente, Superado o Archivado.
 - [ ] No aparecen emojis, negritas decorativas, ni términos del dominio prohibido por D7.
+- [ ] Todo documento con más de tres secciones de primer nivel incluye tabla de contenido inmediatamente después de la cabecera, con enlaces ancla a las secciones de primer y de segundo nivel. Los documentos breves quedan exceptuados.
 
 ---
 
@@ -325,7 +330,7 @@ en SOLUTION-INTAKE §1 y no hay MVP defendible.
 
 ## 1. Descripción de la necesidad
 
-Los equipos consumidores necesitan extender el parser con tipos de columna
+Los equipos integradores necesitan extender el parser con tipos de columna
 personalizados sin modificar el código fuente de la librería ni recompilarla,
 porque cada pipeline de ingesta tiene reglas de tipado propias.
 
@@ -344,7 +349,7 @@ Must Have. La promesa de valor de la librería es justamente extensibilidad
 sin recompilación; sin esta NB la librería pierde su diferenciador.
 ```
 
-Ambos ejemplos respetan filename en Título-Con-Guiones, separador de versión con guion medio, criterios SMART con cifras y prioridad MoSCoW explícita. La estructura es la misma para los demás tipos D8; cambia el dominio del problema y la audiencia, no el esqueleto.
+Ambos ejemplos respetan filename en Título-Con-Guiones, separador de versión con guion medio, criterios SMART con cifras y prioridad MoSCoW explícita. La estructura es la misma para los demás tipos D8; cambia el dominio del problema y el público, no el esqueleto.
 
 ---
 
@@ -366,7 +371,7 @@ Reglas de redacción: §4 de Rules-Necesidades-Negocio.md.
 Nomenclatura: respetar el patrón NB-XX-<Nombre>-v1.0.md.
 Trazabilidad esperada: cada NB declara las CU previstas en 02-Especificacion-Funcional con estado a generar / en redacción / aprobada.
 Criterios de calidad: §6 de Rules-Necesidades-Negocio.md (14 ítems verificables).
-Restricciones: respetar D1 a D8; no incluir emojis, negritas decorativas, ni términos del dominio prohibido por D7.
+Restricciones: respetar D1 a D9; no incluir emojis, negritas decorativas, ni términos del dominio prohibido por D7.
 
 Salida: SDD/Docs/01-Necesidades-Negocio/<archivos>.
 ```
@@ -380,3 +385,5 @@ Salida: SDD/Docs/01-Necesidades-Negocio/<archivos>.
 | 1.0 | 2026-05-17 | Reglas iniciales generadas durante bootstrap SDD |
 | 1.1 | 2026-06-09 | Validación ST-06: la categoría 01 se genera a nivel solución; la frase de cierre de §1.2 usa la variante del proyecto principal del manifiesto. Tablas §1.2 sin reescritura. |
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |
+| 1.3 | 2026-07-26 | Normalización del vocabulario de actores: «consumidor» pasa a «integrador» donde designa un rol de intervención. Se conserva «implementador» donde designa la categoría de stakeholder del modelo RACI del intake. |
+| 1.4 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |

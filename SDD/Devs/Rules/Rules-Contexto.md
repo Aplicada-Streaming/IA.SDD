@@ -2,7 +2,7 @@
 
 **Carpeta target:** `SDD/Docs/00-Contexto/`
 **Subagente target del orquestador:** Product Manager Senior (AG-00) en conjunción con Analista de Negocio Senior (AG-01) si el proyecto tiene stakeholders múltiples.
-**Versión de las reglas:** 1.3
+**Versión de las reglas:** 1.5
 
 ---
 
@@ -16,12 +16,12 @@ Product Manager Senior, equivalente a AG-00 del catálogo de especialidades. Def
 
 | Tipo (D8) | Especialidad específica | Justificación |
 | --- | --- | --- |
-| library | Product Manager + Curador de Librería | El foco está en la API surface, los casos de uso del consumidor y la estabilidad de contratos. El roadmap se piensa por versiones de API, no por features de usuario final. |
+| library | Product Manager + Curador de Librería | El foco está en la API surface, los casos de uso del integrador y la estabilidad de contratos. El roadmap se piensa por versiones de API, no por features de usuario final. |
 | web-monolith | Product Manager Senior | Es el caso canónico. Stakeholders mixtos negocio/técnicos, roadmap por épicas, visión orientada a producto SaaS o aplicación interna. |
 | web-microservices | Product Manager + Domain Modeler (DDD) | Requiere recortar el dominio en bounded contexts desde la visión para que cada microservicio tenga propietario funcional claro. |
 | desktop-app | Product Manager + UX Lead | Las decisiones de visión se cruzan fuerte con la experiencia: instalación, actualización, modo offline, integraciones con el SO. |
 | mobile-app-maui | Product Manager + Mobile UX Lead | La compatibilidad de plataformas y el ciclo de release en stores condicionan el roadmap. El UX móvil define qué es viable. |
-| rest-api | Product Manager + API Product Owner | Los consumidores son desarrolladores. La visión se expresa por capabilities de la API, contratos versionados y métricas de adopción. |
+| rest-api | Product Manager + API Product Owner | Los integradores son desarrolladores. La visión se expresa por capabilities de la API, contratos versionados y métricas de adopción. |
 | cli-tool | Product Manager + Developer Advocate | La audiencia es técnica. La visión enfatiza ergonomía de uso, scripting y documentación ejecutable; el roadmap suele ser ligero. |
 | worker-service | Product Manager + Operations Lead | La visión se mide por SLA operativos, throughput y resiliencia. El alcance se define por colas y eventos procesados, no por pantallas. |
 
@@ -110,6 +110,10 @@ Todos los documentos de la categoría 00 arrancan con un bloque markdown estánd
 **Trazabilidad downstream:** 01-Necesidades-Negocio, 02-Especificacion-Funcional, 05-Arquitectura-Tecnica, ...
 ```
 
+**Tabla de contenido.** Todo documento generado que supere las tres secciones de primer nivel incluye una tabla de contenido inmediatamente después de la cabecera de metadatos, con enlaces ancla a cada sección de primer y de segundo nivel. La tabla de contenido no cuenta como sección de contenido ni altera la estructura obligatoria del documento: se ubica entre la cabecera y la primera sección, y las secciones obligatorias siguen siendo las que declara §4.2. Los documentos breves —fichas de una sola sección, entradas de índice— quedan exceptuados.
+
+El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente de IA que recorre la cadena de especificación acumulando contexto, y para ese lector la tabla de contenido es indiferente. Existe para el agente humano que entra a consultar un punto concreto sin haber leído el documento entero.
+
 ### 4.2 Secciones obligatorias
 
 #### Vision-Producto-v1.0.md
@@ -170,7 +174,7 @@ Todos los documentos de la categoría 00 arrancan con un bloque markdown estánd
 
 - Sección "NFR de compatibilidad" se agrega en `alcance-proyecto` solo si el tipo es `mobile-app-maui`, `desktop-app` o `cli-tool`.
 - Sección "Modelo de licenciamiento" se agrega en `vision-producto` solo si el tipo es `library` o si el proyecto es comercial.
-- Sección "Modelo operativo y SLA" se agrega en `vision-producto` solo si el tipo es `worker-service` o `rest-api` con consumidores externos.
+- Sección "Modelo operativo y SLA" se agrega en `vision-producto` solo si el tipo es `worker-service` o `rest-api` con integradores externos.
 - Sección "Estrategia de internacionalización" se agrega en `alcance-proyecto` solo si el BRIEF §2 declara audiencia en más de una región lingüística.
 
 ### 4.4 Tablas tipo y formatos recurrentes
@@ -252,6 +256,7 @@ Todos los documentos de la categoría 00 arrancan con un bloque markdown estánd
 - [ ] Cada documento de la carpeta declara su trazabilidad upstream (SOLUTION-INTAKE con secciones específicas) y downstream (categorías 01, 02, 05, 07, 11 con detalle).
 - [ ] El nombre de cada archivo respeta el patrón `<Nombre>-v1.0.md` con guion medio antes de la versión.
 - [ ] Ningún documento contiene emojis, negritas decorativas ni referencias hardcoded a stack, frameworks o ejemplos del dominio fuente del bootstrap.
+- [ ] Todo documento con más de tres secciones de primer nivel incluye tabla de contenido inmediatamente después de la cabecera, con enlaces ancla a las secciones de primer y de segundo nivel. Los documentos breves quedan exceptuados.
 
 ---
 
@@ -303,18 +308,18 @@ Fragmento representativo de `Alcance-Proyecto-v1.0.md` para una librería utilit
 **Fecha:** 2026-04-12
 **Autor:** Product Manager + Curador de Librería
 **Trazabilidad upstream:** SOLUTION-INTAKE §4, §9
-**Trazabilidad downstream:** 02-Especificacion-Funcional, 11-Examples
+**Trazabilidad downstream:** 02-Especificacion-Funcional, 10-Examples
 
 ## 4. Alcance incluido
 
 ### 4.1 API surface
 
 - Lectura de archivos CSV con delimitador configurable.
-- Mapeo a tipos del consumidor mediante reflexión y atributos.
+- Mapeo a tipos del integrador mediante reflexión y atributos.
 - Reporte de filas con error sin abortar la lectura.
 - Escritura inversa desde colección a CSV.
 
-### 4.2 Casos de uso del consumidor
+### 4.2 Casos de uso del integrador
 
 - Importación masiva en backoffice.
 - Procesamiento batch en pipelines de datos.
@@ -324,9 +329,9 @@ Fragmento representativo de `Alcance-Proyecto-v1.0.md` para una librería utilit
 
 | Funcionalidad excluida | Justificación | Versión futura |
 | --- | --- | --- |
-| Lectura desde URL remota | Acopla la librería a HTTP; se delega al consumidor | Backlog v1.5 |
-| Detección automática de encoding | Costo alto vs valor; la mayoría de consumidores conoce su encoding | v2.0 |
-| Streaming reactivo (IObservable) | Audiencia objetivo no lo pidió; agrega dependencias | No planificado |
+| Lectura desde URL remota | Acopla la librería a HTTP; se delega al integrador | Backlog v1.5 |
+| Detección automática de encoding | Costo alto vs valor; la mayoría de integradores conoce su encoding | v2.0 |
+| Streaming reactivo (IObservable) | Los integradores objetivo no lo pidieron; agrega dependencias | No planificado |
 ```
 
 ---
@@ -366,3 +371,5 @@ Salida: SDD/Docs/00-Contexto/<archivos>-v1.0.md.
 | 1.1 | 2026-06-08 | Higiene D7 (hallazgo H-02 de la matriz de coherencia ST-01): el criterio de aceptación de §6 deja de nombrar el dominio fuente ("Motor DSL") y pasa a referirse a "ejemplos del dominio fuente del bootstrap". |
 | 1.2 | 2026-06-09 | Validación ST-06: aclaración de que la categoría 00 se genera a nivel solución desde el PROJECT-BRIEF único y usa la variante §1.2 del proyecto principal del manifiesto. |
 | 1.3 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |
+| 1.4 | 2026-07-26 | Normalización del vocabulario de actores: «consumidor» pasa a «integrador» donde designa un rol de intervención. La trazabilidad downstream de §7 apunta a `10-Examples` tras el intercambio de categorías 10 ↔ 11. Se conserva «implementador» donde designa la categoría de stakeholder del intake (propietario / implementador / beneficiario) y «audiencia» donde designa el público del producto. |
+| 1.5 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |

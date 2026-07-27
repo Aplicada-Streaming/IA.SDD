@@ -2,7 +2,7 @@
 
 **Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/07-Plan-Sprint/`
 **Subagente target del orquestador:** Scrum Master / Gestión Ágil de Proyectos senior (AG-07)
-**Versión de las reglas:** 1.2
+**Versión de las reglas:** 1.4
 
 ---
 
@@ -135,15 +135,19 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos. Queda prohibi
 
 Las plantillas reusables y el archivo de velocidad adaptan el título y el estado pero mantienen la misma estructura de cabecera.
 
+**Tabla de contenido.** Todo documento generado que supere las tres secciones de primer nivel incluye una tabla de contenido inmediatamente después de la cabecera de metadatos, con enlaces ancla a cada sección de primer y de segundo nivel. La tabla de contenido no cuenta como sección de contenido ni altera la estructura obligatoria del documento: se ubica entre la cabecera y la primera sección, y las secciones obligatorias siguen siendo las que declara §4.2. Los documentos breves —fichas de una sola sección, entradas de índice— quedan exceptuados.
+
+El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente de IA que recorre la cadena de especificación acumulando contexto, y para ese lector la tabla de contenido es indiferente. Existe para el agente humano que entra a consultar un punto concreto sin haber leído el documento entero.
+
 ### 4.2 Secciones obligatorias de `Plan-Iteracion-Sprint-XX-v1.0.md`
 
 1. Información general. Fechas, duración (en semanas), composición del equipo, capacidad disponible (en story points o en horas, declarando la unidad).
 2. Objetivo del sprint (sprint goal). Una sola frase orientada a valor. Prohibido bullets, listas o enumeraciones. Debe responder a la pregunta "¿qué se logra al final del sprint?".
 3. Historias y tareas comprometidas. Tabla con columnas: ID, tipo (US o BT), descripción corta, prioridad (Alta, Media, Baja), estimación, asignado, estado. Total de puntos comprometidos al pie.
 4. Alcance técnico. Qué componentes se construyen o modifican, en qué orden, qué dependencias existen entre BT (por ejemplo BT-04 depende de BT-02). Esta sección no redefine arquitectura; referencia la arquitectura de 05.
-5. Definition of Done aplicada. Referencia explícita a la DoD canónica del proyecto (vive en 08). Criterios específicos del sprint, si los hay, listados aparte.
+5. Definition of Done aplicada. Referencia explícita a la DoD canónica del proyecto (vive en 08). Criterios específicos del sprint, si los hay, listados aparte. **La DoD del sprint incluye siempre la actualización de la categoría 11**: el corte no se declara cerrado con documentos del cuerpo documental de entrega afectados por los ítems del sprint y sin revisar. La condición se enuncia en §4.5.
 6. Riesgos del sprint y mitigaciones. Tabla con cada riesgo, probabilidad (Alta, Media, Baja), impacto (Alto, Medio, Bajo) y plan de mitigación concreto. Mínimo dos riesgos por sprint.
-7. Criterios de hecho del sprint. Cuándo se considera el sprint completo (todas las US comprometidas en estado terminado, demo realizada, retrospectiva facilitada).
+7. Criterios de hecho del sprint. Cuándo se considera el sprint completo (todas las US comprometidas en estado terminado, demo realizada, retrospectiva facilitada, documentos de 11 afectados revisados con su fecha al día).
 8. Trazabilidad. Tabla con qué NB y qué CU avanzan en este sprint, qué ADRs gobiernan las decisiones técnicas implicadas.
 9. Control de cambios. Tabla con versión, fecha y descripción. Para sprints cerrados, registra cambios de scope ocurridos durante la ejecución.
 
@@ -165,14 +169,28 @@ Las plantillas reusables y el archivo de velocidad adaptan el título y el estad
 4. Acciones concretas. Tabla con cada acción de mejora, responsable nombrado, fecha de compromiso y estado. Cada retrospectiva produce mínimo una acción con responsable y fecha; queda prohibida la retrospectiva sin acciones.
 5. Seguimiento de acciones del sprint anterior. Tabla con las acciones comprometidas en la retro previa y su estado actual (Completada, En progreso, Cancelada).
 
-### 4.5 Secciones obligatorias de `Velocidad-Equipo-v1.0.md`
+### 4.5 La categoría 11 dentro de la Definition of Done
+
+El cierre de sprint es el corte por defecto de la cadencia de actualización del cuerpo documental de entrega, definida en `Rules-Documentacion.md` §0.4. La consecuencia sobre esta regla es una sola y es dura: **un sprint no se declara cerrado con documentos de la categoría 11 afectados por sus ítems y sin revisar**.
+
+Qué exige en la práctica:
+
+- El plan del sprint enumera, junto con las US y BT comprometidas, qué documentos de 11 quedan alcanzados por ellas.
+- Al cerrar el sprint, esos documentos están revisados contra el estado real del sistema y su campo `last_review` tiene la fecha del corte.
+- Las eventualidades registradas durante el sprint recibieron triaje, con destino asignado o marca explícita de `No absorbida`.
+
+Un documento revisado y sin cambios cumple la condición: revisar no obliga a modificar. Lo que no cumple es no haberlo mirado.
+
+La razón por la que esto vive en la DoD y no en una lista de buenas prácticas: la documentación que se posterga «para el sprint que viene» no se escribe nunca, y cuando se escribe describe un sistema que su autor ya no recuerda haber construido. Anclarla al corte la vuelve una condición de cierre verificable en lugar de una intención.
+
+### 4.6 Secciones obligatorias de `Velocidad-Equipo-v1.0.md`
 
 1. Por sprint. Tabla con columnas: sprint, puntos comprometidos, puntos completados, velocity efectiva, promedio móvil de 3 sprints.
 2. Tendencia. Lectura cualitativa de la evolución (estable, ascendente, descendente, errática) con comentario.
 3. Capacidad ajustada. Cálculo de la capacidad sugerida para el próximo sprint a partir del promedio móvil de 3 sprints. Regla por defecto: no comprometer más del 110 % del promedio móvil.
 4. Outliers explicados. Cada sprint cuyo valor se desvía más de un 30 % del promedio móvil debe estar explicado en una fila aparte (causa: vacaciones, incidente operativo, sprint inaugural, cambio de equipo).
 
-### 4.6 Tablas tipo y formatos recurrentes
+### 4.7 Tablas tipo y formatos recurrentes
 
 Tabla de capacidad del equipo, en §1 del plan:
 
@@ -208,12 +226,13 @@ Tabla de velocity, en `Velocidad-Equipo-v1.0.md`:
 | S02 | <pts> | <pts> | <pts> | — | — |
 | S03 | <pts> | <pts> | <pts> | <pts> | — |
 
-### 4.7 Anti-patrones a evitar
+### 4.8 Anti-patrones a evitar
 
 | Anti-patrón | Problema | Solución |
 | --- | --- | --- |
 | Sprint goal vago ("avanzar", "mejorar el sistema") | No da dirección ni permite verificar cumplimiento | Reformular como frase orientada a valor con verbo y resultado verificable |
 | Sprint goal expresado como lista de tareas | Mata la coherencia del sprint y bloquea decisiones de scope | Una sola frase declarativa; las tareas viven en §3 |
+| Sprint cerrado con documentos de 11 afectados sin revisar | La deuda documental se vuelve invisible y se acumula hasta que la documentación deja de describir el sistema | La actualización de la categoría 11 forma parte de la DoD del sprint, según §4.5 |
 | Sprint sin DoD aplicada | Cada item se cierra con criterio improvisado | Referencia explícita a la DoD canónica de 08 + criterios específicos del sprint si los hay |
 | Plan sin trazabilidad a CU o NB | No queda registro de qué necesidad de negocio avanza | Tabla obligatoria en §8 con CU y NB que avanzan |
 | Retrospectiva sin acciones concretas | Se habla mucho pero nada cambia | Mínimo una acción con responsable nombrado y fecha de compromiso |
@@ -250,6 +269,7 @@ Tabla de velocity, en `Velocidad-Equipo-v1.0.md`:
 ### 5.4 Calidad
 
 - ¿La DoD referenciada es la canónica del proyecto?
+- ¿Qué documentos de la categoría 11 tocan los ítems comprometidos en este sprint? ¿Están enumerados en el plan?
 - ¿Hay mínimo dos riesgos identificados con mitigación concreta?
 - ¿La retrospectiva del sprint anterior produjo acciones, y esas acciones están reflejadas en el sprint vigente?
 - ¿La tabla de velocity está actualizada al cierre del sprint anterior?
@@ -269,6 +289,7 @@ Tabla de velocity, en `Velocidad-Equipo-v1.0.md`:
 - [ ] Existen `Template-Sprint-Review-v1.0.md` y `Template-Sprint-Retrospectiva-v1.0.md` como plantillas reusables aplicables a cualquier sprint del proyecto.
 - [ ] Existe `Velocidad-Equipo-v1.0.md` con tabla por sprint y promedio móvil de 3 sprints, actualizada al cierre del último sprint cerrado.
 - [ ] Cada plan referencia la DoD canónica de 08 y solo agrega criterios específicos del sprint si los hay.
+- [ ] La DoD aplicada de cada sprint incluye la actualización de los documentos de la categoría 11 afectados por los ítems comprometidos.
 - [ ] Cada plan declara trazabilidad a CU y NB en §8.
 - [ ] Cada plan identifica mínimo dos riesgos con mitigación concreta.
 - [ ] Toda retrospectiva documentada produce mínimo una acción con responsable nombrado y fecha de compromiso.
@@ -276,6 +297,7 @@ Tabla de velocity, en `Velocidad-Equipo-v1.0.md`:
 - [ ] Ningún archivo abre con `--` ni con otro separador previo al H1.
 - [ ] No hay menciones a stacks concretos, productos comerciales ni protocolos del dominio fuente.
 - [ ] Para proyectos de un solo dev, existe `Mini-Plan-v1.0.md` y no existen los cuatro artefactos completos.
+- [ ] Todo documento con más de tres secciones de primer nivel incluye tabla de contenido inmediatamente después de la cabecera, con enlaces ancla a las secciones de primer y de segundo nivel. Los documentos breves quedan exceptuados.
 
 ---
 
@@ -404,3 +426,5 @@ Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/07-Plan-Sprint/<estructura>.
 | 1.0 | 2026-05-17 | Versión inicial de las reglas constructivas de la categoría 07. Corrige el patrón heredado con doble separador (`Plan-Iteracion_sprint-XX-v1.0.md`) y fija el patrón único `plan-iteracion-sprint-XX-v<X.Y>.md`. Define nueve secciones obligatorias del plan de sprint, las plantillas reusables de review y retrospectiva, el tracking de velocidad con promedio móvil de 3 sprints, las variantes por tipo D8 y los criterios de aceptación. Habilita el modo simplificado (`Mini-Plan-v1.0.md`) para proyectos de un solo dev. |
 | 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `Proyectos/<Nombre-Proyecto>/07-Plan-Sprint/`; la frase de cierre de §1.2 y la ruta de salida del prompt-snippet referencian el `project_type` del proyecto en curso (manifiesto). Tablas §1.2 sin reescritura. |
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |
+| 1.3 | 2026-07-26 | La actualización de la categoría 11 se incorpora a la Definition of Done del sprint. Nuevo §4.5 con la condición de cierre y lo que exige en la práctica, con renumeración de §4.5 a §4.7 previas a §4.6 a §4.8; §4.2 puntos 5 y 7 la enuncian dentro de la estructura del plan; §4.8 suma el anti-patrón de cerrar un sprint con documentos de 11 sin revisar; §5 suma una pregunta guía y §6 un criterio de aceptación. Es la única modificación que esta intervención introduce en la regla: no se agregan artefactos ni carga narrativa. |
+| 1.4 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |

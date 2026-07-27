@@ -2,7 +2,7 @@
 
 **Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/03-UX-UI-DX/`
 **Subagente target del orquestador:** Especialista UX/UI o Especialista DX (AG-03), según variante.
-**Versión de las reglas:** 1.6
+**Versión de las reglas:** 1.8
 
 ---
 
@@ -37,9 +37,9 @@ La variante UX/UI se enfoca en personas no técnicas que recorren pantallas. La 
 | web-microservices (sin frontend) | DX | DX Lead para portal de developers | La superficie pública es la API. Se diseña el portal de documentación, los ejemplos de integración y los mensajes de error. |
 | desktop-app | UX/UI | UX/UI Designer + Cross-Platform Specialist | Se diseña la experiencia para sistema operativo con convenciones de plataforma (atajos de teclado, ventanas, instaladores). |
 | mobile-app-maui | UX/UI | Mobile UX Designer + Accessibility Specialist | El uso es táctil, en contextos variables, con consideraciones de permisos del sistema operativo y de accesibilidad reforzada. |
-| rest-api | DX (con UX en portal) | API DX Designer + Developer Advocate | El consumidor es un developer integrador. Se aplica Diátaxis al portal de docs, OpenAPI como contrato y ejemplos de cada endpoint. |
+| rest-api | DX (con UX en portal) | API DX Designer + Developer Advocate | El rol de intervención es un developer integrador. Se aplica Diátaxis al portal de docs, OpenAPI como contrato y ejemplos de cada endpoint. |
 | cli-tool | DX | CLI UX Designer + DX Engineer | La interfaz es la línea de comandos. Se diseña ayuda contextual, mensajes de error accionables, autocompletado y exit codes. |
-| worker-service | DX para operadores | DX Engineer (Operability) | El consumidor es quien opera el servicio. Se diseñan logs estructurados, dashboards, alertas y runbooks. |
+| worker-service | DX para operadores | DX Engineer (Operability) | El rol de intervención es el operador del servicio. Se diseñan logs estructurados, dashboards, alertas y runbooks. |
 
 ### 1.3 Multi-especialidad
 
@@ -111,7 +111,7 @@ Si `requiere_maqueta` == false, esta sección no aplica y la categoría 03 cierr
 | `wireframes-<superficie>-v1.0.md` | UX/UI | Tipos con UI final, uno por pantalla o flujo principal | — | Tipos sin UI final | Esquema textual o ASCII de cada pantalla con componentes, estados, interacciones, versión móvil cuando aplica. |
 | `representacion-<concepto>-v1.0.md` | UX/UI o DX | Cuando hay una representación visual o estructural reutilizada (un componente, una notificación, un documento exportado) | — | Si no aplica | Documento focalizado sobre una representación específica del sistema. |
 | `Glosario-UX-v1.0.md` | UX/UI | Recomendado para todos los tipos con UI final | Tipos DX si hay vocabulario propio | — | Terminología canónica de la sección (pantalla, vista, modal, toast, estado vacío, etcétera). |
-| `DX-Developer-Experience-v1.0.md` | DX | library, cli-tool, worker-service, rest-api, web-microservices sin frontend | — | Tipos con UI final únicamente | Marco DX: audiencia developer, onboarding por tramos, quick-start, Diátaxis, mensajes de error, métricas DX. |
+| `DX-Developer-Experience-v1.0.md` | DX | library, cli-tool, worker-service, rest-api, web-microservices sin frontend | — | Tipos con UI final únicamente | Marco DX: rol de intervención developer, onboarding por tramos, quick-start, Diátaxis, mensajes de error, métricas DX. |
 | `Guia-Onboarding-Developer-v1.0.md` | DX | library, rest-api, web-microservices sin frontend | cli-tool, worker-service | — | Recorrido de primera hora del developer integrador. |
 | `DX-Error-Messages-v1.0.md` | DX | cli-tool, library | rest-api, worker-service | — | Catálogo de mensajes de error y su diagnóstico accionable. |
 | `DX-Portal-Developers-v1.0.md` | DX | rest-api con portal visible, web-microservices con SDK público | library con portal hospedado | Tipos sin portal | Especificación del portal de documentación de developers. |
@@ -203,6 +203,10 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 **Variante:** UX/UI | DX
 ```
 
+**Tabla de contenido.** Todo documento generado que supere las tres secciones de primer nivel incluye una tabla de contenido inmediatamente después de la cabecera de metadatos, con enlaces ancla a cada sección de primer y de segundo nivel. La tabla de contenido no cuenta como sección de contenido ni altera la estructura obligatoria del documento: se ubica entre la cabecera y la primera sección, y las secciones obligatorias siguen siendo las que declara §4.2. Los documentos breves —fichas de una sola sección, entradas de índice— quedan exceptuados.
+
+El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente de IA que recorre la cadena de especificación acumulando contexto, y para ese lector la tabla de contenido es indiferente. Existe para el agente humano que entra a consultar un punto concreto sin haber leído el documento entero.
+
 ### 4.2 Secciones obligatorias de `Experiencia-De-Uso-v1.0.md`
 
 1. Audiencia y contexto de uso. Persona objetivo, contexto físico y emocional, frecuencia y duración de uso.
@@ -241,7 +245,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 
 ### 4.2.3 Secciones obligatorias de `DX-Developer-Experience-v1.0.md`
 
-1. Audiencia developer. Tipo de developer (integrador, contributor, operador), nivel de experiencia esperado, herramientas que ya conoce.
+1. Rol de intervención developer. Tipo de developer (integrador, mantenedor, operador), nivel de experiencia esperado, herramientas que ya conoce.
 2. Onboarding por tramos. Qué logra el developer en 5 minutos, en 30 minutos y en 1 hora. Cada tramo con su objetivo verificable.
 3. Quick-start. Pasos mínimos para producir el primer resultado exitoso. Debe ser ejecutable y reproducible.
 4. Diátaxis. Plan explícito de los cuatro modos de documentación: tutorial (orientado al aprendizaje), how-to (orientado a la tarea), reference (orientado a la información), explanation (orientado a la comprensión). Indicar dónde vive cada modo y cómo se enlazan.
@@ -419,6 +423,7 @@ Tabla de trazabilidad de un artefacto 03:
 - [ ] No hay menciones a stacks concretos, productos comerciales ni protocolos específicos del dominio fuente.
 - [ ] En proyectos con `requiere_maqueta` == true: cada wireframe declara un nombre canónico de superficie estable, y su tabla de estados enumera todos los estados que la maqueta va a tener que demostrar.
 - [ ] En proyectos con `requiere_maqueta` == true y maqueta ya aprobada: los artefactos afectados por la validación subieron versión con su entrada de control de cambios, y existen `Linea-Base-Visual-v1.0.md`, `Contrato-Datos-Maqueta-v1.0.md` y `Bitacora-Validacion-Maqueta-v1.0.md` en la carpeta de la categoría.
+- [ ] Todo documento con más de tres secciones de primer nivel incluye tabla de contenido inmediatamente después de la cabecera, con enlaces ancla a las secciones de primer y de segundo nivel. Los documentos breves quedan exceptuados.
 
 ---
 
@@ -483,7 +488,7 @@ Compromiso WCAG 2.2 nivel AA. Criterios prioritarios: contraste 4.5:1 en texto, 
 **Autor:** Equipo DX
 **Variante:** DX
 
-## 1. Audiencia developer
+## 1. Rol de intervención developer
 Developer backend con uno a tres años de experiencia, que conoce manejo de archivos pero no necesariamente parsing avanzado. Llega buscando una librería más rápida que su solución actual.
 
 ## 2. Onboarding por tramos
@@ -573,3 +578,5 @@ Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/03-UX-UI-DX/<estructura>.
 | 1.4 | 2026-06-20 | Cableado de la extensión por capacidad `Design-Rules-Config-Esquema`: §1.4 extendida (carga cuando hay superficies de configuración, y requisitos sobre `experiencia-de-uso`/`wireframes`: descriptores, ayuda contextual, presets, explicación en palabras, modo simulación, ranura del asistente y frontera `PropuestaDeConfiguracion`), nuevos anti-patrones de configuración por esquema en §4.4 y fila "Configuración dirigida por esquema aplicada" en la trazabilidad de §4.3. |
 | 1.5 | 2026-07-18 | Cableado de tres extensiones por capacidad nuevas (`Design-Rules-Primer-Arranque`, `Design-Rules-Acceso-Monousuario`, `Design-Rules-Identidad-De-Version`), derivadas de la extracción de características de un panel de control monolítico en producción: §1.4 suma la condición de carga y los requisitos sobre `experiencia-de-uso`/`wireframes` de cada una, más la frontera entre configuración de aplicación y de entorno; §4.3 suma tres filas de trazabilidad; §4.4 suma siete anti-patrones (predicado y guard de arranque, wizard multipaso, ceremonias multiusuario arrastradas, rechazo diferenciado y filtrado de política, vencimiento silencioso de sesión, versión transcrita o ausente, parámetro de entorno dibujado). |
 | 1.6 | 2026-07-19 | Enganche con la Fase B2 de validación visual de maqueta: nueva §1.5 (qué le toca a AG-03 antes y después de la fase, y los tres artefactos que la fase deposita en esta categoría), tres artefactos nuevos en la tabla maestra de §2.1 (`Linea-Base-Visual`, `Contrato-Datos-Maqueta`, `Bitacora-Validacion-Maqueta`), tres filas nuevas en la trazabilidad de §4.3 (modelo UX-UI aplicado, validación visual, línea de base emitida), dos anti-patrones nuevos en §4.4 (superficie sin nombre canónico estable, maqueta aprobada sin retroalimentar) y dos criterios de aceptación condicionados a `requiere_maqueta`. La mecánica de la fase no se duplica acá: vive en `Maqueta-Rules.md`. |
+| 1.7 | 2026-07-26 | Normalización del vocabulario de actores: «consumidor» pasa a «integrador» u «operador» según el caso, y «audiencia» pasa a «rol de intervención» en las secciones DX, que designan a quien interviene sobre el producto. Se conserva «audiencia» en las secciones UX, que designan al público del producto. El tipo de developer se enumera como integrador, mantenedor u operador. |
+| 1.8 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |

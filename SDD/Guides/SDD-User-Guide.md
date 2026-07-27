@@ -2,8 +2,8 @@
 
 ```yaml
 Documento: Guia-Usuario-SDD-v1.0.md
-Versión: 1.3
-Fecha: 2026-07-19
+Versión: 1.5
+Fecha: 2026-07-26
 Audiencia: profesionales y estudiantes que usan el template para una solución real
 Idioma: español rioplatense neutro técnico
 Estado: vigente
@@ -33,6 +33,7 @@ Estado: vigente
   - [4.5 Paso 5 — Ejecutar el master-prompt en Claude Code](#45-paso-5--ejecutar-el-master-prompt-en-claude-code)
   - [4.6 Paso 5b — Validar la maqueta visual (Fase B2, opcional)](#46-paso-5b--validar-la-maqueta-visual-fase-b2-opcional)
   - [4.7 Paso 6 — Revisión humana y handoff a codificación](#47-paso-6--revisión-humana-y-handoff-a-codificación)
+  - [4.8 Paso 7 — Ciclo incremental de documentación viva (Fases I y J)](#48-paso-7--ciclo-incremental-de-documentación-viva-fases-i-y-j)
 - [§5 Ejemplos aplicados](#5-ejemplos-aplicados)
   - [5.1 Caso "API REST de gestión de turnos médicos"](#51-caso-api-rest-de-gestión-de-turnos-médicos-rest-api-solución-de-un-proyecto)
   - [5.2 Caso "Librería utilitaria para parsing de archivos CSV"](#52-caso-librería-utilitaria-para-parsing-de-archivos-csv-library-solución-de-un-proyecto)
@@ -61,7 +62,7 @@ El template resuelve un dolor concreto y repetido: el equipo arranca a codear si
 A diferencia de plantillas ad-hoc o de un README inflado, SDD se apoya en tres pilares:
 
 - Una cadena de trazabilidad cerrada (Visión → Necesidad de Negocio → Caso de Uso → Regla de Negocio → ADR → User Story → Backlog Técnico → Sprint → Test → Pipeline), todos los eslabones formales y verificables.
-- Un conjunto de 12 categorías documentales numeradas (`00-Contexto/` a `11-Examples/`) más un README raíz, cada una con su propio archivo de reglas constructivas que codifica especialidad, documentos a producir, criterios de aceptación y prompts ejemplares.
+- Un conjunto de 12 categorías documentales numeradas (`00-Contexto/` a `11-Documentacion/`) más un README raíz, cada una con su propio archivo de reglas constructivas que codifica especialidad, documentos a producir, criterios de aceptación y prompts ejemplares.
 - Un master-prompt orquestador que se ejecuta una sola vez por solución en Claude Code y va despachando subagentes especializados con audits independientes entre fases.
 
 ### Solución y proyecto: el modelo de trabajo
@@ -74,7 +75,7 @@ Una solución de un solo proyecto es perfectamente válida: es el caso degenerad
 
 La audiencia primaria son desarrolladores, analistas, líderes técnicos y estudiantes avanzados que quieren producir documentación de calidad profesional sin pelearse con plantillas frías. El template asume que vas a usar Claude.ai web para conversar con el cliente y consolidar la idea, y Claude Code para ejecutar el orquestador y materializar la documentación en el repositorio.
 
-Si el lector necesita la fundamentación teórica (por qué se eligió plan-then-confirm, por qué el principio de delegación de la especialidad, qué nodos cubre la cadena D6, qué invariantes globales D1 a D8 se aplican), eso se documenta en el marco teórico del template. Esta guía es operativa.
+Si el lector necesita la fundamentación teórica (por qué se eligió plan-then-confirm, por qué el principio de delegación de la especialidad, qué nodos cubre la cadena D6, qué invariantes globales D1 a D9 se aplican), eso se documenta en el marco teórico del template. Esta guía es operativa.
 
 Una solución típica que usa SDD termina con una carpeta `SDD/Docs/` poblada por categoría (a nivel solución y por proyecto), un informe de audit por cada fase, un README raíz consolidado y un Sprint 1 listo para arrancar codificación. El handoff a codificación es explícito: el orquestador no escribe código sin confirmación humana.
 
@@ -130,7 +131,7 @@ SDD no es universal. Está pensado para proyectos donde el esfuerzo de documenta
 
 - Proyecto trivial (un script, una utilidad chica, una demo): el template es excesivo. Usá un README plano de 50 líneas.
 - Proyecto normal (semanas a pocos meses, un equipo, un dominio acotado): caso canónico, todo el template aplica.
-- Proyecto complejo (varios trimestres, múltiples integraciones, regulación, varios consumidores): el template es la base mínima. Probablemente necesités complementarlo con documentos específicos del dominio (compliance, contratos legales, runbooks operativos extensos).
+- Proyecto complejo (varios trimestres, múltiples integraciones, regulación, varios integradores): el template es la base mínima. Probablemente necesités complementarlo con documentos específicos del dominio (compliance, contratos legales, runbooks operativos extensos).
 
 ### 3.3 Perfilado por tipo de proyecto (D8)
 
@@ -423,9 +424,12 @@ A partir de ahí, el orquestador despacha subagentes fase por fase. La Fase de v
 - Fase C (por proyecto): 05-Arquitectura-Tecnica + audit C.
 - Fase D (por proyecto): 06-Backlog-Tecnico + 07-Plan-Sprint + audit D.
 - Fase E (por proyecto): 08-Calidad-Y-Pruebas + audit E.
-- Fase F (por proyecto): 09-Devops + 10-Developer-Guide (si aplica) + audit F.
-- Fase G (por proyecto): 11-Examples (si aplica) + audit G.
-- Fase H (consolidación de solución): vista de solución + pipeline de solución + README raíz + audit final consolidado. La vista de solución y el pipeline de solución solo se generan si hay más de un proyecto.
+- Fase F (por proyecto): 09-Devops + audit F.
+- Fase G (por proyecto): 10-Examples, pasada de diseño + audit G.
+- Fase H (consolidación): vista de solución + pipeline + README raíz + plan documental de 11 + audit final consolidado.
+- Paso 6 (humano): handoff a codificación. A partir de acá el sistema se construye.
+- Fase I (por incremento, re-ejecutable): 10 pasada de ejecución + 11 actualización incremental + `AGENTS.md` + ensayo automatizado + audit acotado al incremento.
+- Fase J (una vez, al cierre): 11 consolidación + `AGENTS.md` definitivo + ensayo humano como gate + audit final de entrega.
 
 Si la solución es de un solo proyecto (caso degenerado), el orquestador aplana el layout: genera las categorías `00` a `11` directo bajo `SDD/Docs/` más el README raíz, sin el subnivel `Proyectos/<Nombre>/` ni la carpeta `Solucion/`, y la Fase H omite la vista y el pipeline de solución. El resultado es idéntico al template de tipo único.
 
@@ -505,7 +509,30 @@ Confirmo handoff a codificación. Arrancamos Sprint 1 con los items
 listados en el resumen ejecutivo.
 ```
 
-A partir de ahí, ya salís del scope de SDD (que es documentación) y entrás en el ciclo de desarrollo iterativo. La documentación generada queda como referencia viva: se actualiza cuando hay cambios reales, no porque sí.
+El handoff **cierra el tramo de especificación, no el alcance de SDD**. Hasta acá el sistema no existía y se lo especificó; a partir de acá el sistema se construye y la documentación se verifica contra hechos. Ese segundo tramo son las Fases I y J, y es donde vive el paso 7.
+
+### 4.8 Paso 7 — Ciclo incremental de documentación viva (Fases I y J)
+
+Con el sistema en construcción, el orquestador vuelve a entrar en juego una vez por incremento. No es una fase más de la cadena de especificación: es un ciclo re-ejecutable que no tiene cantidad fija de corridas.
+
+**Cuándo corre la Fase I.** En cada corte de la cadencia, que por defecto es el cierre de sprint. Si el equipo no trabaja por sprints, el corte es el cierre de cada incremento demostrable. Hay un tercer disparador que rompe la cadencia a propósito: un cambio que altera un contrato público, un procedimiento de despliegue o una ruta de código citada se documenta de inmediato, sin esperar el corte.
+
+**Qué necesita para poder correr.** La Fase I tiene una precondición dura y el orquestador la verifica antes de despachar nada: tiene que existir código fuente, `/samples` tiene que tener al menos un sample implementado, y los tests tienen que correr. Si algo falta, se detiene y te lo informa en lugar de escribir documentación sobre un sistema que todavía no existe.
+
+**Qué hace en cada corrida:**
+
+1. Completa la evidencia de los contratos de verificación de la categoría 10: corre cada sample y vuelca la salida real con su fecha.
+2. Actualiza los documentos de la categoría 11 que el incremento tocó, y solo esos.
+3. Triaja las eventualidades registradas desde el corte anterior.
+4. Emite o refresca el `AGENTS.md` en la raíz de tu repositorio.
+5. Corre el ensayo de entrega automatizado.
+6. Cierra con un audit acotado al incremento.
+
+**Qué te toca a vos en la Fase I.** Poco, y ese es el punto. El orquestador hace el trabajo; vos revisás el resultado del ensayo automatizado y decidís si hace falta correr un ensayo humano en este corte. Lo único que no podés delegar es el criterio: si al documentar el despliegue el procedimiento resulta enredado, eso es una señal de arquitectura, no un problema de redacción, y conviene atenderla mientras todavía hay margen.
+
+**Qué pasa en la Fase J.** Corre una sola vez, al cierre. Verifica el cuerpo documental completo ejecutando todo comando documentado, emite el `AGENTS.md` definitivo y exige un **ensayo de entrega humano aprobado**. Ese ensayo es un gate: sin él, la Fase J no cierra. Lo corrés vos o alguien de tu equipo que no haya documentado el sistema.
+
+**Si tus correcciones manuales te preocupan**, no deberían: la Fase I no las pisa. El orquestador relee lo que editaste, enumera las diferencias respecto de lo que él había emitido, te informa cómo las interpretó y espera confirmación antes de propagarlas. Es el mismo patrón que ya conocés de la validación de maqueta.
 
 ---
 
@@ -648,11 +675,11 @@ Contexto: el equipo de plataforma de una empresa tecnológica necesita una libre
 
 #### Chat resumido en Claude.ai
 
-Turnos 1 a 4: descripción del problema, identificación de los principales consumidores (3 equipos internos, cada uno con su stack), foco en la ergonomía de la API pública y en la compatibilidad de versiones.
+Turnos 1 a 4: descripción del problema, identificación de los principales integradores (3 equipos internos, cada uno con su stack), foco en la ergonomía de la API pública y en la compatibilidad de versiones.
 
 Turnos 5 a 7: Claude pregunta cómo se distribuye hoy la librería y qué políticas de breaking changes maneja la empresa. Se aclara que se publica via el registry interno del ecosistema del lenguaje y que se siguen lineamientos SemVer estrictos.
 
-Turnos 8 a 10: profundización en historias del consumidor (lectura básica, lectura con error tolerante, lectura en streaming, escritura, detección de encoding) y casos límite (archivo vacío, filas con cantidad de columnas inconsistente, caracteres no UTF-8, valores entre comillas con saltos de línea internos).
+Turnos 8 a 10: profundización en historias del integrador (lectura básica, lectura con error tolerante, lectura en streaming, escritura, detección de encoding) y casos límite (archivo vacío, filas con cantidad de columnas inconsistente, caracteres no UTF-8, valores entre comillas con saltos de línea internos).
 
 Turno 11 a 12: cierre y consolidación.
 
@@ -689,7 +716,7 @@ requiere_compliance: false
 tiene_observabilidad_critica: false
 ```
 
-Plan: categoría 04 omitida (no LLM). Categoría 03 variante DX (developer integrador). Categoría 10 obligatoria. Categoría 11 obligatoria con 3 samples progresivos (consumidor básico, consumidor intermedio, consumidor avanzado con extensiones).
+Plan: categoría 04 omitida (no LLM). Categoría 03 variante DX (developer integrador). Categoría 10 obligatoria con 3 samples progresivos (integrador básico, integrador intermedio, integrador avanzado con extensiones). Categoría 11 obligatoria.
 
 La fase de arquitectura genera 3 ADR mínimos: estilo arquitectónico, superficie pública, política de versionado. La fase de developer guide genera conceptos, onboarding, integración por cada stack, referencia de API y troubleshooting.
 
@@ -712,10 +739,10 @@ avanzados. Reducir el costo de mantenimiento disperso que hoy tiene
 la empresa con N scripts ad-hoc.
 
 ## Objetivos SMART
-- Cobertura interna: 3 equipos consumidores en los primeros 6 meses
+- Cobertura interna: 3 equipos integradores en los primeros 6 meses
   post-release v1.0.
 - Reducción de bugs reportados sobre parsing CSV en los repos
-  consumidores: -50% en 9 meses.
+  integradores: -50% en 9 meses.
 - Tiempo medio de integración de un equipo nuevo: ≤ 1 jornada.
 
 ## Métricas de éxito
@@ -724,12 +751,12 @@ la empresa con N scripts ad-hoc.
 - Tiempo de respuesta a issues críticas: ≤ 2 días hábiles.
 ```
 
-Extracto de `SDD/Docs/11-Examples/README.md`:
+Extracto de `SDD/Docs/10-Examples/README.md`:
 
 ```markdown
 # Samples — csv-parser-lib
 
-Esta carpeta contiene tres proyectos consumidores que ilustran el uso
+Esta carpeta contiene tres proyectos integradores que ilustran el uso
 progresivo de la librería.
 
 | Nivel | Carpeta | Qué demuestra |
@@ -789,7 +816,7 @@ requiere_compliance: true
 tiene_observabilidad_critica: false
 ```
 
-Plan: categoría 03 variante UX/UI con acento en accesibilidad móvil. Categoría 10 opcional (no hay SDK público). Categoría 11 genera 3 samples (app básica con datos mock, sync con mock server, modo offline avanzado con resolución de conflictos).
+Plan: categoría 03 variante UX/UI con acento en accesibilidad móvil. Categoría 11 con cuerpo integrador omitido (no hay SDK público) y cuerpo mantenedor obligatorio. Categoría 10 genera 3 samples (app básica con datos mock, sync con mock server, modo offline avanzado con resolución de conflictos).
 
 La fase de DevOps genera estrategia de publicación atada a los ciclos de las stores móviles, con canales internal/alpha/beta/production.
 
@@ -965,7 +992,7 @@ El master-prompt no se toca para esto: el principio de delegación de la especia
 
 ### F-04 — El audit reportó un P0, ¿cómo lo corrijo?
 
-P0 significa hallazgo bloqueante: viola D1-D8 (idioma, encoding, Título-Con-Guiones, versionado, deprecación, trazabilidad, conjunto cerrado D8) o rompe la estructura obligatoria del documento.
+P0 significa hallazgo bloqueante: viola D1-D9 (idioma, encoding, Título-Con-Guiones, versionado, deprecación, trazabilidad, vocabulario, conjunto cerrado D8, evidencia verificable D9) o rompe la estructura obligatoria del documento.
 
 Pasos:
 
@@ -1124,6 +1151,94 @@ Conviene capturar uno cuando el diseño que aprobaste resuelve bien un problema 
 
 Tené presente que `IA.SDD` es un repositorio público. Cuando aceptás capitalizar un modelo, el orquestador ofusca todo el dominio antes de escribir: reemplaza entidades, campos, valores, textos y assets por equivalentes sintéticos, y preserva solo la forma. Si no puede completar esa verificación con certeza, no escribe nada.
 
+### F-24 — ¿Por qué se intercambiaron las categorías 10 y 11?
+
+Porque la dependencia real entre ellas iba al revés de como estaba declarada. Los ejemplos ejecutables son insumo de la documentación final, no al revés: la documentación los referencia, los contextualiza y los enlaza. Además, los ejemplos cumplen un segundo rol que solo tiene sentido durante la codificación —verificar que cada incremento sigue satisfaciendo los casos de uso—, así que tienen que existir antes.
+
+Ahora la categoría 10 son los `Examples` y la 11 es la `Documentacion`. La formulación que hay que recordar: **10 demuestra con código ejecutable y verificable, 11 explica, referencia y enlaza esos ejemplos sin duplicar su código**.
+
+Si tenés documentación generada con la numeración anterior, no se regenera sola. Ver §8 para la regeneración parcial.
+
+### F-25 — ¿Cuándo se corre la Fase I y con qué cadencia?
+
+Una vez por corte, y el corte por defecto es el **cierre de sprint**. El framework ya modela sprints en la categoría 07, así que no hace falta inventar un ritmo nuevo. Si tu equipo no trabaja por sprints, el corte es el cierre de cada incremento demostrable.
+
+Hay un tercer disparador que rompe la cadencia a propósito: un cambio que altera un contrato público, un procedimiento de despliegue o una ruta de código citada se documenta **de inmediato**, sin esperar el corte. El motivo es práctico: un documento que apunta a una ruta que ya no existe es peor que no tener documento, porque manda al lector a buscar algo que no está y le hace perder la confianza en todo el resto.
+
+La Fase I no arranca apenas hacés el handoff. Tiene una precondición dura: código fuente, al menos un sample implementado y tests que corran. Si no se cumple, el orquestador se detiene y te lo dice.
+
+### F-26 — ¿Qué pasa si quiero saltearme la documentación incremental?
+
+Podés, pero conviene entender qué perdés, porque no es lo que parece.
+
+Lo obvio es que al final vas a tener que escribir todo junto, y va a costar más. Lo que no es obvio es lo otro: la actualización incremental funciona como **instrumento de control del diseño**, no como obligación administrativa. Cuando documentás el despliegue de un incremento y el procedimiento te sale enredado, eso es una señal de arquitectura. Cuando escribís el recorrido de código y no podés explicar dónde vive algo, eso es una señal de estructura. Las dos aparecen mientras todavía hay margen para corregir.
+
+Si postergás todo al cierre, esas señales llegan cuando corregirlas es caro, y además el que escribe ya no recuerda por qué hizo las cosas así.
+
+Formalmente, la actualización de la categoría 11 forma parte de la Definition of Done del sprint: el corte no se declara cerrado con documentos afectados sin revisar. Si decidís saltearla igual, registralo como decisión explícita, no lo dejes pasar en silencio.
+
+### F-27 — ¿Cómo se relaciona `AGENTS.md` con el resto de la documentación?
+
+`AGENTS.md` es el contrato de contexto para agentes de codificación, y vive en la **raíz de tu repositorio**, no dentro de `SDD/Docs/`. Es la única salida del orquestador que queda fuera de `SDD/`, y es a propósito: su valor depende de que las herramientas de agentes lo encuentren en la ruta convencional donde lo buscan.
+
+Contiene lo que un agente necesita para trabajar en tu repositorio sin romper nada: cómo se construye el proyecto, cómo se corren los tests, convenciones de código y de commits, comandos de validación, límites de intervención, y punteros a los documentos de la categoría 11 por intención.
+
+No se escribe a mano. Se **deriva** de `Contrato-Agentes-v<X.Y>.md`, que vive dentro de la carpeta de la categoría 11 y sí sigue la convención de nomenclatura del framework. Si los dos divergen, el contrato es la fuente y el `AGENTS.md` se regenera.
+
+Se emite en la primera corrida de la Fase I y se refresca en todas las siguientes. No se reserva para el cierre, porque la Fase I es justamente el tramo donde los agentes están codificando y es cuando más lo necesitan.
+
+### F-28 — ¿Cómo se corre un ensayo de entrega y qué hago si no se completa?
+
+Un ensayo de entrega es una prueba de utilidad de la documentación: tomás el cuerpo documental en su estado actual y ejecutás con él una tarea real, sin ayuda externa. Es a la documentación lo que la validación de maqueta es al diseño.
+
+Hay dos niveles y no hay que confundirlos:
+
+| Nivel | Quién lo corre | Cuándo | Qué detecta |
+| --- | --- | --- | --- |
+| **Automatizado** | El agente | En cada Fase I | Comandos rotos, rutas inexistentes, prerrequisitos faltantes |
+| **Humano** | Vos o alguien de tu equipo | En los cortes que elijas, y obligatoriamente en la Fase J | Lo que la documentación no dice pero hace falta saber |
+
+El ensayo humano es un **gate**: sin él aprobado, la Fase J no cierra. Y no lo puede aprobar el agente que documentó, por la misma razón por la que no puede aprobar su propia maqueta: conoce el sistema porque acaba de documentarlo, y esa contaminación anula la prueba.
+
+**Cómo se corre.** Elegí un guion según el rol:
+
+- **Operador**: desplegá un servicio desde cero en una máquina limpia, siguiendo únicamente `Guia-Despliegue` y `Guia-Contenedor`.
+- **Mantenedor**: ubicá una porción de código concreta e introducí una mejora acotada, siguiendo únicamente `Recorrido-Codigo` y `Guia-Contribucion`.
+- **Integrador**: consumí una capacidad del sistema desde un cliente nuevo, siguiendo únicamente el cuerpo integrador.
+
+**La regla de oro**: durante la corrida solo se lee la documentación. No le preguntás al equipo, no leés código fuera de lo que la documentación te indica leer, no usás lo que ya sabés del proyecto. **El momento en que tenés que salirte de la documentación es, exactamente, el hallazgo.**
+
+**Qué hacer si no se completa.** Un ensayo que no se completa es un hallazgo P0 y no se cierra el corte con él abierto. El procedimiento es directo: anotá en qué paso te trabaste y qué tuviste que averiguar por fuera; convertí cada trabada en un hallazgo con **destino asignado**, es decir qué documento y qué sección lo tiene que absorber; corregí esos documentos; y volvé a correr el ensayo. El resultado queda registrado en el informe de audit de la fase, en `SDD/Docs/Audit/`.
+
+Lo que no vale es completar la tarea usando conocimiento propio y declarar el ensayo aprobado. Eso no prueba que la documentación sirva: prueba que vos ya sabías.
+
+### F-29 — ¿Cómo se registra y se triaja una eventualidad?
+
+Una **eventualidad** es una situación que aparece al ejecutar el sistema en un entorno real y que ninguna vista de diseño podía anticipar. No es deriva: la deriva es apartarse de algo acordado, y acá no hay línea de base de la cual apartarse. Es conocimiento nuevo que hay que capturar antes de que se pierda.
+
+Se registran en `Bitacora-Eventualidades-v<X.Y>.md`, de nivel solución, con identificador `EVE-XX`.
+
+**Un caso completo, de punta a punta.** Un servicio se comunica con un dispositivo físico conectado por USB al host.
+
+**Síntoma.** Al containerizarlo, el contenedor arranca, el healthcheck responde saludable y no se registra ninguna lectura del dispositivo. Sin errores en el log. Es la peor clase de falla: silenciosa.
+
+**Diagnóstico.** El contenedor no tenía mapeado el dispositivo del host ni pertenencia al grupo que lo gobierna. La biblioteca de acceso falla en silencio cuando la ruta del dispositivo no existe.
+
+**Intentos descartados.** Correr el contenedor con privilegios elevados funciona, pero es inaceptable en producción. Montar el dispositivo como volumen no aplica: es un dispositivo de caracteres, no un archivo. **Este campo es el que más tiempo le ahorra al siguiente**, y es el único lugar donde queda registrado: ningún documento permanente conserva lo que no funcionó.
+
+**Resolución.** Mapear el dispositivo al contenedor y agregar el grupo correspondiente. Además, se agregó una verificación de existencia del dispositivo al arranque, para que la próxima vez falle ruidosamente en lugar de quedarse callada.
+
+**Triaje.** Acá está el punto de toda la mecánica: la bitácora es un buffer de captura, **no el destino final**. Esta eventualidad es un requisito del entorno no declarado, así que se propaga a dos documentos permanentes:
+
+1. `Guia-Contenedor-v1.0.md`, sección «Dispositivos del host requeridos»: la ruta del dispositivo, la regla de acceso y cómo verificar que está disponible.
+2. `Runbook-Operacion-v1.0.md`, entrada `OPS-07` «El servicio no registra lecturas»: síntoma observable, diagnóstico paso a paso y resolución.
+
+La entrada `EVE-03` de la bitácora queda con su campo `destino` apuntando a esos dos lugares.
+
+**Regla dura**: ninguna eventualidad se cierra sin destino asignado. Si de verdad no aplica a ningún documento —porque no es reproducible o es un caso único sin valor para terceros— se marca explícitamente `No absorbida` con el motivo escrito. «Sin destino» no es un estado de cierre válido.
+
+El triaje se ejecuta en cada corte de la Fase I, junto con la actualización incremental. Una eventualidad abierta desde hace más de un corte sin triaje es un hallazgo P0.
+
 ---
 
 ## §7 Cómo extender el template
@@ -1220,7 +1335,7 @@ Regenerá únicamente:
 - 02-Especificacion-Funcional (agregar CU correspondientes)
 - 06-Backlog-Tecnico (agregar US y BT)
 - 07-Plan-Sprint (re-planificar Sprint 3 y 4)
-- 11-Examples (agregar sample de cliente móvil si corresponde)
+- 10-Examples (agregar sample de cliente móvil si corresponde)
 
 Mantené el resto intacto.
 ```
@@ -1283,7 +1398,7 @@ Conviene leer con atención:
 
 Si el template se usa en contexto académico (cátedra, evaluación de trabajos prácticos, jurado de tesis), los criterios de evaluación recomendados son:
 
-- Conformidad D1 a D8 del entregable final (idioma, encoding, naming, versionado, política de deprecación, trazabilidad, vocabulario, conjunto cerrado D8).
+- Conformidad D1 a D9 del entregable final (idioma, encoding, naming, versionado, política de deprecación, trazabilidad, vocabulario, conjunto cerrado D8, evidencia verificable D9).
 - Completitud por categoría: cada una de las 12 categorías tiene los documentos obligatorios para su tipo.
 - Trazabilidad cerrada: la cadena Visión → NB → CU → ADR → US → BT → Sprint → Test → Pipeline cierra sin huérfanos.
 - Calidad de los audits: los informes de `SDD/Docs/Audit/` muestran hallazgos reales y veredictos justificados.
@@ -1332,7 +1447,7 @@ Términos esenciales para usar el template. Para el glosario exhaustivo del marc
 | Convención de nombres de código | Regla de nombres en `/src`: `<NombreSolucionCodigo>.<Sufijo>` (por ejemplo `GestionDeTurnos.WebApi`). Excepción para redistribuibles: arrancan con el prefijo de organización `Aplicada` (por ejemplo `Aplicada.Validaciones`). El plano de documentación sigue en Título-Con-Guiones. |
 | Flag de gating | Variable derivada del intake que condiciona qué documentos se generan. Ejemplos: usa_llm, tiene_persistencia, equipo_n. |
 | Cadena D6 | Cadena de trazabilidad: Visión → NB → CU → RN → ADR → US → BT → Sprint → Test → Pipeline. |
-| Invariante | Decisión que no se renegocia durante la generación. Hay invariantes globales (D1 a D8) y propias del proyecto. |
+| Invariante | Decisión que no se renegocia durante la generación. Hay invariantes globales (D1 a D9) y propias del proyecto. |
 | Ambigüedad legítima | Falta concreta de un dato bloqueante en el intake que dispara detención / pregunta / reanudación. |
 | Handoff a codificación | Punto en el que el orquestador entrega la documentación auditada y espera confirmación humana para arrancar Sprint 1. |
 | Regla constructiva | Archivo `Rules-<Categoria>.md` (o `Root-Rules.md`) que codifica especialidad, documentos, nomenclatura, estructura, criterios y prompt-snippet de la categoría. |
@@ -1372,7 +1487,7 @@ mi-proyecto/
 │   │   │   ├── Rules-Plan-Sprint.md
 │   │   │   ├── Rules-Calidad-Y-Pruebas.md
 │   │   │   ├── Rules-Devops.md
-│   │   │   ├── Rules-Developer-Guide.md
+│   │   │   ├── Rules-Documentacion.md
 │   │   │   └── Rules-Examples.md
 │   │   ├── references/                                  # Catálogo de reglas de diseño por stack, insumo de AG-03
 │   │   │   └── design/
@@ -1413,7 +1528,14 @@ mi-proyecto/
 │   │   │       └── NB-XX-<Nombre>-v1.0.md
 │   │   ├── Solucion/                                    # Solo si hay más de un proyecto (Fase H)
 │   │   │   ├── Vista-Solucion-v1.0.md                    # AG-05: mapa, contratos, grafo
-│   │   │   └── Pipeline-Solucion-v1.0.md                 # AG-09: build topológico, artefactos
+│   │   │   ├── Pipeline-Solucion-v1.0.md                 # AG-09: build topológico, artefactos
+│   │   │   └── 11-Documentacion/                         # AG-11: artefactos de nivel solución
+│   │   │       ├── README.md                             # Matriz de ruteo actor x intención
+│   │   │       ├── Vision-General-Sistema-v1.0.md
+│   │   │       ├── Guia-Inicio-Rapido-v1.0.md
+│   │   │       ├── Guia-Despliegue-v1.0.md
+│   │   │       ├── Bitacora-Eventualidades-v1.0.md
+│   │   │       └── Contrato-Agentes-v1.0.md              # De acá se deriva AGENTS.md
 │   │   ├── Proyectos/                                    # Un subárbol 02..11 por proyecto
 │   │   │   └── <Nombre-Proyecto>/                  # Repetido por cada proyecto del manifiesto
 │   │   │       ├── 02-Especificacion-Funcional/
@@ -1466,17 +1588,17 @@ mi-proyecto/
 │   │   │       │   ├── Estrategia-Versionado-v1.0.md
 │   │   │       │   ├── Entornos-Deploy-v1.0.md
 │   │   │       │   └── Supply-Chain-Seguridad-v1.0.md
-│   │   │       ├── 10-Developer-Guide/                   # Según gating y tipo
+│   │   │       ├── 10-Examples/                          # Según gating y tipo; con contratos de verificación VER-XX
 │   │   │       │   ├── README.md
-│   │   │       │   ├── Conceptos-Fundamentales-v1.0.md
-│   │   │       │   ├── Guia-Onboarding-Developer-v1.0.md
-│   │   │       │   ├── Referencia-API-v1.0.md
-│   │   │       │   └── Troubleshooting-v1.0.md
-│   │   │       └── 11-Examples/                          # Según gating y tipo
+│   │   │       │   ├── ejemplo-01-<Nombre>-v1.0.md
+│   │   │       │   ├── ejemplo-02-<Nombre>-v1.0.md
+│   │   │       │   └── ejemplo-03-<Nombre>-v1.0.md
+│   │   │       └── 11-Documentacion/                     # Siempre; qué cuerpos se materializan depende del tipo
 │   │   │           ├── README.md
-│   │   │           ├── ejemplo-01-<Nombre>-v1.0.md
-│   │   │           ├── ejemplo-02-<Nombre>-v1.0.md
-│   │   │           └── ejemplo-03-<Nombre>-v1.0.md
+│   │   │           ├── Conceptos-Fundamentales-v1.0.md
+│   │   │           ├── Guia-Onboarding-Developer-v1.0.md
+│   │   │           ├── Referencia-API-v1.0.md
+│   │   │           └── Troubleshooting-v1.0.md
 │   │   └── README.md                                     # README raíz consolidado de la solución
 │   └── Maquetas/                                         # Solo si algún proyecto ejecutó la Fase B2
 │       └── <Nombre-Proyecto>/                            # Una maqueta por proyecto visual
@@ -1491,7 +1613,8 @@ mi-proyecto/
 │   ├── <NombreSolucionCodigo>.<Sufijo>/                  # Un proyecto por nombre de código
 │   └── Aplicada.<Paquete>/                               # Redistribuibles con prefijo Aplicada
 ├── tests/                                                # Tests (fase posterior)
-├── samples/                                              # Materializado desde 11-Examples
+├── samples/                                              # Materializado desde 10-Examples
+├── AGENTS.md                                             # Contrato de contexto para agentes (Fase I)
 └── README.md                                             # README de la raíz del repo
 ```
 
@@ -1503,6 +1626,7 @@ Notas sobre el árbol:
 - Las categorías `00-Contexto/` y `01-Necesidades-Negocio/` viven a nivel solución (se generan una vez en la Fase A). Las categorías `02` a `11` se repiten bajo `Proyectos/<Nombre-Proyecto>/`, un subárbol por proyecto del manifiesto.
 - La carpeta `Solucion/` y sus dos artefactos (vista de solución y pipeline de solución) se generan solo cuando hay más de un proyecto.
 - Caso degenerado (solución de un solo proyecto): el orquestador aplana el layout. Las categorías `00` a `11` van directo bajo `SDD/Docs/` (sin el subnivel `Proyectos/<Nombre>/` y sin la carpeta `Solucion/`), igual que en el árbol del template de tipo único. El README raíz se genera siempre.
+- `AGENTS.md` vive en la raíz del repositorio, fuera de `SDD/`. Es la única salida del orquestador que no está bajo `SDD/`, y es a propósito: las herramientas de agentes lo buscan ahí. Se emite en la primera corrida de la Fase I.
 - `SDD/Maquetas/` aparece solo si algún proyecto ejecutó la Fase B2. Es hermana de `SDD/Docs/` y no está dentro de ella: `SDD/Docs/` es exclusivamente prosa generada por el orquestador, y la maqueta es material ejecutable que vos editás a mano durante la validación.
 - El catálogo de modelos UX-UI (`Devs/Modelos-UX-UI/`) y sus ejemplos ejecutables (`Templates/`, en la raíz del repositorio fuente `IA.SDD`, hermana de `SDD/`) viven del lado del template, no del repositorio destino. Se poblan solo si aceptás capitalizar el diseño de una maqueta aprobada.
 - El árbol mostrado es el caso completo; tu solución va a tener algunas omisiones por proyecto según el `project_type` de cada uno y sus flags.
@@ -1522,6 +1646,8 @@ Esta guía de usuario está distribuida en 10 capítulos completos según la est
 | 1.1 | 2026-06-10 | Actualización del contenido al modelo de solución más jerarquía de proyectos: intake de tres documentos (SOLUTION-MANIFEST + BRIEF + README de solución), generación por proyecto en orden topológico, layout con Proyectos/<Nombre>/ y Solucion/, caso degenerado aplanado, convención de nombres de código, caso aplicado multi-proyecto, FAQ y glosario ampliados. |
 | 1.2 | 2026-06-10 | Actualización al intake unificado: el usuario completa un único documento SOLUTION-INTAKE; el SOLUTION-MANIFEST lo deriva el orquestador en la Fase de validación de intake con confirmación; flujo, casos, árbol, FAQ y glosario ajustados. |
 | 1.3 | 2026-07-19 | Incorporación de la Fase B2 de validación visual de maqueta y del sensado de deriva. Se agrega la tabla de contenido del documento. Nuevo §4.6 (Paso 5b: elección de modelo UX-UI, plan de maqueta, construcción, validación en el navegador, las dos vías de corrección, retroalimentación obligatoria, captura de conocimiento y emisión de la línea de base), con el §4.6 anterior renumerado a §4.7. §4.5 suma la Fase B2 al listado de fases. Nuevo §7.4 (agregar un modelo UX-UI al catálogo). Cuatro entradas de FAQ nuevas (F-20 a F-23: saltear la fase, correcciones manuales no tomadas, uso de la línea de base y de la matriz de sensado, qué es un modelo UX-UI). Seis términos nuevos en el glosario (Fase B2, maqueta, modelo UX-UI, línea de base visual, sensado de deriva, evidencia verificable D9). El árbol de carpetas suma `SDD/Maquetas/`, las reglas `Maqueta-Rules.md` y `Deriva-Rules.md`, y el catálogo `Modelos-UX-UI/` con sus notas. |
+| 1.4 | 2026-07-26 | Intercambio de categorías 10 ↔ 11: §2, §4 (fases F y G), §5 (casos aplicados) y §10 (mapa de carpetas) pasan a declarar `10-Examples` gobernada por `Rules-Examples.md` y `11-Documentacion` gobernada por `Rules-Documentacion.md`. Normalización del vocabulario de actores: «consumidor» pasa a «integrador». La reformulación de §4.7 y las entradas nuevas de FAQ son objeto de la versión siguiente. |
+| 1.5 | 2026-07-26 | Actualización de cara al usuario tras la reformulación de las categorías 10 y 11 y la incorporación del ciclo de documentación viva. §4 renumera las categorías en el listado de fases, incorpora las Fases I y J y suma el §4.8 con el paso 7 del usuario, que describe el ciclo incremental posterior al handoff, su precondición, qué hace cada corrida y qué le toca al usuario. §4.7 deja de afirmar que el handoff cierra el alcance de SDD: cierra el tramo de especificación. §5 corrige las referencias a categorías en los casos aplicados. §6 suma seis entradas de FAQ, F-24 a F-29: el intercambio de categorías, la cadencia de la Fase I, las consecuencias de saltear la documentación incremental, la relación de `AGENTS.md` con el resto del cuerpo, cómo correr un ensayo de entrega y qué hacer cuando no se completa, y cómo se registra y triaja una eventualidad con el caso del dispositivo USB desarrollado de punta a punta. §10 actualiza el mapa de carpetas con la carpeta de nivel solución de la categoría 11, los contratos de verificación de la 10 y `AGENTS.md` en la raíz del repositorio. |
 
 ---
 

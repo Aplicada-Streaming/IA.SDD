@@ -1,8 +1,8 @@
 # Reglas de validación del intake unificado
 
 **Archivo target:** `SDD/Intake/SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md`
-**Consumidor:** la Fase de validación de intake del `Master-Prompt.md` (previa a la Fase A).
-**Versión de las reglas:** 1.0
+**Lector:** la Fase de validación de intake del `Master-Prompt.md` (previa a la Fase A).
+**Versión de las reglas:** 1.1
 
 ---
 
@@ -134,3 +134,4 @@ Reglas de la batería:
 | Versión | Fecha | Cambios | Autor |
 |---|---|---|---|
 | 1.0 | 2026-06-10 | Reglas iniciales de validación del intake unificado: campos bloqueantes, patrones de placeholder, derivación del `SOLUTION-MANIFEST` desde §13 del intake con sus validaciones, validaciones de completitud semántica, formato de la batería de preguntas consolidada, niveles de bloqueo y articulación con §2 y §9 del master-prompt. | Reformulación SDD (unificación de intake) |
+| 1.1 | 2026-07-26 | Normalización del vocabulario de actores: el campo de cabecera «Consumidor» pasa a «Lector», porque designa quién lee estas reglas y no un rol de intervención sobre el producto. |

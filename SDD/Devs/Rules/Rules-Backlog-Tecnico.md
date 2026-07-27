@@ -2,7 +2,7 @@
 
 **Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/06-Backlog-Tecnico/`
 **Subagente target del orquestador:** Scrum Master / Agile Coach senior (AG-06)
-**Versión de las reglas:** 1.2
+**Versión de las reglas:** 1.3
 
 ---
 
@@ -144,6 +144,10 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 ```
 
 Para `product-backlog`, `backlog-tecnico`, `BT-XX` y `definition-of-ready` aplica la misma cabecera adaptando el título y los campos pertinentes (la BT lleva `Tipo` en vez de `Prioridad MoSCoW`).
+
+**Tabla de contenido.** Todo documento generado que supere las tres secciones de primer nivel incluye una tabla de contenido inmediatamente después de la cabecera de metadatos, con enlaces ancla a cada sección de primer y de segundo nivel. La tabla de contenido no cuenta como sección de contenido ni altera la estructura obligatoria del documento: se ubica entre la cabecera y la primera sección, y las secciones obligatorias siguen siendo las que declara §4.2. Los documentos breves —fichas de una sola sección, entradas de índice— quedan exceptuados.
+
+El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente de IA que recorre la cadena de especificación acumulando contexto, y para ese lector la tabla de contenido es indiferente. Existe para el agente humano que entra a consultar un punto concreto sin haber leído el documento entero.
 
 ### 4.2 Secciones obligatorias de `Product-Backlog-v1.0.md`
 
@@ -296,6 +300,7 @@ Tabla de trazabilidad de la US:
 - [ ] Ningún archivo usa el patrón `-v<X.Y>.md`; todos usan `-v<X.Y>.md`.
 - [ ] La DoR no se solapa con la Definition of Done de 08; la DoR habla de cuándo empezar, la DoD de cuándo terminar.
 - [ ] No hay menciones a stacks concretos, productos comerciales ni protocolos específicos del dominio fuente.
+- [ ] Todo documento con más de tres secciones de primer nivel incluye tabla de contenido inmediatamente después de la cabecera, con enlaces ancla a las secciones de primer y de segundo nivel. Los documentos breves quedan exceptuados.
 
 ---
 
@@ -439,3 +444,4 @@ Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/06-Backlog-Tecnico/<estructura>.
 | 1.0 | 2026-05-17 | Versión inicial de las reglas constructivas de la categoría 06. Establece la convención obligatoria de dos dígitos uniformes en US, BT y EP como corrección del antecedente Motor DSL (mezcla `US-01` y `BT-001`), define las cinco secciones del product-backlog, las tres del backlog-tecnico, las siete de cada US individual y las siete de cada BT individual, las variantes por tipo D8, los umbrales de archivos individuales (20 US y 30 BT) y los criterios de aceptación. |
 | 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `Proyectos/<Nombre-Proyecto>/06-Backlog-Tecnico/`; la frase de cierre de §1.2 y la ruta de salida del prompt-snippet referencian el `project_type` del proyecto en curso (manifiesto). Tablas §1.2 sin reescritura. |
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |
+| 1.3 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |

@@ -3,6 +3,56 @@
 Todos los cambios relevantes de este repositorio (`IA.SDD`) se documentan acá.
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/).
 
+## [3.1] - 2026-07-26
+
+Eliminación de material histórico absorbido. No cambia ninguna regla ni el comportamiento del orquestador.
+
+### Eliminado
+- `SDD/Devs/Reformulacion/` (4 archivos, 80 KB): `Matriz-Coherencia-Template-v1.0.md` (línea base ST-01), `Propuesta-Modelo-Solucion-Jerarquia-v1.0.md` (ST-02, APROBADA e implementada), `Audit-Reformulacion-Final-v1.0.md` (ST-09, APROBADO sin P0) y `Audit-Unificacion-Intake-v1.0.md` (APROBADO sin P0). Documentaban la reformulación a modelo de solución con jerarquía de proyectos y la unificación del intake, ambas consumadas: el modelo que proponen **es** el framework vigente y los audits cerraron aprobados.
+- `SDD/Devs/Intake/_legacy/2026-06-10/` (2 archivos, 56 KB): `PROJECT-BRIEF-template.md` y `PROJECT-README-template.md`, las dos plantillas que el `SOLUTION-INTAKE` unificado reemplazó.
+
+**Criterio aplicado.** Un registro histórico se conserva mientras alguien lo cite o mientras explique algo que las reglas vigentes no expliquen por sí solas. Estos seis archivos no cumplían ninguna de las dos condiciones: cero referencias entrantes desde archivos vivos, y su contenido íntegramente absorbido en las reglas y en las entradas 2.0 a 2.5 de este changelog. El historial de git los preserva y son recuperables.
+
+**No se tocó `SDD/Devs/Bootstrap/`.** Su `Audit-SDD1.md` es la evidencia empírica de las invariantes: siete archivos de reglas lo citan para justificar qué déficit del fuente corrigen. Eliminarlo dejaría a esas reglas diciendo «hacé X» sin poder decir por qué.
+
+### Cambiado
+- `README.md` y `SDD/Guides/SDD-Development-Guide.md`: la anatomía del repositorio pierde la fila de `Reformulacion/`, y la descripción de `Bootstrap/` deja de decir «registro histórico congelado» para declarar lo que realmente es, una fuente citada. La guía de desarrollo suma el criterio general para decidir cuándo un registro histórico se conserva y cuándo se elimina.
+
+## [3.0] - 2026-07-26
+
+Intercambio de las categorías 10 y 11, redefinición del cuerpo documental de entrega e incorporación del ciclo de documentación viva posterior al handoff. Sube major porque cambia el alcance y el gating de dos categorías, y porque la documentación generada con la numeración anterior deja de cumplir.
+
+### Añadido
+- `SDD/Guides/SDD-Development-Guide.md` (nuevo, 1.0): guía de desarrollo y extensibilidad del framework, para el mantenedor del framework y no el de una solución. Anatomía, seis contratos internos hasta ahora no escritos, **nueve** ejes de extensión con ejemplo trabajado, criterios, once anti-patrones y procedimiento de cambio. El archivo existía vacío desde su creación.
+- `README.md` raíz: reescrito como superficie de entrada. Matriz de ruteo por intención, anatomía del repositorio, mapa de las doce categorías, invariantes D1 a D9 enunciadas y reglas de intervención.
+- `Rules-Documentacion.md` (2.0): cuerpo documental de entrega organizado por rol de intervención, con artefactos de nivel solución (`Vision-General-Sistema`, `Guia-Inicio-Rapido`, `Guia-Despliegue`, `Bitacora-Eventualidades`, `Contrato-Agentes`, `AGENTS.md`) y tres cuerpos de proyecto: integrador, mantenedor y operador. Modelo de documentación viva en tres momentos, cadencia anclada al cierre de sprint, ensayo de entrega con gate humano y bitácora de eventualidades con triaje obligatorio. Identificadores `OPS-XX`, `EXT-XX` y `EVE-XX`.
+- `Rules-Examples.md` (2.0): doble arista del sample. Contrato de verificación `VER-XX` con `verifica`, `comando`, `precondiciones`, `criterio_aceptacion` y `evidencia`, y dos pasadas de generación, de diseño pre-código y de ejecución durante la codificación.
+- `Master-Prompt.md` (3.6): Fases I y J, con la precondición dura de la Fase I, su criterio de re-ejecución y diez hallazgos P0 propios. `AGENTS.md` como única salida fuera de `SDD/`.
+- `Deriva-Rules.md` (1.1): sondas `VER-XX` en la matriz de sensado. Los proyectos sin interfaz visual dejan de quedar sin instrumento de sensado.
+- `SDD-User-Guide.md` (1.5): §4.8 con el paso 7 del usuario y seis entradas de FAQ nuevas, F-24 a F-29.
+
+### Cambiado
+- **Intercambio 10 ↔ 11.** `Rules-Developer-Guide.md` pasa a `Rules-Documentacion.md`; la categoría de ejemplos pasa de 11 a 10 y la de documentación de 10 a 11. Carpetas target `10-Examples/` y `11-Documentacion/`. Subagentes reasignados: AG-10 Developer Advocate y AG-11 Technical Writer / Documentation Lead. La dependencia se invierte: 10 demuestra con código ejecutable y verificable, 11 explica, referencia y enlaza.
+- **Gating de la categoría 11.** Deja de ser opcional para cuatro tipos D8 y pasa a existir siempre, con granularidad por cuerpo. El cuerpo mantenedor es obligatorio para los ocho tipos.
+- **Orden de fases.** La Fase F queda solo con 09-Devops; la Fase G produce la pasada de diseño de 10-Examples; la Fase H suma el plan documental de 11. El handoff cierra el tramo de especificación y no el alcance del framework.
+- **Definition of Done del sprint** (`Rules-Plan-Sprint.md` 1.4): incorpora la actualización de la categoría 11 como condición de cierre.
+- **Fronteras declaradas en las dos direcciones**: `Rules-Arquitectura-Tecnica.md` (1.4), `Rules-Calidad-Y-Pruebas.md` (1.6) y `Rules-Devops.md` (1.6) declaran su frontera con la categoría 11. Sin esto, el subagente de esas categorías no la conoce, porque cada uno lee un solo archivo de reglas.
+- **Tabla de contenido** exigida en los documentos generados por las diez categorías de 00 a 09, cuando superan las tres secciones de primer nivel.
+- **Vocabulario de actores normalizado**: «consumidor» pasa a «integrador» y «constructor» a «mantenedor» donde designan un rol de intervención; «audiencia» pasa a «rol de intervención» donde designa a quien lee documentación. Se conservan los usos técnicos y la categoría de stakeholder del intake.
+- **Referencias a la sección de anti-patrones**: el orquestador las citaba como «§4.5», numeración que solo coincidía en siete de los trece archivos de reglas. Ahora se las ubica por título.
+- `SDD-Getting-Started-Guide.md` (1.1) y `Marco-Teorico-SDD-v1.0.md` (1.7): puestos al día con la numeración nueva.
+
+### Corregido
+- **Contradicción entre `Rules-Calidad-Y-Pruebas.md` y `Deriva-Rules.md`** (1.6 → 1.7). La categoría 08 seguía condicionando `Matriz-Sensado-Deriva` a `requiere_maqueta == true` y a haber ejecutado la Fase B2, contradiciendo la extensión del sensado a contratos y comportamiento. Ahora §0 declara las dos clases de sonda y su origen, §2.1 hace la matriz obligatoria también para proyectos con categoría 10, y §6 separa el criterio por clase de sonda y prohíbe la matriz vacía. Sin esta corrección, un proyecto sin interfaz visual seguía quedando sin instrumento de sensado.
+- **Nomenclatura de invariantes.** El framework se refería al conjunto como «D1-D8» pese a que son nueve desde la incorporación de D9. Dieciocho ocurrencias normativas pasan a «D1-D9» en el master-prompt, las dos guías de usuario, `Root-Rules.md`, `Rules-Necesidades-Negocio.md`, el marco teórico y el catálogo de diseño, con las enumeraciones completadas. Las notas de coherencia ya emitidas conservan «D1-D8»: verificaron contra el conjunto vigente en su momento.
+- **Neutralidad de dominio en la guía de arranque** (1.1 → 1.2). El ejemplo aplicado de §6 nombraba una solución concreta en dieciocho lugares. Pasan al placeholder `<Nombre-Solucion>`, con la descripción del dominio y los flujos de usuario enunciados en términos genéricos.
+- **Referencia muerta en el marco teórico** (1.7 → 1.8). El bloque de ejemplo de §11.2 citaba `devs/Rules/decisiones-D1-D8.md`, archivo inexistente, con rutas del layout previo al modelo de tres niveles.
+- **Versionado de la plantilla de intake** (1.2 → 1.3). `SOLUTION-INTAKE-template.md` no declaraba su propia versión en cabecera, solo en su control de cambios. Aplicación incompleta de D6 sobre las plantillas.
+- **Autosuficiencia del repositorio.** Doce ocurrencias de rutas que apuntaban fuera del árbol quedaron eliminadas. Ningún archivo de `IA.SDD` referencia otro repositorio.
+
+### Impacto sobre documentación ya emitida
+La documentación generada con la numeración anterior no se regenera automáticamente. Una solución existente conserva sus carpetas `10-Developer-Guide/` y `11-Examples/` hasta que se ejecute una regeneración parcial de esas categorías. El resto de las categorías no se ve afectado.
+
 ## [2.5] - 2026-07-25
 
 Normalización de la nomenclatura de los archivos de reglas: se elimina el prefijo numérico de las doce reglas por categoría.

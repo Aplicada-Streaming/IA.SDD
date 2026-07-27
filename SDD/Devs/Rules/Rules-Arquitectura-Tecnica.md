@@ -3,7 +3,7 @@
 **Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/05-Arquitectura-Tecnica/`
 **Carpeta target (nivel solución):** `SDD/Docs/Solucion/`
 **Subagente target del orquestador:** Arquitecto de Software Senior (AG-05)
-**Versión de las reglas:** 1.2
+**Versión de las reglas:** 1.4
 
 ---
 
@@ -16,6 +16,7 @@ La categoría 05 opera en dos niveles dentro de una solución con jerarquía de 
 - Nivel proyecto. Se genera una vez por cada proyecto del manifiesto, bajo `Proyectos/<Nombre-Proyecto>/05-Arquitectura-Tecnica/`. El orquestador selecciona la variante de §1.2 según el `project_type` de ese proyecto. Es la arquitectura interna de cada proyecto y no cambia respecto del template de tipo único.
 - Nivel solución. Se genera una vez para toda la solución, bajo `Solucion/`, por encima de la arquitectura de cada proyecto. Documenta el mapa de proyectos, los contratos inter-proyecto y el grafo de dependencias del manifiesto. Es obligatoria para soluciones con más de un proyecto. Para una solución de un único proyecto (caso degenerado) se omite: su contenido se reduce a la arquitectura del único proyecto y al README raíz.
 
+**Frontera con la categoría 11.** Esta categoría documenta la arquitectura *como decisión de diseño*: vistas formales, ADR, contratos, NFR y alternativas descartadas. Se dirige a quien participó del diseño o lo continúa dentro de la cadena de especificación, y responde «por qué se decidió así». El sistema *como hecho consumado* —qué es, qué componentes tiene y dónde vive cada uno en el árbol de archivos del repositorio— lo documenta la categoría 11 en `Vision-General-Sistema` y `Recorrido-Codigo`, dirigida a quien llega de afuera y responde «qué es esto y por dónde entro». No duplicar: 11 referencia los ADR y los contratos de acá por su identificador.
 ---
 
 ## 1. Especialidad asignada
@@ -170,6 +171,10 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 ```
 
 Para `arquitectura-solucion`, `Modelo-Datos-logico`, `flujo-ejecucion`, `contratos-<area>` y `extensibilidad` aplica la misma cabecera adaptando el título y omitiendo `Categoría`.
+
+**Tabla de contenido.** Todo documento generado que supere las tres secciones de primer nivel incluye una tabla de contenido inmediatamente después de la cabecera de metadatos, con enlaces ancla a cada sección de primer y de segundo nivel. La tabla de contenido no cuenta como sección de contenido ni altera la estructura obligatoria del documento: se ubica entre la cabecera y la primera sección, y las secciones obligatorias siguen siendo las que declara §4.2. Los documentos breves —fichas de una sola sección, entradas de índice— quedan exceptuados.
+
+El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente de IA que recorre la cadena de especificación acumulando contexto, y para ese lector la tabla de contenido es indiferente. Existe para el agente humano que entra a consultar un punto concreto sin haber leído el documento entero.
 
 ### 4.2 Secciones obligatorias de `Arquitectura-Solucion-v1.0.md`
 
@@ -349,6 +354,7 @@ Criterios adicionales de nivel solución (solo si la solución tiene más de un 
 - [ ] Cada contrato inter-proyecto corresponde a una arista de dependencia del manifiesto y referencia el `contratos-<area>` del proyecto productor.
 - [ ] Las decisiones de nivel solución, si existen, viven en `Solucion/Adrs/` como ADRs individuales con las mismas reglas de inmutabilidad que los ADRs de proyecto.
 - [ ] Para una solución de un único proyecto, la vista de solución se omitió correctamente y no quedó `Solucion/` huérfano.
+- [ ] Todo documento con más de tres secciones de primer nivel incluye tabla de contenido inmediatamente después de la cabecera, con enlaces ancla a las secciones de primer y de segundo nivel. Los documentos breves quedan exceptuados.
 
 ---
 
@@ -499,3 +505,5 @@ Salida: SDD/Docs/Solucion/<estructura>.
 | 1.0 | 2026-05-17 | Versión inicial de las reglas constructivas de la categoría 05. Establece la convención obligatoria de ADRs individuales bajo `Adrs/` como corrección del antecedente Motor DSL, define las cuatro vistas mínimas del documento maestro, las diez secciones obligatorias del ADR, las variantes por tipo D8 y los criterios de aceptación. |
 | 1.1 | 2026-06-09 | Reformulación a solución más jerarquía (ST-05). La categoría 05 opera en dos niveles: por proyecto (bajo `Proyectos/<Nombre>/05-Arquitectura-Tecnica/`, con la variante §1.2 del D8 del proyecto, sin cambios respecto del template de tipo único) y de solución (bajo `Solucion/`). Se introduce la vista de solución `Vista-Solucion-v1.0.md` con sus ocho secciones (§4.8): mapa de proyectos, grafo de dependencias, contratos inter-proyecto, decisiones de nivel solución, cross-cutting compartido, riesgos de integración y trazabilidad. Se agregan `Contratos-Inter-Proyecto-v1.0.md` y `Solucion/Adrs/`. La vista de solución es obligatoria para soluciones de más de un proyecto y se omite en el caso degenerado de un proyecto. | Reformulación SDD |
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). | Migración SDD |
+| 1.3 | 2026-07-26 | Se declara en §0 la frontera con la categoría 11: esta categoría documenta la arquitectura como decisión de diseño; el sistema como hecho consumado, con la ubicación de cada componente en el repositorio, lo documenta la categoría 11. Sin cambios de artefactos ni de gating.  Reformulación SDD |
+| 1.4 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |

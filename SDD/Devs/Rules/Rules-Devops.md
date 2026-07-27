@@ -2,7 +2,7 @@
 
 **Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/09-Devops/`
 **Subagente target del orquestador:** Ingeniero DevOps Senior (AG-09)
-**Versión de las reglas:** 1.3
+**Versión de las reglas:** 1.6
 
 ---
 
@@ -19,13 +19,14 @@ La categoría 09 opera en dos niveles dentro de una solución con jerarquía de 
 - Nivel proyecto. Se genera una vez por cada proyecto del manifiesto, bajo `Proyectos/<Nombre-Proyecto>/09-Devops/`, con la variante de §1.2 según su `project_type`. Es el pipeline, el versionado, los ambientes, la guía de publicación y el supply chain de ese proyecto. No cambia respecto del template de tipo único.
 - Nivel solución. Se genera una vez para toda la solución, bajo `Solucion/`, y orquesta el build y la publicación multi-proyecto: el orden de construcción derivado de las dependencias del manifiesto, la matriz de artefactos publicables por proyecto y la coordinación inter-proyecto. Es obligatoria para soluciones con más de un proyecto. Para una solución de un único proyecto (caso degenerado) se omite: el pipeline del único proyecto basta.
 
+**Frontera con la categoría 11.** Esta categoría documenta la *política*: qué ambientes existen, cómo se promociona entre ellos, cómo se firma y se publica el artefacto. Su lector participa del diseño, dentro de la cadena de especificación. La categoría 11 documenta el *procedimiento verificado* sobre el sistema ya construido —qué comando corro, en qué orden, qué tiene que responder— en `Guia-Despliegue`, `Guia-Inicio-Rapido` y `Guia-Contenedor`, para quien llega de afuera. No duplicar: 11 cita la política de acá y no define una segunda paralela. Un valor de configuración que aparece en ambas categorías con contenido distinto es un hallazgo; el de 09 es el que rige.
 ---
 
 ## 1. Especialidad asignada
 
 ### 1.1 Especialidad base
 
-Ingeniero DevOps Senior, equivalente al AG-09 del catálogo SDD. Perfil profesional que diseña, implementa y mantiene la infraestructura de automatización que permite al equipo construir, probar, empaquetar, publicar y desplegar software de manera confiable y repetible. Combina conocimientos de desarrollo, operaciones, seguridad y gestión de configuración. Trata el pipeline como un artefacto de software con su propia estrategia de testing, su control de versiones y su trazabilidad. Se alinea con SemVer 2.0.0 para versionado, con Conventional Commits 1.0.0 para semántica de cambios, con Keep a Changelog 1.1.0 para comunicación al consumidor, con SLSA y NIST SSDF (SP 800-218) para supply chain, con OWASP SCVS para verificación de componentes y con la práctica industrial 2024-2026 de release engineering.
+Ingeniero DevOps Senior, equivalente al AG-09 del catálogo SDD. Perfil profesional que diseña, implementa y mantiene la infraestructura de automatización que permite al equipo construir, probar, empaquetar, publicar y desplegar software de manera confiable y repetible. Combina conocimientos de desarrollo, operaciones, seguridad y gestión de configuración. Trata el pipeline como un artefacto de software con su propia estrategia de testing, su control de versiones y su trazabilidad. Se alinea con SemVer 2.0.0 para versionado, con Conventional Commits 1.0.0 para semántica de cambios, con Keep a Changelog 1.1.0 para comunicación al integrador, con SLSA y NIST SSDF (SP 800-218) para supply chain, con OWASP SCVS para verificación de componentes y con la práctica industrial 2024-2026 de release engineering.
 
 Combina varias facetas que el catálogo de disciplinas separa. CI/CD Engineering diseña stages, triggers, quality gates y artefactos. Release Engineering define versionado, canales, branching y política de breaking changes. Platform Engineering provisiona ambientes con IaC y opera promoción entre ellos. DevSecOps integra SBOM, firma, SCA, SAST y DAST en el pipeline. Operations Engineering define drain, replay y rollback para workloads vivos. Según el tipo D8 del proyecto, una o varias facetas dominan.
 
@@ -121,7 +122,7 @@ El sufijo `-v<X.Y>.md` es uniforme. Queda prohibido el patrón heredado `-v<X.Y>
 
 - Upstream: cada quality gate del pipeline referencia el criterio DoD o el NFR que verifica; cada ambiente referencia los NFR de disponibilidad y latencia objetivo declarados en 05.
 - Downstream: la developer guide de 10 cita los comandos exactos del pipeline para reproducción local; los examples de 11 referencian los canales declarados en `entornos-deploy-v<X.Y>.md`.
-- La estrategia de versionado es el documento bisagra: marca la frontera entre código (Conventional Commits, branching) y artefacto publicado (SemVer, canales, deprecation), y la consumen tanto los autores como los consumidores.
+- La estrategia de versionado es el documento bisagra: marca la frontera entre código (Conventional Commits, branching) y artefacto publicado (SemVer, canales, deprecation), y la consumen tanto los autores como los integradores.
 - Nivel solución: el orden de build y publicación del `pipeline-solucion` referencia el grafo de dependencias del manifiesto; cada artefacto publicable de su matriz referencia la `guia-publicacion-<tipo-artefacto>` del proyecto que lo produce. No puede haber un orden de build que contradiga las dependencias del manifiesto.
 
 ### 3.4 Política de versionado
@@ -151,10 +152,14 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos uniforme:
 **Autor:** {{equipo-o-rol}}
 ```
 
+**Tabla de contenido.** Todo documento generado que supere las tres secciones de primer nivel incluye una tabla de contenido inmediatamente después de la cabecera de metadatos, con enlaces ancla a cada sección de primer y de segundo nivel. La tabla de contenido no cuenta como sección de contenido ni altera la estructura obligatoria del documento: se ubica entre la cabecera y la primera sección, y las secciones obligatorias siguen siendo las que declara §4.2. Los documentos breves —fichas de una sola sección, entradas de índice— quedan exceptuados.
+
+El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente de IA que recorre la cadena de especificación acumulando contexto, y para ese lector la tabla de contenido es indiferente. Existe para el agente humano que entra a consultar un punto concreto sin haber leído el documento entero.
+
 ### 4.2 Estructura de `Pipeline-CI-CD-v1.0.md`
 
 1. Stages obligatorios. Lint (formato, linters por lenguaje), build (compilación reproducible), test (unitarios, integración, contract según pirámide de 08), SCA (composition analysis y vulnerabilidades de dependencias), SBOM (CycloneDX o SPDX), firma (sigstore/cosign u homólogo), publish (al canal correspondiente). Cada stage declara su comando, su tooling y su criterio de éxito.
-2. Matriz de SO y runtime. Combinaciones de sistema operativo y versión del runtime que se ejecutan en cada trigger. Justificación de la matriz: cobertura de consumidores reales versus costo de minutos de CI.
+2. Matriz de SO y runtime. Combinaciones de sistema operativo y versión del runtime que se ejecutan en cada trigger. Justificación de la matriz: cobertura de integradores reales versus costo de minutos de CI.
 3. Caché y artefactos. Política de caché del gestor de dependencias del runtime, expiración, llaves de caché y archivos producidos por cada stage con su retención.
 4. Promotion rules entre ambientes o canales. Criterios para promover de DEV a QA, de QA a STAGING, de STAGING a PROD, o de preview a stable. Cada transición declara su trigger (tag, aprobación manual, merge a rama específica) y sus prerequisitos.
 5. Rollback. Procedimiento por tipo de artefacto: revertir tag o deploy, delist en feed, re-deploy de versión previa, reproceso desde offset previo en workers. Cada paso operativo con comando concreto.
@@ -188,11 +193,11 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos uniforme:
 ### 4.6 Estructura de `Supply-Chain-Seguridad-v1.0.md`
 
 1. SBOM. Formato (CycloneDX o SPDX), generador, formato de salida (JSON o XML), publicación adjunta al release y firma del propio SBOM.
-2. Firma. Cosign, sigstore, certificado de organización u homólogo. Política de transparency log y verificación por consumidores.
+2. Firma. Cosign, sigstore, certificado de organización u homólogo. Política de transparency log y verificación por integradores.
 3. SLSA. Nivel objetivo (L1, L2, L3, L4) con criterios cumplidos y plan de elevación.
 4. Dependency scanning. Tooling de SCA, frecuencia de ejecución, política ante vulnerabilidad crítica, alta, media y baja. Integración con Dependabot, Renovate o equivalente.
 5. SAST y DAST. Herramientas de análisis estático y dinámico, stages del pipeline donde se ejecutan y criterios de bloqueo de PR.
-6. Política de CVE. SLA de remediación por severidad, comunicación al consumidor, ventana entre detección y publicación de fix.
+6. Política de CVE. SLA de remediación por severidad, comunicación al integrador, ventana entre detección y publicación de fix.
 
 ### 4.7 Tablas tipo y formatos recurrentes
 
@@ -249,14 +254,14 @@ Tipo de proyecto D8 y tipo de artefacto a publicar:
 | Versionado manual | Olvidos, inconsistencias y versiones salteadas | Herramienta de auto-versioning a partir de Conventional Commits y tags Git |
 | Falta de SBOM | Inventario opaco, imposibilidad de responder ante CVE de dependencias | SBOM CycloneDX o SPDX adjunto a cada release |
 | Secretos en commit | Tokens expuestos en historia Git, rotación reactiva tardía | Vault o secret manager; scan automático de commits; rotación periódica |
-| Sin política de rollback | Versión rota publicada y consumidores bloqueados | Procedimiento documentado por tipo de artefacto, ejecutable en minutos |
+| Sin política de rollback | Versión rota publicada e integradores bloqueados | Procedimiento documentado por tipo de artefacto, ejecutable en minutos |
 | Stack hardcoded en el documento general | El fuente SDD 1.0 tenía `guia-publicacion-nuget` ligado al ecosistema .NET, impidiendo aplicar la regla a otros runtimes | Nombre genérico `guia-publicacion-<tipo-artefacto>-v<X.Y>.md` con el tipo elegido por proyecto |
 | Confundir publicación con despliegue | Aplicar DEV/QA/STAGING/PROD al artefacto de una librería | Distinguir canales (preview/stable) en library de ambientes en servicios desplegables |
 | Pipeline irreproducible localmente | Solo corre en el runner CI; debugging dependiente de logs | Comandos del pipeline documentados y ejecutables en máquina local con las mismas versiones |
 | Trigger único y opaco | Todo se dispara en push a `main`; no hay distinción PR vs release | Triggers explícitos por evento: PR, push, tag, schedule |
-| Falta de firma del artefacto | Consumidor no puede verificar autoría e integridad | Firma con sigstore/cosign u homólogo en el stage final |
+| Falta de firma del artefacto | El integrador no puede verificar autoría e integridad | Firma con sigstore/cosign u homólogo en el stage final |
 | Promotion sin aprobador humano para PROD | Despliegues automáticos a producción sin gate humano cuando el negocio lo requiere | Aprobador explícito en la promoción a PROD y registro auditable |
-| CHANGELOG ausente o no mantenido | Consumidor no sabe qué cambió | Generación automática desde Conventional Commits y publicación en el release |
+| CHANGELOG ausente o no mantenido | El integrador no sabe qué cambió | Generación automática desde Conventional Commits y publicación en el release |
 
 ### 4.9 Estructura de `Pipeline-Solucion-v1.0.md`
 
@@ -302,7 +307,7 @@ Para una solución de un único proyecto, este artefacto se omite: el orden de b
 - ¿Existe procedimiento de rollback por tipo de artefacto, ejecutable y ensayado al menos una vez?
 - ¿El SBOM se genera y se adjunta al release de forma automatizada?
 - ¿La firma del artefacto se ejecuta en el stage final y se verifica antes del publish?
-- ¿La política de CVE tiene SLA por severidad y comunicación al consumidor?
+- ¿La política de CVE tiene SLA por severidad y comunicación al integrador?
 - ¿Los secretos viven en un vault, nunca en commit, y rotan con frecuencia declarada?
 
 ---
@@ -330,6 +335,7 @@ Criterios adicionales de nivel solución (solo si la solución tiene más de un 
 - [ ] Cada artefacto publicable referencia la `guia-publicacion-<tipo-artefacto>` del proyecto que lo produce.
 - [ ] Existe un gate de integración de solución antes de publicar la solución.
 - [ ] Para una solución de un único proyecto, `pipeline-solucion` se omitió correctamente.
+- [ ] Todo documento con más de tres secciones de primer nivel incluye tabla de contenido inmediatamente después de la cabecera, con enlaces ancla a las secciones de primer y de segundo nivel. Los documentos breves quedan exceptuados.
 
 ---
 
@@ -492,3 +498,6 @@ Salida: SDD/Docs/Solucion/Pipeline-Solucion-v1.0.md.
 | 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `Proyectos/<Nombre-Proyecto>/09-Devops/`; la frase de cierre de §1.2 y la ruta de salida del prompt-snippet referencian el `project_type` del proyecto en curso (manifiesto). Tablas §1.2 sin reescritura. El build y la publicación multi-proyecto se reformulan en ST-07. |
 | 1.2 | 2026-06-09 | Reformulación ST-07: build y publicación multi-proyecto. La categoría 09 opera en dos niveles. Nivel proyecto sin cambios. Nivel solución: nuevo artefacto `Pipeline-Solucion-v1.0.md` en `Solucion/` (§4.9) con orden de construcción derivado del grafo de dependencias del manifiesto, matriz de artefactos publicables por proyecto, coordinación inter-proyecto, versionado de la solución, gate de integración y rollback coordinado. Obligatorio para soluciones de más de un proyecto; omitido en el caso degenerado. | Reformulación SDD |
 | 1.3 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). | Migración SDD |
+| 1.4 | 2026-07-26 | Normalización del vocabulario de actores: «consumidor» pasa a «integrador» donde designa a quien consume el artefacto publicado. Se conserva el término donde designa un proyecto consumidor del grafo de dependencias o un consumer group de mensajería, usos técnicos en los que no refiere a un actor. |
+| 1.5 | 2026-07-26 | Se declara en §0 la frontera con la categoría 11: esta categoría define la política de ambientes, promoción y publicación; la 11 documenta el procedimiento verificado sobre el sistema construido y no define una política paralela. Sin cambios de artefactos ni de gating. |
+| 1.6 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |

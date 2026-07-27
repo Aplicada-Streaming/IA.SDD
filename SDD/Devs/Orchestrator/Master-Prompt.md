@@ -1,11 +1,11 @@
 # Master prompt SDD — Orquestador de la solución
 
 **Archivo:** `Master-Prompt.md`
-**Versión:** 3.4
+**Versión:** 3.6
 **Idioma:** Español rioplatense neutro técnico
 **Modo:** plan-then-confirm con subagentes + audit independiente
 **Prerequisitos:** `SDD/Intake/SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md` completo. El `SOLUTION-MANIFEST` lo deriva el orquestador del intake durante la fase de validación (§3); no es un insumo a completar a mano.
-**Salida:** `SDD/Docs/` poblada con la documentación de la solución y de cada proyecto, más `SDD/Maquetas/` cuando algún proyecto ejecuta la Fase B2 de validación visual.
+**Salida:** `SDD/Docs/` poblada con la documentación de la solución y de cada proyecto, más `SDD/Maquetas/` cuando algún proyecto ejecuta la Fase B2 de validación visual, más `/samples/` y `AGENTS.md` en la raíz del repositorio destino cuando se ejecutan las fases posteriores al handoff.
 
 ---
 
@@ -178,6 +178,7 @@ SDD/Docs/
   00-Contexto/                 (nivel solución: visión, alcance, roadmap del negocio único)
   01-Necesidades-Negocio/      (nivel solución: NB del negocio único)
   Solucion/                   (vista de solución: mapa de proyectos, contratos inter-proyecto, grafo; ver §11 y la categoría 05)
+    11-Documentacion/          (artefactos de nivel solución de la categoría 11; ver Rules-Documentacion.md §2.1)
   Proyectos/
     <Nombre-Proyecto>/
       02-Especificacion-Funcional/
@@ -188,11 +189,13 @@ SDD/Docs/
       07-Plan-Sprint/
       08-Calidad-Y-Pruebas/
       09-Devops/
-      10-Developer-Guide/      (según project_type y flags)
-      11-Examples/             (según project_type y flags)
+      10-Examples/             (según project_type y flags)
+      11-Documentacion/        (siempre; qué cuerpos se materializan depende del project_type)
       README.md                (README del proyecto)
   README.md                    (README raíz de la solución)
 ```
+
+Fuera de `SDD/Docs/`, en la **raíz del repositorio destino**, la categoría 11 emite `AGENTS.md`. Es la única salida del orquestador que no vive bajo `SDD/`, y se admite porque su valor depende de que las herramientas de agentes lo encuentren en la ruta convencional. El artefacto versionado del que se deriva, `Contrato-Agentes-v<X.Y>.md`, sí vive dentro de la carpeta de la categoría.
 
 Además de `SDD/Docs/`, los proyectos que ejecutan la Fase B2 producen su maqueta de validación en `SDD/Maquetas/<Nombre-Proyecto>/`, hermana de `SDD/Docs/` y no dentro de ella. La separación es deliberada: `SDD/Docs/` es exclusivamente prosa generada por el orquestador, y la maqueta es material ejecutable que el humano edita a mano durante la validación.
 
@@ -248,9 +251,9 @@ Reglas operativas sobre los flags:
 
 ---
 
-## §5 Recolección de invariantes de la solución (D1-D8 propias)
+## §5 Recolección de invariantes de la solución (D1-D9 propias)
 
-Las invariantes D1-D8 del bootstrap son globales del template (idioma, encoding, Título-Con-Guiones, versionado con guion medio, política de single-version-vigente, trazabilidad D6, prohibición de ejemplos del dominio fuente, conjunto cerrado D8). Sobre esa base, cada solución define otro conjunto de invariantes propias que el orquestador necesita fijar antes de generar. Estas invariantes son de nivel solución y aplican a todos sus proyectos.
+Las invariantes D1-D9 son globales del template (idioma, encoding, Título-Con-Guiones, versionado con guion medio, política de single-version-vigente, trazabilidad D6, prohibición de ejemplos del dominio fuente, conjunto cerrado D8, evidencia verificable D9). D1 a D8 vienen del bootstrap; D9 se incorporó con el sensado de deriva y rige hacia adelante. Sobre esa base, cada solución define otro conjunto de invariantes propias que el orquestador necesita fijar antes de generar. Estas invariantes son de nivel solución y aplican a todos sus proyectos.
 
 El orquestador presenta la siguiente lista con sus valores por defecto y pide al usuario confirmar o sustituir:
 
@@ -279,7 +282,7 @@ Si el usuario propone cambios, se registran en un bloque `Invariantes confirmada
 
 ## §6 Plan de generación por categoría
 
-A continuación se documenta el plan maestro que el orquestador construye. Las categorías de nivel solución (00, 01) se generan una vez. Las categorías por proyecto (02 a 11) se generan una vez por cada proyecto del manifiesto, en orden topológico. La columna `Subagente (variante por tipo)` se completa leyendo §1.2 del archivo de reglas correspondiente y aplicando el `project_type` del proyecto en curso. La columna `Documentos` se filtra contra §2.1 y §2.2 del archivo de reglas; los documentos omitidos por el tipo D8 no se generan.
+A continuación se documenta el plan maestro que el orquestador construye. Las categorías de nivel solución (00, 01) se generan una vez. Las categorías por proyecto (02 a 10) se generan una vez por cada proyecto del manifiesto, en orden topológico. La categoría 11 no sigue ese patrón: se planifica en la Fase H, se construye incrementalmente en la Fase I y se consolida en la Fase J, según el modelo de documentación viva de `Rules-Documentacion.md` §0.3. La columna `Subagente (variante por tipo)` se completa leyendo §1.2 del archivo de reglas correspondiente y aplicando el `project_type` del proyecto en curso. La columna `Documentos` se filtra contra §2.1 y §2.2 del archivo de reglas; los documentos omitidos por el tipo D8 no se generan.
 
 | Fase | Categoría | Ámbito | Documentos a generar | Subagente (variante por tipo) | Insumos upstream | Insumos de reglas | Path de salida | Audit post-fase |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -294,9 +297,12 @@ A continuación se documenta el plan maestro que el orquestador construye. Las c
 | D | 07-Plan-Sprint | proyecto | Si `equipo_n` > 1: sprint plan completo; si == 1: `Mini-Plan-v1.0.md`, `README.md` | Scrum Master / Gestión Ágil Senior (AG-07) + variante D8 del proyecto | 06 del proyecto; 02; 05 | `Rules-Plan-Sprint.md` | `SDD/Docs/Proyectos/<Nombre>/07-Plan-Sprint/` | Sí |
 | E | 08-Calidad-Y-Pruebas | proyecto | `estrategia-calidad`, `estrategia-testing`, `plan-pruebas`, `matriz-cobertura-pruebas`, `casos-prueba-referenciales`, `criterios-validacion`, `definition-of-done`, `guia-testing-extensibilidad` (si aplica), `README.md` | Ingeniero QA / SDET Senior (AG-08) + variante D8 del proyecto | 02; 05; 06; 07 del proyecto | `Rules-Calidad-Y-Pruebas.md` | `SDD/Docs/Proyectos/<Nombre>/08-Calidad-Y-Pruebas/` | Sí |
 | F | 09-Devops | proyecto | `pipeline-ci-cd`, `estrategia-versionado`, `entornos-deploy`, `guia-publicacion-<tipo-artefacto>` (según §2.2), `supply-chain-seguridad`, `README.md` | Ingeniero DevOps Senior (AG-09) + variante D8 del proyecto | 05; 08 del proyecto; README §5 del proyecto | `Rules-Devops.md` | `SDD/Docs/Proyectos/<Nombre>/09-Devops/` | Sí |
-| F | 10-Developer-Guide | proyecto | Según `project_type` y `tiene_portal_developers`: conceptos, onboarding, integración, referencia, troubleshooting, glosario, `README.md`. Si se omite, registrar ADR de omisión en 05 del proyecto | Technical Writer / Developer Advocate Senior (AG-10) + variante D8 del proyecto | 02; 05; 08 del proyecto | `Rules-Developer-Guide.md` | `SDD/Docs/Proyectos/<Nombre>/10-Developer-Guide/` | Sí (si se generó) |
-| G | 11-Examples | proyecto | Según §2.2: `README.md` + `ejemplo-XX-<Nombre>-v1.0.md` (mínimos por tipo); `Imagenes/` si hay assets | Developer Advocate / Sample Engineer Senior (AG-11) + variante D8 del proyecto | 02; 05; 10 del proyecto | `Rules-Examples.md` | `SDD/Docs/Proyectos/<Nombre>/11-Examples/` | Sí (si se generó) |
+| G | 10-Examples | proyecto | Pasada de diseño: `README.md` + `ejemplo-XX-<Nombre>-v1.0.md` (mínimos por tipo) con su `Contrato de verificación` y `evidencia` en `No verificado — sin código`; `/samples` esqueletado; `Imagenes/` si hay assets | Developer Advocate / Sample Engineer Senior (AG-10) + variante D8 del proyecto | 02; 05; 06 del proyecto | `Rules-Examples.md`, `Deriva-Rules.md` | `SDD/Docs/Proyectos/<Nombre>/10-Examples/` | Sí (si se generó) |
 | H | Consolidación de solución | solución | `Solucion/Vista-Solucion-v1.0.md` (AG-05) y `Solucion/Pipeline-Solucion-v1.0.md` (AG-09), solo si hay más de un proyecto; `SDD/Docs/README.md` con la tabla de proyectos, su D8, rol y dependencias (AG-ROOT) | AG-05, AG-09 y AG-ROOT (variante D8 del proyecto principal) | Todos los anteriores; manifiesto | `Rules-Arquitectura-Tecnica.md`, `Rules-Devops.md`, `Root-Rules.md` | `SDD/Docs/Solucion/` y `SDD/Docs/README.md` | Sí (audit final consolidado) |
+| H | 11-Documentacion, plan documental | proyecto + solución | Momento 1: índice del cuerpo documental por proyecto, con el rol de intervención de cada artefacto y su estado `Planificado`. Sin contenido redactado | Technical Writer / Documentation Lead (AG-11) | Manifiesto; 02; 05 de cada proyecto | `Rules-Documentacion.md` | `SDD/Docs/Proyectos/<Nombre>/11-Documentacion/` y `SDD/Docs/Solucion/11-Documentacion/` | Sí (dentro del audit final) |
+| I | 10-Examples, pasada de ejecución | proyecto | Samples implementados y corridos; campo `evidencia` de cada `VER-XX` con la salida real y su fecha | Developer Advocate / Sample Engineer Senior (AG-10) | Código construido; 10 de la pasada de diseño | `Rules-Examples.md` §0.2 | `SDD/Docs/Proyectos/<Nombre>/10-Examples/` y `/samples/` | Sí (acotado al incremento) |
+| I | 11-Documentacion, actualización incremental | proyecto + solución | Momento 2: documentos afectados por el incremento actualizados al estado real, triaje de la bitácora, `AGENTS.md` emitido o refrescado en la raíz del repositorio destino, ensayo de entrega automatizado | Technical Writer / Documentation Lead (AG-11) | Código construido; 05; 08; 09; 10 | `Rules-Documentacion.md` §0.3 a §0.6 | `SDD/Docs/.../11-Documentacion/` y `AGENTS.md` en la raíz del destino | Sí (acotado al incremento) |
+| J | 11-Documentacion, consolidación | proyecto + solución | Momento 3: verificación del cuerpo completo ejecutando todo comando documentado, `AGENTS.md` definitivo, ensayo de entrega humano como gate | Technical Writer / Documentation Lead (AG-11) + confirmación humana | Todo lo anterior | `Rules-Documentacion.md` | `SDD/Docs/.../11-Documentacion/` y `AGENTS.md` | Sí (audit final de entrega) |
 
 Notas operativas sobre el plan:
 
@@ -328,7 +334,9 @@ Nada de este procedimiento se improvisa. Si una regla cambia, el plan cambia aut
 
 ## §7 Ejecución por fases
 
-El orquestador valida el intake y deriva el manifiesto, luego genera las categorías de nivel solución, recorre los proyectos en orden topológico generando sus categorías, y cierra con la consolidación de solución. El orden de ejecución dentro de cada proyecto sigue la cadena D6. Cada fase se cierra con su audit antes de pasar a la siguiente.
+El orquestador valida el intake y deriva el manifiesto, luego genera las categorías de nivel solución, recorre los proyectos en orden topológico generando sus categorías, y cierra con la consolidación de solución y el handoff. El orden de ejecución dentro de cada proyecto sigue la cadena D6. Cada fase se cierra con su audit antes de pasar a la siguiente.
+
+Las fases se agrupan en dos tramos separados por el handoff. **De la validación de intake a la Fase H** el sistema todavía no existe: se especifica. **De la Fase I a la Fase J** el sistema ya está construido: se documenta contra hechos verificables. La separación no es formal. Determina qué se puede afirmar en cada tramo, porque D9 exige evidencia para toda afirmación sobre el estado del sistema, y antes del handoff no hay sistema del cual obtenerla.
 
 Fase de validación de intake (una vez, antes de todo). El orquestador ejecuta §3: valida el `SOLUTION-INTAKE` con `Intake-Rules.md`, emite la batería consolidada de preguntas y se detiene ante pendientes; deriva el `SOLUTION-MANIFEST` desde §13 y lo presenta para confirmación. Recién con el manifiesto confirmado avanza a la Fase A. Esta fase no genera documentación de `/Docs/`.
 
@@ -369,23 +377,71 @@ Bucle por proyecto, en orden topológico (niveles 0, 1, 2, ...; proyectos del mi
     1. 08-Calidad-Y-Pruebas.
     2. Audit independiente de Fase E del proyecto.
 
-  Fase F — DevOps y developer guide del proyecto.
+  Fase F — DevOps del proyecto.
     1. 09-Devops.
-    2. 10-Developer-Guide (en paralelo con 09 cuando aplique).
-    3. Audit independiente de Fase F del proyecto.
+    2. Audit independiente de Fase F del proyecto.
 
-  Fase G — Examples del proyecto.
-    1. 11-Examples.
-    2. Audit independiente de Fase G del proyecto.
+  Fase G — Examples del proyecto, pasada de diseño.
+    1. 10-Examples, pasada de diseño según `Rules-Examples.md` §0.2: markdown explicativos completos y contrato de verificación `VER-XX` con su `criterio_aceptacion` declarado y su `evidencia` en `No verificado — sin código`. Las carpetas de `/samples` quedan esqueletadas con su README local y su comando previsto.
+    2. Alta de las sondas `VER-XX` en la matriz de sensado de deriva (`Deriva-Rules.md` §2.4 y §4).
+    3. Audit independiente de Fase G del proyecto.
 
-Fase H — Vista de solución, pipeline de solución, README raíz y handoff (una vez, al cerrar todos los proyectos).
+Fase H — Consolidación de solución, plan documental y handoff (una vez, al cerrar todos los proyectos).
   1. AG-05 consolida la vista de solución en `Solucion/Vista-Solucion-v1.0.md` (mapa de proyectos, contratos inter-proyecto, grafo de dependencias).
   2. AG-09 consolida el pipeline de solución en `Solucion/Pipeline-Solucion-v1.0.md` (orden de construcción topológico, matriz de artefactos publicables por proyecto, coordinación inter-proyecto). Solo si la solución tiene más de un proyecto.
   3. AG-ROOT redacta `SDD/Docs/README.md` consolidando la solución y la tabla de proyectos.
-  4. Audit final consolidado: verifica los ítems de §6 de `Root-Rules.md`, la coherencia inter-proyecto y que no hay enlaces rotos.
-  5. Se ejecuta §12 (check-out y handoff a codificación).
+  4. AG-11 emite el plan documental de la categoría 11, que es el Momento 1 de `Rules-Documentacion.md` §0.3: la lista de artefactos por proyecto con su rol de intervención y su estado `Planificado`, sin contenido redactado. Se presenta junto con el resto de la consolidación para que el humano vea qué documentación va a existir al final.
+  5. Audit final consolidado: verifica los ítems de §6 de `Root-Rules.md`, la coherencia inter-proyecto y que no hay enlaces rotos.
+  6. Se ejecuta §12 (check-out y handoff a codificación).
+
+Paso 6 — Handoff a codificación (humano). A partir de acá el sistema se construye. Las fases siguientes operan sobre un repositorio con código y no antes.
+
+  Fase I — Ciclo incremental (por incremento, re-ejecutable).
+    0. Verificación de la precondición dura de §7.1. Si no se cumple, el orquestador se detiene y lo informa, en lugar de generar documentación sobre un sistema inexistente.
+    1. 10-Examples, pasada de ejecución: los samples alcanzados por el incremento se implementan, se corren, y su campo `evidencia` se completa con la salida real y su fecha. Un `criterio_aceptacion` que falla es un hallazgo del incremento, no un documento pendiente.
+    2. 11-Documentacion, actualización incremental (Momento 2): se actualizan únicamente los documentos afectados por el incremento, con su `last_review` al día y su estado revisado.
+    3. Triaje de la bitácora de eventualidades según `Rules-Documentacion.md` §0.6: toda `EVE-XX` abierta recibe destino, o queda marcada `No absorbida` con su motivo.
+    4. Emisión o refresco de `AGENTS.md` en la raíz del repositorio destino, derivado de `Contrato-Agentes-v<X.Y>.md`. Se emite en la primera corrida de esta fase y se refresca en todas las siguientes.
+    5. Ensayo de entrega automatizado: se ejecutan los comandos documentados en un entorno limpio y se verifican sus aserciones.
+    6. Actualización de la matriz de sensado de deriva en las filas que el incremento toca.
+    7. Audit independiente de Fase I, acotado al incremento.
+
+  Fase J — Consolidación de entrega (una vez, al cierre).
+    1. 11-Documentacion, consolidación (Momento 3): se ejecuta todo comando documentado del cuerpo completo, se confirma que las aserciones se cumplen y se revisan huecos y contradicciones entre documentos.
+    2. Emisión de la versión definitiva de `AGENTS.md`.
+    3. Ensayo de entrega humano, con al menos un guion por rol de intervención aplicable. Es un corte de confirmación humana: el agente que documentó no puede declararlo aprobado por sí mismo.
+    4. Audit final de entrega.
 
 Detención obligatoria entre fases: el orquestador no inicia la siguiente fase (ni el siguiente proyecto) sin que el audit de la fase previa haya devuelto APROBADO. Cualquier hallazgo P0 detiene la cadena y dispara la corrección antes de continuar. Un proyecto no arranca antes de que estén generados y aprobados los proyectos de los que depende.
+
+**El ensayo humano de la Fase J es un gate.** Sin ensayo humano aprobado la Fase J no cierra, por la misma razón por la que la Fase B2 no cierra sin aprobación explícita de la maqueta: el agente que produjo el artefacto conoce el sistema porque acaba de documentarlo, y esa contaminación anula la prueba.
+
+### §7.1 Precondición dura de la Fase I
+
+La Fase I no puede ejecutarse sobre un repositorio sin código. Antes de despachar cualquier subagente, el orquestador verifica las tres condiciones y las reporta con su evidencia:
+
+| Condición | Cómo se verifica |
+| --- | --- |
+| Existe código fuente del proyecto | El árbol de código declarado en §16 del `SOLUTION-INTAKE` existe y contiene archivos |
+| `/samples` tiene al menos un sample implementado | Existe al menos una carpeta de `/samples` con código, no solo su README esqueletado |
+| Los tests corren | El comando de test declarado en la categoría 08 se ejecuta y devuelve un resultado, aprobado o no |
+
+Si alguna condición no se cumple, el orquestador **se detiene y lo informa**. No genera documentación sobre un sistema inexistente, porque el resultado sería un cuerpo documental que describe intenciones y se lee como si describiera hechos, que es precisamente lo que D9 prohíbe.
+
+### §7.2 Criterio de re-ejecución de la Fase I
+
+La Fase I se re-ejecuta una vez por incremento, así que hay que declarar qué se regenera y qué se preserva en cada corrida.
+
+| Elemento | Comportamiento en la re-ejecución |
+| --- | --- |
+| Documentos de 11 no afectados por el incremento | Se preservan intactos. Solo se toca lo que el incremento alcanza |
+| Documentos de 11 afectados por el incremento | Se actualizan al estado real del sistema, con `last_review` nuevo |
+| Campo `evidencia` de los contratos `VER-XX` | Se sobrescribe con la salida real de la corrida en curso. La evidencia anterior no se conserva: lo que importa es el estado presente |
+| Entradas `EVE-XX`, `OPS-XX`, `ISSUE-XX` y `EXT-XX` existentes | Se preservan. Los identificadores son estables y no se reciclan |
+| `AGENTS.md` | Se regenera completo desde `Contrato-Agentes-v<X.Y>.md` en cada corrida |
+| **Correcciones manuales del usuario sobre documentos de 11** | **No se pisan.** El orquestador relee el documento, enumera las diferencias respecto de lo que él había emitido, informa cómo interpretó cada una y espera confirmación antes de propagarlas |
+
+El tratamiento de las correcciones manuales es el mismo patrón que ya rige para las correcciones manuales de maqueta en la Fase B2: el humano edita, el agente lee lo editado, declara qué entendió y pide confirmación. Pisar una corrección manual sin declararlo es la forma más rápida de que el usuario deje de corregir.
 
 ---
 
@@ -424,7 +480,7 @@ Sos un {{ESPECIALIDAD_VARIANTE}}, leído literal de la sección §1.2 del archiv
 
 {{LISTA_DOCUMENTOS_FILTRADA_POR_TIPO_Y_FLAGS}}
 
-Cada uno con su cabecera obligatoria (§4.1 del archivo de reglas), sus secciones obligatorias (§4.2), sus secciones opcionales aplicables (§4.3), las tablas estándar (§4.4) y respetando los anti-patrones a evitar (§4.5).
+Cada uno con su cabecera obligatoria (§4.1 del archivo de reglas), sus secciones obligatorias y opcionales aplicables, las tablas estándar y respetando la sección de anti-patrones a evitar de ese archivo. El número de esa sección varía por archivo de reglas: se la ubica por su título, no por su numeración.
 
 ## Trazabilidad esperada
 
@@ -510,28 +566,45 @@ Perfil del auditor: Arquitecto de Soluciones + QA Senior, sin haber participado 
 
 Criterios del audit (matriz):
 
-- Conformidad D1 a D8 de cada documento (idioma, encoding, Título-Con-Guiones, versionado con guion medio, política deprecation, trazabilidad D6, prohibición de vocabulario fuente, conjunto D8 cerrado).
+- Conformidad D1 a D9 de cada documento (idioma, encoding, Título-Con-Guiones, versionado con guion medio, política deprecation, trazabilidad D6, prohibición de vocabulario fuente, conjunto D8 cerrado, evidencia verificable D9).
 - Conformidad D9 (evidencia verificable) en los artefactos emitidos desde la incorporación de la regla: toda afirmación sobre el estado del sistema cita evidencia en el formato de `Deriva-Rules.md` §1. Una afirmación sin evidencia es P1; una evidencia que no resuelve es P0. La regla no se aplica retroactivamente a documentación previa.
 - Cumplimiento de §6 (criterios de aceptación) del archivo de reglas correspondiente, para el `project_type` del proyecto.
 - Coherencia cross-doc dentro de la fase (referencias entre archivos resuelven, IDs no duplicados, glosario sin contradicciones).
 - Trazabilidad upstream/downstream declarada en cada cabecera y consistente con §3.3 del archivo de reglas, incluyendo el upstream de nivel solución (00, 01) y de proyectos dependientes cuando aplica.
 - Filename y estructura de carpetas correctos, incluyendo la ubicación bajo `Proyectos/<Nombre>/` para las categorías de proyecto.
 - En la Fase B2, además: los criterios de aceptación de `Maqueta-Rules.md` §8 y de `Deriva-Rules.md` §6. Son hallazgos P0 de esa fase la aprobación de la maqueta sin retroalimentación de la documentación, la propagación de una corrección manual sin confirmación de su interpretación, y cualquier literal del dominio del proyecto destino en los artefactos escritos en `IA.SDD`.
+- En la Fase G, además: los criterios de aceptación de la arista B de `Rules-Examples.md` §6. Son hallazgos P0 de esa fase un `criterio_aceptacion` redactado como prosa en lugar de aserción evaluable, un sample sin contrato de verificación, y un contrato cuya `evidencia` afirma una corrida que no ocurrió.
+- En las Fases I y J, además: los criterios de aceptación de `Rules-Documentacion.md` §6, con los hallazgos P0 propios que se enumeran abajo.
+
+Hallazgos P0 propios de las Fases I y J. Son los que distinguen a un cuerpo documental verificado de uno que solo parece estarlo:
+
+- Un comando documentado no ejecuta, o falla.
+- Un criterio de aceptación está redactado como prosa en lugar de aserción evaluable.
+- Un documento afirma algo que contradice el estado real del código.
+- Una ruta de archivo citada no existe en el repositorio.
+- Un artefacto declarado obligatorio por el gating de `Rules-Documentacion.md` §2.5 está ausente sin ADR que lo justifique.
+- **Un ensayo de entrega no se completó**, o requirió salirse de la documentación para avanzar.
+- **Una eventualidad quedó cerrada sin destino asignado**, o abierta desde hace más de un corte sin triaje.
+- El corte de sprint o de incremento se declaró cerrado con documentos de 11 afectados y sin revisar.
+- La Fase I se ejecutó sin cumplir la precondición dura de §7.1.
+- La Fase J se declaró cerrada sin ensayo humano aprobado.
 
 Niveles de hallazgo:
 
-- P0 (bloqueante): rompe trazabilidad, viola D1-D8, omite un documento obligatorio, contiene vocabulario prohibido, falta cabecera o checklist de §6. Detiene la cadena.
-- P1 (alto): incumplimiento de §6 sin romper trazabilidad, anti-patrón listado en §4.5, sección obligatoria incompleta. Bloquea avance hasta corrección.
+- P0 (bloqueante): rompe trazabilidad, viola D1-D9, omite un documento obligatorio, contiene vocabulario prohibido, falta cabecera o checklist de §6. Detiene la cadena.
+- P1 (alto): incumplimiento de §6 sin romper trazabilidad, anti-patrón listado en la sección de anti-patrones del archivo de reglas correspondiente, sección obligatoria incompleta. Bloquea avance hasta corrección.
 - P2 (medio): ítems opcionales recomendados ausentes, cabeceras con campos parciales. Se documenta y se sigue.
 - P3 (bajo): mejoras estilísticas o de claridad. Se anota y se decide al cierre de fase si corregir.
 
-Path del informe: `SDD/Docs/Audit/<fase>-<categoria>[-<proyecto>]-v1.0.md`.
+Path del informe: `SDD/Docs/Audit/<fase>-<categoria>[-<proyecto>]-v1.0.md`. Las corridas repetidas de la Fase I se distinguen por incremento: `SDD/Docs/Audit/I-<incremento>-<categoria>[-<proyecto>]-v1.0.md`.
+
+El resultado del ensayo de entrega se registra en el informe de audit de su fase, reutilizando esta misma maquinaria. No se crea un artefacto de ensayo aparte: un ensayo es una verificación, y las verificaciones viven en `SDD/Docs/Audit/`.
 
 Estructura del informe de audit:
 
 1. Cabecera con fase, proyecto (si aplica), alcance, auditor y fecha.
 2. Resumen ejecutivo (3 a 5 líneas) con cantidad total de hallazgos por nivel y veredicto.
-3. Matriz D1-D8 por documento.
+3. Matriz D1-D9 por documento.
 4. Matriz de estructura obligatoria por documento (cabecera + secciones obligatorias).
 5. Coherencia cross-doc (trazabilidad declarada, IDs no duplicados, glosarios sin contradicciones).
 6. Hallazgos enumerados, cada uno con: nivel (P0/P1/P2/P3), archivo, sección, evidencia, recomendación.
@@ -543,7 +616,7 @@ Despacho del auditor (esqueleto):
 
 ```text
 Sos un auditor independiente con perfil Arquitecto de Soluciones + QA Senior. No participaste de la generación de la fase {{FASE}} del proyecto {{NOMBRE_PROYECTO}} (o de nivel solución). Tu misión es evaluar los entregables contra:
-- D1 a D8 globales del template.
+- D1 a D9 globales del template.
 - §6 (criterios de aceptación) de cada archivo de reglas correspondiente a la fase, para el project_type {{PROJECT_TYPE}}.
 - Coherencia cross-doc dentro de la fase y trazabilidad hacia el upstream de solución y de proyectos dependientes.
 
@@ -597,12 +670,18 @@ Estructura del resumen ejecutivo:
 | Decisiones pendientes | Ambigüedades no resueltas, ADRs sin cerrar, secciones `Por confirmar` y bloqueos a despejar antes de codear. |
 | Flags activos | Flags de §4 por solución y por proyecto con su valor final. |
 | Línea de base y sensado de deriva | Por cada proyecto que ejecutó la Fase B2: ruta de la maqueta aprobada, cantidad de elementos de la línea de base por tipo (`SUP`, `CMP`, `EST`, `NAV`, `DM`) y la `Matriz-Sensado-Deriva-v1.0.md` con el estado de cada fila. Es el instrumento que el equipo se lleva al ciclo de codificación para verificar, sprint a sprint, que lo construido sigue siendo lo aprobado. |
+| Plan documental de la categoría 11 | Índice del cuerpo documental por proyecto: qué artefactos va a tener, su rol de intervención y su estado `Planificado`. Es el Momento 1 del modelo de documentación viva. |
+| Contratos de verificación pendientes | Tabla de sondas `VER-XX` emitidas en la Fase G con su `criterio_aceptacion` declarado y su `evidencia` en `No verificado — sin código`. Es lo que el equipo se lleva para completar durante la codificación. |
 
 Texto obligatorio del orquestador al cerrar:
 
 > "Documentación `SDD/Docs/` de la solución generada y auditada. Antes de avanzar a la generación de código, necesito confirmación explícita del usuario para arrancar el Sprint 1. Si confirmás, el siguiente paso es despachar al subagente de codificación con los items del Sprint 1 del proyecto que indiques, respetando el orden topológico de dependencias. Si no, este es el cierre del trabajo del orquestador de documentación."
 
 El orquestador no escribe código bajo ninguna circunstancia sin recibir la confirmación literal.
+
+**El handoff no cierra el alcance de SDD.** Cierra el tramo de especificación. Con el sistema en construcción se abren las Fases I y J: la pasada de ejecución de los contratos de verificación, la actualización incremental del cuerpo documental de entrega, el refresco del `AGENTS.md` y los ensayos de entrega. Ese tramo es re-ejecutable y no tiene cantidad fija de corridas: una por incremento, hasta la consolidación de la Fase J.
+
+La Fase I no arranca acá. Arranca cuando el repositorio cumple la precondición dura de §7.1, que exige código, al menos un sample implementado y tests que corran. El orquestador lo verifica antes de despachar cualquier subagente de esa fase.
 
 ---
 
@@ -633,16 +712,16 @@ Cualquier intento de un subagente de modificar el `SOLUTION-INTAKE` o el manifie
 
 La salida `SDD/Docs/` cambia según el `project_type` de cada proyecto. Esta tabla no cambia de contenido respecto del template de tipo único: cambia su ámbito de aplicación. Se aplica una vez por cada proyecto del manifiesto, contra su D8.
 
-| `project_type` | 00 contexto | 02 espec funcional (mínimo CU) | 03 ux/dx variante principal | 05 arquitectura (mínimo ADR) | 07 plan-sprint | 09 devops (artefacto publicado) | 10 developer guide | 11 examples (mínimo) |
+| `project_type` | 00 contexto | 02 espec funcional (mínimo CU) | 03 ux/dx variante principal | 05 arquitectura (mínimo ADR) | 07 plan-sprint | 09 devops (artefacto publicado) | 10 examples (mínimo) | 11 documentación |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| library | vision, alcance, acuerdo-equipo; roadmap opcional | 5 CU | DX (developer integrador) | 3 ADR (estilo, superficie pública, versionado) | Sprint plan release-driven | Paquete del gestor del runtime; canales preview/stable | Obligatoria: conceptos, onboarding, integración, referencia-api, troubleshooting, glosario | 3 samples (básico + intermedio + avanzado) consumiendo la librería |
-| web-monolith | vision, alcance, roadmap, acuerdo-equipo | 8 CU | UX/UI (navegador, mínimo 4 wireframes) | 5 ADR (estilo, persistencia, autenticación, capas, errores) | Sprint plan estándar Scrum | image-docker desplegable, ambientes DEV/QA/STAGING/PROD | Opcional, suele colapsar en README | 2 samples (datos seed + tema custom si hay extensión visual) |
-| web-microservices | vision, alcance, roadmap, acuerdo-equipo | 6 CU por bounded context | UX/UI o DX según frontend | 6 ADR por contexto | Sprint plan coordinado entre contextos | image-docker + chart-helm; GitOps | Recomendada si hay APIs públicas | 2 samples (compose mínimo + compose end-to-end con cliente de prueba) |
-| desktop-app | vision, alcance, roadmap, compatibilidad, acuerdo-equipo | 6 CU | UX/UI (escritorio, mínimo 4 ventanas) | 3 ADR (estilo, persistencia local, actualización) | Sprint plan con coordinación cross-platform | Instalador nativo firmado por plataforma | Opcional, activa si hay plugins | 2 samples (plugin demo + tema custom) |
-| mobile-app-maui | vision, alcance, roadmap, compatibilidad, acuerdo-equipo | 6 CU | UX/UI móvil + accesibilidad reforzada | 4 ADR (estilo, persistencia local, sincronización, permisos) | Sprint plan atado a ciclos de tienda | aab-android, ipa-ios; canales internal/alpha/beta/production | Opcional, activa si hay SDK público | 3 samples (app básica + sync offline + multiplataforma) |
-| rest-api | vision, alcance, roadmap, acuerdo-equipo; compatibilidad si hay SDKs | 1 CU por recurso público + 5 transversales | DX (developer consumidor) con UX en portal si aplica | 5 ADR (estilo, persistencia, autenticación, paginación, errores) | Sprint plan con coordinación de breaking changes | image-docker + OpenAPI versionado; canary o blue-green | Obligatoria: referencia generada desde OpenAPI, onboarding, troubleshooting | 3 samples (cliente HTTP de referencia + colección Postman/Bruno + SDK tipado) |
-| cli-tool | vision, alcance, compatibilidad; roadmap opcional; acuerdo-equipo si > 1 dev | 1 CU por comando + 3 transversales | DX (CLI UX) | 3 ADR (estilo, parser de argumentos, contrato stdout/stderr) | Mini-plan si 1 dev; Sprint plan condensado si > 1 | Binarios multi-OS + gestores adicionales (homebrew, scoop, chocolatey, paquete del runtime) | Obligatoria: conceptos, onboarding, referencia-cli, troubleshooting | 3 samples (recetas Windows + Linux + macOS) |
-| worker-service | vision, alcance, roadmap, acuerdo-equipo | 1 CU por tipo de mensaje + 3 transversales | DX para operadores (operability) | 5 ADR (estilo, mensajería, idempotencia, dead-letter, observabilidad) | Sprint plan combinando feature y mantenimiento | image-docker desplegado por consumer groups con drain/replay | Opcional, runbook breve si aplica | 2 samples (compose con broker + productor de prueba) |
+| library | vision, alcance, acuerdo-equipo; roadmap opcional | 5 CU | DX (developer integrador) | 3 ADR (estilo, superficie pública, versionado) | Sprint plan release-driven | Paquete del gestor del runtime; canales preview/stable | 3 samples (básico + intermedio + avanzado) consumiendo la librería | Obligatoria: conceptos, onboarding, integración, referencia-api, troubleshooting, glosario |
+| web-monolith | vision, alcance, roadmap, acuerdo-equipo | 8 CU | UX/UI (navegador, mínimo 4 wireframes) | 5 ADR (estilo, persistencia, autenticación, capas, errores) | Sprint plan estándar Scrum | image-docker desplegable, ambientes DEV/QA/STAGING/PROD | 2 samples (datos seed + tema custom si hay extensión visual) | Opcional, suele colapsar en README |
+| web-microservices | vision, alcance, roadmap, acuerdo-equipo | 6 CU por bounded context | UX/UI o DX según frontend | 6 ADR por contexto | Sprint plan coordinado entre contextos | image-docker + chart-helm; GitOps | 2 samples (compose mínimo + compose end-to-end con cliente de prueba) | Recomendada si hay APIs públicas |
+| desktop-app | vision, alcance, roadmap, compatibilidad, acuerdo-equipo | 6 CU | UX/UI (escritorio, mínimo 4 ventanas) | 3 ADR (estilo, persistencia local, actualización) | Sprint plan con coordinación cross-platform | Instalador nativo firmado por plataforma | 2 samples (plugin demo + tema custom) | Opcional, activa si hay plugins |
+| mobile-app-maui | vision, alcance, roadmap, compatibilidad, acuerdo-equipo | 6 CU | UX/UI móvil + accesibilidad reforzada | 4 ADR (estilo, persistencia local, sincronización, permisos) | Sprint plan atado a ciclos de tienda | aab-android, ipa-ios; canales internal/alpha/beta/production | 3 samples (app básica + sync offline + multiplataforma) | Opcional, activa si hay SDK público |
+| rest-api | vision, alcance, roadmap, acuerdo-equipo; compatibilidad si hay SDKs | 1 CU por recurso público + 5 transversales | DX (developer integrador) con UX en portal si aplica | 5 ADR (estilo, persistencia, autenticación, paginación, errores) | Sprint plan con coordinación de breaking changes | image-docker + OpenAPI versionado; canary o blue-green | 3 samples (cliente HTTP de referencia + colección Postman/Bruno + SDK tipado) | Obligatoria: referencia generada desde OpenAPI, onboarding, troubleshooting |
+| cli-tool | vision, alcance, compatibilidad; roadmap opcional; acuerdo-equipo si > 1 dev | 1 CU por comando + 3 transversales | DX (CLI UX) | 3 ADR (estilo, parser de argumentos, contrato stdout/stderr) | Mini-plan si 1 dev; Sprint plan condensado si > 1 | Binarios multi-OS + gestores adicionales (homebrew, scoop, chocolatey, paquete del runtime) | 3 samples (recetas Windows + Linux + macOS) | Obligatoria: conceptos, onboarding, referencia-cli, troubleshooting |
+| worker-service | vision, alcance, roadmap, acuerdo-equipo | 1 CU por tipo de mensaje + 3 transversales | DX para operadores (operability) | 5 ADR (estilo, mensajería, idempotencia, dead-letter, observabilidad) | Sprint plan combinando feature y mantenimiento | image-docker desplegado por consumer groups con drain/replay | 2 samples (compose con broker + productor de prueba) | Opcional, runbook breve si aplica |
 
 Notas:
 
@@ -668,8 +747,8 @@ Términos canónicos del orquestador. Cualquier divergencia con estos términos 
 | Orden topológico | Secuencia de generación que respeta las dependencias del manifiesto: primero las dependencias, después los dependientes. |
 | Caso degenerado | Solución con un único proyecto. Reproduce el comportamiento del template de tipo único. |
 | Subagente | Agente especializado invocado por el orquestador para producir los documentos de una categoría, con su rol declarado en §1 del archivo de reglas y parametrizado por el `project_type` del proyecto en curso. |
-| Audit independiente | Subagente auditor invocado al cierre de cada fase, sin contexto previo, con la única misión de evaluar los entregables contra D1-D8 y los criterios de §6 de cada regla, y emitir veredicto bloqueante. |
-| Invariante | Decisión que no se renegocia durante la generación. Existen invariantes globales del template (D1-D8 del bootstrap) e invariantes de la solución (las recolectadas en §5). |
+| Audit independiente | Subagente auditor invocado al cierre de cada fase, sin contexto previo, con la única misión de evaluar los entregables contra D1-D9 y los criterios de §6 de cada regla, y emitir veredicto bloqueante. |
+| Invariante | Decisión que no se renegocia durante la generación. Existen invariantes globales del template (D1 a D9; las ocho primeras del bootstrap, D9 incorporada con el sensado de deriva) e invariantes de la solución (las recolectadas en §5). |
 | Plan-then-confirm | Modo operativo del orquestador: cada fase se planifica, se presenta al usuario, se confirma, se ejecuta, se audita, se detiene. Sin atajos. |
 | `project_type` | Variable bloqueante leída del manifiesto por proyecto, perteneciente al conjunto cerrado D8. Gobierna las variantes de especialidad y la inclusión/exclusión de documentos de ese proyecto. |
 | Principio de delegación de la especialidad | Regla rectora del orquestador: la especialidad de cada subagente vive en §1.2 del archivo de reglas; el orquestador la lee, no la asigna. |
@@ -687,6 +766,15 @@ Términos canónicos del orquestador. Cualquier divergencia con estos términos 
 | Línea de base visual | Inventario identificado (`SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX`) de lo que el humano aprobó al mirar la maqueta, más el contrato de datos (`DM-XX`) que exhibe. Punto de comparación externo del sensado de deriva. |
 | Sensado de deriva | Mecanismo de control que contrasta lo construido contra la línea de base visual y el contrato de datos, con umbrales declarados de deriva menor y mayor, en cuatro momentos de sensado. Su regla es `Deriva-Rules.md`. |
 | Evidencia verificable (D9) | Invariante global: toda afirmación sobre el estado del sistema cita un artefacto localizable, reproducible, contemporáneo e independiente de quien afirma. No aplica a afirmaciones de diseño, de especificación ni de contexto. |
+| Fase I | Ciclo incremental posterior al handoff, re-ejecutable una vez por incremento. Completa la evidencia de los contratos de verificación, actualiza la categoría 11 al estado real del sistema, refresca `AGENTS.md` y corre el ensayo automatizado. Requiere la precondición dura de §7.1. |
+| Fase J | Consolidación de entrega, una sola vez al cierre. Verifica el cuerpo documental completo ejecutando todo comando documentado, emite el `AGENTS.md` definitivo y exige ensayo de entrega humano aprobado como gate. |
+| Documentación viva | Modelo por el cual la categoría 11 se produce en tres momentos —plan documental, actualización incremental y consolidación— en lugar de redactarse de una sola vez al cierre. Definido en `Rules-Documentacion.md` §0.3. |
+| Momento (1, 2, 3) | Cada una de las tres pasadas del modelo de documentación viva. El Momento 1 ocurre en la Fase H, el Momento 2 en cada corrida de la Fase I y el Momento 3 en la Fase J. |
+| Contrato de verificación (`VER-XX`) | Bloque obligatorio de cada sample de la categoría 10 que declara qué casos de uso verifica, con qué comando, bajo qué precondiciones, contra qué aserción evaluable y con qué evidencia real. Definido en `Rules-Examples.md` §4.6. |
+| Ensayo de entrega | Prueba de utilidad de la documentación: se ejecuta una tarea real usando únicamente el cuerpo documental. Tiene nivel automatizado, que corre el agente en cada Fase I, y nivel humano, que es gate de la Fase J. El momento en que hay que salirse de la documentación es el hallazgo. |
+| Eventualidad (`EVE-XX`) | Situación no prevista que aparece al ejecutar el sistema en un entorno real y que ninguna vista de diseño anticipaba. Se captura en la bitácora de nivel solución y se triaja hacia un documento permanente. No confundir con deriva: la deriva se aparta de una línea de base acordada, la eventualidad es conocimiento nuevo. |
+| Rol de intervención | Qué viene a hacer un lector con el sistema: integrar, mantener u operar. Organiza los cuerpos de la categoría 11 y es independiente de la naturaleza del lector, que puede ser agente humano o agente de IA. |
+| `AGENTS.md` | Contrato de contexto para agentes de codificación, emitido en la raíz del repositorio destino y derivado de `Contrato-Agentes-v<X.Y>.md`. Formato abierto y establecido; se adopta sin renombrarlo ni versionarlo, porque su valor depende de que las herramientas lo encuentren en la ruta convencional. |
 
 ---
 
@@ -706,6 +794,8 @@ Este master-prompt se versiona como cualquier otro artefacto del template. Cualq
 | 3.3 | 2026-07-18 | Incorporación de tres extensiones por capacidad derivadas de la extracción de características de un panel de control monolítico en producción: las notas operativas de §6 explicitan que AG-03 recibe además `Design-Rules-Primer-Arranque-v1.0.md` cuando el proyecto se despliega por instancia y arranca vacío, `Design-Rules-Acceso-Monousuario-v1.0.md` cuando declara una sola identidad de operación y `Design-Rules-Identidad-De-Version-v1.0.md` cuando produce artefactos desplegables identificables, todas vía el índice del catálogo, y declara la ortogonalidad mutua de las cuatro extensiones. No cambia la mecánica plan-then-confirm, las fases ni los insumos obligatorios; es un agregado de insumo normativo. | Reformulación SDD (arquetipo de panel monolítico) |
 
 | 3.4 | 2026-07-19 | Incorporación de la Fase B2 de validación visual de maqueta y del sensado de deriva. §0 suma `SDD/Maquetas/` a la salida y declara la única excepción de escritura fuera del destino (captura de modelo UX-UI en `IA.SDD`, con aceptación explícita y ofuscación bloqueante); §4 suma el flag `requiere_maqueta` con su regla de derivación y su confirmación por el humano; §5 registra la invariante D9 de evidencia verificable, con alcance acotado y vigencia hacia adelante; §6 suma la fila de la Fase B2 al plan y dos notas operativas (oferta de modelo UX-UI y freno ante propagación a categorías de nivel solución o al intake); §7 detalla los nueve pasos de la fase dentro del bucle por proyecto; §10 suma D9 y los criterios de audit propios de B2; §12 suma la línea de base y la matriz de sensado al resumen ejecutivo del handoff; §15 suma seis términos al glosario. La mecánica de la fase vive en las reglas nuevas `Maqueta-Rules.md` y `Deriva-Rules.md`, por delegación de la especialidad; el master-prompt solo la cablea. La fase es opcional y no altera el flujo de los proyectos sin UI. | Framework SDD (validación visual y sensado de deriva) |
+| 3.5 | 2026-07-26 | Intercambio de categorías 10 ↔ 11. §3.5 (layout de salida), §6 (plan de generación, filas F y G), §7 (ejecución por fases) y §14 (tabla de adaptabilidad por D8) pasan a declarar `10-Examples/` gobernada por `Rules-Examples.md` con subagente AG-10, y `11-Documentacion/` gobernada por `Rules-Documentacion.md` con subagente AG-11. Se invierte el orden de generación para respetar la dependencia nueva: los ejemplos se producen antes que el cuerpo documental, que los referencia. El caso degenerado y el resto del flujo no cambian. La incorporación de las Fases I y J del modelo de documentación viva es objeto de la versión siguiente. | Reformulación SDD |
+| 3.6 | 2026-07-26 | Incorporación del ciclo de documentación viva posterior al handoff. §0 suma `/samples/` y `AGENTS.md` a la salida. §3.5 declara `Solucion/11-Documentacion/`, la emisión de `AGENTS.md` en la raíz del repositorio destino como única salida fuera de `SDD/`, y que la categoría 11 existe siempre. §6 reordena las filas del plan: la Fase F queda solo con 09, la Fase G produce la pasada de diseño de 10 con sus contratos de verificación, la Fase H suma el plan documental de 11 (Momento 1), y se agregan las filas de las Fases I y J. §7 reescribe la ejecución por fases con el tramo posterior al handoff, y suma §7.1 con la precondición dura de la Fase I (código, sample implementado y tests que corran) y §7.2 con el criterio de re-ejecución, que preserva las correcciones manuales del usuario siguiendo el patrón de la Fase B2. §10 suma los criterios de audit de las Fases G, I y J con sus diez hallazgos P0 propios, y declara que el ensayo de entrega se registra en el informe de audit de su fase. §12 suma el plan documental y los contratos de verificación pendientes al resumen ejecutivo del handoff, y declara que el handoff cierra el tramo de especificación y no el alcance de SDD. §15 suma nueve términos. Se corrige además una referencia preexistente incorrecta: §8 y §10 citaban la sección de anti-patrones como «§4.5», numeración que solo coincide en siete de los trece archivos de reglas; ahora se la ubica por título. La mecánica de los tres momentos, la cadencia, el ensayo y la bitácora vive en `Rules-Documentacion.md`; el master-prompt solo la cablea. | Reformulación SDD |
 
 Reglas de versionado:
 

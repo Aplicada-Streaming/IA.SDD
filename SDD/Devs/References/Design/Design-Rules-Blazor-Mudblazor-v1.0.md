@@ -238,7 +238,7 @@ public static class TablerIcons
 - Theme en `Theme/AppTheme.cs`; íconos custom en `Theme/TablerIcons.cs`. Una sola definición, importada globalmente (`_Imports.razor`).
 - Componentes reutilizables del catálogo (tarjeta de acceso, badge de estado, fila de ABM) como componentes Razor propios que envuelven MudBlazor, para que el patrón viva en un solo lugar.
 - CSS propio mínimo y siempre apoyado en `--mud-palette-*`; nada de hex sueltos.
-- Nomenclatura de archivos y artefactos según D1–D8 del template (Título-Con-Guiones en docs, PascalCase en código .NET según el perfil de convención de nombres del manifiesto).
+- Nomenclatura de archivos y artefactos según D1–D9 del template (Título-Con-Guiones en docs, PascalCase en código .NET según el perfil de convención de nombres del manifiesto).
 
 ---
 

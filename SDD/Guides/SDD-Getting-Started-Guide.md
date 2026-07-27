@@ -3,18 +3,16 @@ doc_id: GUIDE-SDD-GETTING-STARTED
 doc_type: getting-started-guide
 title: SDD Getting Started Guide
 status: vigente
-version: 1.0
+version: 1.2
 origin: ai-assisted
 confidence: alta
 owner: Framework SDD
-last_review: 2026-07-24
+last_review: 2026-07-26
 audience: [desarrollador-primerizo, analista, lider-tecnico, agente-ia]
 language: es-rioplatense-neutro-tecnico
 traces:
   - SDD-User-Guide.md
   - PROMPT-Agente-Bootstrap-SDD.md
-  - Ejecutar-Prompt-Integrador-Documento-Intake.md
-  - Ejecutar-Prompt-Orquestador.md
 ---
 
 # SDD Getting Started Guide
@@ -46,7 +44,7 @@ Estado: vigente
 
 **En una frase.** SDD invierte el orden habitual: primero se especifica (intake → documentación por fases con audits), después se codea; y esta guía te muestra el camino corto para hacerlo la primera vez.
 
-> Las afirmaciones sobre el flujo, las fases y los artefactos de esta guía están respaldadas por la [Guía de usuario](SDD-User-Guide.md) y por el [prompt de entrada Bootstrap](../../PROMPTS/PROMPT-Agente-Bootstrap-SDD.md). Los detalles del ejemplo aplicado están respaldados por los tool-prompts reales de la solución `SAI.Service.Core` (ver §6).
+> Las afirmaciones sobre el flujo, las fases y los artefactos de esta guía están respaldadas por la [Guía de usuario](SDD-User-Guide.md) y por el [prompt de entrada Bootstrap](../../PROMPTS/PROMPT-Agente-Bootstrap-SDD.md). Los detalles del ejemplo aplicado están respaldados por los tool-prompts reales de la solución `<Nombre-Solucion>` (ver §6).
 
 ---
 
@@ -63,7 +61,7 @@ Estado: vigente
   - [PASO-5 — Ejecutar el prompt orquestador (genera la documentación)](#paso-5--ejecutar-el-prompt-orquestador-genera-la-documentación)
   - [PASO-6 — Revisión humana y handoff a codificación](#paso-6--revisión-humana-y-handoff-a-codificación)
 - [§5 La mejora metodológica: repositorio de documentación y tool-prompts](#5-la-mejora-metodológica-repositorio-de-documentación-y-tool-prompts)
-- [§6 Ejemplo aplicado end-to-end: SAI.Service.Core](#6-ejemplo-aplicado-end-to-end-saiservicecore)
+- [§6 Ejemplo aplicado end-to-end](#6-ejemplo-aplicado-end-to-end)
 - [§7 Errores frecuentes de arranque](#7-errores-frecuentes-de-arranque)
 - [§8 Próximos pasos y referencias](#8-próximos-pasos-y-referencias)
 - [§9 Glosario mínimo de arranque](#9-glosario-mínimo-de-arranque)
@@ -85,7 +83,7 @@ Lo que esta guía **no** cubre (y dónde está):
 
 | Necesitás | Andá a |
 |---|---|
-| La teoría (por qué plan-then-confirm, la cadena D6, invariantes D1-D8) | Marco teórico del template |
+| La teoría (por qué plan-then-confirm, la cadena D6, invariantes D1-D9) | Marco teórico del template |
 | El detalle de cada fase, FAQ extensa, casos por tipo D8 | [Guía de usuario](SDD-User-Guide.md) §4 a §10 |
 | La mecánica interna del orquestador | [Master-Prompt.md](../Devs/Orchestrator/Master-Prompt.md) |
 | Cómo se valida el intake y se deriva el manifiesto | [Intake-Rules.md](../Devs/Rules/Intake-Rules.md) |
@@ -99,8 +97,8 @@ SDD trabaja sobre repositorios **separados por responsabilidad**. La [Guía de u
 | Rol | Ejemplo | Escritura | Contiene |
 |---|---|---|---|
 | **Framework SDD** (fuente, solo lectura) | `IA.SDD` | Nunca lo tocás | Reglas, plantillas de intake, master-prompt, guías, prompt de entrada |
-| **Repositorio destino** | `SAI.Service.Core` | El orquestador escribe acá | El intake (`SDD/Intake/`), la documentación generada (`SDD/Docs/`) y, más adelante, el código |
-| **Repositorio de documentación** | `SAI.Service.Core.Documentacion` | Vos, a mano | Los tool-prompts reejecutables (`PROMPTs/`), el material de investigación (`INPUTs/`), indexación y análisis |
+| **Repositorio destino** | `<Nombre-Solucion>` | El orquestador escribe acá | El intake (`SDD/Intake/`), la documentación generada (`SDD/Docs/`) y, más adelante, el código |
+| **Repositorio de documentación** | `<Nombre-Solucion>.Documentacion` | Vos, a mano | Los tool-prompts reejecutables (`Prompts/`), el material de investigación (`INPUTs/`), indexación y análisis |
 
 > **Definición — tool-prompt.** Un prompt operativo, versionado y reejecutable, que se invoca desde Claude Code con la fórmula «Lee y ejecuta `<ruta>`». Vive en el repositorio de documentación y dispara una tarea concreta sobre el repositorio destino (por ejemplo, «generar el intake» o «arrancar el orquestador»).
 
@@ -113,8 +111,8 @@ flowchart TD
             SDD["IA.SDD<br/>Framework SDD<br/>(solo lectura)"]
         end
         subgraph DEV["DEV/  (solución en desarrollo)"]
-            DEST["SAI.Service.Core<br/>repositorio destino<br/>(SDD/Intake · SDD/Docs · código)"]
-            DOC["SAI.Service.Core.Documentacion<br/>repositorio de documentación<br/>(PROMPTs · INPUTs · análisis)"]
+            DEST["<Nombre-Solucion><br/>repositorio destino<br/>(SDD/Intake · SDD/Docs · código)"]
+            DOC["<Nombre-Solucion>.Documentacion<br/>repositorio de documentación<br/>(Prompts · INPUTs · análisis)"]
         end
     end
 
@@ -190,13 +188,13 @@ Poné los tres repositorios en un workspace común. El framework `IA.SDD` es de 
 git clone <url-de-IA.SDD> IA/IA.SDD
 
 # 2) Repositorio destino de la solución
-git clone <url-del-destino> DEV/SAI.Service.Core
+git clone <url-del-destino> DEV/<Nombre-Solucion>
 
 # 3) Repositorio de documentación de la solución
-git clone <url-de-documentacion> DEV/SAI.Service.Core.Documentacion
+git clone <url-de-documentacion> DEV/<Nombre-Solucion>.Documentacion
 ```
 
-**Convención de nombres.** El repositorio de documentación lleva el nombre de la solución con el sufijo `.Documentacion` (por ejemplo `SAI.Service.Core` → `SAI.Service.Core.Documentacion`). El destino normalmente lleva el nombre de la solución tal cual.
+**Convención de nombres.** El repositorio de documentación lleva el nombre de la solución con el sufijo `.Documentacion` (por ejemplo `<Nombre-Solucion>` → `<Nombre-Solucion>.Documentacion`). El destino normalmente lleva el nombre de la solución tal cual.
 
 > Si tu solución es de un solo proyecto, igual usás los tres repos: el modelo no cambia. Lo que cambia según sea de uno o varios proyectos es cómo el orquestador organiza `SDD/Docs/`, no cómo arrancás.
 
@@ -207,10 +205,10 @@ Agrupá los repositorios por naturaleza. Una convención que funciona: una carpe
 ```text
 workspace/
 ├── DEV/                                  # repositorios de la solución en desarrollo
-│   ├── SAI.Service.Core/                 # repositorio destino
+│   ├── <Nombre-Solucion>/                 # repositorio destino
 │   │   └── SDD/                          # (lo genera el flujo: Intake/, Docs/)
-│   └── SAI.Service.Core.Documentacion/   # repositorio de documentación
-│       └── PROMPTs/
+│   └── <Nombre-Solucion>.Documentacion/   # repositorio de documentación
+│       └── Prompts/
 │           ├── 01-Ejecutar-Prompt-Integrador-Documento-Intake/
 │           │   ├── Ejecutar-Prompt-Integrador-Documento-Intake.md   # tool-prompt
 │           │   └── INPUTs/               # tu material de investigación
@@ -231,7 +229,7 @@ Los nombres de las carpetas agrupadoras (`DEV/`, `IA/`) son convención, no requ
 Antes de generar nada, juntá el material que describe la solución que querés construir: análisis, requerimientos funcionales, topología de proyectos, definición de stack, notas del cliente, ejemplos. Dejá todo eso como documentos en la carpeta de inputs del tool-prompt integrador, en el **repositorio de documentación**:
 
 ```text
-DEV/SAI.Service.Core.Documentacion/PROMPTs/01-Ejecutar-Prompt-Integrador-Documento-Intake/INPUTs/
+<RUTA-DOCUMENTACION>/Prompts/01-Ejecutar-Prompt-Integrador-Documento-Intake/INPUTs/
 ```
 
 **Regla de oro de este paso:** el intake se genera a partir de estos inputs. Si un dato bloqueante no está acá (ni en el cuerpo del tool-prompt), el proceso se va a detener más adelante para pedírtelo. Cuanto más completo el material, menos idas y vueltas.
@@ -245,7 +243,7 @@ Este paso corresponde al **Paso 4 del último proceso experimentado**: se invoca
 Abrí Claude Code con el workspace en contexto e invocá el tool-prompt integrador:
 
 ```text
-Lee y ejecuta /DEV/SAI.Service.Core.Documentacion/PROMPTs/01-Ejecutar-Prompt-Integrador-Documento-Intake/Ejecutar-Prompt-Integrador-Documento-Intake.md
+Lee y ejecuta <RUTA-DOCUMENTACION>/Prompts/01-Ejecutar-Prompt-Integrador-Documento-Intake/Ejecutar-Prompt-Integrador-Documento-Intake.md
 ```
 
 Bloque para agentes — qué hace este tool-prompt:
@@ -265,7 +263,7 @@ Este paso corresponde al **Paso 5 del último proceso experimentado**: se invoca
 Invocá el tool-prompt orquestador desde Claude Code:
 
 ```text
-Lee y ejecuta /DEV/SAI.Service.Core.Documentacion/PROMPTs/02-Ejecutar-Prompt-Orquestador/Ejecutar-Prompt-Orquestador.md
+Lee y ejecuta <RUTA-DOCUMENTACION>/Prompts/02-Ejecutar-Prompt-Orquestador/Ejecutar-Prompt-Orquestador.md
 ```
 
 Ese tool-prompt es una fina capa que delega en el **prompt de entrada Bootstrap** del framework, que a su vez delega en el **master-prompt** (el orquestador real):
@@ -322,7 +320,7 @@ Esta sección documenta explícitamente **qué agrega el último proceso experim
 **Lo que suma la experiencia última (refinamiento).** Un **tercer repositorio**, el de documentación (`<Solución>.Documentacion`), que persiste dos cosas que en el modelo base quedaban efímeras:
 
 1. El **material de investigación** (`INPUTs/`), versionado en Git en vez de disperso en un chat.
-2. Los **tool-prompts reejecutables** (`PROMPTs/01-…` integrador y `PROMPTs/02-…` orquestador), que fijan por escrito y de forma reproducible cómo se genera el intake y cómo se arranca el orquestador para *esta* solución.
+2. Los **tool-prompts reejecutables** (`Prompts/01-…` integrador y `Prompts/02-…` orquestador), que fijan por escrito y de forma reproducible cómo se genera el intake y cómo se arranca el orquestador para *esta* solución.
 
 Comparación de los dos caminos hacia el mismo intake:
 
@@ -340,18 +338,20 @@ Comparación de los dos caminos hacia el mismo intake:
 
 ---
 
-## §6 Ejemplo aplicado end-to-end: SAI.Service.Core
+## §6 Ejemplo aplicado end-to-end
+
+El recorrido de abajo es un caso real, con los nombres de la solución reemplazados por `<Nombre-Solucion>` para preservar D7. Los tiempos, los conteos y la secuencia de pasos son los que efectivamente ocurrieron.
 
 Caso real que ilustra el flujo completo. Los datos provienen del tool-prompt integrador de la solución (`Ejecutar-Prompt-Integrador-Documento-Intake.md`), que es evidencia verificable del arranque.
 
-**Contexto.** `SAI.Service.Core` es un servicio de monitoreo y gestión de un parque de SAI (sistemas de alimentación ininterrumpida) con un panel de control web. El material de investigación describe las prestaciones a partir de un documento de análisis unificado y una topología de proyecto/solución.
+**Contexto.** `<Nombre-Solucion>` es un servicio de monitoreo y gestión de un parque de dispositivos con un panel de control web. El material de investigación describe las prestaciones a partir de un documento de análisis unificado y una topología de proyecto/solución.
 
 **Repositorios del caso:**
 
 ```text
 DEV/
-├── SAI.Service.Core/                 # destino: SDD/Intake, SDD/Docs, código
-└── SAI.Service.Core.Documentacion/   # documentación: PROMPTs, INPUTs
+├── <Nombre-Solucion>/                 # destino: SDD/Intake, SDD/Docs, código
+└── <Nombre-Solucion>.Documentacion/   # documentación: Prompts, INPUTs
 IA/
 └── IA.SDD/                           # framework (solo lectura)
 ```
@@ -360,9 +360,9 @@ IA/
 
 **Jerarquía de usuarios:** un único usuario administrador; al iniciar, el sistema pide usuario y contraseña de administración.
 
-**PASO-3 — inputs.** El material se dejó en `PROMPTs/01-Ejecutar-Prompt-Integrador-Documento-Intake/INPUTs/`: el análisis unificado de prestaciones, la topología de proyecto/solución y la definición del entorno de desarrollo.
+**PASO-3 — inputs.** El material se dejó en `Prompts/01-Ejecutar-Prompt-Integrador-Documento-Intake/INPUTs/`: el análisis unificado de prestaciones, la topología de proyecto/solución y la definición del entorno de desarrollo.
 
-**PASO-4 — integrador.** Se ejecutó el tool-prompt integrador, que construyó el intake en `SAI.Service.Core/SDD/Intake/` a partir de esos inputs y de la plantilla de intake, sin inventar datos.
+**PASO-4 — integrador.** Se ejecutó el tool-prompt integrador, que construyó el intake en `<Nombre-Solucion>/SDD/Intake/` a partir de esos inputs y de la plantilla de intake, sin inventar datos.
 
 **PASO-5 — orquestador y etapas de codificación previstas.** El tool-prompt integrador también dejó pautadas, para las fases posteriores de codificación, etapas con puntos de validación humana tangibles. Las primeras:
 
@@ -371,7 +371,7 @@ IA/
 - **Etapa 3:** integración de SQLite y entidades de autenticación/autorización; primera pantalla de alta del administrador.
 - **Etapa 4:** login, cambio de contraseña y acciones de la barra superior (cerrar sesión, cambio de contraseña).
 
-Las etapas siguientes se estructuran según los flujos de usuario previstos (UF-1 a UF-10: alta del parque, configuración de políticas, monitoreo en vivo, históricos y gráficas, prueba de batería y salud, servicio técnico, reparación/sustitución del SAI, ventana de mantenimiento, informe de período, ingesta automatizada), verificando en el navegador que las pantallas funcionan en cada una.
+Las etapas siguientes se estructuran según los flujos de usuario previstos (UF-1 a UF-10: alta del parque de dispositivos, configuración de políticas, monitoreo en vivo, históricos y gráficas, prueba de estado y salud, atención de servicio técnico, reparación o sustitución de un dispositivo, ventana de mantenimiento, informe de período, ingesta automatizada), verificando en el navegador que las pantallas funcionan en cada una.
 
 > Estas etapas pertenecen a la fase de **codificación**, posterior al handoff (PASO-6). Se citan acá porque muestran cómo el intake condiciona no solo la documentación sino el plan de sprints que el orquestador va a derivar, con puntos de validación tangibles en cada etapa.
 
@@ -411,8 +411,8 @@ Referencias de esta guía:
 | Master-prompt (orquestador) | `/IA/IA.SDD/SDD/Devs/Orchestrator/Master-Prompt.md` |
 | Plantilla de intake | `/IA/IA.SDD/SDD/Devs/Intake/SOLUTION-INTAKE-template.md` |
 | Reglas de validación de intake | `/IA/IA.SDD/SDD/Devs/Rules/Intake-Rules.md` |
-| Tool-prompt integrador (ejemplo) | `/DEV/SAI.Service.Core.Documentacion/PROMPTs/01-Ejecutar-Prompt-Integrador-Documento-Intake/Ejecutar-Prompt-Integrador-Documento-Intake.md` |
-| Tool-prompt orquestador (ejemplo) | `/DEV/SAI.Service.Core.Documentacion/PROMPTs/02-Ejecutar-Prompt-Orquestador/Ejecutar-Prompt-Orquestador.md` |
+| Tool-prompt integrador (ejemplo) | `<RUTA-DOCUMENTACION>/Prompts/01-Ejecutar-Prompt-Integrador-Documento-Intake/Ejecutar-Prompt-Integrador-Documento-Intake.md` |
+| Tool-prompt orquestador (ejemplo) | `<RUTA-DOCUMENTACION>/Prompts/02-Ejecutar-Prompt-Orquestador/Ejecutar-Prompt-Orquestador.md` |
 
 ---
 
@@ -424,7 +424,7 @@ Solo los términos que necesitás para el primer arranque. El glosario completo 
 |---|---|
 | Framework SDD | El template de solo lectura (`IA.SDD`): reglas, plantillas, master-prompt, guías. No se toca por solución. |
 | Repositorio destino | Repositorio de la solución donde el orquestador escribe el intake, la documentación (`SDD/Docs/`) y luego el código. |
-| Repositorio de documentación | Repositorio `<Solución>.Documentacion` que persiste los tool-prompts (`PROMPTs/`) y el material de investigación (`INPUTs/`). Aporte de la experiencia última. |
+| Repositorio de documentación | Repositorio `<Solución>.Documentacion` que persiste los tool-prompts (`Prompts/`) y el material de investigación (`INPUTs/`). Aporte de la experiencia última. |
 | Tool-prompt | Prompt operativo, versionado y reejecutable, invocado con «Lee y ejecuta `<ruta>`», que dispara una tarea sobre el destino. |
 | Intake (`SOLUTION-INTAKE`) | Documento único de entrada de la solución. Fuente de verdad del negocio, la composición y la técnica. El único documento que completás. |
 | Prompt integrador | Tool-prompt que reúne el material de `INPUTs/` en el intake, sobre la plantilla del framework. |
@@ -442,6 +442,8 @@ Solo los términos que necesitás para el primer arranque. El glosario completo 
 | Versión | Fecha | Cambios |
 |---|---|---|
 | 1.0 | 2026-07-24 | Creación de la guía de arranque. Recorrido de 6 pasos del arranque de una solución nueva con SDD, alineado con la Guía de usuario (§2 a §10) y con el prompt de entrada Bootstrap. Documenta la mejora metodológica del último proceso experimentado: el modelo de tres repositorios (framework, destino, documentación) y los tool-prompts reejecutables (integrador y orquestador). Incluye ejemplo aplicado end-to-end sobre `SAI.Service.Core` con evidencia de sus tool-prompts, tres diagramas mermaid (topología del workspace, flujo de 6 pasos, cadena de delegación del orquestador), glosario mínimo de arranque y frontmatter máquina-legible para la cara agente. |
+| 1.1 | 2026-07-26 | Preservación de la autosuficiencia del repositorio: las rutas absolutas a un repositorio de documentación nominado se reemplazan por el placeholder `<RUTA-DOCUMENTACION>` y la carpeta de tool-prompts del repositorio de documentación se nombra `Prompts/`, de modo que ningún archivo de `IA.SDD` contenga una ruta que apunte fuera de su propio árbol. El modelo de tres repositorios y el ejemplo aplicado no cambian. |
+| 1.2 | 2026-07-26 | Neutralidad de dominio (D7): el nombre de la solución concreta del ejemplo aplicado de §6 se reemplaza por el placeholder `<Nombre-Solucion>` en las dieciocho ocurrencias del cuerpo, incluidos el título de sección, su ancla, el diagrama de topología, los comandos de clonado y el árbol de carpetas. La descripción del dominio y los flujos de usuario se enuncian en términos genéricos. §6 abre declarando que el recorrido es un caso real con los nombres reemplazados. La fila 1.0 conserva su redacción original por ser registro histórico. |
 
 ---
 
