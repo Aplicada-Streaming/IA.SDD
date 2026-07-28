@@ -2,7 +2,7 @@
 
 **Archivo target:** `SDD/Intake/SOLUTION-INTAKE-<Nombre-Solucion>.md`
 **Lector:** la Fase de validación de intake del `Master-Prompt.md` (previa a la Fase A).
-**Versión de las reglas:** 2.0
+**Versión de las reglas:** 2.1
 
 ---
 
@@ -85,7 +85,14 @@ Por parte del intake, el orquestador verifica presencia y coherencia mínima:
 - Composición (Parte B): §13 completa y derivable (ver §4); §14 declara los contratos entre proyectos coherentes con las dependencias de §13; §15 garantiza valor end-to-end en el primer sprint; §16 deriva el árbol de la jerarquía y la convención de nombres.
 - Técnica (Parte C): §17 completo por cada proyecto de §13, con los P bloqueantes de §2.
 
+- Anexos de datos (Parte D): es opcional, pero **si existe se valida**. Cada escenario declara procedencia, un `Estado` del enum cerrado (`medido`, `declarado`, `derivado`, `reconstruido`) y sus cuatro bloques: contexto, qué ejercita, JSON completo y **qué verificar**. Un escenario sin bloque de verificación no es utilizable por `08-Calidad-Y-Pruebas` ni por `10-Examples`, que son sus consumidores declarados.
+- Navegabilidad: el intake declara su **tabla de contenido** después de la cabecera, con las secciones de primer y segundo nivel y con cada escenario de la Parte D listado por identificador.
+
 Coherencia cross-parte que se chequea: la cantidad de bloques §17 coincide con la cantidad de proyectos de §13; los contratos de §14 corresponden a aristas de dependencia de §13; las métricas de negocio (§8) no se confunden con NFR técnicos (§17 P.10).
+
+**Regla de resolución de la Parte D.** Todo identificador de escenario citado desde el cuerpo (`E-1`, `E-2`, …) existe como subsección de §20, y todo escenario de §20 está citado desde el cuerpo. Una cita sin anexo es una referencia colgada que el orquestador no puede resolver aguas abajo; un anexo sin cita es ruido. La plantilla declara esta regla desde su versión 1.3 y hasta ahora ninguna validación la verificaba: se verifica acá.
+
+**Regla de autocontención.** Ninguna sección del intake puede dejar como único respaldo de un dato una referencia a un archivo o repositorio externo. El orquestador no la resuelve, y los subagentes que reciben el intake como insumo tampoco. Si la fuente aporta el dato, se transcribe completo en la Parte D; si no lo aporta, se resuelve como ambigüedad antes de emitir el intake.
 
 ---
 
@@ -136,3 +143,4 @@ Reglas de la batería:
 | 1.0 | 2026-06-10 | Reglas iniciales de validación del intake unificado: campos bloqueantes, patrones de placeholder, derivación del `SOLUTION-MANIFEST` desde §13 del intake con sus validaciones, validaciones de completitud semántica, formato de la batería de preguntas consolidada, niveles de bloqueo y articulación con §2 y §9 del master-prompt. | Reformulación SDD (unificación de intake) |
 | 1.1 | 2026-07-26 | Normalización del vocabulario de actores: el campo de cabecera «Consumidor» pasa a «Lector», porque designa quién lee estas reglas y no un rol de intervención sobre el producto. |
 | 2.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |
+| 2.1 | 2026-07-28 | §5 incorpora la validación de la Parte D, hasta ahora sin verificar: presencia de los cuatro bloques por escenario, `Estado` dentro del enum cerrado, tabla de contenido con los escenarios listados por identificador, regla de resolución de identificadores en las dos direcciones y regla de autocontención. La plantilla declaraba estas reglas desde su 1.3 y ninguna validación las comprobaba. |

@@ -26,11 +26,16 @@ Tres propiedades se siguen de la regla: cuál es la versión vigente deja de ser
 
 ### Añadido
 - **`_legacy/`** en la raíz del framework, con su README. Una subcarpeta por versión publicada, con el **conjunto normativo completo** —no los archivos que cambiaron— porque las reglas son interdependientes y lo que hay que poder reconstruir es el estado coherente. Un snapshot son unos 50 archivos y 1,5 MB, y se toma una vez por entrada de este changelog. **Rige desde la 4.0 hacia adelante**; las versiones anteriores solo son recuperables desde el historial del control de versiones, con el mismo criterio con que se incorporó D9.
+- **Criterio de reexpresión de las notas de coherencia**, en el `README.md`. El **alcance** de lo que una nota verificó no se toca nunca: una nota que verificó D1 a D8 sigue diciendo D1 a D8. Una **verificación concreta** se reexpresa solo cuando quedaría falsa contra el árbol vigente o citaría un archivo inexistente; no alcanza con que la invariante haya cambiado de forma. La versión 4.0 es el ejemplo: D4 y D5 se reformularon las dos, pero solo las celdas de D4 se reexpresaron, porque las de D5 siguen siendo ciertas bajo la formulación nueva. Sin esta distinción el framework quedaba con dos prácticas opuestas para el mismo artefacto.
 - **El `CHANGELOG.md` queda declarado como el mecanismo de versionado del framework.** El control de versiones vuelve a ser control de código fuente y nada más: reconstruir una versión no requiere tags ni ramas, porque el árbol se autocontiene.
 
 ### Corregido
 - **Los checklists de D4 eran tautológicos.** Al menos seis reglas verificaban «Ningún archivo usa el patrón `-v<X.Y>.md`; todos usan `-v<X.Y>.md`», con los dos patrones idénticos, y `Rules-Contexto.md` daba un ejemplo inválido idéntico a los válidos. Una normalización anterior había convertido el patrón prohibido `.v<X.Y>.md` en el permitido y había vaciado de sentido toda línea que los contrastaba. Un auditor que los corriera pasaba siempre. Reescritos contra la regla nueva.
 - **Campos `Documento` que no coincidían con su archivo**: cuatro notas de coherencia se declaraban con un prefijo de guion bajo que ningún archivo tenía.
+- **Las cuatro notas de coherencia quedaban contradiciéndose a sí mismas** tras el cambio de D4: sus filas de inventario nombraban los archivos sin sufijo mientras sus celdas de verificación seguían afirmando que lo llevaban. Se readecuaron a las reglas vigentes, **declarando la reexpresión en la propia celda** e indicando bajo qué versión se hizo la verificación original. De paso citaban `Guia-Usuario-SDD-v1.0.md`, un archivo que nunca existió con ese nombre.
+- **`§6.5` de `Maqueta-Rules.md` no existe**, y tres archivos lo citaban. §6 es una lista numerada sin subsecciones y la verificación de ofuscación es su punto 5. Defecto preexistente, verificado contra el estado anterior del repositorio.
+- **`Master-Prompt.md` §0 titulaba «Modelo de dos repositorios»** mientras el `README.md` y la guía de arranque declaran tres. Reescrito: el framework opera sobre tres, el orquestador sobre dos de ellos y el tercero no lo toca nunca.
+- **Cita ambigua a `§3.1`** en la derivación del manifiesto, que se leía como si la sección fuera del formato del manifiesto y no del propio master-prompt.
 
 ### Añadido — fase de reconciliación normativa
 
@@ -42,10 +47,20 @@ Hasta ahora, ante un `SDD/Docs/` con contenido previo el orquestador solo ofrec�
 - **Prohibiciones de la fase**: no modificar ningún documento, no elegir salida por cuenta propia ni siquiera cuando no hay impacto, y no declarar reconstruible un conjunto de origen sin verificar que existe, porque es una afirmación sobre el estado del sistema y D9 exige evidencia.
 - Propagado a `PROMPT-Agente-Bootstrap-SDD.md` (prerrequisito 4), `SDD-Getting-Started-Guide.md` (troubleshooting), `SDD-User-Guide.md` (lista de fases y glosario) y `Master-Prompt.md` §0, §3.5 y §7.
 
-**Sobre el primer snapshot de `_legacy/`.** No se creó ninguno en esta versión. Las entradas `[3.2]` y `[4.0]` se produjeron en una misma sesión de trabajo sobre el estado `[3.1]`, así que no existe un árbol publicado intermedio que preservar. El archivado por versión rige desde la 4.0 hacia adelante: su primera subcarpeta se crea cuando la 4.0 sea superada. Fabricar un snapshot reconstruido sería un registro falso, que es justamente lo que la regla de intocabilidad de `_legacy/` prohíbe.
+### Añadido — navegabilidad y anexos de datos del intake
+
+Sintetizado del patrón que **dos intakes reales desarrollaron por su cuenta** sobre la plantilla 1.3, en dos soluciones sin relación entre sí. La convergencia entre ambos es la evidencia de que faltaba en la plantilla.
+
+- **Tabla de contenido obligatoria** en el `SOLUTION-INTAKE`, después de la cabecera, con las secciones de primer y segundo nivel y con cada escenario de la Parte D listado por identificador. El framework ya la exigía a los documentos que genera; el intake, que es el que más agentes leen y que en la práctica supera las dos mil líneas, era la excepción injustificada.
+- **Formato por escenario de §20, de tres piezas a cinco.** Suma **contexto** (qué situación real representa), **qué ejercita** (del modelo, las reglas y los invariantes) y **qué verificar** (traducción directa a casos de prueba). El último es el que convierte un JSON en fixture: es lo que `08-Calidad-Y-Pruebas` toma como criterio de aceptación y lo que `10-Examples` convierte en contrato de verificación.
+- **`Estado` del dato como enum cerrado**: `medido`, `declarado`, `derivado`, `reconstruido`. Es la regla de evidencia D9 aplicada a los datos de ejemplo, con la consecuencia declarada de que un valor `reconstruido` no es una medición y no se presenta como tal.
+- **Recomendación de encadenar los escenarios** como una única línea de tiempo coherente en lugar de emitirlos sueltos: un conjunto encadenado sirve de juego de datos para un *end-to-end* completo.
+- **`Intake-Rules.md` (2.0 → 2.1) valida ahora la Parte D**, que hasta acá no verificaba nadie: presencia de los cuatro bloques por escenario, `Estado` dentro del enum, tabla de contenido con los escenarios listados, **regla de resolución de identificadores en las dos direcciones** (toda cita tiene anexo y todo anexo está citado) y **regla de autocontención**. Las dos reglas existían declaradas en la plantilla desde su 1.3 y ninguna validación las comprobaba.
 
 ### Preservado deliberadamente
 - Las entradas anteriores de este changelog y los archivos de `SDD/Devs/Bootstrap/` **conservan los nombres que citaban en su momento**, según `SDD-Development-Guide.md` §VI.2 y la regla de que `Bootstrap/` nunca se edita. Un registro que se corrige después deja de ser un registro.
+
+**Sobre el primer snapshot de `_legacy/`.** No se creó ninguno en esta versión. Las entradas `[3.2]` y `[4.0]` se produjeron en una misma sesión de trabajo sobre el estado `[3.1]`, así que no existe un árbol publicado intermedio que preservar. El archivado por versión rige desde la 4.0 hacia adelante: su primera subcarpeta se crea cuando la 4.0 sea superada. Fabricar un snapshot reconstruido sería un registro falso, que es justamente lo que la regla de intocabilidad de `_legacy/` prohíbe.
 
 ## [3.2] - 2026-07-28
 

@@ -1,6 +1,6 @@
 # SOLUTION-INTAKE-template
 
-**Versión de la plantilla:** 1.3
+**Versión de la plantilla:** 1.4
 
 Este campo versiona la **plantilla**. El campo `| Versión |` de la cabecera de abajo pertenece al documento de intake que la plantilla genera, y arranca en 1.0 en cada solución nueva.
 
@@ -18,12 +18,13 @@ Estructura en tres partes:
 ## Guía de uso de esta plantilla
 
 1. Copiar este archivo como `SOLUTION-INTAKE-<Nombre-Solucion>.md` en `SDD/Intake/` del repositorio destino.
-2. Completar la cabecera y recorrer §1 a §19 en orden. Las preguntas guía marcadas con `(*)` son bloqueantes: el orquestador no avanza sin ellas.
-3. Replicar el bloque técnico de §17 una vez por cada proyecto declarado en §13.
-4. Borrar los bloques `Ejemplo` y `Lo que NO va en esta sección` una vez completado cada apartado.
-5. Regla de autocontención: cuando una sección del cuerpo se apoye en un ejemplo de instancia (un escenario, un payload, un caso con datos), citarlo por identificador en el cuerpo (`E-1`, `E-2`, …) y transcribir su JSON completo en la Parte D (§20). Si las fuentes aportan esos ejemplos, la Parte D es obligatoria y debe contenerlos enteros; si no aportan ninguno, la Parte D se declara vacía con una línea que lo diga. **Prohibido dejar en el intake final una referencia a un archivo o repositorio externo como único respaldo de un dato: el orquestador aguas abajo no puede resolverla.**
-6. Validar el §19 (checklist) antes de pasar el intake al orquestador.
-7. Declarar `Versión: 1.0` en la cabecera en la primera emisión. El nombre del archivo no lleva la versión.
+2. **Emitir la tabla de contenido** inmediatamente después de la cabecera, con enlaces ancla a cada sección de primer y segundo nivel. Es obligatoria y se regenera antes de entregar el intake al orquestador: un intake real supera con facilidad las dos mil líneas, y sin índice ni el humano ni el agente que lo lee por partes pueden ubicar una sección. La misma exigencia rige para los documentos que el framework genera; el intake no es la excepción, es el caso donde más hace falta.
+3. Completar la cabecera y recorrer §1 a §19 en orden. Las preguntas guía marcadas con `(*)` son bloqueantes: el orquestador no avanza sin ellas.
+4. Replicar el bloque técnico de §17 una vez por cada proyecto declarado en §13.
+5. Borrar los bloques `Ejemplo` y `Lo que NO va en esta sección` una vez completado cada apartado.
+6. Regla de autocontención: cuando una sección del cuerpo se apoye en un ejemplo de instancia (un escenario, un payload, un caso con datos), citarlo por identificador en el cuerpo (`E-1`, `E-2`, …) y transcribir su JSON completo en la Parte D (§20). Si las fuentes aportan esos ejemplos, la Parte D es obligatoria y debe contenerlos enteros; si no aportan ninguno, la Parte D se declara vacía con una línea que lo diga. **Prohibido dejar en el intake final una referencia a un archivo o repositorio externo como único respaldo de un dato: el orquestador aguas abajo no puede resolverla.**
+7. Validar el §19 (checklist) antes de pasar el intake al orquestador.
+8. Declarar `Versión: 1.0` en la cabecera en la primera emisión. El nombre del archivo no lleva la versión.
 
 Para una solución de un solo proyecto (caso degenerado), §13 tiene una sola fila y §17 se replica una vez: el orquestador aplana el layout y reproduce el comportamiento del template de tipo único.
 
@@ -47,6 +48,26 @@ Bloque obligatorio al inicio. Reproducir y completar:
 
 > Este documento captura qué quiere el cliente, cómo se compone la solución y cómo se construye cada proyecto.
 > El orquestador deriva de §13 el `SOLUTION-MANIFEST` canónico; no completes el manifiesto a mano.
+
+## Tabla de contenido
+
+Bloque obligatorio, inmediatamente después de la cabecera. Enumerar cada sección de primer y segundo nivel con enlace ancla, en el orden en que aparecen, incluidas las Partes A a D y el checklist de §19. Se regenera antes de entregar el intake al orquestador, para que ninguna sección agregada durante la redacción quede fuera del índice.
+
+Formato:
+
+```markdown
+- [Parte A — Negocio de la solución](#parte-a--negocio-de-la-solución)
+  - [§1 Idea y problema](#1-idea-y-problema)
+  - [§2 …](#2-)
+- [Parte B — Composición de la solución](#parte-b--composición-de-la-solución)
+  - …
+- [Parte D — Anexos de datos](#parte-d--anexos-de-datos)
+  - [§20 Anexo A — Escenarios con ejemplos completos](#20-anexo-a--escenarios-con-ejemplos-completos)
+    - [§20.E-1 · …](#20e-1--)
+- [§19 Checklist de completitud del intake](#19-checklist-de-completitud-del-intake)
+```
+
+En la Parte D, listar además cada escenario por su identificador: es la parte que más crece y la que otros documentos citan por ID, así que su índice es lo que permite resolver una cita sin recorrer el archivo entero.
 
 ---
 
@@ -457,24 +478,46 @@ Parte opcional y condicional: se incluye únicamente si las fuentes del intake a
 
 ## §20 Anexo A — Escenarios con ejemplos completos
 
-Instrucción: Transcribir, uno por subsección, cada escenario de instancia que el cuerpo cita por identificador (`E-1`, `E-2`, …), con su JSON completo y sin recortar. Cada subsección declara la procedencia del dato (archivo fuente y rango de líneas) y su estado (`verificado` si proviene de una medición documentada, `propuesto`/`reconstruido` si es un valor de fixture). Es el único apartado del intake donde se admite payload crudo. No se inventan datos: si un escenario citado no existe en las fuentes, no se crea; se resuelve como ambigüedad antes de emitir el intake.
+Instrucción: Transcribir, uno por subsección, cada escenario de instancia que el cuerpo cita por identificador (`E-1`, `E-2`, …), con su JSON completo y sin recortar. Es el único apartado del intake donde se admite payload crudo. No se inventan datos: si un escenario citado no existe en las fuentes, no se crea; se resuelve como ambigüedad antes de emitir el intake.
+
+**Por qué el anexo no es decorativo.** Estos escenarios son insumo declarado de cuatro consumidores aguas abajo: el modelo conceptual de `02-Especificacion-Funcional`, los datos de la maqueta de la Fase B2, las *fixtures* de prueba de `08-Calidad-Y-Pruebas` y los samples de `10-Examples`. Un JSON sin criterio de verificación es dato suelto; con él, es una fixture ejecutable. Por eso el formato pide las cuatro piezas y no solo el payload.
+
+**Estado del dato.** Enum cerrado, porque es la regla de evidencia D9 aplicada a los datos de ejemplo:
+
+| Estado | Significa |
+|---|---|
+| `medido` | Proviene de una observación documentada, con su fecha |
+| `declarado` | Lo afirma una persona con autoridad sobre el dato, sin medición que lo respalde |
+| `derivado` | Se calcula a partir de otro dato del intake, con la regla de cálculo declarada |
+| `reconstruido` | Valor sintético que rellena una serie para que la fixture sea ejecutable |
+
+Un valor `reconstruido` **no es una medición** y nunca se presenta como tal. Cuando conviven en un mismo JSON, marcar los reconstruidos dentro del propio payload.
 
 Formato por escenario:
 
 ### §20.[ID] · [Título del escenario]
 
-Procedencia: `[archivo fuente]`, líneas [N–M]. Estado: [verificado / propuesto / reconstruido].
+Procedencia: `[archivo fuente]`, líneas [N–M]. Estado: [medido / declarado / derivado / reconstruido].
+
+**Contexto.** Qué situación real representa este escenario y en qué momento de la vida del sistema ocurre.
+
+**Qué ejercita.** Qué partes del modelo, qué reglas de negocio y qué invariantes pone a prueba. Si el escenario cubre un caso incómodo —un dato que el sistema no puede obtener por sí solo, un borde del modelo—, decirlo acá: es lo que lo vuelve valioso.
 
 ​```json
 { ...JSON completo del escenario, transcripto de la fuente sin recortes... }
 ​```
 
+**Qué verificar.** Traducción directa a casos de prueba: qué debe cumplirse sobre estos datos para que el comportamiento se considere correcto. Es lo que `08-Calidad-Y-Pruebas` toma como criterio de aceptación y lo que `10-Examples` convierte en contrato de verificación.
+
 (repetir la subsección `§20.[ID]` una vez por cada escenario aportado por las fuentes)
+
+**Recomendación sobre el conjunto.** Cuando los escenarios lo permitan, encadenarlos como una única línea de tiempo coherente, de la puesta en marcha al caso más avanzado, en lugar de emitirlos como casos sueltos. Un conjunto encadenado sirve como juego de datos de un *end-to-end* completo; ocho casos inconexos, no. Los identificadores internos conviene que sean legibles, para que las fixtures se lean solas.
 
 Lo que NO va en esta sección:
 - Referencias a un archivo externo en lugar del JSON (rompe la autocontención: el orquestador no las resuelve).
 - Escenarios no citados desde el cuerpo (un anexo huérfano es ruido).
-- Datos sintéticos presentados como medidos: un valor reconstruido para una fixture se marca como tal.
+- Datos sintéticos presentados como medidos: un valor `reconstruido` se marca como tal.
+- JSON sin bloque **Qué verificar**: sin criterio, el dato no es utilizable aguas abajo.
 
 ## §21 Anexo B — Cobertura de campos y trazabilidad de los ejemplos
 
@@ -548,3 +591,4 @@ Este documento alimenta las siguientes secciones SDD. La parte de negocio (A) es
 | 1.1 | 2026-07-20 | Se agrega la Parte D — Anexos de datos (§20 escenarios con JSON completo, §21 cobertura), la regla de autocontención en la guía de uso (paso 5), los ítems de checklist de la Parte D y la fila de trazabilidad downstream. Objetivo: que el intake transcriba los ejemplos de instancia en lugar de referenciar archivos externos que el orquestador no puede resolver. | Orquestador SDD (Claude Code) |
 | 1.2 | 2026-07-26 | Intercambio de categorías 10 ↔ 11: los destinos declarados en §17 P.11, §18 y la tabla de mapeo intake → documentación pasan a `10-Examples/` para los samples y `11-Documentacion/` para el cuerpo documental de entrega. Normalización del vocabulario de actores. | Reformulación SDD |
 | 1.3 | 2026-07-26 | La plantilla declara su propia versión en cabecera, con la aclaración de que el campo `Versión` del cuerpo pertenece al documento generado y no a la plantilla. Corrige una aplicación incompleta de D6 sobre las plantillas.  Reformulación SDD |
+| 1.4 | 2026-07-28 | Navegabilidad y anexos de datos. Se incorpora la **tabla de contenido obligatoria** después de la cabecera, con cada escenario de la Parte D listado por identificador: un intake real supera las dos mil líneas y sin índice no es navegable ni por el humano ni por el agente que lo lee por partes. El formato por escenario de §20 pasa de tres piezas a cinco: suma **contexto**, **qué ejercita** y **qué verificar**, este último porque es lo que `08-Calidad-Y-Pruebas` toma como criterio de aceptación y `10-Examples` convierte en contrato de verificación. El `Estado` del dato pasa a enum cerrado (`medido`, `declarado`, `derivado`, `reconstruido`), que es D9 aplicada a los datos de ejemplo. Se agrega la recomendación de encadenar los escenarios como una única línea de tiempo. Sintetizado del patrón que dos intakes reales desarrollaron por su cuenta sobre la versión 1.3. |
