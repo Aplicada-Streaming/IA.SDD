@@ -1,13 +1,13 @@
 # Reglas de diseño — Blazor Interactive Server + MudBlazor
 
 **Proyecto:** {{nombre-solucion}}
-**Documento:** Design-Rules-Blazor-Mudblazor-v1.0.md
+**Documento:** Design-Rules-Blazor-Mudblazor.md
 **Versión:** 1.2
 **Estado:** Vigente
 **Fecha:** 2026-07-18
 **Autor:** {{equipo-o-rol}} (AG-03 UX/UI + Frontend Architect .NET)
 **Ámbito:** Web — Blazor Interactive Server (.NET 8/9) con MudBlazor v9
-**Hereda de:** `Design-Rules-Web-Generico-v1.0.md`
+**Hereda de:** `Design-Rules-Web-Generico.md`
 **Posición:** Insumo normativo de la categoría 03 para proyectos `project_type = web-monolith` o `web-microservices (con frontend)` cuyo stack declarado en la Parte C del intake sea Blazor + MudBlazor.
 
 ---
@@ -260,11 +260,11 @@ Además de los criterios del documento base, una superficie Blazor + MudBlazor c
 
 | Dimensión | Referencia |
 | --- | --- |
-| Documento base | `Design-Rules-Web-Generico-v1.0.md` |
+| Documento base | `Design-Rules-Web-Generico.md` |
 | Especialidad dueña | AG-03 UX/UI + Frontend Architect .NET |
 | Regla que lo invoca | `devs/Rules/Rules-UX-UI-DX.md` (selección por stack) |
 | Aplica a `project_type` | web-monolith, web-microservices (con frontend) con stack Blazor + MudBlazor |
-| Extensiones por capacidad que mapea | `Design-Rules-Config-Esquema-v1.0.md` (§4.1); `Design-Rules-Primer-Arranque-v1.0.md`, `Design-Rules-Acceso-Monousuario-v1.0.md` e `Design-Rules-Identidad-De-Version-v1.0.md` (§4.2) |
+| Extensiones por capacidad que mapea | `Design-Rules-Config-Esquema.md` (§4.1); `Design-Rules-Primer-Arranque.md`, `Design-Rules-Acceso-Monousuario.md` e `Design-Rules-Identidad-De-Version.md` (§4.2) |
 | Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>` del proyecto Blazor |
 
 ---

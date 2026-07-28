@@ -1,7 +1,7 @@
 # Nota de coherencia — Incorporación del catálogo de reglas de diseño
 
 **Proyecto:** Template SDD
-**Documento:** _Coherencia-Incorporacion-v1.0.md
+**Documento:** Coherencia-Incorporacion.md
 **Versión:** 1.0
 **Estado:** Vigente
 **Fecha:** 2026-06-19
@@ -20,14 +20,14 @@ Pase de verificación en lectura sobre la incorporación del catálogo de reglas
 | Archivo | Rol |
 | --- | --- |
 | `devs/References/Design/Index-Design-Rules.md` | Índice del catálogo: propósito, tabla del catálogo, roadmap de especializaciones, criterio de selección, control de cambios. |
-| `Devs/References/Design/_coherencia-Incorporacion-v1.0.md` | Esta nota de coherencia. |
+| `Devs/References/Design/Coherencia-Incorporacion.md` | Esta nota de coherencia. |
 
 ### 2.2 Provistos, intactos (no modificados)
 
 | Archivo | Estado |
 | --- | --- |
-| `Devs/References/Design/Design-Rules-Web-Generico-v1.0.md` | Documento base, sin alteración. |
-| `Devs/References/Design/Design-Rules-Blazor-Mudblazor-v1.0.md` | Especialización Blazor + MudBlazor, sin alteración. |
+| `Devs/References/Design/Design-Rules-Web-Generico.md` | Documento base, sin alteración. |
+| `Devs/References/Design/Design-Rules-Blazor-Mudblazor.md` | Especialización Blazor + MudBlazor, sin alteración. |
 
 ### 2.3 Editados
 
@@ -35,8 +35,8 @@ Pase de verificación en lectura sobre la incorporación del catálogo de reglas
 | --- | --- | --- |
 | `devs/Rules/Rules-UX-UI-DX.md` | Nueva §1.4 (insumos normativos de diseño por stack), fila de anti-patrón en §4.4, fila "Catálogo de diseño aplicado" en la tabla de trazabilidad de §4.3, control de cambios. | 1.2 → 1.3 |
 | `devs/Orchestrator/Master-Prompt.md` | Nota operativa en §6 sobre el insumo del catálogo para AG-03 en proyectos con UI, fila en la tabla de versionado §16. | 3.0 → 3.1 |
-| `Devs/Guides/Marco-Teorico-SDD-v1.0.md` | `references/` sumado al mapa de carpetas del plano `devs/` (§1.5), nueva subsección §8.7 sobre el catálogo. | sin marca de versión interna; solo edición |
-| `Guides/Guia-Usuario-SDD-v1.0.md` | Subárbol `References/Design/` sumado al mapa de carpetas del plano `devs/` (§10.2). | sin marca de versión interna; solo edición |
+| `Devs/Guides/Marco-Teorico-SDD.md` | `references/` sumado al mapa de carpetas del plano `devs/` (§1.5), nueva subsección §8.7 sobre el catálogo. | sin marca de versión interna; solo edición |
+| `Guides/SDD-User-Guide.md` | Subárbol `References/Design/` sumado al mapa de carpetas del plano `devs/` (§10.2). | sin marca de versión interna; solo edición |
 
 No se modificó `docs/`. No se sobrescribió ninguna plantilla.
 
@@ -46,8 +46,8 @@ No se modificó `docs/`. No se sobrescribió ninguna plantilla.
 | --- | --- | --- |
 | Idioma español rioplatense neutro técnico | Cumple | Todo el contenido nuevo en español; sin emojis ni negritas decorativas. |
 | Encoding UTF-8 | Cumple | Archivos nuevos en UTF-8 sin BOM. |
-| Título-Con-Guiones en nombres de archivo | Cumple | `Index-Design-Rules.md`, `_Coherencia-Incorporacion-v1.0.md` y los `design-rules-*` siguen Título-Con-Guiones; los prefijos `_` se alinean con los meta-archivos existentes (`Root-Rules.md`, `Intake-Rules.md`). |
-| Sufijo `-v1.0` con guion medio antes de `v` | Cumple | `_Coherencia-Incorporacion-v1.0.md` y los dos `design-rules-*-v1.0.md` usan guion bajo; no aparece el patrón prohibido `.v1.0`. El índice no lleva versión en el nombre por ser meta-archivo de entrada, igual que `Root-Rules.md` y `Intake-Rules.md`. |
+| Título-Con-Guiones en nombres de archivo | Cumple | `Index-Design-Rules.md`, `Coherencia-Incorporacion.md` y los `design-rules-*` siguen Título-Con-Guiones; los prefijos `_` se alinean con los meta-archivos existentes (`Root-Rules.md`, `Intake-Rules.md`). |
+| Versionado de nombre (D4) | Cumple | Los archivos declaran su versión en el campo `Versión` de su cabecera y ninguno lleva sufijo de versión en el nombre. Reexpresado bajo la D4 vigente desde el framework 4.0; la verificación original de esta nota se hizo contra la D4 anterior, que exigía el sufijo en el nombre. |
 | Una sola versión vigente por nombre lógico | Cumple | Un único archivo por nombre lógico en `References/Design/`; sin versiones paralelas. |
 | Trazabilidad explícita en cabeceras | Cumple | El índice y esta nota declaran Proyecto/Documento/Versión/Estado/Fecha/Autor; la cabecera de la regla 03 sube a 1.3 y la del master-prompt a 3.1, con su control de cambios respectivo. |
 | Vocabulario neutro sin atar al dominio de ninguna solución (D7) | Cumple | El contenido nuevo no introduce literales de dominio de solución. Los nombres de stack (Blazor, MudBlazor, MAUI, HTML) y los tokens de diseño pertenecen a la capa de especialización por stack del catálogo, no al dominio funcional de una solución. |
@@ -57,10 +57,10 @@ No se modificó `docs/`. No se sobrescribió ninguna plantilla.
 
 | Eslabón | Resultado | Evidencia |
 | --- | --- | --- |
-| El índice referencia los dos documentos | Cumple | Tabla del catálogo en `Index-Design-Rules.md` §2 lista `Design-Rules-Web-Generico-v1.0.md` y `Design-Rules-Blazor-Mudblazor-v1.0.md` con su relación base→especialización. |
+| El índice referencia los dos documentos | Cumple | Tabla del catálogo en `Index-Design-Rules.md` §2 lista `Design-Rules-Web-Generico.md` y `Design-Rules-Blazor-Mudblazor.md` con su relación base→especialización. |
 | La regla 03 referencia el índice | Cumple | §1.4 de `Rules-UX-UI-DX.md` indica cargar el catálogo a través de `Index-Design-Rules.md`. |
-| El marco teórico referencia el subárbol | Cumple | §1.5 (mapa de carpetas) y §8.7 de `Marco-Teorico-SDD-v1.0.md` mencionan `devs/References/Design/` y el modelo base→especialización. |
-| La guía de usuario referencia el subárbol | Cumple | §10.2 de `Guia-Usuario-SDD-v1.0.md` incluye `References/Design/` en el árbol del plano `devs/` con su línea de propósito. |
+| El marco teórico referencia el subárbol | Cumple | §1.5 (mapa de carpetas) y §8.7 de `Marco-Teorico-SDD.md` mencionan `devs/References/Design/` y el modelo base→especialización. |
+| La guía de usuario referencia el subárbol | Cumple | §10.2 de `SDD-User-Guide.md` incluye `References/Design/` en el árbol del plano `devs/` con su línea de propósito. |
 | El master-prompt incluye el insumo | Cumple | Nota operativa de §6 de `Master-Prompt.md` suma el catálogo como insumo de AG-03 para proyectos con UI. |
 
 ## 5. Observaciones
@@ -71,7 +71,7 @@ No se modificó `docs/`. No se sobrescribió ninguna plantilla.
 
 APROBADO CON OBSERVACIONES.
 
-Las invariantes verificadas (Título-Con-Guiones, sufijo `-v1.0` con guion medio, encoding UTF-8, idioma, ausencia de literales de dominio, una sola versión vigente por nombre) y la trazabilidad del catálogo cumplen. La única observación es la del EOL CRLF, preexistente y de alcance template, sin impacto sobre la coherencia de la incorporación.
+Las invariantes verificadas (Título-Con-Guiones, versión declarada en la cabecera y no en el nombre, encoding UTF-8, idioma, ausencia de literales de dominio, una sola versión vigente por nombre) y la trazabilidad del catálogo cumplen. La única observación es la del EOL CRLF, preexistente y de alcance template, sin impacto sobre la coherencia de la incorporación.
 
 ## 7. Control de cambios
 

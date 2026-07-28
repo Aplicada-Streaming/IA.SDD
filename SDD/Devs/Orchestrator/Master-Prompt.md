@@ -1,10 +1,10 @@
 # Master prompt SDD — Orquestador de la solución
 
 **Archivo:** `Master-Prompt.md`
-**Versión:** 3.6
+**Versión:** 4.0
 **Idioma:** Español rioplatense neutro técnico
 **Modo:** plan-then-confirm con subagentes + audit independiente
-**Prerequisitos:** `SDD/Intake/SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md` completo. El `SOLUTION-MANIFEST` lo deriva el orquestador del intake durante la fase de validación (§3); no es un insumo a completar a mano.
+**Prerequisitos:** `SDD/Intake/SOLUTION-INTAKE-<Nombre-Solucion>.md` completo. El `SOLUTION-MANIFEST` lo deriva el orquestador del intake durante la fase de validación (§3); no es un insumo a completar a mano.
 **Salida:** `SDD/Docs/` poblada con la documentación de la solución y de cada proyecto, más `SDD/Maquetas/` cuando algún proyecto ejecuta la Fase B2 de validación visual, más `/samples/` y `AGENTS.md` en la raíz del repositorio destino cuando se ejecutan las fases posteriores al handoff.
 
 ---
@@ -13,7 +13,7 @@
 
 Este prompt se ejecuta una sola vez por solución, sobre un repositorio que ya contiene el documento de intake unificado de la solución completo (`SOLUTION-INTAKE`). Una solución agrupa una jerarquía de proyectos; cada proyecto lleva exactamente uno de los 8 valores cerrados D8 y es la unidad de especialización de los subagentes. La ejecución sigue el patrón plan-then-confirm: en cada fase el orquestador propone, espera confirmación, ejecuta y se detiene para validar antes de avanzar a la siguiente.
 
-**Modelo de dos repositorios.** El orquestador trabaja sobre dos repositorios ubicados en un workspace común: el repositorio fuente `IA.SDD` (este template) y el repositorio destino de la solución. La convención de rutas de este prompt es:
+**Modelo de repositorios.** El framework opera sobre tres repositorios separados por responsabilidad, según la anatomía declarada en el `README.md` de este repositorio. El orquestador trabaja sobre dos de ellos, ubicados en un workspace común: el repositorio fuente `IA.SDD` (este template) y el repositorio destino de la solución. El tercero, el repositorio de documentación, lo mantiene el usuario a mano y el orquestador no lo toca nunca. La convención de rutas de este prompt es:
 
 - Insumos de solo lectura (reglas, plantillas, prompts, guías y este master-prompt) viven en el repositorio fuente y se referencian como `../IA.SDD/SDD/Devs/...` y `../IA.SDD/SDD/Guides/...`.
 - Los artefactos de la solución viven en el repositorio destino: el intake y el manifiesto derivado en `SDD/Intake/`, la documentación generada en `SDD/Docs/` y las maquetas de validación visual en `SDD/Maquetas/`. Estas rutas son relativas a la raíz del repositorio destino, donde se ejecuta el orquestador.
@@ -24,10 +24,10 @@ El orquestador se invoca desde el repositorio destino (ver `../IA.SDD/PROMPTS/PR
 
 Prerrequisitos verificables antes de arrancar:
 
-1. Existe `SDD/Intake/SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md` con su checklist de §19 íntegramente tildado.
+1. Existe `SDD/Intake/SOLUTION-INTAKE-<Nombre-Solucion>.md` con su checklist de §19 íntegramente tildado.
 2. Cada proyecto declarado en §13 del intake tiene un `project_type` que pertenece a los 8 valores cerrados D8.
 3. El intake pasa la fase de validación de §3 (completitud y derivación del manifiesto con confirmación).
-4. La carpeta `SDD/Docs/` está vacía o no existe. Si tiene contenido previo, el orquestador se detiene y pide al usuario decidir entre archivar el contenido en `SDD/Docs/_legacy/<fecha>/` o abortar.
+4. La carpeta `SDD/Docs/` está vacía o no existe. Si tiene contenido previo, el orquestador ejecuta la reconciliación normativa de §2.1 antes de cualquier otra cosa: compara la procedencia declarada por el destino contra la versión vigente del framework y presenta las salidas posibles. No genera ni modifica nada hasta que el usuario elige.
 
 Mecánica de ejecución:
 
@@ -78,8 +78,8 @@ Primer paso obligatorio de cualquier sesión: el orquestador lee el intake unifi
 
 Procedimiento:
 
-1. Resolver el `<Nombre-Solucion>`. Si hay un solo archivo `SOLUTION-INTAKE-*-v1.0.md` en `SDD/Intake/`, esa es la solución. Si hay varios, pedir al usuario que indique cuál.
-2. Leer `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md` íntegro: la Parte A (negocio, §1 a §12), la Parte B (composición, §13 a §16, con la tabla de proyectos de la que se deriva el manifiesto) y la Parte C (técnica por proyecto, §17, un bloque por proyecto).
+1. Resolver el `<Nombre-Solucion>`. Si hay un solo archivo `SOLUTION-INTAKE-*.md` en `SDD/Intake/`, esa es la solución. Si hay varios, pedir al usuario que indique cuál.
+2. Leer `SOLUTION-INTAKE-<Nombre-Solucion>.md` íntegro: la Parte A (negocio, §1 a §12), la Parte B (composición, §13 a §16, con la tabla de proyectos de la que se deriva el manifiesto) y la Parte C (técnica por proyecto, §17, un bloque por proyecto).
 3. Verificar el checklist final de §19. Cualquier ítem bloqueante sin tildar invalida el intake.
 
 Patrón de detención por intake incompleto:
@@ -88,7 +88,73 @@ Patrón de detención por intake incompleto:
 
 Esto cubre el caso de intakes a medio completar y el caso de plantillas pegadas sin personalizar.
 
-Completada la lectura y el scan de placeholders, el orquestador pasa de inmediato a la Fase de validación de intake de §3 (validación de completitud semántica y derivación del manifiesto), bloqueante y previa a la Fase A.
+Completada la lectura y el scan de placeholders, el orquestador evalúa §2.1 y después pasa a la Fase de validación de intake de §3, bloqueante y previa a la Fase A.
+
+### §2.1 Reconciliación normativa
+
+Un árbol de `SDD/Docs/` sobrevive a varias versiones del framework. Esta sección resuelve qué hacer cuando el orquestador arranca sobre un destino que **ya tiene documentación generada**, posiblemente bajo una versión anterior.
+
+**Cuándo se dispara.** Solo si `SDD/Docs/` tiene contenido. Si está vacía o no existe, el orquestador salta a §3 sin más.
+
+**Los tres casos posibles.**
+
+| Caso | Condición | Qué hace el orquestador |
+| --- | --- | --- |
+| **Sin procedencia** | Hay documentación pero el manifiesto no declara el bloque de procedencia de §1.1 | No hay contra qué comparar: el árbol se generó antes de que la procedencia existiera. Se detiene y ofrece únicamente **regenerar** o **abortar**, y lo declara como tal para que el usuario sepa por qué no hay más opciones |
+| **Al día** | La procedencia coincide con la versión vigente del framework | Lo informa en una línea y continúa a §3 sin preguntar |
+| **Desfasado** | La procedencia declara una versión anterior a la vigente | Ejecuta la comparación y presenta las tres salidas |
+
+**Cómo se construye la comparación.** El orquestador arma un diff normativo, sin despachar ningún subagente:
+
+1. Lee el bloque de procedencia del `SOLUTION-MANIFEST` del destino: versión del conjunto y de cada archivo de reglas aplicado.
+2. Lee las versiones vigentes en `../IA.SDD/`, de la cabecera de cada archivo, y la entrada vigente del `CHANGELOG.md` del framework.
+3. Para cada archivo que cambió, clasifica el salto: **major**, **minor** o sin cambio. La severidad se lee de la propia numeración, no se infiere del contenido.
+4. Para cada archivo con salto **major**, enumera los artefactos que ese archivo gobierna leyendo su tabla maestra de documentos (§2.1 de la regla) y los marca como **potencialmente invalidados**, que es lo que el framework declara que ocurre ante un major.
+5. Si el conjunto normativo de la versión de origen está en `../IA.SDD/_legacy/<version>/`, lo cita como disponible para consulta. Si no está —porque la versión es anterior a que existiera el archivado por versión— lo declara **no reconstruible** y lo dice explícitamente, en lugar de dejar suponer que se puede consultar.
+
+**Formato de la presentación al usuario.** Detención obligatoria. El orquestador no elige por su cuenta:
+
+```text
+Reconciliación normativa
+
+Este destino declara procedencia: SDD {{VERSION_ORIGEN}}
+Framework vigente:                SDD {{VERSION_VIGENTE}}
+Conjunto de origen:               {{disponible en _legacy/<version>/ | no reconstruible}}
+
+Cambios entre ambas versiones:
+
+| Archivo | Origen | Vigente | Salto | Impacto |
+| --- | --- | --- | --- | --- |
+| {{archivo}} | {{v}} | {{v}} | {{major/minor}} | {{documentos potencialmente invalidados, o "sin impacto"}} |
+
+Documentos potencialmente invalidados: {{N}}
+
+Opciones:
+  A) Plan de adecuación. No modifico nada todavía: emito un plan documento por
+     documento y lo presento para que decidas.
+  B) Regenerar desde cero. Archivo `SDD/Docs/` completo en `SDD/Docs/_legacy/<fecha>/`
+     y genero de nuevo bajo la versión vigente.
+  C) Continuar bajo {{VERSION_ORIGEN}}. Registro la decisión en el manifiesto y sigo
+     con las reglas de esa versión, no con las vigentes.
+
+Indicá A, B o C.
+```
+
+**Qué hace cada salida.**
+
+| Salida | Efecto |
+| --- | --- |
+| **A — Plan de adecuación** | Emite `SDD/Docs/Audit/Reconciliacion-<origen>-a-<vigente>.md` con una fila por documento afectado: path, regla que lo gobierna, qué cambió en esa regla, si requiere regeneración o solo revisión, y en qué orden conviene tocarlos según la cadena D6. **No modifica ningún documento.** Al presentarlo, el orquestador vuelve a detenerse: ejecutar el plan es una decisión aparte |
+| **B — Regenerar desde cero** | Es el comportamiento histórico del prerrequisito 4 de §0. Archiva `SDD/Docs/` completo en `SDD/Docs/_legacy/<fecha>/` y arranca la generación bajo la versión vigente. El manifiesto reescribe su bloque de procedencia con la versión nueva |
+| **C — Continuar bajo la versión de origen** | El orquestador **usa las reglas de la versión de origen**, tomadas de `_legacy/<version>/`, no las vigentes. Si el conjunto de origen no es reconstruible, esta salida no se ofrece, porque el orquestador no puede aplicar reglas que no puede leer. Registra la decisión en el manifiesto según §1.1 del formato |
+
+**Por qué la decisión de C se registra.** Sin registro, el arranque siguiente vuelve a presentar la misma pregunta y el usuario vuelve a contestarla, sin memoria de que ya la había resuelto. Con registro, el orquestador informa la postergación en una línea y solo vuelve a preguntar si el framework avanzó **más allá** de la versión que ya se evaluó.
+
+**Prohibiciones de esta sección.**
+
+- No modificar ningún documento de `SDD/Docs/` durante la reconciliación. Es una fase de lectura y de decisión.
+- No elegir salida por cuenta propia, ni siquiera cuando la comparación no arroja impacto: informar y seguir es distinto de decidir.
+- No declarar reconstruible un conjunto de origen sin haber verificado que `_legacy/<version>/` existe. Es una afirmación sobre el estado del sistema y D9 exige evidencia.
 
 ---
 
@@ -97,7 +163,8 @@ Completada la lectura y el scan de placeholders, el orquestador pasa de inmediat
 Esta es la fase previa a la Fase A. Antes de despachar cualquier subagente, el orquestador valida el intake unificado y deriva de él el manifiesto canónico. Procede en este orden:
 
 1. Validación de completitud. El orquestador lee `rules/Intake-Rules.md` y valida el `SOLUTION-INTAKE` contra sus campos bloqueantes (`Intake-Rules.md` §2) y sus validaciones de completitud semántica (`Intake-Rules.md` §5). Si hay pendientes, emite la batería consolidada de preguntas (formato de `Intake-Rules.md` §6) y se detiene hasta que el humano actualiza el intake. No avanza con bloqueantes abiertos. Esta validación es semántica y proactiva; no reemplaza el scan de placeholders de §2 ni la ambigüedad runtime de §9.
-2. Derivación del manifiesto. A partir de `SOLUTION-INTAKE` §13, el orquestador construye el `SOLUTION-MANIFEST-<Nombre-Solucion>-v1.0.md` siguiendo `Intake-Rules.md` §4 y el formato de `SOLUTION-MANIFEST-template.md`, aplicando las validaciones de §3.1. El usuario no completa el manifiesto a mano.
+2. Derivación del manifiesto. A partir de `SOLUTION-INTAKE` §13, el orquestador construye el `SOLUTION-MANIFEST-<Nombre-Solucion>.md` siguiendo `Intake-Rules.md` §4 y el formato de `SOLUTION-MANIFEST-template.md`, aplicando las validaciones de §3.1 de este master-prompt. El usuario no completa el manifiesto a mano.
+   En la misma operación completa el **bloque de procedencia del framework** (§1.1 del formato del manifiesto): la versión del conjunto, tomada de la entrada vigente del `CHANGELOG.md` del framework, y la versión de cabecera de este master-prompt y de cada archivo de reglas que la solución vaya a usar. No agrega ninguna lectura: son los mismos archivos que §8 abre para construir cada despacho. Sin ese bloque, la documentación generada no declara bajo qué normativa se produjo, y más adelante no hay forma de saber qué quedó invalidado cuando una regla sube major.
 3. Confirmación. El orquestador presenta el manifiesto derivado al humano y espera confirmación explícita antes de tratarlo como canónico.
 4. Detección de la jerarquía. Con el manifiesto confirmado, el orquestador deriva los nombres (§3.2), el orden topológico (§3.3) y el bloque informativo (§3.4), y recién entonces entra a la Fase A.
 
@@ -192,10 +259,16 @@ SDD/Docs/
       10-Examples/             (según project_type y flags)
       11-Documentacion/        (siempre; qué cuerpos se materializan depende del project_type)
       README.md                (README del proyecto)
+  Audit/                       (informes de auditoría de todas las fases, y el informe de reconciliación normativa de §2.1)
   README.md                    (README raíz de la solución)
 ```
 
-Fuera de `SDD/Docs/`, en la **raíz del repositorio destino**, la categoría 11 emite `AGENTS.md`. Es la única salida del orquestador que no vive bajo `SDD/`, y se admite porque su valor depende de que las herramientas de agentes lo encuentren en la ruta convencional. El artefacto versionado del que se deriva, `Contrato-Agentes-v<X.Y>.md`, sí vive dentro de la carpeta de la categoría.
+Dos carpetas más completan el layout y no se listan arriba porque no ocupan una posición fija:
+
+- `_legacy/` puede aparecer como hija de **cualquier** carpeta que contenga artefactos versionados, y contiene los estados superados de los artefactos de esa carpeta, agrupados por fecha de archivado. Su forma canónica y su contenido los fija la política de deprecación de §5. Que aparezca o no en una carpeta depende de si algún artefacto suyo fue superado, así que no es parte del esqueleto que se crea al inicio: se crea al primer archivado.
+- `SDD/Docs/Audit/` sí es fija y recibe los informes de auditoría de todas las fases, de nivel solución y de proyecto, según §10.
+
+Fuera de `SDD/Docs/`, en la **raíz del repositorio destino**, la categoría 11 emite `AGENTS.md`. Es la única salida del orquestador que no vive bajo `SDD/`, y se admite porque su valor depende de que las herramientas de agentes lo encuentren en la ruta convencional. El artefacto versionado del que se deriva, `Contrato-Agentes.md`, sí vive dentro de la carpeta de la categoría.
 
 Además de `SDD/Docs/`, los proyectos que ejecutan la Fase B2 producen su maqueta de validación en `SDD/Maquetas/<Nombre-Proyecto>/`, hermana de `SDD/Docs/` y no dentro de ella. La separación es deliberada: `SDD/Docs/` es exclusivamente prosa generada por el orquestador, y la maqueta es material ejecutable que el humano edita a mano durante la validación.
 
@@ -215,9 +288,9 @@ A partir del intake, el orquestador deriva flags que condicionan el plan de gene
 | `tiene_ui_final` | proyecto | `project_type` del proyecto | true cuando `project_type` ∈ {web-monolith, web-microservices con frontend, desktop-app, mobile-app-maui} | Selecciona variante UX/UI para la categoría 03 del proyecto. Si false y `project_type` ∈ {library, cli-tool, worker-service, rest-api sin portal}, selecciona variante DX. |
 | `multi_tenant` | proyecto | README §5 P.4 (persistencia) del proyecto | true si el proyecto declara modelo multi-tenant | Activa secciones específicas en 05, 07 y 09 del proyecto. |
 | `tiene_auth` | proyecto | README §5 P.5 del proyecto | true si declara cualquier mecanismo de autenticación distinto a "ninguno" | Habilita CU de autenticación en 02 y ADR de autenticación en 05 del proyecto. |
-| `equipo_n` | solución | SOLUTION-INTAKE §2 (stakeholders) o §10 (restricciones del cliente) | número entero >= 1 con la cantidad de devs | Si > 1: 07 produce sprint plan completo. Si == 1: 07 produce únicamente `Mini-Plan-v1.0.md` (regla §2.2 de `Rules-Plan-Sprint.md`). |
+| `equipo_n` | solución | SOLUTION-INTAKE §2 (stakeholders) o §10 (restricciones del cliente) | número entero >= 1 con la cantidad de devs | Si > 1: 07 produce sprint plan completo. Si == 1: 07 produce únicamente `Mini-Plan.md` (regla §2.2 de `Rules-Plan-Sprint.md`). |
 | `tiene_portal_developers` | proyecto | README §5 del proyecto | true si el proyecto declara portal de developers, SDK público o documentación pública orientada a integradores | Activa documentos DX adicionales en 03 y refuerza 10 y 11 del proyecto. |
-| `tiene_extensibilidad` | proyecto | README §5 P.2 y rol del proyecto | true si el proyecto declara puntos de extensión, plugins o handlers externos | Activa `Extensibilidad-v1.0.md` en 05 y `guia-testing-extensibilidad` en 08 del proyecto. |
+| `tiene_extensibilidad` | proyecto | README §5 P.2 y rol del proyecto | true si el proyecto declara puntos de extensión, plugins o handlers externos | Activa `Extensibilidad.md` en 05 y `guia-testing-extensibilidad` en 08 del proyecto. |
 | `tiene_persistencia` | proyecto | README §5 P.4 del proyecto | true si declara cualquier motor de persistencia distinto a "No aplica" | Activa `modelo-conceptual` en 02 y `Modelo-Datos-logico` en 05 del proyecto. |
 | `requiere_compliance` | proyecto/solución | SOLUTION-INTAKE §10 (restricciones) y §17 P.5/P.10 del proyecto | true si se mencionan GDPR, PCI, HIPAA, SOC2, ISO 27001 o normativa local | Refuerza secciones de seguridad en 05, 08 y 09 y obliga ADR de compliance. |
 | `tiene_observabilidad_critica` | proyecto | README §5 P.10 del proyecto | true si los NFR declaran SLO de disponibilidad >= 99.9 % o latencia p99 con métrica numérica | Refuerza supply-chain-seguridad y dashboards en 09 y NFR-tests en 08 del proyecto. |
@@ -263,20 +336,60 @@ El orquestador presenta la siguiente lista con sus valores por defecto y pide al
 | Tildes y eñes | Obligatorias en el cuerpo de los documentos | Heredado de D1. Filename siempre ASCII sin acentos. |
 | Estilo de fecha | YYYY-MM-DD | ISO 8601 estricto. |
 | Encoding | UTF-8 | LF como EOL. |
-| Política de versionado de docs | Inicio en `-v1.0`, subir minor en cambios no breaking, major en breaking | Heredado D5. |
-| Política de deprecación | Una sola versión vigente, las anteriores se archivan en `_legacy/<categoria>/<fecha>/` | Heredado D5. |
+| Política de versionado de docs | Inicio en la versión `1.0` declarada en la cabecera, subir minor en cambios no breaking, major en breaking. Las correcciones derivadas del audit de la propia fase de emisión se absorben dentro de la versión en curso, sin subir, mientras el documento esté en estado `Borrador` o `Propuesto`: el audit forma parte del ciclo de emisión y no de una revisión posterior a la publicación. Desde que el documento pasa a `Aprobado` o `Vigente` —lo que ocurre en el corte de fase con confirmación humana, o cuando otro artefacto lo cita como insumo, lo que suceda primero— toda corrección sube versión y archiva el estado anterior. Cada corrección absorbida deja su fila en el control de cambios citando el hallazgo del informe de audit que la origina | Heredado D5, precisado con la cadencia del audit de §10. |
+| Política de deprecación | Un solo archivo por nombre lógico en la carpeta de trabajo, y ese archivo es la versión vigente. Al ser superado se copia completo a `<carpeta-del-artefacto>/_legacy/<YYYY-MM-DD>/`, donde recibe el sufijo de la versión que preserva, con un bloque de archivado antepuesto que declara estado `Superado` y enlaza a la versión vigente. El cuerpo del snapshot no se modifica | Heredado D5. Detalle operativo debajo de esta tabla. |
 | Tipo de identificadores | `NB-XX`, `CU-XX`, `RN-XX`, `ADR-XX`, `US-XX`, `BT-XX`, `RC-XX`, `TC-XX`, con dos dígitos uniformes | Heredado D3 y D4. |
 | Perfil de convención de nombres de código | El declarado en el manifiesto (PascalCase, separador, prefijo de redistribuibles) | Aplica a todos los proyectos de la solución. |
 | Tono y registro | Técnico neutro, sin marketing, sin emojis, sin negritas decorativas, sin onomatopeyas | Sin excepciones. |
 | Política de enlaces | Relativos dentro de `SDD/Docs/`; los enlaces a archivos externos al repo se anotan como referencia, no como link clickable | Heredado D6. |
 | Convenciones de tablas | Cada tabla declara encabezado completo, sin filas "TBD" ni placeholders sin cerrar | Heredado D2 y D8. |
 | Casing de nombres de archivo y carpeta | Título-Con-Guiones (cada palabra capitalizada, separadas por guion medio); prohibidos espacios, acentos, eñes y caracteres especiales; los prefijos de identificador (`NB`, `CU`, `RN`, etc.) van en mayúscula completa | Heredado D3. |
-| Sufijo de versión | `-v<X.Y>.md` con guion medio, nunca `_v<X.Y>.md` con guion bajo ni `.v<X.Y>.md` con punto | Heredado D4. |
+| Sufijo de versión | El archivo vivo lleva su nombre lógico estable, sin sufijo, y declara su versión en el campo `Versión` de la cabecera. El sufijo `-v<X.Y>.md`, con guion medio y nunca con guion bajo ni con punto, identifica a las copias archivadas en `_legacy/` | Heredado D4. |
 | Política de control de cambios | Cada documento incluye sección `Control de cambios` con tabla versión / fecha / cambios / autor | Heredado D5. |
-
 | Regla de evidencia verificable (D9) | Toda afirmación sobre el estado del sistema cita evidencia verificable | Invariante global incorporada con el sensado de deriva. Su alcance, su formato de cita y sus excepciones viven en `Deriva-Rules.md` §1. Rige hacia adelante desde su incorporación; no se aplica retroactivamente a documentación previa. |
 
 Si el usuario propone cambios, se registran en un bloque `Invariantes confirmadas de la solución` que el orquestador inyecta como contexto a todos los subagentes en §8.
+
+### §5.1 Detalle operativo de la política de deprecación
+
+**La regla única.** En la carpeta de trabajo hay **un solo archivo por nombre lógico, sin sufijo de versión en el nombre**. La versión vive en el campo `Versión` de la cabecera del documento. Al ser superado, el archivo se copia completo a `_legacy/`, y **la copia archivada sí recibe el sufijo** de la versión que preserva.
+
+```text
+Proyectos/<Nombre-Proyecto>/00-Contexto/
+  Vision-Producto.md                       (vigente; la cabecera dice qué versión es)
+  Alcance-Proyecto.md
+  README.md
+  _legacy/
+    2026-08-15/
+      Vision-Producto.md              (copia completa y autocontenida)
+      Vision-Producto.md
+```
+
+Aplica a **todo** artefacto generado, sin excepciones de nombre. Es lo que evita que convivan dos lógicas de versionado dentro del mismo árbol, que es la condición en la que un archivado sobrescribe al anterior sin que nadie reciba error.
+
+Tres propiedades se siguen de la regla y conviene que el orquestador las tenga presentes:
+
+- **Cuál es la versión vigente deja de ser una regla que hay que cumplir.** Es una propiedad estructural: hay un solo archivo, así que no hay ambigüedad posible que verificar.
+- **Subir de versión no propaga ninguna actualización de referencias.** Los enlaces entre documentos apuntan a un nombre que no cambia, así que la cadena de trazabilidad D6 no se toca cuando un documento sube de versión.
+- **Un agente que lee una carpeta ingiere un solo ejemplar de cada documento.** `_legacy/` es una subcarpeta y se saltea.
+
+**Una sola ruta de archivado.** El archivado es siempre local a la carpeta que contiene el artefacto vivo: `<carpeta-del-artefacto>/_legacy/<YYYY-MM-DD>/`. El eje de proyecto no se declara porque viene dado por la carpeta, lo que evita que dos proyectos que archiven la misma categoría el mismo día colisionen entre sí. Las reglas de categoría que escriben `_legacy/` sin más se leen como abreviatura de esta misma ruta, no como una convención distinta.
+
+Un caso que no es el mismo y conviene no confundir: cuando el destino ya tiene una corrida anterior completa en `SDD/Docs/`, el prerrequisito 4 de §0 manda archivar en `SDD/Docs/_legacy/<fecha>/`. Ahí el artefacto archivado es el árbol entero y su carpeta contenedora es `SDD/Docs/`, con lo cual esa ruta cumple la regla local y no la contradice.
+
+**Qué queda exento del archivado**, cada uno por su razón:
+
+| Artefacto | Razón de la exención |
+| --- | --- |
+| `AGENTS.md` | Se regenera completo desde `Contrato-Agentes.md` en cada corrida (§7.2). El artefacto versionado y archivable es el contrato |
+| `CHANGELOG.md` | Es acumulativo: su historia es su propio contenido y no tiene estado superado |
+| Superficies y assets de la maqueta | Se versionan con el repositorio (`Maqueta-Rules.md` §2.3) |
+| ADR | Nunca se versionan en el mismo archivo; la anterior queda en `Adrs/` con estado `Superado por ADR-YY` (`Rules-Arquitectura-Tecnica.md` §3.6) |
+| Campo `evidencia` de los contratos `VER-XX` | Se sobrescribe con la salida de la corrida en curso y la anterior no se conserva, porque lo que la afirmación sostiene es el estado presente (§7.2) |
+
+**Sobre lo ya archivado.** Un archivo que ya vive en un `_legacy/` no se toca nunca más: ni sus enlaces, ni su estado, ni su nombre. Un registro que se corrige después deja de ser un registro, y etiquetar con una versión un archivo cuyo contenido no se verificó es una afirmación sin evidencia que viola D9.
+
+**Procedencia del framework.** La documentación generada declara bajo qué versión del framework se produjo, en el bloque de procedencia del `SOLUTION-MANIFEST` que §3 deriva. Es lo que permite, más adelante, saber qué reglas gobernaron cada árbol y qué quedó invalidado cuando el framework sube de versión.
 
 ---
 
@@ -286,19 +399,19 @@ A continuación se documenta el plan maestro que el orquestador construye. Las c
 
 | Fase | Categoría | Ámbito | Documentos a generar | Subagente (variante por tipo) | Insumos upstream | Insumos de reglas | Path de salida | Audit post-fase |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| A | 00-Contexto | solución | `Vision-Producto-v1.0.md`, `Alcance-Proyecto-v1.0.md`, `Roadmap-Producto-v1.0.md`, `Compatibilidad-Plataformas-v1.0.md` (según §2.2), `Acuerdo-Equipo-v1.0.md` (si `equipo_n` > 2), `README.md` | Product Manager Senior (AG-00) | SOLUTION-INTAKE Parte A (negocio); §13 a §16 (composición) | `Rules-Contexto.md` | `SDD/Docs/00-Contexto/` | Sí |
-| A | 01-Necesidades-Negocio | solución | `Necesidades-Negocio-v1.0.md`, `Necesidades-De-Negocio/NB-XX-<Nombre>-v1.0.md` (mínimo 3), `README.md` si > 5 NB | Analista de Negocio Senior (AG-01) | SOLUTION-INTAKE Parte A (negocio); 00-Contexto | `Rules-Necesidades-Negocio.md` | `SDD/Docs/01-Necesidades-Negocio/` | Sí |
-| B | 02-Especificacion-Funcional | proyecto | `Especificacion-Funcional-v1.0.md`, `Casos-De-Uso/CU-XX-<Nombre>-v1.0.md`, `Reglas-De-Negocio/RN-XX-<Nombre>-v1.0.md` (si aplica), `Modelo-Datos/...` (si hay persistencia), `README.md` | Analista Funcional Senior (AG-02) + variante D8 del proyecto | 01/NB-XX, 00; README §5 P.x del proyecto | `Rules-Especificacion-Funcional.md` | `SDD/Docs/Proyectos/<Nombre>/02-Especificacion-Funcional/` | Sí |
+| A | 00-Contexto | solución | `Vision-Producto.md`, `Alcance-Proyecto.md`, `Roadmap-Producto.md`, `Compatibilidad-Plataformas.md` (según §2.2), `Acuerdo-Equipo.md` (si `equipo_n` > 2), `README.md` | Product Manager Senior (AG-00) | SOLUTION-INTAKE Parte A (negocio); §13 a §16 (composición) | `Rules-Contexto.md` | `SDD/Docs/00-Contexto/` | Sí |
+| A | 01-Necesidades-Negocio | solución | `Necesidades-Negocio.md`, `Necesidades-De-Negocio/NB-XX-<Nombre>.md` (mínimo 3), `README.md` si > 5 NB | Analista de Negocio Senior (AG-01) | SOLUTION-INTAKE Parte A (negocio); 00-Contexto | `Rules-Necesidades-Negocio.md` | `SDD/Docs/01-Necesidades-Negocio/` | Sí |
+| B | 02-Especificacion-Funcional | proyecto | `Especificacion-Funcional.md`, `Casos-De-Uso/CU-XX-<Nombre>.md`, `Reglas-De-Negocio/RN-XX-<Nombre>.md` (si aplica), `Modelo-Datos/...` (si hay persistencia), `README.md` | Analista Funcional Senior (AG-02) + variante D8 del proyecto | 01/NB-XX, 00; README §5 P.x del proyecto | `Rules-Especificacion-Funcional.md` | `SDD/Docs/Proyectos/<Nombre>/02-Especificacion-Funcional/` | Sí |
 | B | 03-UX-UI-DX | proyecto | Variante UX/UI o DX según `tiene_ui_final`, `README.md` | Especialista UX/UI o DX (AG-03) + variante D8 del proyecto | 02 del proyecto, 00 | `Rules-UX-UI-DX.md` | `SDD/Docs/Proyectos/<Nombre>/03-UX-UI-DX/` | Sí |
 | B | 04-Prompts-AI | proyecto | Si `usa_llm` del proyecto == true: artefactos de prompts; si false: omitir | Ingeniero de Prompts Senior (AG-04) + variante D8 del proyecto | 01, README §5 del proyecto, 02 del proyecto | `Rules-Prompts-AI.md` | `SDD/Docs/Proyectos/<Nombre>/04-Prompts-AI/` (solo si gating positivo) | Sí (si se generó) |
-| B2 | Validación visual de maqueta | proyecto | Solo si `requiere_maqueta` del proyecto == true: maqueta navegable en `SDD/Maquetas/<Nombre>/` (`index.html`, un HTML por superficie clave, `assets/css/`, `assets/js/Datos-Maqueta.js`, `assets/js/Maqueta.js`, `README.md`); retroalimentación de 03 y de las categorías que la matriz de propagación alcance; `Linea-Base-Visual-v1.0.md`, `Contrato-Datos-Maqueta-v1.0.md` y `Bitacora-Validacion-Maqueta-v1.0.md` en 03; `Matriz-Sensado-Deriva-v1.0.md` en 08; si el humano lo acepta, modelo en `../IA.SDD/SDD/Devs/Modelos-UX-UI/` y template ofuscado en `../IA.SDD/Templates/` | Maquetador de validación visual (AG-03M) + variante D8 del proyecto | 03 del proyecto (`Experiencia-De-Uso`, wireframes, representaciones, glosario), 02 del proyecto (CU, RN, modelo conceptual y sus ejemplos), 00 | `Maqueta-Rules.md`, `Deriva-Rules.md`, catálogo `References/Design/`, catálogo `Modelos-UX-UI/` | `SDD/Maquetas/<Nombre>/`, `SDD/Docs/Proyectos/<Nombre>/03-UX-UI-DX/`, `SDD/Docs/Proyectos/<Nombre>/08-Calidad-Y-Pruebas/` | Sí (si se ejecutó) |
-| C | 05-Arquitectura-Tecnica | proyecto + solución | Por proyecto: `Arquitectura-Solucion-v1.0.md`, `Decisiones-Arquitectura-v1.0.md`, `Adrs/ADR-XX-<Nombre>-v1.0.md`, modelo lógico/flujo/contratos/extensibilidad según flags, `README.md`. Nivel solución: vista de solución en `Solucion/` (mapa de proyectos, contratos inter-proyecto, grafo) | Arquitecto de Software Senior (AG-05) + variante D8 del proyecto | 02, RN, modelo conceptual; 04 del proyecto; 00 | `Rules-Arquitectura-Tecnica.md` | `SDD/Docs/Proyectos/<Nombre>/05-Arquitectura-Tecnica/` y `SDD/Docs/Solucion/` | Sí |
-| D | 06-Backlog-Tecnico | proyecto | `Product-Backlog-v1.0.md`, `Backlog-Tecnico-v1.0.md`, US/BT individuales según umbrales, `Definition-Of-Ready-v1.0.md`, `README.md` | Scrum Master / Agile Coach (AG-06) + variante D8 del proyecto | 01; 02; 05 del proyecto | `Rules-Backlog-Tecnico.md` | `SDD/Docs/Proyectos/<Nombre>/06-Backlog-Tecnico/` | Sí |
-| D | 07-Plan-Sprint | proyecto | Si `equipo_n` > 1: sprint plan completo; si == 1: `Mini-Plan-v1.0.md`, `README.md` | Scrum Master / Gestión Ágil Senior (AG-07) + variante D8 del proyecto | 06 del proyecto; 02; 05 | `Rules-Plan-Sprint.md` | `SDD/Docs/Proyectos/<Nombre>/07-Plan-Sprint/` | Sí |
+| B2 | Validación visual de maqueta | proyecto | Solo si `requiere_maqueta` del proyecto == true: maqueta navegable en `SDD/Maquetas/<Nombre>/` (`index.html`, un HTML por superficie clave, `assets/css/`, `assets/js/Datos-Maqueta.js`, `assets/js/Maqueta.js`, `README.md`); retroalimentación de 03 y de las categorías que la matriz de propagación alcance; `Linea-Base-Visual.md`, `Contrato-Datos-Maqueta.md` y `Bitacora-Validacion-Maqueta.md` en 03; `Matriz-Sensado-Deriva.md` en 08; si el humano lo acepta, modelo en `../IA.SDD/SDD/Devs/Modelos-UX-UI/` y template ofuscado en `../IA.SDD/Templates/` | Maquetador de validación visual (AG-03M) + variante D8 del proyecto | 03 del proyecto (`Experiencia-De-Uso`, wireframes, representaciones, glosario), 02 del proyecto (CU, RN, modelo conceptual y sus ejemplos), 00 | `Maqueta-Rules.md`, `Deriva-Rules.md`, catálogo `References/Design/`, catálogo `Modelos-UX-UI/` | `SDD/Maquetas/<Nombre>/`, `SDD/Docs/Proyectos/<Nombre>/03-UX-UI-DX/`, `SDD/Docs/Proyectos/<Nombre>/08-Calidad-Y-Pruebas/` | Sí (si se ejecutó) |
+| C | 05-Arquitectura-Tecnica | proyecto + solución | Por proyecto: `Arquitectura-Solucion.md`, `Decisiones-Arquitectura.md`, `Adrs/ADR-XX-<Nombre>.md`, modelo lógico/flujo/contratos/extensibilidad según flags, `README.md`. Nivel solución: vista de solución en `Solucion/` (mapa de proyectos, contratos inter-proyecto, grafo) | Arquitecto de Software Senior (AG-05) + variante D8 del proyecto | 02, RN, modelo conceptual; 04 del proyecto; 00 | `Rules-Arquitectura-Tecnica.md` | `SDD/Docs/Proyectos/<Nombre>/05-Arquitectura-Tecnica/` y `SDD/Docs/Solucion/` | Sí |
+| D | 06-Backlog-Tecnico | proyecto | `Product-Backlog.md`, `Backlog-Tecnico.md`, US/BT individuales según umbrales, `Definition-Of-Ready.md`, `README.md` | Scrum Master / Agile Coach (AG-06) + variante D8 del proyecto | 01; 02; 05 del proyecto | `Rules-Backlog-Tecnico.md` | `SDD/Docs/Proyectos/<Nombre>/06-Backlog-Tecnico/` | Sí |
+| D | 07-Plan-Sprint | proyecto | Si `equipo_n` > 1: sprint plan completo; si == 1: `Mini-Plan.md`, `README.md` | Scrum Master / Gestión Ágil Senior (AG-07) + variante D8 del proyecto | 06 del proyecto; 02; 05 | `Rules-Plan-Sprint.md` | `SDD/Docs/Proyectos/<Nombre>/07-Plan-Sprint/` | Sí |
 | E | 08-Calidad-Y-Pruebas | proyecto | `estrategia-calidad`, `estrategia-testing`, `plan-pruebas`, `matriz-cobertura-pruebas`, `casos-prueba-referenciales`, `criterios-validacion`, `definition-of-done`, `guia-testing-extensibilidad` (si aplica), `README.md` | Ingeniero QA / SDET Senior (AG-08) + variante D8 del proyecto | 02; 05; 06; 07 del proyecto | `Rules-Calidad-Y-Pruebas.md` | `SDD/Docs/Proyectos/<Nombre>/08-Calidad-Y-Pruebas/` | Sí |
 | F | 09-Devops | proyecto | `pipeline-ci-cd`, `estrategia-versionado`, `entornos-deploy`, `guia-publicacion-<tipo-artefacto>` (según §2.2), `supply-chain-seguridad`, `README.md` | Ingeniero DevOps Senior (AG-09) + variante D8 del proyecto | 05; 08 del proyecto; README §5 del proyecto | `Rules-Devops.md` | `SDD/Docs/Proyectos/<Nombre>/09-Devops/` | Sí |
-| G | 10-Examples | proyecto | Pasada de diseño: `README.md` + `ejemplo-XX-<Nombre>-v1.0.md` (mínimos por tipo) con su `Contrato de verificación` y `evidencia` en `No verificado — sin código`; `/samples` esqueletado; `Imagenes/` si hay assets | Developer Advocate / Sample Engineer Senior (AG-10) + variante D8 del proyecto | 02; 05; 06 del proyecto | `Rules-Examples.md`, `Deriva-Rules.md` | `SDD/Docs/Proyectos/<Nombre>/10-Examples/` | Sí (si se generó) |
-| H | Consolidación de solución | solución | `Solucion/Vista-Solucion-v1.0.md` (AG-05) y `Solucion/Pipeline-Solucion-v1.0.md` (AG-09), solo si hay más de un proyecto; `SDD/Docs/README.md` con la tabla de proyectos, su D8, rol y dependencias (AG-ROOT) | AG-05, AG-09 y AG-ROOT (variante D8 del proyecto principal) | Todos los anteriores; manifiesto | `Rules-Arquitectura-Tecnica.md`, `Rules-Devops.md`, `Root-Rules.md` | `SDD/Docs/Solucion/` y `SDD/Docs/README.md` | Sí (audit final consolidado) |
+| G | 10-Examples | proyecto | Pasada de diseño: `README.md` + `ejemplo-XX-<Nombre>.md` (mínimos por tipo) con su `Contrato de verificación` y `evidencia` en `No verificado — sin código`; `/samples` esqueletado; `Imagenes/` si hay assets | Developer Advocate / Sample Engineer Senior (AG-10) + variante D8 del proyecto | 02; 05; 06 del proyecto | `Rules-Examples.md`, `Deriva-Rules.md` | `SDD/Docs/Proyectos/<Nombre>/10-Examples/` | Sí (si se generó) |
+| H | Consolidación de solución | solución | `Solucion/Vista-Solucion.md` (AG-05) y `Solucion/Pipeline-Solucion.md` (AG-09), solo si hay más de un proyecto; `SDD/Docs/README.md` con la tabla de proyectos, su D8, rol y dependencias (AG-ROOT) | AG-05, AG-09 y AG-ROOT (variante D8 del proyecto principal) | Todos los anteriores; manifiesto | `Rules-Arquitectura-Tecnica.md`, `Rules-Devops.md`, `Root-Rules.md` | `SDD/Docs/Solucion/` y `SDD/Docs/README.md` | Sí (audit final consolidado) |
 | H | 11-Documentacion, plan documental | proyecto + solución | Momento 1: índice del cuerpo documental por proyecto, con el rol de intervención de cada artefacto y su estado `Planificado`. Sin contenido redactado | Technical Writer / Documentation Lead (AG-11) | Manifiesto; 02; 05 de cada proyecto | `Rules-Documentacion.md` | `SDD/Docs/Proyectos/<Nombre>/11-Documentacion/` y `SDD/Docs/Solucion/11-Documentacion/` | Sí (dentro del audit final) |
 | I | 10-Examples, pasada de ejecución | proyecto | Samples implementados y corridos; campo `evidencia` de cada `VER-XX` con la salida real y su fecha | Developer Advocate / Sample Engineer Senior (AG-10) | Código construido; 10 de la pasada de diseño | `Rules-Examples.md` §0.2 | `SDD/Docs/Proyectos/<Nombre>/10-Examples/` y `/samples/` | Sí (acotado al incremento) |
 | I | 11-Documentacion, actualización incremental | proyecto + solución | Momento 2: documentos afectados por el incremento actualizados al estado real, triaje de la bitácora, `AGENTS.md` emitido o refrescado en la raíz del repositorio destino, ensayo de entrega automatizado | Technical Writer / Documentation Lead (AG-11) | Código construido; 05; 08; 09; 10 | `Rules-Documentacion.md` §0.3 a §0.6 | `SDD/Docs/.../11-Documentacion/` y `AGENTS.md` en la raíz del destino | Sí (acotado al incremento) |
@@ -309,11 +422,11 @@ Notas operativas sobre el plan:
 - El orquestador antes de cada fase de proyecto verifica qué documentos generar leyendo §2.1 y §2.2 de la regla y comparándolas contra el `project_type` y los flags del proyecto en curso. Cualquier documento que se omita se registra con motivo en el log del orquestador y, cuando corresponda, en el README de la sección.
 - Para todo archivo opcional cuya omisión esté condicionada por una decisión técnica, se registra una ADR en 05 del proyecto.
 - La columna `Documentos a generar` se reescribe textualmente como input al subagente correspondiente; no se interpreta libremente.
-- Para la categoría 03 de proyectos con UI (`tiene_ui_final` == true), el despacho de AG-03 suma como insumo el catálogo de reglas de diseño: el índice `References/Design/Index-Design-Rules.md`, el documento base `Design-Rules-Web-Generico-v1.0.md` y, si existe, la especialización del stack declarado en la Parte C del intake (por ejemplo `Design-Rules-Blazor-Mudblazor-v1.0.md`). Es un insumo normativo adicional para 03; no altera la mecánica plan-then-confirm ni las fases.
-- Para proyectos con superficies de configuración (parámetros que el usuario fija), el despacho de AG-03 suma además la extensión por capacidad del catálogo `Design-Rules-Config-Esquema-v1.0.md`, vía el mismo índice. Es ortogonal a la especialización por stack y sigue siendo un insumo normativo; no altera la mecánica plan-then-confirm ni las fases.
-- Para proyectos que se despliegan por instancia y arrancan sin la configuración mínima que los hace utilizables, el despacho de AG-03 suma `Design-Rules-Primer-Arranque-v1.0.md`, vía el mismo índice.
-- Para proyectos con una sola identidad de operación (sin gestión de usuarios ni roles diferenciados), el despacho de AG-03 suma `Design-Rules-Acceso-Monousuario-v1.0.md`, vía el mismo índice.
-- Para proyectos que producen artefactos desplegables identificables, el despacho de AG-03 suma `Design-Rules-Identidad-De-Version-v1.0.md`, vía el mismo índice. En proyectos sin UI final la capacidad se materializa en la superficie DX correspondiente.
+- Para la categoría 03 de proyectos con UI (`tiene_ui_final` == true), el despacho de AG-03 suma como insumo el catálogo de reglas de diseño: el índice `References/Design/Index-Design-Rules.md`, el documento base `Design-Rules-Web-Generico.md` y, si existe, la especialización del stack declarado en la Parte C del intake (por ejemplo `Design-Rules-Blazor-Mudblazor.md`). Es un insumo normativo adicional para 03; no altera la mecánica plan-then-confirm ni las fases.
+- Para proyectos con superficies de configuración (parámetros que el usuario fija), el despacho de AG-03 suma además la extensión por capacidad del catálogo `Design-Rules-Config-Esquema.md`, vía el mismo índice. Es ortogonal a la especialización por stack y sigue siendo un insumo normativo; no altera la mecánica plan-then-confirm ni las fases.
+- Para proyectos que se despliegan por instancia y arrancan sin la configuración mínima que los hace utilizables, el despacho de AG-03 suma `Design-Rules-Primer-Arranque.md`, vía el mismo índice.
+- Para proyectos con una sola identidad de operación (sin gestión de usuarios ni roles diferenciados), el despacho de AG-03 suma `Design-Rules-Acceso-Monousuario.md`, vía el mismo índice.
+- Para proyectos que producen artefactos desplegables identificables, el despacho de AG-03 suma `Design-Rules-Identidad-De-Version.md`, vía el mismo índice. En proyectos sin UI final la capacidad se materializa en la superficie DX correspondiente.
 - Para proyectos con `requiere_maqueta` == true, la Fase B2 corre después del audit de la Fase B y antes de la Fase C. Su mecánica completa (los siete pasos, sus tres detenciones, las dos vías de corrección y la matriz de propagación de la retroalimentación) vive en `Maqueta-Rules.md`; el orquestador la lee, no la duplica. El paso 1 de esa fase ofrece al humano de qué modelo UX-UI partir, leyendo `../IA.SDD/SDD/Devs/Modelos-UX-UI/Index-Modelos-UX-UI.md`: el catálogo base de `References/Design/` es la opción por defecto y los modelos registrados son alternativas que se aplican por encima del base, nunca en su reemplazo.
 - La retroalimentación del paso 6 de la Fase B2 puede alcanzar categorías ya generadas y auditadas. Cuando alcanza a 00 o 01, que son de nivel solución, el orquestador se detiene, informa el alcance real del cambio y pide confirmación antes de tocarlas. Cuando alcanza al `SOLUTION-INTAKE`, aplica §13 de este master-prompt.
 - Las cuatro extensiones por capacidad son ortogonales entre sí y respecto de la especialización por stack: se cargan en cualquier combinación según las condiciones anteriores, y el arquetipo de panel de control monolítico de un servicio específico las carga a las cuatro. Todas son insumo normativo adicional para 03; ninguna altera la mecánica plan-then-confirm ni las fases.
@@ -337,6 +450,8 @@ Nada de este procedimiento se improvisa. Si una regla cambia, el plan cambia aut
 El orquestador valida el intake y deriva el manifiesto, luego genera las categorías de nivel solución, recorre los proyectos en orden topológico generando sus categorías, y cierra con la consolidación de solución y el handoff. El orden de ejecución dentro de cada proyecto sigue la cadena D6. Cada fase se cierra con su audit antes de pasar a la siguiente.
 
 Las fases se agrupan en dos tramos separados por el handoff. **De la validación de intake a la Fase H** el sistema todavía no existe: se especifica. **De la Fase I a la Fase J** el sistema ya está construido: se documenta contra hechos verificables. La separación no es formal. Determina qué se puede afirmar en cada tramo, porque D9 exige evidencia para toda afirmación sobre el estado del sistema, y antes del handoff no hay sistema del cual obtenerla.
+
+Reconciliación normativa (solo si `SDD/Docs/` tiene contenido previo, antes de todo lo demás). El orquestador ejecuta §2.1: compara la procedencia declarada por el destino contra la versión vigente del framework, presenta el diff normativo con los documentos potencialmente invalidados y se detiene hasta que el usuario elige entre plan de adecuación, regeneración desde cero o continuar bajo la versión de origen. No genera ni modifica documentación. Sobre un destino vacío esta fase no corre.
 
 Fase de validación de intake (una vez, antes de todo). El orquestador ejecuta §3: valida el `SOLUTION-INTAKE` con `Intake-Rules.md`, emite la batería consolidada de preguntas y se detiene ante pendientes; deriva el `SOLUTION-MANIFEST` desde §13 y lo presenta para confirmación. Recién con el manifiesto confirmado avanza a la Fase A. Esta fase no genera documentación de `/Docs/`.
 
@@ -387,8 +502,8 @@ Bucle por proyecto, en orden topológico (niveles 0, 1, 2, ...; proyectos del mi
     3. Audit independiente de Fase G del proyecto.
 
 Fase H — Consolidación de solución, plan documental y handoff (una vez, al cerrar todos los proyectos).
-  1. AG-05 consolida la vista de solución en `Solucion/Vista-Solucion-v1.0.md` (mapa de proyectos, contratos inter-proyecto, grafo de dependencias).
-  2. AG-09 consolida el pipeline de solución en `Solucion/Pipeline-Solucion-v1.0.md` (orden de construcción topológico, matriz de artefactos publicables por proyecto, coordinación inter-proyecto). Solo si la solución tiene más de un proyecto.
+  1. AG-05 consolida la vista de solución en `Solucion/Vista-Solucion.md` (mapa de proyectos, contratos inter-proyecto, grafo de dependencias).
+  2. AG-09 consolida el pipeline de solución en `Solucion/Pipeline-Solucion.md` (orden de construcción topológico, matriz de artefactos publicables por proyecto, coordinación inter-proyecto). Solo si la solución tiene más de un proyecto.
   3. AG-ROOT redacta `SDD/Docs/README.md` consolidando la solución y la tabla de proyectos.
   4. AG-11 emite el plan documental de la categoría 11, que es el Momento 1 de `Rules-Documentacion.md` §0.3: la lista de artefactos por proyecto con su rol de intervención y su estado `Planificado`, sin contenido redactado. Se presenta junto con el resto de la consolidación para que el humano vea qué documentación va a existir al final.
   5. Audit final consolidado: verifica los ítems de §6 de `Root-Rules.md`, la coherencia inter-proyecto y que no hay enlaces rotos.
@@ -401,7 +516,7 @@ Paso 6 — Handoff a codificación (humano). A partir de acá el sistema se cons
     1. 10-Examples, pasada de ejecución: los samples alcanzados por el incremento se implementan, se corren, y su campo `evidencia` se completa con la salida real y su fecha. Un `criterio_aceptacion` que falla es un hallazgo del incremento, no un documento pendiente.
     2. 11-Documentacion, actualización incremental (Momento 2): se actualizan únicamente los documentos afectados por el incremento, con su `last_review` al día y su estado revisado.
     3. Triaje de la bitácora de eventualidades según `Rules-Documentacion.md` §0.6: toda `EVE-XX` abierta recibe destino, o queda marcada `No absorbida` con su motivo.
-    4. Emisión o refresco de `AGENTS.md` en la raíz del repositorio destino, derivado de `Contrato-Agentes-v<X.Y>.md`. Se emite en la primera corrida de esta fase y se refresca en todas las siguientes.
+    4. Emisión o refresco de `AGENTS.md` en la raíz del repositorio destino, derivado de `Contrato-Agentes.md`. Se emite en la primera corrida de esta fase y se refresca en todas las siguientes.
     5. Ensayo de entrega automatizado: se ejecutan los comandos documentados en un entorno limpio y se verifican sus aserciones.
     6. Actualización de la matriz de sensado de deriva en las filas que el incremento toca.
     7. Audit independiente de Fase I, acotado al incremento.
@@ -438,10 +553,15 @@ La Fase I se re-ejecuta una vez por incremento, así que hay que declarar qué s
 | Documentos de 11 afectados por el incremento | Se actualizan al estado real del sistema, con `last_review` nuevo |
 | Campo `evidencia` de los contratos `VER-XX` | Se sobrescribe con la salida real de la corrida en curso. La evidencia anterior no se conserva: lo que importa es el estado presente |
 | Entradas `EVE-XX`, `OPS-XX`, `ISSUE-XX` y `EXT-XX` existentes | Se preservan. Los identificadores son estables y no se reciclan |
-| `AGENTS.md` | Se regenera completo desde `Contrato-Agentes-v<X.Y>.md` en cada corrida |
+| `AGENTS.md` | Se regenera completo desde `Contrato-Agentes.md` en cada corrida |
 | **Correcciones manuales del usuario sobre documentos de 11** | **No se pisan.** El orquestador relee el documento, enumera las diferencias respecto de lo que él había emitido, informa cómo interpretó cada una y espera confirmación antes de propagarlas |
+| Versión de un documento de 11 actualizado | Sube **minor una vez por corte** de la cadencia de `Rules-Documentacion.md` §0.4 en el que el documento fue tocado, no una vez por edición, y archiva el estado con el que cerró el corte anterior |
 
 El tratamiento de las correcciones manuales es el mismo patrón que ya rige para las correcciones manuales de maqueta en la Fase B2: el humano edita, el agente lee lo editado, declara qué entendió y pide confirmación. Pisar una corrección manual sin declararlo es la forma más rápida de que el usuario deje de corregir.
+
+**Sobre el versionado en este tramo.** El corte de cadencia es el evento de publicación de la documentación viva, y por eso es el evento de versionado: es el momento en que el equipo consume el documento. Versionar por edición produciría estados intermedios que ningún lector vio, y no versionar dejaría sin señalizar contra qué estado del sistema trabajó cada lector. Es coherente con que `Rules-Documentacion.md` §0.4 ya defina el corte como la unidad de actualización y con que la documentación forme parte de la Definition of Done del incremento.
+
+**Sobre el snapshot previo.** La regla de §8 que obliga al orquestador a archivar el estado previo antes de despachar **no rige acá**. En este tramo el eje de identidad de un documento no tocado es su `last_review` y su estado, no un snapshot por corrida: la Fase I se re-ejecuta una vez por incremento y archivar en cada una produciría un `_legacy/` que crece sin lector que lo consuma. Lo que se archiva es únicamente el estado con el que el documento cerró el corte anterior, cuando el corte en curso lo sube de versión.
 
 ---
 
@@ -471,8 +591,8 @@ Sos un {{ESPECIALIDAD_VARIANTE}}, leído literal de la sección §1.2 del archiv
 
 ## Insumos a leer obligatoriamente
 
-- SOLUTION-MANIFEST: SDD/Intake/SOLUTION-MANIFEST-{{NOMBRE_SOLUCION}}-v1.0.md
-- SOLUTION-INTAKE: SDD/Intake/SOLUTION-INTAKE-{{NOMBRE_SOLUCION}}-v1.0.md (Parte A negocio; §13 composición; §17 bloque técnico del proyecto {{NOMBRE_PROYECTO}})
+- SOLUTION-MANIFEST: SDD/Intake/SOLUTION-MANIFEST-{{NOMBRE_SOLUCION}}.md
+- SOLUTION-INTAKE: SDD/Intake/SOLUTION-INTAKE-{{NOMBRE_SOLUCION}}.md (Parte A negocio; §13 composición; §17 bloque técnico del proyecto {{NOMBRE_PROYECTO}})
 - Reglas de la categoría: {{PATH_REGLA}}
 - Documentos upstream ya generados: {{LISTA_PATHS_UPSTREAM}}
 
@@ -494,6 +614,12 @@ Aplicar literalmente la sección §6 del archivo de reglas. Cada criterio debe s
 ## Path de salida obligatorio
 
 {{PATH_SALIDA}}
+
+## Estado previo del entregable
+
+{{VACIO | EXISTENTE, snapshot tomado en PATH_LEGACY}}
+
+Si el bloque dice EXISTENTE, el orquestador ya archivó el estado previo del entregable en la ruta indicada, antes de construir este despacho. No lo archives de nuevo: editás el archivo vivo. Si al abrir el entregable encontrás contenido que el snapshot no refleja, detenete y devolvelo como ambigüedad según §9, sin editar.
 
 ## Prohibiciones explícitas
 
@@ -522,6 +648,9 @@ Reglas de construcción del despacho:
 - El bloque de contexto de solución y proyecto se completa con los datos del bloque informativo de §3.4 del proyecto en curso.
 - `{{LISTA_UPSTREAM}}` y `{{LISTA_DOWNSTREAM}}` se calculan según §3.3 de cada archivo de reglas y la fase actual. El upstream de las categorías de proyecto incluye las categorías de nivel solución (00, 01) y las categorías ya generadas del mismo proyecto.
 - Si el despacho corresponde a una categoría con `README.md` de sección, ese archivo va al final de la lista de documentos a producir.
+- `{{VACIO | EXISTENTE}}` se resuelve verificando la carpeta de salida antes de construir el despacho. Un despacho de corrección posterior a un audit es siempre `EXISTENTE`.
+- Cuando resuelve `EXISTENTE`, el orquestador toma el snapshot en ese momento, según la política de deprecación de §5, y verifica que esté completo antes de despachar. El snapshot es responsabilidad del orquestador y no del subagente: un subagente puede abortar después de haber editado y antes de haber archivado, y una fase que despacha varios subagentes produciría carpetas de archivado parciales de distintos momentos. Es la misma asignación de responsabilidad que §13.6 ya hace para el intake.
+- Esta regla no rige en las Fases I y J, cuyo criterio de re-ejecución vive en §7.2.
 
 ---
 
@@ -596,7 +725,9 @@ Niveles de hallazgo:
 - P2 (medio): ítems opcionales recomendados ausentes, cabeceras con campos parciales. Se documenta y se sigue.
 - P3 (bajo): mejoras estilísticas o de claridad. Se anota y se decide al cierre de fase si corregir.
 
-Path del informe: `SDD/Docs/Audit/<fase>-<categoria>[-<proyecto>]-v1.0.md`. Las corridas repetidas de la Fase I se distinguen por incremento: `SDD/Docs/Audit/I-<incremento>-<categoria>[-<proyecto>]-v1.0.md`.
+Path del informe: `SDD/Docs/Audit/<fase>-<categoria>[-<proyecto>]-r<N>.md`, donde `<N>` es el número de ronda de auditoría de esa fase, empezando en 1. Un veredicto RECHAZADO produce una ronda nueva: el re-audit escribe su propio informe y no toca el anterior. Las corridas repetidas de la Fase I se distinguen además por incremento: `SDD/Docs/Audit/I-<incremento>-<categoria>[-<proyecto>]-r<N>.md`.
+
+El informe es por ronda y no un documento que cada ronda amplía, porque cada auditoría es un acto independiente de un agente invocado desde cero, que es la garantía de mirada externa que esta sección declara. Un informe único obligaría al segundo auditor a editar un documento que no escribió y le daría el contexto del anterior, que es justamente lo que la invocación desde cero evita. Preservar el informe de cada ronda es además lo que sostiene la trazabilidad que la política de versionado de §5 exige: una corrección absorbida cita el hallazgo que la origina, y esa cita tiene que resolver contra un informe que siga existiendo.
 
 El resultado del ensayo de entrega se registra en el informe de audit de su fase, reutilizando esta misma maquinaria. No se crea un artefacto de ensayo aparte: un ensayo es una verificación, y las verificaciones viven en `SDD/Docs/Audit/`.
 
@@ -626,7 +757,7 @@ Insumos:
 - Manifiesto e intake: SDD/Intake/
 
 Salida:
-- Informe en SDD/Docs/Audit/{{fase}}-{{categoria}}[-{{proyecto}}]-v1.0.md siguiendo la estructura de §10 del master-prompt.
+- Informe en SDD/Docs/Audit/{{fase}}-{{categoria}}[-{{proyecto}}]-r{{RONDA}}.md siguiendo la estructura de §10 del master-prompt. No modifiques los informes de rondas anteriores de esta misma fase.
 - Veredicto final.
 ```
 
@@ -636,9 +767,9 @@ Salida:
 
 Al cierre del bucle de proyectos, el orquestador despacha primero a AG-05 para consolidar la vista de solución en `SDD/Docs/Solucion/` y luego a AG-ROOT para redactar `SDD/Docs/README.md`.
 
-Vista de solución (AG-05, regla `Rules-Arquitectura-Tecnica.md`): en `Solucion/Vista-Solucion-v1.0.md`, mapa de proyectos con su D8 y rol, contratos inter-proyecto coherentes con las dependencias del manifiesto, y el grafo de dependencias como vista navegable. Esta vista se sitúa por encima de la arquitectura de cada proyecto, no la reemplaza.
+Vista de solución (AG-05, regla `Rules-Arquitectura-Tecnica.md`): en `Solucion/Vista-Solucion.md`, mapa de proyectos con su D8 y rol, contratos inter-proyecto coherentes con las dependencias del manifiesto, y el grafo de dependencias como vista navegable. Esta vista se sitúa por encima de la arquitectura de cada proyecto, no la reemplaza.
 
-Pipeline de solución (AG-09, regla `Rules-Devops.md`): orquestación de build y publicación multi-proyecto en `Solucion/Pipeline-Solucion-v1.0.md`, con el orden de construcción derivado del grafo de dependencias del manifiesto, la matriz de artefactos publicables por proyecto y la coordinación inter-proyecto. Solo aplica a soluciones de más de un proyecto; en el caso degenerado se omite.
+Pipeline de solución (AG-09, regla `Rules-Devops.md`): orquestación de build y publicación multi-proyecto en `Solucion/Pipeline-Solucion.md`, con el orden de construcción derivado del grafo de dependencias del manifiesto, la matriz de artefactos publicables por proyecto y la coordinación inter-proyecto. Solo aplica a soluciones de más de un proyecto; en el caso degenerado se omite.
 
 README raíz (AG-ROOT, regla `Root-Rules.md`): cubre la documentación generada en `SDD/Docs/`, presenta la solución, la jerarquía y la tabla de proyectos con su D8, rol y dependencias, y enlaza a la documentación de cada proyecto y a las categorías de nivel solución. La especialidad combinada es Arquitecto de Soluciones Senior más la variante D8 del proyecto principal.
 
@@ -669,7 +800,7 @@ Estructura del resumen ejecutivo:
 | Audits aprobados | Lista de los audits (fase A a H, por proyecto cuando aplica) con su veredicto y path al informe. |
 | Decisiones pendientes | Ambigüedades no resueltas, ADRs sin cerrar, secciones `Por confirmar` y bloqueos a despejar antes de codear. |
 | Flags activos | Flags de §4 por solución y por proyecto con su valor final. |
-| Línea de base y sensado de deriva | Por cada proyecto que ejecutó la Fase B2: ruta de la maqueta aprobada, cantidad de elementos de la línea de base por tipo (`SUP`, `CMP`, `EST`, `NAV`, `DM`) y la `Matriz-Sensado-Deriva-v1.0.md` con el estado de cada fila. Es el instrumento que el equipo se lleva al ciclo de codificación para verificar, sprint a sprint, que lo construido sigue siendo lo aprobado. |
+| Línea de base y sensado de deriva | Por cada proyecto que ejecutó la Fase B2: ruta de la maqueta aprobada, cantidad de elementos de la línea de base por tipo (`SUP`, `CMP`, `EST`, `NAV`, `DM`) y la `Matriz-Sensado-Deriva.md` con el estado de cada fila. Es el instrumento que el equipo se lleva al ciclo de codificación para verificar, sprint a sprint, que lo construido sigue siendo lo aprobado. |
 | Plan documental de la categoría 11 | Índice del cuerpo documental por proyecto: qué artefactos va a tener, su rol de intervención y su estado `Planificado`. Es el Momento 1 del modelo de documentación viva. |
 | Contratos de verificación pendientes | Tabla de sondas `VER-XX` emitidas en la Fase G con su `criterio_aceptacion` declarado y su `evidencia` en `No verificado — sin código`. Es lo que el equipo se lleva para completar durante la codificación. |
 
@@ -774,7 +905,7 @@ Términos canónicos del orquestador. Cualquier divergencia con estos términos 
 | Ensayo de entrega | Prueba de utilidad de la documentación: se ejecuta una tarea real usando únicamente el cuerpo documental. Tiene nivel automatizado, que corre el agente en cada Fase I, y nivel humano, que es gate de la Fase J. El momento en que hay que salirse de la documentación es el hallazgo. |
 | Eventualidad (`EVE-XX`) | Situación no prevista que aparece al ejecutar el sistema en un entorno real y que ninguna vista de diseño anticipaba. Se captura en la bitácora de nivel solución y se triaja hacia un documento permanente. No confundir con deriva: la deriva se aparta de una línea de base acordada, la eventualidad es conocimiento nuevo. |
 | Rol de intervención | Qué viene a hacer un lector con el sistema: integrar, mantener u operar. Organiza los cuerpos de la categoría 11 y es independiente de la naturaleza del lector, que puede ser agente humano o agente de IA. |
-| `AGENTS.md` | Contrato de contexto para agentes de codificación, emitido en la raíz del repositorio destino y derivado de `Contrato-Agentes-v<X.Y>.md`. Formato abierto y establecido; se adopta sin renombrarlo ni versionarlo, porque su valor depende de que las herramientas lo encuentren en la ruta convencional. |
+| `AGENTS.md` | Contrato de contexto para agentes de codificación, emitido en la raíz del repositorio destino y derivado de `Contrato-Agentes.md`. Formato abierto y establecido; se adopta sin renombrarlo ni versionarlo, porque su valor depende de que las herramientas lo encuentren en la ruta convencional. |
 
 ---
 
@@ -786,17 +917,17 @@ Este master-prompt se versiona como cualquier otro artefacto del template. Cualq
 | --- | --- | --- | --- |
 | 1.0 | 2026-05-17 | Versión inicial del master-prompt SDD. Define el patrón plan-then-confirm con subagentes especializados, audit independiente entre fases, gating de la categoría 04 por `usa_llm`, principio de delegación de la especialidad, manejo de ambigüedad con pattern de detención/pregunta/reanudación, reglas de no-modificación de intake con flujo controlado de actualización, handoff explícito a codificación, tabla de adaptabilidad para los 8 tipos D8 y glosario operativo. | Bootstrap SDD |
 | 2.0 | 2026-06-09 | Reformulación a solución más jerarquía de proyectos (ST-04). El orquestador deja de asumir un único `project_type` por repositorio: lee el manifiesto de solución (nuevo insumo obligatorio), valida la jerarquía, deriva los nombres de solución y de cada proyecto (incluido el nombre de código), ordena los proyectos topológicamente y recorre las fases por proyecto. §3 detección de la solución y la jerarquía; §4 flags por proyecto; §6 plan por proyecto más categorías de nivel solución; §7 bucle topológico; §8 despacho con contexto de proyecto; §11 vista de solución más README raíz; §14 adaptabilidad por proyecto. Se resuelve el acoplamiento residual al bootstrap: la guía de vocabulario prohibido por D7 se delega a las reglas en lugar de referenciar los audits de `Bootstrap/`. El caso degenerado de un proyecto reproduce el comportamiento de la versión 1.0. | Reformulación SDD |
-| 2.1 | 2026-06-09 | Coherencia con ST-07: la Fase H de §7 y la §11 incorporan el despacho de AG-09 para consolidar el pipeline de solución (`Solucion/Pipeline-Solucion-v1.0.md`) con el orden de build topológico y la matriz de artefactos publicables, junto a la vista de solución de AG-05 y el README raíz de AG-ROOT. Solo aplica a soluciones de más de un proyecto. | Reformulación SDD |
-| 2.2 | 2026-06-10 | Audit final consolidado (ST-09): §3.5 explicita el aplanado del layout en el caso degenerado (una solución de un proyecto genera 00 a 11 directo bajo `SDD/Docs/`, sin el subnivel `Proyectos/<Nombre>/` ni `Solucion/`), garantizando estructura idéntica al template de tipo único; la fila Fase H de §6, y §7 y §11, nombran los artefactos de consolidación (`Vista-Solucion-v1.0.md`, `Pipeline-Solucion-v1.0.md`) y distinguen los tres despachos de cierre (AG-05, AG-09, AG-ROOT). | Reformulación SDD |
+| 2.1 | 2026-06-09 | Coherencia con ST-07: la Fase H de §7 y la §11 incorporan el despacho de AG-09 para consolidar el pipeline de solución (`Solucion/Pipeline-Solucion.md`) con el orden de build topológico y la matriz de artefactos publicables, junto a la vista de solución de AG-05 y el README raíz de AG-ROOT. Solo aplica a soluciones de más de un proyecto. | Reformulación SDD |
+| 2.2 | 2026-06-10 | Audit final consolidado (ST-09): §3.5 explicita el aplanado del layout en el caso degenerado (una solución de un proyecto genera 00 a 11 directo bajo `SDD/Docs/`, sin el subnivel `Proyectos/<Nombre>/` ni `Solucion/`), garantizando estructura idéntica al template de tipo único; la fila Fase H de §6, y §7 y §11, nombran los artefactos de consolidación (`Vista-Solucion.md`, `Pipeline-Solucion.md`) y distinguen los tres despachos de cierre (AG-05, AG-09, AG-ROOT). | Reformulación SDD |
 | 3.0 | 2026-06-10 | Unificación del intake (ST-03/ST-04). El orquestador deja de leer tres documentos (`SOLUTION-MANIFEST` + `PROJECT-BRIEF` + `PROJECT-README`) y pasa a leer un único `SOLUTION-INTAKE` (cambio de insumos obligatorios, por eso sube major). §0 prerrequisitos y §2 lectura apuntan al intake único; §3 se convierte en la Fase de validación de intake previa a la Fase A: valida el intake con `rules/Intake-Rules.md`, emite la batería consolidada de preguntas, deriva el `SOLUTION-MANIFEST` desde §13 del intake y lo presenta para confirmación; §7 incorpora esa fase; §4 (flags), §6 y §8 (insumos), §11, §13 (no-modificación) y §15 (glosario) referencian el intake unificado. El manifiesto deja de completarse a mano: es artefacto derivado y confirmado. El comportamiento de generación y el caso degenerado no cambian. | Reformulación SDD (unificación de intake) |
-| 3.1 | 2026-06-19 | Incorporación del catálogo de reglas de diseño como insumo del despacho de la categoría 03: las notas operativas de §6 explicitan que, para proyectos con UI (`tiene_ui_final` == true), AG-03 recibe además el índice `References/Design/Index-Design-Rules.md`, el documento base `Design-Rules-Web-Generico-v1.0.md` y la especialización del stack declarado en la Parte C del intake. No cambia la mecánica plan-then-confirm, las fases ni los insumos obligatorios; es un agregado de insumo normativo. | Reformulación SDD (catálogo de diseño) |
-| 3.2 | 2026-06-20 | Incorporación de la extensión por capacidad "configuración dirigida por esquema": las notas operativas de §6 explicitan que, para proyectos con superficies de configuración, AG-03 recibe además `Design-Rules-Config-Esquema-v1.0.md` vía el índice del catálogo. No cambia la mecánica plan-then-confirm, las fases ni los insumos obligatorios; es un agregado de insumo normativo. | Reformulación SDD (configuración por esquema) |
-| 3.3 | 2026-07-18 | Incorporación de tres extensiones por capacidad derivadas de la extracción de características de un panel de control monolítico en producción: las notas operativas de §6 explicitan que AG-03 recibe además `Design-Rules-Primer-Arranque-v1.0.md` cuando el proyecto se despliega por instancia y arranca vacío, `Design-Rules-Acceso-Monousuario-v1.0.md` cuando declara una sola identidad de operación y `Design-Rules-Identidad-De-Version-v1.0.md` cuando produce artefactos desplegables identificables, todas vía el índice del catálogo, y declara la ortogonalidad mutua de las cuatro extensiones. No cambia la mecánica plan-then-confirm, las fases ni los insumos obligatorios; es un agregado de insumo normativo. | Reformulación SDD (arquetipo de panel monolítico) |
-
+| 3.1 | 2026-06-19 | Incorporación del catálogo de reglas de diseño como insumo del despacho de la categoría 03: las notas operativas de §6 explicitan que, para proyectos con UI (`tiene_ui_final` == true), AG-03 recibe además el índice `References/Design/Index-Design-Rules.md`, el documento base `Design-Rules-Web-Generico.md` y la especialización del stack declarado en la Parte C del intake. No cambia la mecánica plan-then-confirm, las fases ni los insumos obligatorios; es un agregado de insumo normativo. | Reformulación SDD (catálogo de diseño) |
+| 3.2 | 2026-06-20 | Incorporación de la extensión por capacidad "configuración dirigida por esquema": las notas operativas de §6 explicitan que, para proyectos con superficies de configuración, AG-03 recibe además `Design-Rules-Config-Esquema.md` vía el índice del catálogo. No cambia la mecánica plan-then-confirm, las fases ni los insumos obligatorios; es un agregado de insumo normativo. | Reformulación SDD (configuración por esquema) |
+| 3.3 | 2026-07-18 | Incorporación de tres extensiones por capacidad derivadas de la extracción de características de un panel de control monolítico en producción: las notas operativas de §6 explicitan que AG-03 recibe además `Design-Rules-Primer-Arranque.md` cuando el proyecto se despliega por instancia y arranca vacío, `Design-Rules-Acceso-Monousuario.md` cuando declara una sola identidad de operación y `Design-Rules-Identidad-De-Version.md` cuando produce artefactos desplegables identificables, todas vía el índice del catálogo, y declara la ortogonalidad mutua de las cuatro extensiones. No cambia la mecánica plan-then-confirm, las fases ni los insumos obligatorios; es un agregado de insumo normativo. | Reformulación SDD (arquetipo de panel monolítico) |
 | 3.4 | 2026-07-19 | Incorporación de la Fase B2 de validación visual de maqueta y del sensado de deriva. §0 suma `SDD/Maquetas/` a la salida y declara la única excepción de escritura fuera del destino (captura de modelo UX-UI en `IA.SDD`, con aceptación explícita y ofuscación bloqueante); §4 suma el flag `requiere_maqueta` con su regla de derivación y su confirmación por el humano; §5 registra la invariante D9 de evidencia verificable, con alcance acotado y vigencia hacia adelante; §6 suma la fila de la Fase B2 al plan y dos notas operativas (oferta de modelo UX-UI y freno ante propagación a categorías de nivel solución o al intake); §7 detalla los nueve pasos de la fase dentro del bucle por proyecto; §10 suma D9 y los criterios de audit propios de B2; §12 suma la línea de base y la matriz de sensado al resumen ejecutivo del handoff; §15 suma seis términos al glosario. La mecánica de la fase vive en las reglas nuevas `Maqueta-Rules.md` y `Deriva-Rules.md`, por delegación de la especialidad; el master-prompt solo la cablea. La fase es opcional y no altera el flujo de los proyectos sin UI. | Framework SDD (validación visual y sensado de deriva) |
 | 3.5 | 2026-07-26 | Intercambio de categorías 10 ↔ 11. §3.5 (layout de salida), §6 (plan de generación, filas F y G), §7 (ejecución por fases) y §14 (tabla de adaptabilidad por D8) pasan a declarar `10-Examples/` gobernada por `Rules-Examples.md` con subagente AG-10, y `11-Documentacion/` gobernada por `Rules-Documentacion.md` con subagente AG-11. Se invierte el orden de generación para respetar la dependencia nueva: los ejemplos se producen antes que el cuerpo documental, que los referencia. El caso degenerado y el resto del flujo no cambian. La incorporación de las Fases I y J del modelo de documentación viva es objeto de la versión siguiente. | Reformulación SDD |
 | 3.6 | 2026-07-26 | Incorporación del ciclo de documentación viva posterior al handoff. §0 suma `/samples/` y `AGENTS.md` a la salida. §3.5 declara `Solucion/11-Documentacion/`, la emisión de `AGENTS.md` en la raíz del repositorio destino como única salida fuera de `SDD/`, y que la categoría 11 existe siempre. §6 reordena las filas del plan: la Fase F queda solo con 09, la Fase G produce la pasada de diseño de 10 con sus contratos de verificación, la Fase H suma el plan documental de 11 (Momento 1), y se agregan las filas de las Fases I y J. §7 reescribe la ejecución por fases con el tramo posterior al handoff, y suma §7.1 con la precondición dura de la Fase I (código, sample implementado y tests que corran) y §7.2 con el criterio de re-ejecución, que preserva las correcciones manuales del usuario siguiendo el patrón de la Fase B2. §10 suma los criterios de audit de las Fases G, I y J con sus diez hallazgos P0 propios, y declara que el ensayo de entrega se registra en el informe de audit de su fase. §12 suma el plan documental y los contratos de verificación pendientes al resumen ejecutivo del handoff, y declara que el handoff cierra el tramo de especificación y no el alcance de SDD. §15 suma nueve términos. Se corrige además una referencia preexistente incorrecta: §8 y §10 citaban la sección de anti-patrones como «§4.5», numeración que solo coincide en siete de los trece archivos de reglas; ahora se la ubica por título. La mecánica de los tres momentos, la cadencia, el ensayo y la bitácora vive en `Rules-Documentacion.md`; el master-prompt solo la cablea. | Reformulación SDD |
-
+| 3.7 | 2026-07-28 | Reparación de la política de deprecación y del archivado, a partir de los hallazgos de una corrida real sobre una solución de cuatro proyectos. §3.5 declara `SDD/Docs/Audit/` en el layout y explica dónde aparece `_legacy/`, que la política usaba sin que ninguna fuente de estructura la declarara. §5 unifica la ruta de archivado en `<carpeta-del-artefacto>/_legacy/<YYYY-MM-DD>/`, local a la carpeta del artefacto, que preserva el eje de proyecto y evita que dos proyectos que archiven la misma categoría el mismo día colisionen; incorpora a la política de deprecación los requisitos de estado `Superado` y nota a la versión vigente, que hasta ahora vivían solo en las reglas de categoría y no llegaban al bloque de invariantes; y precisa la política de versionado con el criterio de estado de cabecera para las correcciones derivadas del audit de la propia fase de emisión. §5.1 es nueva y reúne el detalle operativo: la ruta única con su lectura de las abreviaturas de las reglas, el sufijo de versión que reciben al archivarse los artefactos emitidos sin sufijo, la tabla de cinco exenciones declaradas y la prohibición de renombrar retroactivamente lo ya archivado. §7.2 declara el versionado por corte de cadencia en el tramo de documentación viva y exceptúa a las Fases I y J de la regla de snapshot previo. §8 suma la sección «Estado previo del entregable» al esqueleto de despacho y asigna el snapshot al orquestador, no al subagente. §10 incorpora el eje de ronda al path del informe de auditoría, que estaba fijo en `-v1.0` y hacía que el re-audit obligatorio tras un veredicto RECHAZADO sobrescribiera al informe anterior. Se corrigen dos erratas preexistentes de formato: la fila D9 de §5 y la fila 3.4 de §16 estaban separadas de sus tablas por una línea en blanco que las rompía como markdown. No se modifica ninguna invariante D1-D9: la intervención precisa la política operativa de §5, no el enunciado de D5, y ninguna documentación ya emitida deja de cumplir. | Revisión SDD |
+| 4.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. En la misma versión se incorpora la **fase de reconciliación normativa** (§2.1, nueva): cuando el orquestador arranca sobre un destino que ya tiene documentación, lee el bloque de procedencia del manifiesto, lo compara contra las versiones vigentes del framework, clasifica cada salto por severidad, enumera los documentos potencialmente invalidados por los saltos major y se detiene ofreciendo tres salidas: plan de adecuación sin modificar nada, regeneración desde cero, o continuar bajo la versión de origen leyendo sus reglas desde `_legacy/`. §0 reemplaza el prerrequisito 4, que hasta ahora solo ofrecía archivar todo o abortar; §3.5 declara el informe de reconciliación en `Audit/`; §7 suma la fase al inicio del recorrido. La fase no corre sobre un destino vacío y no modifica ningún documento. | Revisión SDD |
 Reglas de versionado:
 
 - Cambio editorial sin impacto operativo: sube patch (no aplicable acá: solo X.Y).

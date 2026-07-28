@@ -1,7 +1,7 @@
 # Guía de usuario del template SDD
 
 ```yaml
-Documento: Guia-Usuario-SDD-v1.0.md
+Documento: Guia-Usuario-SDD.md
 Versión: 1.5
 Fecha: 2026-07-26
 Audiencia: profesionales y estudiantes que usan el template para una solución real
@@ -122,7 +122,7 @@ SDD no es universal. Está pensado para proyectos donde el esfuerzo de documenta
 
 ### 3.1 Perfilado por tamaño de equipo
 
-- 1 persona (solo dev / freelance): conviene una versión liviana. Saltearse el `acuerdo-equipo` y el sprint plan completo (se usa `Mini-Plan-v1.0.md`). Igual generar visión, alcance, NB, CU, ADR mínimas y backlog.
+- 1 persona (solo dev / freelance): conviene una versión liviana. Saltearse el `acuerdo-equipo` y el sprint plan completo (se usa `Mini-Plan.md`). Igual generar visión, alcance, NB, CU, ADR mínimas y backlog.
 - 2 a 5 personas (equipo chico): caso canónico del template, todo el flujo aplica.
 - 6 a 15 personas (equipo mediano): caso canónico también. Se recomienda fuerte ejecutar la fase H final (audit consolidado) con un revisor externo al equipo.
 - Más de 15 personas (equipo grande): el template aplica como base. La coordinación entre múltiples bounded contexts se modela como una solución multi-proyecto (un proyecto por contexto dentro de la misma tabla de proyectos del intake, §13) en lugar de un único proyecto monolítico.
@@ -302,7 +302,7 @@ No completás ningún manifiesto en este paso: el `SOLUTION-MANIFEST` no lo llen
 
 Output del paso: un único archivo markdown personalizado a la solución, listo para bajar a local. El nombre definitivo sigue el patrón:
 
-- `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md`
+- `SOLUTION-INTAKE-<Nombre-Solucion>.md`
 
 Donde `<Nombre-Solucion>` es el nombre de la solución en Título-Con-Guiones (minúsculas, sin acentos, guion medio como separador). Ejemplo: para "Gestión de Turnos", el slug es `gestion-de-turnos`. Los nombres de cada proyecto siguen el mismo criterio Título-Con-Guiones (por ejemplo `gestion-de-turnos-api`).
 
@@ -326,19 +326,19 @@ workspace/
 └── mi-solucion/            # destino: acá se generan el intake y la documentación
 ```
 
-En el repositorio destino, colocá tu intake completado en `SDD/Intake/` (creá la carpeta si no existe). El nombre sigue el patrón `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md`:
+En el repositorio destino, colocá tu intake completado en `SDD/Intake/` (creá la carpeta si no existe). El nombre sigue el patrón `SOLUTION-INTAKE-<Nombre-Solucion>.md`:
 
 ```bash
 # Desde la raíz del repo destino (mi-solucion/)
 mkdir -p SDD/Intake
-cp INTAKE-lleno.md SDD/Intake/SOLUTION-INTAKE-Gestion-De-Turnos-v1.0.md
+cp INTAKE-lleno.md SDD/Intake/SOLUTION-INTAKE-Gestion-De-Turnos.md
 ```
 
 En PowerShell el equivalente es:
 
 ```powershell
 New-Item -ItemType Directory -Force SDD\Intake
-Copy-Item INTAKE-lleno.md SDD\Intake\SOLUTION-INTAKE-Gestion-De-Turnos-v1.0.md
+Copy-Item INTAKE-lleno.md SDD\Intake\SOLUTION-INTAKE-Gestion-De-Turnos.md
 ```
 
 Hacé un commit del estado inicial en el repo destino:
@@ -417,6 +417,7 @@ Y el orquestador ajusta antes de arrancar.
 
 A partir de ahí, el orquestador despacha subagentes fase por fase. La Fase de validación de intake ya corrió antes de todo esto (validó el intake y derivó el manifiesto). La Fase A es a nivel solución y se corre una sola vez; las Fases B a G se repiten por proyecto en orden topológico (un proyecto no arranca antes que sus dependencias); la Fase H consolida la solución:
 
+- Reconciliación normativa (solo si el destino ya tiene documentación de una corrida anterior): el orquestador compara con qué versión del framework se generó ese árbol contra la vigente, te muestra qué documentos quedaron potencialmente invalidados y te deja elegir entre un plan de adecuación, regenerar desde cero o continuar bajo la versión anterior. Sobre un destino vacío no corre.
 - Fase de validación de intake (una vez, previa a A): validación de completitud del `SOLUTION-INTAKE` y derivación del `SOLUTION-MANIFEST` desde §13, con batería de preguntas si falta algo bloqueante y confirmación del manifiesto derivado.
 - Fase A (nivel solución, una vez): 00-Contexto + 01-Necesidades-Negocio + audit A.
 - Fase B (por proyecto): 02-Especificacion-Funcional + 03-UX-UI-DX + 04-Prompts-AI (si aplica) + audit B.
@@ -433,7 +434,7 @@ A partir de ahí, el orquestador despacha subagentes fase por fase. La Fase de v
 
 Si la solución es de un solo proyecto (caso degenerado), el orquestador aplana el layout: genera las categorías `00` a `11` directo bajo `SDD/Docs/` más el README raíz, sin el subnivel `Proyectos/<Nombre>/` ni la carpeta `Solucion/`, y la Fase H omite la vista y el pipeline de solución. El resultado es idéntico al template de tipo único.
 
-Entre cada fase, el orquestador se detiene, presenta el informe del audit (`SDD/Docs/Audit/<fase>-<categoria>-v1.0.md`) y espera tu confirmación para continuar.
+Entre cada fase, el orquestador se detiene, presenta el informe del audit (`SDD/Docs/Audit/<fase>-<categoria>.md`) y espera tu confirmación para continuar.
 
 Si un audit devuelve `RECHAZADO` por hallazgos P0, el orquestador no avanza. Hay que corregir y re-auditar.
 
@@ -605,7 +606,7 @@ Fases ejecutadas en orden: A, B, C, D, E, F, G, H. Cada una con su audit. La fas
 
 #### Muestras de documentos generados
 
-Extracto de `SDD/Docs/02-Especificacion-Funcional/Casos-De-Uso/CU-03-Reservar-Turno-v1.0.md`:
+Extracto de `SDD/Docs/02-Especificacion-Funcional/Casos-De-Uso/CU-03-Reservar-Turno.md`:
 
 ```markdown
 # CU-03 — Reservar turno
@@ -639,7 +640,7 @@ Paciente registrado
 - Downstream: US-08, BT-12, RC-04, TC-15
 ```
 
-Extracto de `SDD/Docs/05-Arquitectura-Tecnica/Adrs/ADR-002-Estilo-Clean-Architecture-v1.0.md`:
+Extracto de `SDD/Docs/05-Arquitectura-Tecnica/Adrs/ADR-002-Estilo-Clean-Architecture.md`:
 
 ```markdown
 # ADR-002 — Adopción de Clean Architecture
@@ -722,7 +723,7 @@ La fase de arquitectura genera 3 ADR mínimos: estilo arquitectónico, superfici
 
 #### Muestras de documentos generados
 
-Extracto de `SDD/Docs/00-Contexto/Vision-Producto-v1.0.md`:
+Extracto de `SDD/Docs/00-Contexto/Vision-Producto.md`:
 
 ```markdown
 # Visión del producto — csv-parser-lib
@@ -822,7 +823,7 @@ La fase de DevOps genera estrategia de publicación atada a los ciclos de las st
 
 #### Muestras de documentos generados
 
-Extracto de `SDD/Docs/03-UX-UI-DX/Wireframes-Pantalla-Escaneo-v1.0.md`:
+Extracto de `SDD/Docs/03-UX-UI-DX/Wireframes-Pantalla-Escaneo.md`:
 
 ```markdown
 # Wireframe — pantalla de escaneo
@@ -849,7 +850,7 @@ base local. Si la conexión está disponible, se sincroniza en
 background sin bloquear al usuario.
 ```
 
-Extracto de `SDD/Docs/09-Devops/Entornos-Deploy-v1.0.md`:
+Extracto de `SDD/Docs/09-Devops/Entornos-Deploy.md`:
 
 ```markdown
 # Estrategia de entornos y publicación
@@ -935,7 +936,7 @@ proyectos: 4 (orden topologico: aplicada-validaciones, gestion-de-turnos-domain,
               gestion-de-turnos-api, gestion-de-turnos-notificaciones)
 ```
 
-Ejecuta la Fase A una sola vez a nivel solución (00-Contexto, 01-Necesidades-Negocio), luego recorre las Fases B a G por proyecto en el orden topológico, y cierra con la Fase H de consolidación: como hay más de un proyecto, genera la vista de solución (`Solucion/Vista-Solucion-v1.0.md`, con el mapa de proyectos, los contratos inter-proyecto y el grafo de dependencias), el pipeline de solución (`Solucion/Pipeline-Solucion-v1.0.md`, con el orden de build topológico y la matriz de artefactos publicables por proyecto) y el README raíz.
+Ejecuta la Fase A una sola vez a nivel solución (00-Contexto, 01-Necesidades-Negocio), luego recorre las Fases B a G por proyecto en el orden topológico, y cierra con la Fase H de consolidación: como hay más de un proyecto, genera la vista de solución (`Solucion/Vista-Solucion.md`, con el mapa de proyectos, los contratos inter-proyecto y el grafo de dependencias), el pipeline de solución (`Solucion/Pipeline-Solucion.md`, con el orden de build topológico y la matriz de artefactos publicables por proyecto) y el README raíz.
 
 #### Layout generado (extracto)
 
@@ -944,8 +945,8 @@ SDD/Docs/
 ├── 00-Contexto/                         # nivel solución
 ├── 01-Necesidades-Negocio/              # nivel solución
 ├── Solucion/
-│   ├── Vista-Solucion-v1.0.md
-│   └── Pipeline-Solucion-v1.0.md
+│   ├── Vista-Solucion.md
+│   └── Pipeline-Solucion.md
 ├── Proyectos/
 │   ├── aplicada-validaciones/02..11/
 │   ├── gestion-de-turnos-domain/02..11/
@@ -996,7 +997,7 @@ P0 significa hallazgo bloqueante: viola D1-D9 (idioma, encoding, Título-Con-Gui
 
 Pasos:
 
-1. Abrí el informe en `SDD/Docs/Audit/<fase>-<categoria>-v1.0.md`.
+1. Abrí el informe en `SDD/Docs/Audit/<fase>-<categoria>.md`.
 2. Identificá el archivo, sección y evidencia del hallazgo.
 3. Si es un error de contenido (placeholder sin completar, sección omitida), pedile al orquestador que regenere ese documento.
 4. Si es un error de trazabilidad, revisá los documentos upstream o downstream y arreglá las referencias.
@@ -1017,7 +1018,7 @@ Para una traducción completa del template, copiá el repo y traducí los archiv
 Indicale al orquestador qué documento querés regenerar. Ejemplo:
 
 ```text
-Regenerá únicamente SDD/Docs/05-Arquitectura-Tecnica/Adrs/ADR-003-Persistencia-v1.0.md
+Regenerá únicamente SDD/Docs/05-Arquitectura-Tecnica/Adrs/ADR-003-Persistencia.md
 manteniendo el resto intacto.
 ```
 
@@ -1058,7 +1059,7 @@ Primer paso: leé el archivo de reglas de la categoría y verificá qué pide. E
 Segundo paso: si el subagente realmente se desvió, pedile al orquestador que regenere el documento citando explícitamente la sección de la regla que no se respetó. Ejemplo:
 
 ```text
-Regenerá CU-04-Cancelar-Turno-v1.0.md respetando estrictamente la
+Regenerá CU-04-Cancelar-Turno.md respetando estrictamente la
 estructura de §4.2 de ../IA.SDD/SDD/Devs/Rules/Rules-Especificacion-Funcional.md.
 El documento actual omite la sección de criterios Given/When/Then.
 ```
@@ -1135,7 +1136,7 @@ Si un cambio que le pedís por prompt entra en conflicto con algo que corregiste
 
 Son el instrumento de control que te llevás a la codificación, y viven fuera del alcance de SDD, que termina en el handoff.
 
-Qué son. La línea de base es el inventario de lo que aprobaste al mirar la maqueta: cada superficie, componente, estado y ruta de navegación con su identificador (`SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX`), más el contrato de los campos que la maqueta exhibía (`DM-XX`). La matriz (`Matriz-Sensado-Deriva-v1.0.md`, en la categoría 08) convierte ese inventario en una lista de comprobaciones, cada una con su método de verificación, la evidencia que la respalda y el umbral a partir del cual la diferencia deja de ser aceptable.
+Qué son. La línea de base es el inventario de lo que aprobaste al mirar la maqueta: cada superficie, componente, estado y ruta de navegación con su identificador (`SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX`), más el contrato de los campos que la maqueta exhibía (`DM-XX`). La matriz (`Matriz-Sensado-Deriva.md`, en la categoría 08) convierte ese inventario en una lista de comprobaciones, cada una con su método de verificación, la evidencia que la respalda y el umbral a partir del cual la diferencia deja de ser aceptable.
 
 Cómo se usa. Al cierre de cada sprint, recorrés las filas de la matriz cuyos elementos tocó el sprint y las marcás como `Conforme`, `Deriva menor` o `Deriva mayor`. Una deriva menor se registra y sigue. Una deriva mayor se resuelve de una de dos maneras, nunca por omisión: se corrige el sistema para volver a la línea de base, o se actualiza la línea de base con tu aprobación explícita porque la construcción reveló que la línea de base estaba equivocada. Lo que no vale es que las dos se separen sin que nadie lo declare: eso es la deriva.
 
@@ -1183,7 +1184,7 @@ Formalmente, la actualización de la categoría 11 forma parte de la Definition 
 
 Contiene lo que un agente necesita para trabajar en tu repositorio sin romper nada: cómo se construye el proyecto, cómo se corren los tests, convenciones de código y de commits, comandos de validación, límites de intervención, y punteros a los documentos de la categoría 11 por intención.
 
-No se escribe a mano. Se **deriva** de `Contrato-Agentes-v<X.Y>.md`, que vive dentro de la carpeta de la categoría 11 y sí sigue la convención de nomenclatura del framework. Si los dos divergen, el contrato es la fuente y el `AGENTS.md` se regenera.
+No se escribe a mano. Se **deriva** de `Contrato-Agentes.md`, que vive dentro de la carpeta de la categoría 11 y sí sigue la convención de nomenclatura del framework. Si los dos divergen, el contrato es la fuente y el `AGENTS.md` se regenera.
 
 Se emite en la primera corrida de la Fase I y se refresca en todas las siguientes. No se reserva para el cierre, porque la Fase I es justamente el tramo donde los agentes están codificando y es cuando más lo necesitan.
 
@@ -1216,7 +1217,7 @@ Lo que no vale es completar la tarea usando conocimiento propio y declarar el en
 
 Una **eventualidad** es una situación que aparece al ejecutar el sistema en un entorno real y que ninguna vista de diseño podía anticipar. No es deriva: la deriva es apartarse de algo acordado, y acá no hay línea de base de la cual apartarse. Es conocimiento nuevo que hay que capturar antes de que se pierda.
 
-Se registran en `Bitacora-Eventualidades-v<X.Y>.md`, de nivel solución, con identificador `EVE-XX`.
+Se registran en `Bitacora-Eventualidades.md`, de nivel solución, con identificador `EVE-XX`.
 
 **Un caso completo, de punta a punta.** Un servicio se comunica con un dispositivo físico conectado por USB al host.
 
@@ -1230,8 +1231,8 @@ Se registran en `Bitacora-Eventualidades-v<X.Y>.md`, de nivel solución, con ide
 
 **Triaje.** Acá está el punto de toda la mecánica: la bitácora es un buffer de captura, **no el destino final**. Esta eventualidad es un requisito del entorno no declarado, así que se propaga a dos documentos permanentes:
 
-1. `Guia-Contenedor-v1.0.md`, sección «Dispositivos del host requeridos»: la ruta del dispositivo, la regla de acceso y cómo verificar que está disponible.
-2. `Runbook-Operacion-v1.0.md`, entrada `OPS-07` «El servicio no registra lecturas»: síntoma observable, diagnóstico paso a paso y resolución.
+1. `Guia-Contenedor.md`, sección «Dispositivos del host requeridos»: la ruta del dispositivo, la regla de acceso y cómo verificar que está disponible.
+2. `Runbook-Operacion.md`, entrada `OPS-07` «El servicio no registra lecturas»: síntoma observable, diagnóstico paso a paso y resolución.
 
 La entrada `EVE-03` de la bitácora queda con su campo `destino` apuntando a esos dos lugares.
 
@@ -1253,7 +1254,7 @@ Pasos:
 
 1. Creá la carpeta `../IA.SDD/SDD/Devs/Rules/Rules-Observabilidad.md` siguiendo la estructura de las reglas existentes (§1 Especialidad, §2 Documentos, §3 Nomenclatura, §4 Estructura, §5 Preguntas guía, §6 Criterios, §7 Anti-patrones, §8 Prompt-snippet).
 2. Definí la especialidad base (por ejemplo, "Site Reliability Engineer Senior") y las variantes por tipo D8.
-3. Listá los documentos a producir: `Estrategia-Observabilidad-v1.0.md`, `Dashboards-v1.0.md`, `Alertas-v1.0.md`, `runbooks/RB-XX-<Nombre>-v1.0.md`, `README.md`.
+3. Listá los documentos a producir: `Estrategia-Observabilidad.md`, `Dashboards.md`, `Alertas.md`, `runbooks/RB-XX-<Nombre>.md`, `README.md`.
 4. Actualizá `../IA.SDD/SDD/Devs/Orchestrator/Master-Prompt.md` §6 (plan de generación por categoría) para incluir la nueva categoría. Subí minor del master-prompt.
 5. Decidí en qué fase entra (si es transversal, queda como fase F o G; si es post-DevOps, queda como fase F2 nueva).
 6. Probá el flujo completo con un proyecto piloto.
@@ -1289,7 +1290,7 @@ La vía normal es aceptar la oferta del paso 7 de la Fase B2 (ver §4.6 y F-23):
 
 Si querés agregar un modelo por fuera de ese flujo, por ejemplo porque tenés un diseño validado en un proyecto anterior a la existencia de la fase:
 
-1. Copiá `../IA.SDD/SDD/Devs/Modelos-UX-UI/Rules-Design-Modelo-Template.md` y completalo como `Rules-Design-<Nombre-Modelo>-v1.0.md` en el mismo directorio. El criterio de qué incluir está en el encabezado de la plantilla: se escriben reglas accionables, no descripciones, y una regla entra si su ausencia haría que un diseño posterior salga distinto de forma perceptible.
+1. Copiá `../IA.SDD/SDD/Devs/Modelos-UX-UI/Rules-Design-Modelo-Template.md` y completalo como `Rules-Design-<Nombre-Modelo>.md` en el mismo directorio. El criterio de qué incluir está en el encabezado de la plantilla: se escriben reglas accionables, no descripciones, y una regla entra si su ausencia haría que un diseño posterior salga distinto de forma perceptible.
 2. Construí el ejemplo ejecutable en `../IA.SDD/Templates/<Nombre-Modelo>/`, derivándolo de `Templates/Modelo-Generico/`, que fija la estructura y el nivel de detalle esperados.
 3. Registrá el modelo en la tabla de `../IA.SDD/SDD/Devs/Modelos-UX-UI/Index-Modelos-UX-UI.md` §2. Un modelo que no está en el índice no existe para el orquestador.
 4. Verificá la ofuscación antes de commitear: ni nombres de clientes, ni datos reales, ni assets del proyecto de origen, ni decisiones que solo tengan sentido en su dominio.
@@ -1429,14 +1430,16 @@ Términos esenciales para usar el template. Para el glosario exhaustivo del marc
 |---|---|
 | Solución | Contenedor de nivel superior que agrupa una jerarquía de N proyectos (N mayor o igual a 1). No tiene un D8 propio: lo declaran sus proyectos. |
 | Proyecto | Unidad de la jerarquía de una solución. Lleva exactamente uno de los 8 tipos D8. Sobre cada proyecto se generan las categorías 02 a 11. |
-| Manifiesto de solución | Documento `SOLUTION-MANIFEST-<Nombre-Solucion>-v1.0.md`. Artefacto derivado por el orquestador a partir de §13 del intake (no lo completa el usuario): enumeración de proyectos, su D8, rol, dependencias, nombres de código derivados y perfil de nombres. Su grafo es acíclico (DAG). El usuario lo confirma; no lo escribe a mano. |
+| Manifiesto de solución | Documento `SOLUTION-MANIFEST-<Nombre-Solucion>.md`. Artefacto derivado por el orquestador a partir de §13 del intake (no lo completa el usuario): enumeración de proyectos, su D8, rol, dependencias, nombres de código derivados y perfil de nombres. Su grafo es acíclico (DAG). El usuario lo confirma; no lo escribe a mano. |
 | Proyecto principal | El proyecto cabeza de la solución. El manifiesto declara exactamente uno; es una validación bloqueante. |
 | Orden topológico | Orden de generación y build derivado del grafo de dependencias: primero los proyectos sin dependencias, luego los que dependen de proyectos ya resueltos. Ninguno arranca antes que sus dependencias. |
 | Caso degenerado | Solución de un solo proyecto. El orquestador aplana el layout (00..11 directo bajo `docs/`, sin `Proyectos/<Nombre>/` ni `Solucion/`). Equivale al template de tipo único anterior. |
-| Vista de solución | Artefacto de nivel solución (`Solucion/Vista-Solucion-v1.0.md`), solo si hay más de un proyecto. Contiene el mapa de proyectos, los contratos inter-proyecto y el grafo de dependencias. |
-| Pipeline de solución | Artefacto de nivel solución (`Solucion/Pipeline-Solucion-v1.0.md`), solo si hay más de un proyecto. Contiene el orden de build topológico y la matriz de artefactos publicables por proyecto. |
+| Vista de solución | Artefacto de nivel solución (`Solucion/Vista-Solucion.md`), solo si hay más de un proyecto. Contiene el mapa de proyectos, los contratos inter-proyecto y el grafo de dependencias. |
+| Pipeline de solución | Artefacto de nivel solución (`Solucion/Pipeline-Solucion.md`), solo si hay más de un proyecto. Contiene el orden de build topológico y la matriz de artefactos publicables por proyecto. |
 | Intake | Documento único de entrada de la solución: el `SOLUTION-INTAKE`. Es fuente de verdad. Reemplaza a las antiguas plantillas PROJECT-BRIEF y PROJECT-README, hoy deprecadas. |
-| SOLUTION-INTAKE | Plantilla de intake unificada `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md`, una por solución. Tres partes: A negocio (§1-§12), B composición con la tabla de proyectos de §13 (§13-§16), C técnica por proyecto (§17, bloque P.1-P.12), más §18 samples y §19 checklist. El único documento que completa el usuario. |
+| SOLUTION-INTAKE | Plantilla de intake unificada `SOLUTION-INTAKE-<Nombre-Solucion>.md`, una por solución. Tres partes: A negocio (§1-§12), B composición con la tabla de proyectos de §13 (§13-§16), C técnica por proyecto (§17, bloque P.1-P.12), más §18 samples y §19 checklist. El único documento que completa el usuario. |
+| Reconciliación normativa | Fase previa a todo, dirigida por `Master-Prompt.md` §2.1. Solo corre si `SDD/Docs/` del destino ya tiene contenido. Compara la versión del framework declarada en el bloque de procedencia del manifiesto contra la vigente, enumera los documentos potencialmente invalidados por los saltos major y ofrece tres salidas: plan de adecuación, regeneración desde cero o continuar bajo la versión de origen. No modifica nada. |
+| Procedencia del framework | Bloque del `SOLUTION-MANIFEST` que declara bajo qué versión del framework y de qué reglas se generó la documentación del destino. Es lo que hace posible la reconciliación normativa. |
 | Fase de validación de intake | Fase previa a la Fase A, dirigida por `Intake-Rules.md`. El orquestador valida la completitud del intake, emite una batería consolidada de preguntas si falta algo bloqueante, deriva el `SOLUTION-MANIFEST` de §13 y lo presenta para confirmación. |
 | Master-prompt | Archivo único `../IA.SDD/SDD/Devs/Orchestrator/Master-Prompt.md` que ejecuta el orquestador. Es la instrucción que se pega en Claude Code. |
 | Orquestador | Agente principal que coordina la generación de la documentación. Valida el intake, deriva el manifiesto de §13, valida la jerarquía, deriva nombres, ordena los proyectos en orden topológico, planifica, despacha subagentes y audita. |
@@ -1455,7 +1458,7 @@ Términos esenciales para usar el template. Para el glosario exhaustivo del marc
 | Maqueta | Sitio estático navegable en `SDD/Maquetas/<Nombre-Proyecto>/`: HTML, CSS, Bootstrap 5 y JavaScript, sin proceso de build, con los datos de ejemplo de la documentación hardcodeados. Sirve para validar de una sola vez la experiencia y el modelo de datos. No es el producto ni documentación viva: es la línea de base de un momento, aprobada explícitamente. |
 | Modelo UX-UI | Diseño capturado de una maqueta aprobada, escrito como reglas constructivas en `Modelos-UX-UI/` con su ejemplo ofuscado en `Templates/`. Opcional; se aplica por encima del catálogo base de `References/Design/`, nunca en su reemplazo. |
 | Línea de base visual | Inventario identificado (`SUP-XX` superficies, `CMP-XX` componentes, `EST-XX` estados, `NAV-XX` rutas) de lo aprobado en la maqueta, más el contrato de datos (`DM-XX`) que exhibía. Punto de comparación externo del sensado de deriva. |
-| Sensado de deriva | Mecanismo de control que contrasta lo construido contra la línea de base visual y el contrato de datos, con umbrales declarados de deriva menor y mayor. Se opera con la `Matriz-Sensado-Deriva-v1.0.md` de la categoría 08, sprint a sprint. Su regla es `Deriva-Rules.md`. |
+| Sensado de deriva | Mecanismo de control que contrasta lo construido contra la línea de base visual y el contrato de datos, con umbrales declarados de deriva menor y mayor. Se opera con la `Matriz-Sensado-Deriva.md` de la categoría 08, sprint a sprint. Su regla es `Deriva-Rules.md`. |
 | Evidencia verificable (D9) | Invariante global: toda afirmación sobre el estado del sistema cita un artefacto localizable, reproducible, contemporáneo e independiente de quien afirma. No aplica a afirmaciones de diseño, de especificación ni de contexto, que necesitan justificación y no evidencia. Rige hacia adelante desde su incorporación. |
 
 ### 10.2 Mapa visual de la estructura de carpetas
@@ -1469,7 +1472,7 @@ mi-proyecto/
 │   │   ├── intake/
 │   │   │   ├── SOLUTION-INTAKE-template.md               # Única plantilla a completar
 │   │   │   ├── SOLUTION-MANIFEST-template.md             # Referencia del artefacto derivado
-│   │   │   └── SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md  # Tu intake unificado
+│   │   │   └── SOLUTION-INTAKE-<Nombre-Solucion>.md  # Tu intake unificado
 │   │   ├── orchestrator/
 │   │   │   └── Master-Prompt.md                          # Único prompt a pegar
 │   │   ├── rules/
@@ -1492,113 +1495,113 @@ mi-proyecto/
 │   │   ├── references/                                  # Catálogo de reglas de diseño por stack, insumo de AG-03
 │   │   │   └── design/
 │   │   │       ├── Index-Design-Rules.md
-│   │   │       ├── Design-Rules-Web-Generico-v1.0.md
-│   │   │       ├── Design-Rules-Blazor-Mudblazor-v1.0.md
-│   │   │       ├── Design-Rules-Config-Esquema-v1.0.md      # Extensión por capacidad: configuración dirigida por esquema
-│   │   │       ├── Design-Rules-Primer-Arranque-v1.0.md     # Extensión por capacidad: primer arranque y aprovisionamiento inicial
-│   │   │       ├── Design-Rules-Acceso-Monousuario-v1.0.md  # Extensión por capacidad: acceso de operador único
-│   │   │       └── Design-Rules-Identidad-De-Version-v1.0.md # Extensión por capacidad: identidad de versión y su superficie
+│   │   │       ├── Design-Rules-Web-Generico.md
+│   │   │       ├── Design-Rules-Blazor-Mudblazor.md
+│   │   │       ├── Design-Rules-Config-Esquema.md      # Extensión por capacidad: configuración dirigida por esquema
+│   │   │       ├── Design-Rules-Primer-Arranque.md     # Extensión por capacidad: primer arranque y aprovisionamiento inicial
+│   │   │       ├── Design-Rules-Acceso-Monousuario.md  # Extensión por capacidad: acceso de operador único
+│   │   │       └── Design-Rules-Identidad-De-Version.md # Extensión por capacidad: identidad de versión y su superficie
 │   │   ├── Modelos-UX-UI/                               # Catálogo de modelos capturados de maquetas aprobadas (Fase B2)
 │   │   │   ├── Index-Modelos-UX-UI.md
 │   │   │   ├── Rules-Design-Modelo-Template.md          # Plantilla para capturar un modelo
-│   │   │   └── Rules-Design-<Nombre-Modelo>-v1.0.md     # Un archivo por modelo capturado
+│   │   │   └── Rules-Design-<Nombre-Modelo>.md     # Un archivo por modelo capturado
 │   │   └── Bootstrap/                                   # Material de bootstrapping
 │   ├── guides/
-│   │   ├── Guia-Usuario-SDD-v1.0.md                   # Este documento
-│   │   └── Marco-Teorico-SDD-v1.0.md                  # Marco teórico (separado)
+│   │   ├── Guia-Usuario-SDD.md                   # Este documento
+│   │   └── Marco-Teorico-SDD.md                  # Marco teórico (separado)
 │   ├── docs/                                             # Generado por el orquestador
 │   │   ├── Audit/                                       # Informes de audit por fase
-│   │   │   ├── FaseA-00-Contexto-v1.0.md
-│   │   │   ├── FaseA-01-Necesidades-Negocio-v1.0.md
-│   │   │   ├── FaseB-02-Especificacion-Funcional-v1.0.md
+│   │   │   ├── FaseA-00-Contexto.md
+│   │   │   ├── FaseA-01-Necesidades-Negocio.md
+│   │   │   ├── FaseB-02-Especificacion-Funcional.md
 │   │   │   └── ...
 │   │   ├── 00-Contexto/                                  # Nivel solución (Fase A, una vez)
 │   │   │   ├── README.md
-│   │   │   ├── Vision-Producto-v1.0.md
-│   │   │   ├── Alcance-Proyecto-v1.0.md
-│   │   │   ├── Roadmap-Producto-v1.0.md
-│   │   │   ├── Compatibilidad-Plataformas-v1.0.md
-│   │   │   └── Acuerdo-Equipo-v1.0.md
+│   │   │   ├── Vision-Producto.md
+│   │   │   ├── Alcance-Proyecto.md
+│   │   │   ├── Roadmap-Producto.md
+│   │   │   ├── Compatibilidad-Plataformas.md
+│   │   │   └── Acuerdo-Equipo.md
 │   │   ├── 01-Necesidades-Negocio/                       # Nivel solución (Fase A, una vez)
 │   │   │   ├── README.md
-│   │   │   ├── Necesidades-Negocio-v1.0.md
+│   │   │   ├── Necesidades-Negocio.md
 │   │   │   └── Necesidades-De-Negocio/
-│   │   │       ├── NB-01-<Nombre>-v1.0.md
-│   │   │       ├── NB-02-<Nombre>-v1.0.md
-│   │   │       └── NB-XX-<Nombre>-v1.0.md
+│   │   │       ├── NB-01-<Nombre>.md
+│   │   │       ├── NB-02-<Nombre>.md
+│   │   │       └── NB-XX-<Nombre>.md
 │   │   ├── Solucion/                                    # Solo si hay más de un proyecto (Fase H)
-│   │   │   ├── Vista-Solucion-v1.0.md                    # AG-05: mapa, contratos, grafo
-│   │   │   ├── Pipeline-Solucion-v1.0.md                 # AG-09: build topológico, artefactos
+│   │   │   ├── Vista-Solucion.md                    # AG-05: mapa, contratos, grafo
+│   │   │   ├── Pipeline-Solucion.md                 # AG-09: build topológico, artefactos
 │   │   │   └── 11-Documentacion/                         # AG-11: artefactos de nivel solución
 │   │   │       ├── README.md                             # Matriz de ruteo actor x intención
-│   │   │       ├── Vision-General-Sistema-v1.0.md
-│   │   │       ├── Guia-Inicio-Rapido-v1.0.md
-│   │   │       ├── Guia-Despliegue-v1.0.md
-│   │   │       ├── Bitacora-Eventualidades-v1.0.md
-│   │   │       └── Contrato-Agentes-v1.0.md              # De acá se deriva AGENTS.md
+│   │   │       ├── Vision-General-Sistema.md
+│   │   │       ├── Guia-Inicio-Rapido.md
+│   │   │       ├── Guia-Despliegue.md
+│   │   │       ├── Bitacora-Eventualidades.md
+│   │   │       └── Contrato-Agentes.md              # De acá se deriva AGENTS.md
 │   │   ├── Proyectos/                                    # Un subárbol 02..11 por proyecto
 │   │   │   └── <Nombre-Proyecto>/                  # Repetido por cada proyecto del manifiesto
 │   │   │       ├── 02-Especificacion-Funcional/
 │   │   │       │   ├── README.md
-│   │   │       │   ├── Especificacion-Funcional-v1.0.md
+│   │   │       │   ├── Especificacion-Funcional.md
 │   │   │       │   ├── Casos-De-Uso/
-│   │   │       │   │   ├── CU-01-<Nombre>-v1.0.md
-│   │   │       │   │   └── CU-XX-<Nombre>-v1.0.md
+│   │   │       │   │   ├── CU-01-<Nombre>.md
+│   │   │       │   │   └── CU-XX-<Nombre>.md
 │   │   │       │   ├── Reglas-De-Negocio/
-│   │   │       │   │   └── RN-XX-<Nombre>-v1.0.md
+│   │   │       │   │   └── RN-XX-<Nombre>.md
 │   │   │       │   └── Modelo-Datos/
-│   │   │       │       └── Modelo-Conceptual-v1.0.md
+│   │   │       │       └── Modelo-Conceptual.md
 │   │   │       ├── 03-UX-UI-DX/
 │   │   │       │   ├── README.md
 │   │   │       │   └── (UX/UI o DX según gating)
 │   │   │       ├── 04-Prompts-AI/                        # Solo si usa_llm == true
 │   │   │       │   ├── README.md
-│   │   │       │   └── prompt-<tarea>-v1.0.md
+│   │   │       │   └── prompt-<tarea>.md
 │   │   │       ├── 05-Arquitectura-Tecnica/
 │   │   │       │   ├── README.md
-│   │   │       │   ├── Arquitectura-Solucion-v1.0.md
-│   │   │       │   ├── Decisiones-Arquitectura-v1.0.md
+│   │   │       │   ├── Arquitectura-Solucion.md
+│   │   │       │   ├── Decisiones-Arquitectura.md
 │   │   │       │   └── Adrs/
-│   │   │       │       ├── ADR-001-<Nombre>-v1.0.md
-│   │   │       │       └── ADR-XX-<Nombre>-v1.0.md
+│   │   │       │       ├── ADR-001-<Nombre>.md
+│   │   │       │       └── ADR-XX-<Nombre>.md
 │   │   │       ├── 06-Backlog-Tecnico/
 │   │   │       │   ├── README.md
-│   │   │       │   ├── Product-Backlog-v1.0.md
-│   │   │       │   ├── Backlog-Tecnico-v1.0.md
-│   │   │       │   └── Definition-Of-Ready-v1.0.md
+│   │   │       │   ├── Product-Backlog.md
+│   │   │       │   ├── Backlog-Tecnico.md
+│   │   │       │   └── Definition-Of-Ready.md
 │   │   │       ├── 07-Plan-Sprint/
 │   │   │       │   ├── README.md
-│   │   │       │   ├── Plan-Iteracion-Sprint-00-v1.0.md
-│   │   │       │   ├── Plan-Iteracion-Sprint-01-v1.0.md
-│   │   │       │   ├── Template-Sprint-Review-v1.0.md
-│   │   │       │   ├── Template-Sprint-Retrospectiva-v1.0.md
-│   │   │       │   └── Velocidad-Equipo-v1.0.md
+│   │   │       │   ├── Plan-Iteracion-Sprint-00.md
+│   │   │       │   ├── Plan-Iteracion-Sprint-01.md
+│   │   │       │   ├── Template-Sprint-Review.md
+│   │   │       │   ├── Template-Sprint-Retrospectiva.md
+│   │   │       │   └── Velocidad-Equipo.md
 │   │   │       ├── 08-Calidad-Y-Pruebas/
 │   │   │       │   ├── README.md
-│   │   │       │   ├── Estrategia-Calidad-v1.0.md
-│   │   │       │   ├── Estrategia-Testing-v1.0.md
-│   │   │       │   ├── Plan-Pruebas-v1.0.md
-│   │   │       │   ├── Matriz-Cobertura-Pruebas-v1.0.md
-│   │   │       │   ├── Casos-Prueba-Referenciales-v1.0.md
-│   │   │       │   ├── Criterios-Validacion-v1.0.md
-│   │   │       │   └── Definition-Of-Done-v1.0.md
+│   │   │       │   ├── Estrategia-Calidad.md
+│   │   │       │   ├── Estrategia-Testing.md
+│   │   │       │   ├── Plan-Pruebas.md
+│   │   │       │   ├── Matriz-Cobertura-Pruebas.md
+│   │   │       │   ├── Casos-Prueba-Referenciales.md
+│   │   │       │   ├── Criterios-Validacion.md
+│   │   │       │   └── Definition-Of-Done.md
 │   │   │       ├── 09-Devops/
 │   │   │       │   ├── README.md
-│   │   │       │   ├── Pipeline-CI-CD-v1.0.md
-│   │   │       │   ├── Estrategia-Versionado-v1.0.md
-│   │   │       │   ├── Entornos-Deploy-v1.0.md
-│   │   │       │   └── Supply-Chain-Seguridad-v1.0.md
+│   │   │       │   ├── Pipeline-CI-CD.md
+│   │   │       │   ├── Estrategia-Versionado.md
+│   │   │       │   ├── Entornos-Deploy.md
+│   │   │       │   └── Supply-Chain-Seguridad.md
 │   │   │       ├── 10-Examples/                          # Según gating y tipo; con contratos de verificación VER-XX
 │   │   │       │   ├── README.md
-│   │   │       │   ├── ejemplo-01-<Nombre>-v1.0.md
-│   │   │       │   ├── ejemplo-02-<Nombre>-v1.0.md
-│   │   │       │   └── ejemplo-03-<Nombre>-v1.0.md
+│   │   │       │   ├── ejemplo-01-<Nombre>.md
+│   │   │       │   ├── ejemplo-02-<Nombre>.md
+│   │   │       │   └── ejemplo-03-<Nombre>.md
 │   │   │       └── 11-Documentacion/                     # Siempre; qué cuerpos se materializan depende del tipo
 │   │   │           ├── README.md
-│   │   │           ├── Conceptos-Fundamentales-v1.0.md
-│   │   │           ├── Guia-Onboarding-Developer-v1.0.md
-│   │   │           ├── Referencia-API-v1.0.md
-│   │   │           └── Troubleshooting-v1.0.md
+│   │   │           ├── Conceptos-Fundamentales.md
+│   │   │           ├── Guia-Onboarding-Developer.md
+│   │   │           ├── Referencia-API.md
+│   │   │           └── Troubleshooting.md
 │   │   └── README.md                                     # README raíz consolidado de la solución
 │   └── Maquetas/                                         # Solo si algún proyecto ejecutó la Fase B2
 │       └── <Nombre-Proyecto>/                            # Una maqueta por proyecto visual

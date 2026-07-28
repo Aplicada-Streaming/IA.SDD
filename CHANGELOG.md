@@ -3,6 +3,70 @@
 Todos los cambios relevantes de este repositorio (`IA.SDD`) se documentan acá.
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/).
 
+## [4.0] - 2026-07-28
+
+Normalización del versionado y del archivado. **Sube major: se modifican las invariantes D4 y D5**, y la documentación generada con la nomenclatura anterior deja de cumplir.
+
+**Origen.** El framework tenía **dos lógicas de versionado conviviendo dentro de cada plano**. En el propio repositorio, 34 archivos usaban nombre estable con la versión en la cabecera y 11 la llevaban en el nombre, de los cuales 4 mentían: el marco teórico iba por la versión 1.8 dentro de un archivo llamado `-v1.0.md`. En la documentación generada, la mayoría de los artefactos llevaba la versión en el nombre y nueve clases no la llevaban. **En los dos planos los defectos aparecieron en la frontera entre ambas lógicas**: la pérdida silenciosa de dos README de sección durante una corrida real, y los cuatro nombres desactualizados del framework, son el mismo choque visto de los dos lados.
+
+### La regla única
+
+En la carpeta de trabajo hay **un solo archivo por nombre lógico, sin sufijo de versión**. La versión vive en el campo `Versión` de la cabecera. Al ser superado, el archivo se copia completo a `_legacy/`, y **la copia archivada sí recibe el sufijo**. Aplica a los dos planos, sin excepciones de nombre.
+
+Tres propiedades se siguen de la regla: cuál es la versión vigente deja de ser algo que hay que verificar y pasa a ser una propiedad estructural del árbol; subir de versión no propaga ninguna actualización de referencias, porque los enlaces apuntan a un nombre que no cambia; y un agente que lee una carpeta ingiere un solo ejemplar de cada documento.
+
+### Cambiado
+- **`README.md`**: D4 pasa a declarar que el archivo vivo lleva nombre lógico estable y que el sufijo `-v<X.Y>.md` identifica a las copias archivadas. D5 pasa a declarar que una sola versión vigente **es** un solo archivo por nombre lógico en la carpeta de trabajo. Se agrega la nota que explica la duplicidad anterior y por qué se elimina en lugar de parchearse, la fila de `_legacy/` en el mapa del repositorio y una fila de intervención para publicar una versión nueva del framework. Se agrega además el **criterio de qué se conserva y qué se reexpresa en una nota de coherencia**: el alcance verificado no se toca nunca, y una verificación concreta se reexpresa solo si quedaría falsa contra el árbol vigente o citaría un archivo que ya no existe.
+- **Las cuatro notas de coherencia reexpresan su celda de D4** —la del marco teórico y las tres del catálogo de diseño— porque afirmaban que ciertos archivos llevaban sufijo de versión en el nombre y eso dejó de ser cierto. Cada celda declara bajo qué versión de la invariante se hizo la verificación original. **Las celdas de D5 quedan intactas**: afirmaban un único archivo por nombre lógico sin copias paralelas, que sigue siendo cierto bajo la formulación nueva.
+- **Once archivos renombrados** a su nombre lógico estable: el marco teórico, la nota de coherencia del marco, los tres documentos de coherencia del catálogo de diseño y los seis `Design-Rules-*`. **163 referencias actualizadas** en 23 archivos, con cero enlaces rotos. Los `Design-Rules` previstos del roadmap del índice también pierden el sufijo, porque ese listado fija la convención de nombre.
+- **`Master-Prompt.md` (3.7 → 4.0)**: §3 completa el bloque de procedencia del framework al derivar el manifiesto. §5 reescribe las celdas de versionado, deprecación y sufijo. §5.1 reescribe el detalle operativo alrededor de la regla única, con su ejemplo de árbol y las tres propiedades que se siguen.
+- **Los dieciséis archivos de reglas suben major**: patrones de nombre, ejemplos, cabeceras modelo, anti-patrones y criterios de aceptación pasan a la nomenclatura sin sufijo. **751 nombres de artefacto normalizados** en 24 archivos, incluidas las dos guías de usuario, el prompt de entrada, las plantillas de intake y el marco teórico.
+- **`SOLUTION-MANIFEST-template.md`**: §1.1 nueva con el bloque de procedencia del framework, que declara la versión del conjunto y la de cada regla aplicada. El perfil de convención de nombres pasa a §1.2.
+- **`SDD-Development-Guide.md` (1.1 → 1.2)**: §I.2 suma `_legacy/` a la anatomía; §VI.4 declara que congelar la versión anterior depende de la procedencia y del snapshot; **§VI.5 nueva** con el versionado del framework como conjunto.
+
+### Añadido
+- **`_legacy/`** en la raíz del framework, con su README. Una subcarpeta por versión publicada, con el **conjunto normativo completo** —no los archivos que cambiaron— porque las reglas son interdependientes y lo que hay que poder reconstruir es el estado coherente. Un snapshot son unos 50 archivos y 1,5 MB, y se toma una vez por entrada de este changelog. **Rige desde la 4.0 hacia adelante**; las versiones anteriores solo son recuperables desde el historial del control de versiones, con el mismo criterio con que se incorporó D9.
+- **El `CHANGELOG.md` queda declarado como el mecanismo de versionado del framework.** El control de versiones vuelve a ser control de código fuente y nada más: reconstruir una versión no requiere tags ni ramas, porque el árbol se autocontiene.
+
+### Corregido
+- **Los checklists de D4 eran tautológicos.** Al menos seis reglas verificaban «Ningún archivo usa el patrón `-v<X.Y>.md`; todos usan `-v<X.Y>.md`», con los dos patrones idénticos, y `Rules-Contexto.md` daba un ejemplo inválido idéntico a los válidos. Una normalización anterior había convertido el patrón prohibido `.v<X.Y>.md` en el permitido y había vaciado de sentido toda línea que los contrastaba. Un auditor que los corriera pasaba siempre. Reescritos contra la regla nueva.
+- **Campos `Documento` que no coincidían con su archivo**: cuatro notas de coherencia se declaraban con un prefijo de guion bajo que ningún archivo tenía.
+
+### Añadido — fase de reconciliación normativa
+
+Hasta ahora, ante un `SDD/Docs/` con contenido previo el orquestador solo ofrecía **archivar todo y empezar de cero, o abortar**. No miraba con qué versión se había generado ese árbol ni proponía nada. Con la procedencia declarada y el archivado por versión, esa limitación deja de tener sentido.
+
+- **`Master-Prompt.md` §2.1, nueva.** Se dispara solo si `SDD/Docs/` tiene contenido. Distingue tres casos: sin procedencia declarada (árbol anterior a que la procedencia existiera, se ofrece solo regenerar o abortar y se explica por qué), al día (lo informa y sigue) y desfasado (ejecuta la comparación). El diff normativo se arma sin despachar subagentes: lee la procedencia del manifiesto, lee las versiones vigentes de cabecera, clasifica cada salto por severidad leyéndola de la propia numeración, y para cada salto major enumera los artefactos que esa regla gobierna según su tabla maestra de documentos.
+- **Tres salidas, con detención obligatoria.** **A** emite un plan de adecuación en `SDD/Docs/Audit/Reconciliacion-<origen>-a-<vigente>.md`, documento por documento y sin modificar nada. **B** regenera desde cero, que es el comportamiento histórico. **C** continúa bajo la versión de origen, leyendo sus reglas desde `_legacy/<version>/`; no se ofrece si ese conjunto no es reconstruible, porque el orquestador no puede aplicar reglas que no puede leer.
+- **La decisión C se registra** en el manifiesto (`SOLUTION-MANIFEST-template.md` §1.1, tabla de decisiones de reconciliación). Sin registro, el arranque siguiente vuelve a preguntar lo mismo y el usuario vuelve a contestarlo sin memoria de haberlo hecho.
+- **Prohibiciones de la fase**: no modificar ningún documento, no elegir salida por cuenta propia ni siquiera cuando no hay impacto, y no declarar reconstruible un conjunto de origen sin verificar que existe, porque es una afirmación sobre el estado del sistema y D9 exige evidencia.
+- Propagado a `PROMPT-Agente-Bootstrap-SDD.md` (prerrequisito 4), `SDD-Getting-Started-Guide.md` (troubleshooting), `SDD-User-Guide.md` (lista de fases y glosario) y `Master-Prompt.md` §0, §3.5 y §7.
+
+**Sobre el primer snapshot de `_legacy/`.** No se creó ninguno en esta versión. Las entradas `[3.2]` y `[4.0]` se produjeron en una misma sesión de trabajo sobre el estado `[3.1]`, así que no existe un árbol publicado intermedio que preservar. El archivado por versión rige desde la 4.0 hacia adelante: su primera subcarpeta se crea cuando la 4.0 sea superada. Fabricar un snapshot reconstruido sería un registro falso, que es justamente lo que la regla de intocabilidad de `_legacy/` prohíbe.
+
+### Preservado deliberadamente
+- Las entradas anteriores de este changelog y los archivos de `SDD/Devs/Bootstrap/` **conservan los nombres que citaban en su momento**, según `SDD-Development-Guide.md` §VI.2 y la regla de que `Bootstrap/` nunca se edita. Un registro que se corrige después deja de ser un registro.
+
+## [3.2] - 2026-07-28
+
+Reparación de la política de deprecación y del archivado en `_legacy/`. Sube minor: precisa políticas existentes y agrega una sección al esqueleto de despacho, sin modificar ninguna invariante D1-D9 ni el conjunto de artefactos de ninguna categoría. Ninguna documentación ya emitida deja de cumplir.
+
+**Origen.** Ocho hallazgos verificados sobre la política de archivado, cinco reportados por la evaluación de una corrida real del orquestador sobre una solución de cuatro proyectos y tres detectados al contrastarlos contra el framework. Cuatro de ellos comparten el mismo mecanismo: un artefacto se sobrescribe sin que ningún actor reciba error y sin que el directorio se vea incorrecto.
+
+### Cambiado
+- `Master-Prompt.md` (3.6 → 3.7). **§3.5**: el layout declara `SDD/Docs/Audit/`, que §10 escribía sin que ninguna fuente de estructura la declarara, y explica dónde aparece `_legacy/` y por qué no ocupa una posición fija. **§5**: la política de deprecación unifica la ruta en `<carpeta-del-artefacto>/_legacy/<YYYY-MM-DD>/` e incorpora los requisitos de estado `Superado` y nota a la versión vigente, que hasta ahora vivían solo en las reglas de categoría y por eso no llegaban al bloque de invariantes que §8 inyecta a los subagentes; la política de versionado incorpora el criterio de estado de cabecera para las correcciones derivadas del audit de la propia fase de emisión. **§7.2**: declara el versionado por corte de cadencia en el tramo de documentación viva y exceptúa a las Fases I y J de la regla de snapshot previo. **§8**: el esqueleto de despacho suma la sección «Estado previo del entregable», y el snapshot queda asignado al orquestador y no al subagente. **§10**: el path del informe de auditoría suma el eje de ronda.
+- `Root-Rules.md` (1.4 → 1.5), `Rules-Contexto.md` (1.5 → 1.6), `Rules-Necesidades-Negocio.md` (1.4 → 1.5), `Rules-Examples.md` (2.0 → 2.1), `Rules-Documentacion.md` (2.0 → 2.1): cada una declara que su artefacto emitido sin sufijo de versión sí lo recibe al archivarse, con puntero a la regla general.
+
+### Añadido
+- `Master-Prompt.md` **§5.1**, sección nueva con el detalle operativo de la política de deprecación: la ruta única con su lectura de las abreviaturas de las reglas de categoría y el caso distinto de `SDD/Docs/_legacy/` del prerrequisito 4; el sufijo de versión que reciben al archivarse los artefactos emitidos sin sufijo; la tabla de cinco exenciones declaradas (`AGENTS.md`, `CHANGELOG.md`, maqueta, ADR y el campo `evidencia` de los contratos `VER-XX`); y la prohibición de renombrar retroactivamente lo ya archivado, porque etiquetar con una versión un archivo cuyo contenido no se verificó viola D9.
+
+### Corregido
+- **Ruta de archivado sin eje de proyecto.** `_legacy/<categoria>/<fecha>/` no tenía forma de distinguir dos proyectos que archivaran la misma categoría el mismo día. La ruta local a la carpeta del artefacto lo resuelve por construcción.
+- **Artefactos sin sufijo de versión imposibles de archivar.** Seis clases de artefacto se emitían sin sufijo y se archivaban identificándose por nombre de archivo: el segundo archivado del mismo día sobrescribía al primero. Produjo pérdida real en dos README de sección durante la corrida que originó la evaluación.
+- **Re-audit que sobrescribía su informe.** El path del informe de auditoría estaba fijo en `-v1.0` y §10 obliga a re-audit tras un veredicto RECHAZADO. El eje de ronda lo corrige, y con él la trazabilidad de las correcciones, que citan el hallazgo del informe que las origina.
+- **Dos erratas de formato preexistentes**: la fila D9 de `Master-Prompt.md` §5 y la fila 3.4 de su §16 estaban separadas de sus tablas por una línea en blanco que las rompía como markdown.
+- **Referencia colgada** en `SDD-Development-Guide.md` §2 a `SDD/Devs/Intake/_legacy/`, carpeta eliminada en la entrada 3.1 de este changelog.
+
 ## [3.1] - 2026-07-26
 
 Eliminación de material histórico absorbido. No cambia ninguna regla ni el comportamiento del orquestador.

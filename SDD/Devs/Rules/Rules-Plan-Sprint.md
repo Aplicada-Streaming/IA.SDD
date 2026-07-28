@@ -2,7 +2,7 @@
 
 **Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/07-Plan-Sprint/`
 **Subagente target del orquestador:** Scrum Master / Gestión Ágil de Proyectos senior (AG-07)
-**Versión de las reglas:** 1.4
+**Versión de las reglas:** 2.0
 
 ---
 
@@ -52,11 +52,11 @@ El AG-07 mantiene siempre la titularidad de los artefactos; las demás especiali
 
 | Archivo | Obligatorio para | Recomendado | Omitir para | Descripción |
 | --- | --- | --- | --- | --- |
-| `Plan-Iteracion-Sprint-XX-v1.0.md` | Todos los tipos D8 con equipo mayor a 1 dev; mínimo Sprint 0 y Sprint 1 | — | Proyectos de 1 dev (se reemplaza por mini-plan) | Plan de iteración por sprint. Un archivo por sprint, numerado con dos dígitos. |
-| `Template-Sprint-Review-v1.0.md` | Todos los tipos D8 con equipo mayor a 1 dev | — | Proyectos de 1 dev | Plantilla reusable para documentar el sprint review al cierre de cada iteración. |
-| `Template-Sprint-Retrospectiva-v1.0.md` | Todos los tipos D8 con equipo mayor a 1 dev | — | Proyectos de 1 dev | Plantilla reusable para documentar la retrospectiva al cierre de cada iteración. |
-| `Velocidad-Equipo-v1.0.md` | Todos los tipos D8 con equipo mayor a 1 dev | — | Proyectos de 1 dev | Tracking acumulado de velocity sprint a sprint, con promedio móvil y outliers explicados. |
-| `Mini-Plan-v1.0.md` | Proyectos de 1 dev (sustituye a los cuatro anteriores) | — | Equipos con más de 1 dev | Plan único condensado que combina sprint goal, lista de items y bitácora de avance semanal. |
+| `Plan-Iteracion-Sprint-XX.md` | Todos los tipos D8 con equipo mayor a 1 dev; mínimo Sprint 0 y Sprint 1 | — | Proyectos de 1 dev (se reemplaza por mini-plan) | Plan de iteración por sprint. Un archivo por sprint, numerado con dos dígitos. |
+| `Template-Sprint-Review.md` | Todos los tipos D8 con equipo mayor a 1 dev | — | Proyectos de 1 dev | Plantilla reusable para documentar el sprint review al cierre de cada iteración. |
+| `Template-Sprint-Retrospectiva.md` | Todos los tipos D8 con equipo mayor a 1 dev | — | Proyectos de 1 dev | Plantilla reusable para documentar la retrospectiva al cierre de cada iteración. |
+| `Velocidad-Equipo.md` | Todos los tipos D8 con equipo mayor a 1 dev | — | Proyectos de 1 dev | Tracking acumulado de velocity sprint a sprint, con promedio móvil y outliers explicados. |
+| `Mini-Plan.md` | Proyectos de 1 dev (sustituye a los cuatro anteriores) | — | Equipos con más de 1 dev | Plan único condensado que combina sprint goal, lista de items y bitácora de avance semanal. |
 | `README.md` de la sección | Recomendado para todos | — | — | Índice navegable de planes de sprint vigentes, plantillas reusables y tabla de velocity. |
 
 ### 2.2 Reglas de inclusión y exclusión por tamaño de equipo
@@ -75,13 +75,13 @@ Sprint 0 corresponde al sprint de arranque dedicado a setup técnico, validació
 
 ### 3.1 Patrón de nombres
 
-- `plan-iteracion-sprint-XX-v<X.Y>.md` para cada plan de iteración. `XX` con dos dígitos siempre (01, 02, ..., 99). Un único separador previo a la versión: `_v`.
-- `template-sprint-review-v<X.Y>.md` para la plantilla de review.
-- `template-sprint-retrospectiva-v<X.Y>.md` para la plantilla de retrospectiva.
-- `velocidad-equipo-v<X.Y>.md` para el tracking de velocidad.
-- `mini-plan-v<X.Y>.md` para proyectos de un solo dev.
+- `plan-iteracion-sprint-XX.md` para cada plan de iteración. `XX` con dos dígitos siempre (01, 02, ..., 99). Un único separador previo a la versión: `_v`.
+- `template-sprint-review.md` para la plantilla de review.
+- `template-sprint-retrospectiva.md` para la plantilla de retrospectiva.
+- `velocidad-equipo.md` para el tracking de velocidad.
+- `mini-plan.md` para proyectos de un solo dev.
 
-La auditoría de Fase 0 del bootstrap detectó que el fuente Motor DSL usa el patrón `Plan-Iteracion_sprint-01-v1.0.md`, que mezcla dos separadores (`_sprint-01` y luego `-v1.0`) sin coherencia con el resto del repositorio. SDD corrige esta práctica: el único separador del nombre es el guion medio (`-`) en todo el archivo, incluida la versión; el guion bajo (`_`) queda prohibido. Queda prohibido el patrón `plan-iteracion_sprint-XX-v<X.Y>.md` con guion bajo; el patrón correcto y único es `Plan-Iteracion-Sprint-XX-v<X.Y>.md`.
+La auditoría de Fase 0 del bootstrap detectó que el fuente Motor DSL usa el patrón `Plan-Iteracion_sprint-01.md`, que mezcla dos separadores (`_sprint-01` y luego `-v1.0`) sin coherencia con el resto del repositorio. SDD corrige esta práctica: el único separador del nombre es el guion medio (`-`) en todo el archivo, incluida la versión; el guion bajo (`_`) queda prohibido. Queda prohibido el patrón `plan-iteracion_sprint-XX.md` con guion bajo; el patrón correcto y único es `Plan-Iteracion-Sprint-XX.md`.
 
 ### 3.2 Duración estándar del sprint
 
@@ -96,7 +96,7 @@ Sprints de cuatro semanas o más quedan desaconsejados: rompen la cadencia de fe
 
 - Prefijo `plan-iteracion-sprint-`: identifica el plan de un sprint específico.
 - Prefijo `template-sprint-`: identifica plantillas reusables (review, retrospectiva).
-- Sufijo `-v<X.Y>.md` uniforme para todos los artefactos. Sin excepciones.
+- Nombre lógico sin sufijo de versión en el nombre; la versión vive en el campo `Versión` de la cabecera (D4), uniforme para todos los artefactos. Sin excepciones.
 
 ### 3.4 Vinculación cross-doc
 
@@ -107,7 +107,7 @@ Sprints de cuatro semanas o más quedan desaconsejados: rompen la cadencia de fe
 
 ### 3.5 README de la sección
 
-Recomendado. Debe listar el sprint actual con su plan, el histórico de sprints cerrados, las plantillas reusables y un enlace directo a `Velocidad-Equipo-v1.0.md`. Sirve como punto de entrada para revisores externos (AG-06, AG-08, AG-09) y para nuevos miembros del equipo.
+Recomendado. Debe listar el sprint actual con su plan, el histórico de sprints cerrados, las plantillas reusables y un enlace directo a `Velocidad-Equipo.md`. Sirve como punto de entrada para revisores externos (AG-06, AG-08, AG-09) y para nuevos miembros del equipo.
 
 ### 3.6 Política de versionado
 
@@ -125,7 +125,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos. Queda prohibi
 # Plan de Iteración — Sprint XX
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** plan-iteracion-sprint-XX-v<X.Y>.md
+**Documento:** plan-iteracion-sprint-XX.md
 **Versión:** <X.Y>
 **Estado:** Propuesto | En curso | Cerrado
 **Fecha inicio:** YYYY-MM-DD
@@ -139,7 +139,7 @@ Las plantillas reusables y el archivo de velocidad adaptan el título y el estad
 
 El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente de IA que recorre la cadena de especificación acumulando contexto, y para ese lector la tabla de contenido es indiferente. Existe para el agente humano que entra a consultar un punto concreto sin haber leído el documento entero.
 
-### 4.2 Secciones obligatorias de `Plan-Iteracion-Sprint-XX-v1.0.md`
+### 4.2 Secciones obligatorias de `Plan-Iteracion-Sprint-XX.md`
 
 1. Información general. Fechas, duración (en semanas), composición del equipo, capacidad disponible (en story points o en horas, declarando la unidad).
 2. Objetivo del sprint (sprint goal). Una sola frase orientada a valor. Prohibido bullets, listas o enumeraciones. Debe responder a la pregunta "¿qué se logra al final del sprint?".
@@ -151,7 +151,7 @@ El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente
 8. Trazabilidad. Tabla con qué NB y qué CU avanzan en este sprint, qué ADRs gobiernan las decisiones técnicas implicadas.
 9. Control de cambios. Tabla con versión, fecha y descripción. Para sprints cerrados, registra cambios de scope ocurridos durante la ejecución.
 
-### 4.3 Secciones obligatorias de `Template-Sprint-Review-v1.0.md`
+### 4.3 Secciones obligatorias de `Template-Sprint-Review.md`
 
 1. Objetivo del sprint y resultado. Cita literal del sprint goal y veredicto: cumplido, parcialmente cumplido, no cumplido, con explicación corta.
 2. Demos realizadas. Tabla con cada US o BT demostrada, breve descripción de la demo y feedback del Product Owner.
@@ -161,7 +161,7 @@ El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente
 6. Carry-over al siguiente sprint. Lista de items no completados que se mueven al siguiente sprint, con motivo del traslado.
 7. Decisiones tomadas durante el review. Lista de decisiones explícitas (ajustes al backlog, repriorización, items removidos, items agregados).
 
-### 4.4 Secciones obligatorias de `Template-Sprint-Retrospectiva-v1.0.md`
+### 4.4 Secciones obligatorias de `Template-Sprint-Retrospectiva.md`
 
 1. Qué salió bien. Lista de aspectos positivos del proceso del sprint que el equipo quiere mantener.
 2. Qué no salió bien. Lista de problemas, fricciones o impedimentos sufridos durante el sprint.
@@ -183,7 +183,7 @@ Un documento revisado y sin cambios cumple la condición: revisar no obliga a mo
 
 La razón por la que esto vive en la DoD y no en una lista de buenas prácticas: la documentación que se posterga «para el sprint que viene» no se escribe nunca, y cuando se escribe describe un sistema que su autor ya no recuerda haber construido. Anclarla al corte la vuelve una condición de cierre verificable en lugar de una intención.
 
-### 4.6 Secciones obligatorias de `Velocidad-Equipo-v1.0.md`
+### 4.6 Secciones obligatorias de `Velocidad-Equipo.md`
 
 1. Por sprint. Tabla con columnas: sprint, puntos comprometidos, puntos completados, velocity efectiva, promedio móvil de 3 sprints.
 2. Tendencia. Lectura cualitativa de la evolución (estable, ascendente, descendente, errática) con comentario.
@@ -218,7 +218,7 @@ Tabla de burndown, sugerida para tracking diario:
 | ... | ... |
 | n | 0 |
 
-Tabla de velocity, en `Velocidad-Equipo-v1.0.md`:
+Tabla de velocity, en `Velocidad-Equipo.md`:
 
 | Sprint | Comprometidos | Completados | Velocity | Promedio móvil 3 sprints | Notas |
 | --- | --- | --- | --- | --- | --- |
@@ -239,7 +239,7 @@ Tabla de velocity, en `Velocidad-Equipo-v1.0.md`:
 | Carry-over sistemático sin alerta | El equipo arrastra items sprint tras sprint sin replantearse el commitment | Si más del 20 % de los puntos comprometidos se trasladan, disparar análisis en la retro siguiente |
 | Estimación basada en horas en lugar de puntos | Falsa precisión; ata la métrica a quien estima | Usar story points con escala consistente (Fibonacci o lineal) y declarar la unidad en §1 |
 | DoD redefinida en cada sprint | Inconsistencia inter-sprint y dilución del criterio | Referenciar la DoD canónica; agregar solo criterios específicos del sprint |
-| Doble separador en el nombre (`_sprint-XX_v`) | Inconsistencia detectada en el antecedente Motor DSL | Patrón único `plan-iteracion-sprint-XX-v<X.Y>.md` |
+| Doble separador en el nombre (`_sprint-XX_v`) | Inconsistencia detectada en el antecedente Motor DSL | Patrón único `plan-iteracion-sprint-XX.md` |
 | Plan abierto con `--` antes del H1 | Inconsistencia de frontmatter detectada en el antecedente | H1 directo seguido del bloque markdown de metadatos |
 
 ---
@@ -277,26 +277,26 @@ Tabla de velocity, en `Velocidad-Equipo-v1.0.md`:
 ### 5.5 Consistencia inter-sprint
 
 - ¿Todos los planes de sprint tienen la misma estructura (nueve secciones del §4.2)?
-- ¿La nomenclatura sigue el patrón único `plan-iteracion-sprint-XX-v<X.Y>.md` sin doble separador?
+- ¿La nomenclatura sigue el patrón único `plan-iteracion-sprint-XX.md` sin doble separador?
 - ¿Algún plan abre con `--` u otro separador previo al H1?
 
 ---
 
 ## 6. Criterios de aceptación
 
-- [ ] Existe `Plan-Iteracion-Sprint-XX-v1.0.md` para cada sprint planificado, mínimo Sprint 0 y Sprint 1, con las nueve secciones del §4.2.
+- [ ] Existe `Plan-Iteracion-Sprint-XX.md` para cada sprint planificado, mínimo Sprint 0 y Sprint 1, con las nueve secciones del §4.2.
 - [ ] Cada plan declara sprint goal como una sola frase orientada a valor, sin bullets ni listas.
-- [ ] Existen `Template-Sprint-Review-v1.0.md` y `Template-Sprint-Retrospectiva-v1.0.md` como plantillas reusables aplicables a cualquier sprint del proyecto.
-- [ ] Existe `Velocidad-Equipo-v1.0.md` con tabla por sprint y promedio móvil de 3 sprints, actualizada al cierre del último sprint cerrado.
+- [ ] Existen `Template-Sprint-Review.md` y `Template-Sprint-Retrospectiva.md` como plantillas reusables aplicables a cualquier sprint del proyecto.
+- [ ] Existe `Velocidad-Equipo.md` con tabla por sprint y promedio móvil de 3 sprints, actualizada al cierre del último sprint cerrado.
 - [ ] Cada plan referencia la DoD canónica de 08 y solo agrega criterios específicos del sprint si los hay.
 - [ ] La DoD aplicada de cada sprint incluye la actualización de los documentos de la categoría 11 afectados por los ítems comprometidos.
 - [ ] Cada plan declara trazabilidad a CU y NB en §8.
 - [ ] Cada plan identifica mínimo dos riesgos con mitigación concreta.
 - [ ] Toda retrospectiva documentada produce mínimo una acción con responsable nombrado y fecha de compromiso.
-- [ ] Ningún archivo usa el patrón `plan-iteracion_sprint-XX-v<X.Y>.md` con doble separador; todos usan `plan-iteracion-sprint-XX-v<X.Y>.md`.
+- [ ] Ningún archivo usa el patrón `plan-iteracion_sprint-XX.md` con doble separador; todos usan `plan-iteracion-sprint-XX.md`.
 - [ ] Ningún archivo abre con `--` ni con otro separador previo al H1.
 - [ ] No hay menciones a stacks concretos, productos comerciales ni protocolos del dominio fuente.
-- [ ] Para proyectos de un solo dev, existe `Mini-Plan-v1.0.md` y no existen los cuatro artefactos completos.
+- [ ] Para proyectos de un solo dev, existe `Mini-Plan.md` y no existen los cuatro artefactos completos.
 - [ ] Todo documento con más de tres secciones de primer nivel incluye tabla de contenido inmediatamente después de la cabecera, con enlaces ancla a las secciones de primer y de segundo nivel. Los documentos breves quedan exceptuados.
 
 ---
@@ -311,7 +311,7 @@ Fragmento ilustrativo, no documento completo:
 # Plan de Iteración — Sprint 01
 
 **Proyecto:** Turnos Médicos
-**Documento:** Plan-Iteracion-Sprint-01-v1.0.md
+**Documento:** Plan-Iteracion-Sprint-01.md
 **Versión:** 1.0
 **Estado:** Propuesto
 **Fecha inicio:** 2026-06-01
@@ -348,7 +348,7 @@ Disponer de un walking skeleton end-to-end que permite a un usuario autenticado 
 | ADRs implicadas | ADR-01 (estilo), ADR-03 (persistencia relacional) |
 ```
 
-### 7.2 Ejemplo 2 — Fragmento de `Velocidad-Equipo-v1.0.md` para una librería de procesamiento CSV
+### 7.2 Ejemplo 2 — Fragmento de `Velocidad-Equipo.md` para una librería de procesamiento CSV
 
 Fragmento ilustrativo, con 5 sprints de tracking:
 
@@ -356,7 +356,7 @@ Fragmento ilustrativo, con 5 sprints de tracking:
 # Velocidad del equipo
 
 **Proyecto:** Librería CSV
-**Documento:** Velocidad-Equipo-v1.0.md
+**Documento:** Velocidad-Equipo.md
 **Versión:** 1.0
 **Estado:** En curso
 **Fecha:** 2026-08-15
@@ -395,18 +395,18 @@ Sos un {{ESPECIALIDAD-VARIANTE}} responsable de redactar el plan de sprint del p
 Insumos:
 - SOLUTION-INTAKE: {{path}}
 - Upstream: 06 (backlog técnico priorizado con US y BT), 02 (CU y NB), 05 (arquitectura y ADRs).
-- Histórico: Velocidad-Equipo-v1.0.md si existe.
+- Histórico: Velocidad-Equipo.md si existe.
 
 A generar (según tamaño de equipo):
-- Plan-Iteracion-Sprint-XX-v1.0.md para el sprint vigente, con las nueve secciones del §4.2.
-- Template-Sprint-Review-v1.0.md y Template-Sprint-Retrospectiva-v1.0.md si todavía no existen.
-- Velocidad-Equipo-v1.0.md actualizado al cierre del sprint anterior.
-- Mini-Plan-v1.0.md si el proyecto es de un solo dev (sustituye a los anteriores).
+- Plan-Iteracion-Sprint-XX.md para el sprint vigente, con las nueve secciones del §4.2.
+- Template-Sprint-Review.md y Template-Sprint-Retrospectiva.md si todavía no existen.
+- Velocidad-Equipo.md actualizado al cierre del sprint anterior.
+- Mini-Plan.md si el proyecto es de un solo dev (sustituye a los anteriores).
 - README.md de la sección (recomendado).
 
 Reglas de redacción: §4 de Rules-Plan-Sprint.md.
-Nomenclatura: `plan-iteracion-sprint-XX-v<X.Y>.md` con un único separador antes de la versión (`_v`).
-Convención crítica: prohibido el patrón `plan-iteracion_sprint-XX-v<X.Y>.md` con doble separador; prohibido abrir el archivo con `--` previo al H1.
+Nomenclatura: `plan-iteracion-sprint-XX.md` con un único separador antes de la versión (`_v`).
+Convención crítica: prohibido el patrón `plan-iteracion_sprint-XX.md` con doble separador; prohibido abrir el archivo con `--` previo al H1.
 Sprint goal: una sola frase orientada a valor, sin bullets ni listas.
 Trazabilidad: cada US y BT con identificador del backlog de 06; cada sprint declara CU y NB que avanzan.
 Calidad: DoD por referencia a la canónica de 08; mínimo dos riesgos con mitigación; toda retrospectiva produce mínimo una acción con responsable y fecha.
@@ -423,8 +423,9 @@ Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/07-Plan-Sprint/<estructura>.
 
 | Versión | Fecha | Descripción |
 | --- | --- | --- |
-| 1.0 | 2026-05-17 | Versión inicial de las reglas constructivas de la categoría 07. Corrige el patrón heredado con doble separador (`Plan-Iteracion_sprint-XX-v1.0.md`) y fija el patrón único `plan-iteracion-sprint-XX-v<X.Y>.md`. Define nueve secciones obligatorias del plan de sprint, las plantillas reusables de review y retrospectiva, el tracking de velocidad con promedio móvil de 3 sprints, las variantes por tipo D8 y los criterios de aceptación. Habilita el modo simplificado (`Mini-Plan-v1.0.md`) para proyectos de un solo dev. |
+| 1.0 | 2026-05-17 | Versión inicial de las reglas constructivas de la categoría 07. Corrige el patrón heredado con doble separador (`Plan-Iteracion_sprint-XX.md`) y fija el patrón único `plan-iteracion-sprint-XX.md`. Define nueve secciones obligatorias del plan de sprint, las plantillas reusables de review y retrospectiva, el tracking de velocidad con promedio móvil de 3 sprints, las variantes por tipo D8 y los criterios de aceptación. Habilita el modo simplificado (`Mini-Plan.md`) para proyectos de un solo dev. |
 | 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `Proyectos/<Nombre-Proyecto>/07-Plan-Sprint/`; la frase de cierre de §1.2 y la ruta de salida del prompt-snippet referencian el `project_type` del proyecto en curso (manifiesto). Tablas §1.2 sin reescritura. |
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |
 | 1.3 | 2026-07-26 | La actualización de la categoría 11 se incorpora a la Definition of Done del sprint. Nuevo §4.5 con la condición de cierre y lo que exige en la práctica, con renumeración de §4.5 a §4.7 previas a §4.6 a §4.8; §4.2 puntos 5 y 7 la enuncian dentro de la estructura del plan; §4.8 suma el anti-patrón de cerrar un sprint con documentos de 11 sin revisar; §5 suma una pregunta guía y §6 un criterio de aceptación. Es la única modificación que esta intervención introduce en la regla: no se agregan artefactos ni carga narrativa. |
 | 1.4 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |
+| 2.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |

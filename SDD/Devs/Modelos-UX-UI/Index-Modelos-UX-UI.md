@@ -40,7 +40,7 @@ Mientras el catálogo esté vacío, el paso 1 de la Fase B2 (`Maqueta-Rules.md` 
 
 ## 3. Convención de nombres y estructura
 
-- Documento de reglas de un modelo: `Rules-Design-<Nombre-Modelo>-v<X.Y>.md`, en este directorio.
+- Documento de reglas de un modelo: `Rules-Design-<Nombre-Modelo>.md`, en este directorio.
 - `<Nombre-Modelo>` va en Título-Con-Guiones, es agnóstico del dominio del proyecto de origen y describe qué resuelve el modelo, no de quién salió. `Panel-Operativo-Denso` es un nombre válido; `Panel-Cliente-Acme` no lo es.
 - Cada modelo tiene su ejemplo ejecutable ofuscado en `Templates/<Nombre-Modelo>/` del repositorio fuente, con la misma raíz de nombre.
 - El documento se redacta a partir de `Rules-Design-Modelo-Template.md` de este directorio.
@@ -52,13 +52,13 @@ Mientras el catálogo esté vacío, el paso 1 de la Fase B2 (`Maqueta-Rules.md` 
 
 El registro ocurre en el paso 7 de la Fase B2 (`Maqueta-Rules.md` §3.7), solo con aceptación explícita del humano, y produce tres escrituras en la misma operación:
 
-1. `Rules-Design-<Nombre-Modelo>-v1.0.md` en este directorio, con las reglas constructivas extraídas según `Maqueta-Rules.md` §5.
+1. `Rules-Design-<Nombre-Modelo>.md` en este directorio, con las reglas constructivas extraídas según `Maqueta-Rules.md` §5.
 2. `Templates/<Nombre-Modelo>/` en la raíz del repositorio fuente, con el ejemplo ejecutable ofuscado según `Maqueta-Rules.md` §6.
 3. Una fila nueva en la tabla del §2 de este índice.
 
 Un modelo que no está en la tabla del §2 no existe para el orquestador: el paso 1 de la Fase B2 lee este índice y solo ofrece lo que encuentra acá.
 
-Condición bloqueante de la escritura: `IA.SDD` es un repositorio público. Ningún modelo ni ningún template puede contener nombres de clientes, datos reales, assets del proyecto de origen ni decisiones que solo tengan sentido en su dominio. La verificación de ofuscación de `Maqueta-Rules.md` §6.5 es previa y bloqueante.
+Condición bloqueante de la escritura: `IA.SDD` es un repositorio público. Ningún modelo ni ningún template puede contener nombres de clientes, datos reales, assets del proyecto de origen ni decisiones que solo tengan sentido en su dominio. La verificación de ofuscación de `Maqueta-Rules.md` §6 punto 5 es previa y bloqueante.
 
 ---
 
@@ -80,4 +80,4 @@ La opción por defecto (catálogo base sin modelo) se presenta siempre y primero
 
 | Versión | Fecha | Cambios | Autor |
 | --- | --- | --- | --- |
-| 1.0 | 2026-07-19 | Índice inicial del catálogo de modelos UX-UI, creado junto con la Fase B2 de validación visual de maqueta. Define el propósito del catálogo y su diferencia con `References/Design/`, la convención de nombres `Rules-Design-<Nombre-Modelo>-v<X.Y>.md` con su template ofuscado en `Templates/`, el procedimiento de registro con sus tres escrituras y su condición bloqueante de ofuscación, y el criterio de presentación de opciones en el paso 1 de la Fase B2. El catálogo arranca vacío. | AG-ROOT |
+| 1.0 | 2026-07-19 | Índice inicial del catálogo de modelos UX-UI, creado junto con la Fase B2 de validación visual de maqueta. Define el propósito del catálogo y su diferencia con `References/Design/`, la convención de nombres `Rules-Design-<Nombre-Modelo>.md` con su template ofuscado en `Templates/`, el procedimiento de registro con sus tres escrituras y su condición bloqueante de ofuscación, y el criterio de presentación de opciones en el paso 1 de la Fase B2. El catálogo arranca vacío. | AG-ROOT |

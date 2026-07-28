@@ -1,7 +1,7 @@
 # Nota de coherencia — Incorporación de la configuración dirigida por esquema
 
 **Proyecto:** Template SDD
-**Documento:** _Coherencia-Config-Esquema-v1.0.md
+**Documento:** Coherencia-Config-Esquema.md
 **Versión:** 1.0
 **Estado:** Vigente
 **Fecha:** 2026-06-20
@@ -19,19 +19,19 @@ Pase de verificación en lectura sobre la incorporación de la extensión por ca
 
 | Archivo | Rol |
 | --- | --- |
-| `Devs/References/Design/Design-Rules-Config-Esquema-v1.0.md` | Documento de capacidad: configuración dirigida por esquema (§0–§12), agnóstico de framework. |
-| `Devs/References/Design/_coherencia-Config-Esquema-v1.0.md` | Esta nota de coherencia. |
+| `Devs/References/Design/Design-Rules-Config-Esquema.md` | Documento de capacidad: configuración dirigida por esquema (§0–§12), agnóstico de framework. |
+| `Devs/References/Design/Coherencia-Config-Esquema.md` | Esta nota de coherencia. |
 
 ### 2.2 Editados
 
 | Archivo | Cambios | Versión |
 | --- | --- | --- |
-| `Devs/References/Design/Design-Rules-Web-Generico-v1.0.md` | Principio rector 8, estado semántico `info` en §2.1 (con confirmación de `warning` = Atención), anti-patrón en §10, extensión por capacidad en §11, control de cambios. | 1.0 → 1.1 |
+| `Devs/References/Design/Design-Rules-Web-Generico.md` | Principio rector 8, estado semántico `info` en §2.1 (con confirmación de `warning` = Atención), anti-patrón en §10, extensión por capacidad en §11, control de cambios. | 1.0 → 1.1 |
 | `devs/References/Design/Index-Design-Rules.md` | §1 distingue especializaciones por stack de extensiones por capacidad; §2 registra el documento de capacidad en subtabla propia; §4 criterio de carga; §3 nota de roadmap; control de cambios. | 1.0 → 1.1 |
-| `Devs/References/Design/Design-Rules-Blazor-Mudblazor-v1.0.md` | Nueva §4.1: mapeo de los patrones de configuración por esquema a componentes MudBlazor; control de cambios. | 1.0 → 1.1 |
+| `Devs/References/Design/Design-Rules-Blazor-Mudblazor.md` | Nueva §4.1: mapeo de los patrones de configuración por esquema a componentes MudBlazor; control de cambios. | 1.0 → 1.1 |
 | `devs/Rules/Rules-UX-UI-DX.md` | §1.4 extendida (carga de la extensión y requisitos sobre `experiencia-de-uso`/`wireframes`), anti-patrones en §4.4, fila de trazabilidad en §4.3, control de cambios. | 1.3 → 1.4 |
-| `Devs/Guides/Marco-Teorico-SDD-v1.0.md` | Párrafo en §8.7 sobre el eje de configuración dirigida por esquema. | sin marca de versión interna; solo edición |
-| `Guides/Guia-Usuario-SDD-v1.0.md` | `Design-Rules-Config-Esquema-v1.0.md` sumado al árbol del plano `devs/` en §10.2. | sin marca de versión interna; solo edición |
+| `Devs/Guides/Marco-Teorico-SDD.md` | Párrafo en §8.7 sobre el eje de configuración dirigida por esquema. | sin marca de versión interna; solo edición |
+| `Guides/SDD-User-Guide.md` | `Design-Rules-Config-Esquema.md` sumado al árbol del plano `devs/` en §10.2. | sin marca de versión interna; solo edición |
 | `devs/Orchestrator/Master-Prompt.md` | Nota operativa en §6 sobre la extensión como insumo de AG-03; fila 3.2 en §16 (y corrección del orden de las filas 3.0/3.1); cabecera. | 3.1 → 3.2 |
 
 No se modificó `docs/`. No se sobrescribió ninguna plantilla.
@@ -42,8 +42,8 @@ No se modificó `docs/`. No se sobrescribió ninguna plantilla.
 | --- | --- | --- |
 | D1 — Idioma | Cumple | Todo el contenido nuevo en español rioplatense técnico; sin emojis ni negritas decorativas; tono alineado con el resto del catálogo. |
 | D2 — Encoding | Cumple | Archivos nuevos en UTF-8 sin BOM. |
-| D3 — Nombres | Cumple | `Design-Rules-Config-Esquema-v1.0.md` en Título-Con-Guiones; `_Coherencia-Config-Esquema-v1.0.md` con prefijo `_` de meta-archivo, igual que `_index` y `_coherencia-incorporacion`. |
-| D4 — Versionado de nombre | Cumple | Sufijo `-v1.0` con guion medio en ambos archivos nuevos; no aparece el patrón prohibido `.v1.0`. |
+| D3 — Nombres | Cumple | `Design-Rules-Config-Esquema.md` en Título-Con-Guiones; `Coherencia-Config-Esquema.md` con prefijo `_` de meta-archivo, igual que `_index` y `Coherencia-incorporacion`. |
+| D4 — Versionado de nombre | Cumple | Los archivos declaran su versión en el campo `Versión` de su cabecera y ninguno lleva sufijo de versión en el nombre. Reexpresado bajo la D4 vigente desde el framework 4.0; la verificación original de esta nota se hizo contra la D4 anterior, que exigía el sufijo en el nombre. |
 | D5 — Una sola versión vigente | Cumple | Un único archivo por nombre lógico; los documentos editados suben versión in situ, sin copias paralelas. |
 | D6 — Trazabilidad de cabecera | Cumple | El documento de capacidad declara Proyecto/Documento/Versión/Estado/Fecha/Autor/Ámbito/Posición, más tablas de Trazabilidad (§11) y Control de cambios (§12); esta nota declara su cabecera y control de cambios. |
 | D7 — Neutralidad de dominio (crítica) | Cumple | El catálogo no contiene literales del dominio de moderación de la fuente: no aparecen baneo/banear/ban, spam, canales (de chat), timeout, "palabra prohibida" ni fan-out. El vocabulario es neutro: parámetro, umbral, ventana, unidad, default, límite, ejemplo, preset, propuesta, simulación, descriptor. La búsqueda de literales prohibidos solo arroja falsos positivos neutros: "el único canal de información/sensorial" (idiom de accesibilidad), "Banner" (término de UI) y "Bandeja" (ejemplo de inbox preexistente en el base y la especialización Blazor), ninguno del dominio fuente. |
@@ -53,12 +53,12 @@ No se modificó `docs/`. No se sobrescribió ninguna plantilla.
 
 | Eslabón | Resultado | Evidencia |
 | --- | --- | --- |
-| Índice → documento de capacidad | Cumple | `Index-Design-Rules.md` §2 registra `Design-Rules-Config-Esquema-v1.0.md` en la subtabla de extensiones por capacidad; §4 fija su criterio de carga. |
-| Documento de capacidad → base | Cumple | La cabecera declara "Hereda de `Design-Rules-Web-Generico-v1.0.md`" y §0/§11 lo confirman; el base lo registra en §11 (extensión por capacidad) y lo remite desde el principio 8. |
-| Especialización Blazor → documento de capacidad | Cumple | `Design-Rules-Blazor-Mudblazor-v1.0.md` §4.1 mapea los patrones de la extensión a componentes MudBlazor. |
+| Índice → documento de capacidad | Cumple | `Index-Design-Rules.md` §2 registra `Design-Rules-Config-Esquema.md` en la subtabla de extensiones por capacidad; §4 fija su criterio de carga. |
+| Documento de capacidad → base | Cumple | La cabecera declara "Hereda de `Design-Rules-Web-Generico.md`" y §0/§11 lo confirman; el base lo registra en §11 (extensión por capacidad) y lo remite desde el principio 8. |
+| Especialización Blazor → documento de capacidad | Cumple | `Design-Rules-Blazor-Mudblazor.md` §4.1 mapea los patrones de la extensión a componentes MudBlazor. |
 | Regla 03 → índice / extensión | Cumple | `Rules-UX-UI-DX.md` §1.4 indica cargar `Design-Rules-Config-Esquema` vía el índice cuando hay superficies de configuración. |
-| Marco teórico → subárbol | Cumple | `Marco-Teorico-SDD-v1.0.md` §8.7 describe el eje de extensiones por capacidad y la configuración dirigida por esquema. |
-| Guía de usuario → árbol | Cumple | `Guia-Usuario-SDD-v1.0.md` §10.2 incluye `Design-Rules-Config-Esquema-v1.0.md` en el árbol del plano `devs/`. |
+| Marco teórico → subárbol | Cumple | `Marco-Teorico-SDD.md` §8.7 describe el eje de extensiones por capacidad y la configuración dirigida por esquema. |
+| Guía de usuario → árbol | Cumple | `SDD-User-Guide.md` §10.2 incluye `Design-Rules-Config-Esquema.md` en el árbol del plano `devs/`. |
 | Master-prompt → insumo | Cumple | `Master-Prompt.md` §6 suma la extensión como insumo de AG-03 para proyectos con superficies de configuración; §16 lo registra en la fila 3.2. |
 | Límite con 05/02 | Cumple | El documento de capacidad acota el lado UX y referencia el motor (registro de descriptores, validación, salidas estructuradas / tool calling, plan-and-apply) como cross-ref a 05 y el qué funcional a 02, sin implementarlos. |
 

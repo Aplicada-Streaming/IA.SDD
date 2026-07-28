@@ -250,7 +250,7 @@ Bloque para agentes — qué hace este tool-prompt:
 
 - **Entradas:** el material de `INPUTs/`, la plantilla oficial [`SOLUTION-INTAKE-template.md`](../Devs/Intake/SOLUTION-INTAKE-template.md), el stack y los datos de la solución declarados en el cuerpo del propio tool-prompt.
 - **Proceso:** crea en el **repositorio destino** la jerarquía de carpetas que pide el framework y vuelca el material a la plantilla de intake, respetando sus tres partes: A negocio (§1–§12), B composición con la tabla de proyectos (§13–§16) y C técnica por proyecto (§17). Marca como `PENDIENTE` lo que falte, en lugar de inventar.
-- **Salidas:** un único archivo `SDD/Intake/SOLUTION-INTAKE-<Nombre-Solución>-v1.0.md` en el repositorio destino, con el checklist de §19 apuntando a completitud.
+- **Salidas:** un único archivo `SDD/Intake/SOLUTION-INTAKE-<Nombre-Solución>.md` en el repositorio destino, con el checklist de §19 apuntando a completitud.
 
 > **No** completás el `SOLUTION-MANIFEST` a mano: lo deriva el orquestador de la §13 del intake en el paso siguiente ([Guía de usuario](SDD-User-Guide.md) §4.3, F-19).
 
@@ -384,7 +384,7 @@ Checklist de los tropiezos más comunes la primera vez:
 - **Escribir en el framework.** `IA.SDD` es de solo lectura. Si necesitás cambiar una regla, es un cambio de framework, no de tu solución. Nunca edites la fuente para un caso puntual.
 - **Avanzar con el intake incompleto.** Si el integrador dejó `PENDIENTE`s, resolvelos antes del PASO-5. El intake incompleto es la principal fuente de documentación pobre; el orquestador se va a frenar igual.
 - **Completar el `SOLUTION-MANIFEST` a mano.** No se hace: lo deriva el orquestador de la §13. Vos solo completás el `SOLUTION-INTAKE`.
-- **`SDD/Docs/` con contenido previo.** Si el destino ya tiene documentación de una corrida anterior, el orquestador se detiene y te pide archivar en `SDD/Docs/_legacy/<fecha>/` o abortar ([Bootstrap §2](../../PROMPTS/PROMPT-Agente-Bootstrap-SDD.md), prerrequisito 4).
+- **`SDD/Docs/` con contenido previo.** Si el destino ya tiene documentación de una corrida anterior, el orquestador no arranca de una: ejecuta la reconciliación normativa ([Master-Prompt §2.1](../Devs/Orchestrator/Master-Prompt.md)). Lee con qué versión del framework se generó ese árbol, la compara con la vigente y te dice qué cambió y qué documentos quedaron potencialmente invalidados. Después te ofrece tres caminos: un plan de adecuación documento por documento, regenerar todo desde cero, o seguir bajo la versión anterior. Hasta que elijas, no toca nada.
 - **Aprobar el plan sin leerlo.** Revisá tipos D8, proyecto principal, orden topológico y flags (`usa_llm`, `tiene_auth`, `equipo_n`). Un flag mal puesto genera categorías de más o de menos.
 - **Perder el material de investigación en un chat.** Dejalo en `INPUTs/` del repo de documentación. Es lo que hace el arranque reproducible (§5).
 - **Un `project_type` fuera de D8.** Cada proyecto declara exactamente uno de los 8 tipos cerrados. Cualquier otro valor es un error bloqueante.

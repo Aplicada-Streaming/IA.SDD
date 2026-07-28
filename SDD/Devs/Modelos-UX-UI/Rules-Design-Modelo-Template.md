@@ -11,7 +11,7 @@
 
 ## Cómo se usa esta plantilla
 
-La completa el subagente AG-03M en el paso 7 de la Fase B2 (`Rules/Maqueta-Rules.md` §3.7), cuando el humano acepta capitalizar el diseño de una maqueta aprobada. El resultado se escribe como `Rules-Design-<Nombre-Modelo>-v1.0.md` en este mismo directorio y se registra en `Index-Modelos-UX-UI.md` §2.
+La completa el subagente AG-03M en el paso 7 de la Fase B2 (`Rules/Maqueta-Rules.md` §3.7), cuando el humano acepta capitalizar el diseño de una maqueta aprobada. El resultado se escribe como `Rules-Design-<Nombre-Modelo>.md` en este mismo directorio y se registra en `Index-Modelos-UX-UI.md` §2.
 
 Tres reglas de redacción que gobiernan todo el documento:
 
@@ -26,13 +26,13 @@ Los bloques `<...>` son placeholders a reemplazar. Los bloques rotulados como or
 # Reglas de diseño — Modelo `<Nombre-Modelo>`
 
 **Proyecto:** {{nombre-solucion}}
-**Documento:** Rules-Design-`<Nombre-Modelo>`-v1.0.md
+**Documento:** Rules-Design-`<Nombre-Modelo>`.md
 **Versión:** 1.0
 **Estado:** Vigente
 **Fecha:** `<YYYY-MM-DD>`
 **Autor:** {{equipo-o-rol}} (AG-03M)
 **Ámbito:** Modelo UX-UI capturado de maqueta aprobada
-**Hereda de:** `References/Design/Design-Rules-Web-Generico-v1.0.md`
+**Hereda de:** `References/Design/Design-Rules-Web-Generico.md`
 **Posición:** Insumo normativo opcional de la Fase B2 y de la categoría 03. Se aplica por encima del catálogo base, nunca lo reemplaza.
 
 ---
@@ -195,11 +195,11 @@ Lista verificable de qué tiene que cumplir un diseño para poder decir que apli
 
 | Dimensión | Referencia |
 | --- | --- |
-| Catálogo base del que hereda | `Design-Rules-Web-Generico-v1.0.md` |
+| Catálogo base del que hereda | `Design-Rules-Web-Generico.md` |
 | Extensiones por capacidad asumidas | `<lista o N/A>` |
 | Template ejecutable | `Templates/<Nombre-Modelo>/` |
 | Fase que lo capturó | Fase B2 del proyecto de origen |
-| Verificación de ofuscación | `<fecha y resultado, según Maqueta-Rules.md §6.5>` |
+| Verificación de ofuscación | `<fecha y resultado, según Maqueta-Rules.md §6 punto 5>` |
 
 ---
 

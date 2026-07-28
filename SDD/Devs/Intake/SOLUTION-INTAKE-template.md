@@ -4,7 +4,7 @@
 
 Este campo versiona la **plantilla**. El campo `| Versión |` de la cabecera de abajo pertenece al documento de intake que la plantilla genera, y arranca en 1.0 en cada solución nueva.
 
-Plantilla metodológica SDD para producir el documento `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md`: el único documento de intake de una solución. Reúne el negocio (lo que el cliente quiere), la composición (qué proyectos componen la solución y cómo dependen entre sí) y la técnica de construcción (decisiones por proyecto). El orquestador lo lee, valida su completitud en la fase de validación de intake, deriva de él el `SOLUTION-MANIFEST` canónico (con tu confirmación) y recién entonces despacha la generación.
+Plantilla metodológica SDD para producir el documento `SOLUTION-INTAKE-<Nombre-Solucion>.md`: el único documento de intake de una solución. Reúne el negocio (lo que el cliente quiere), la composición (qué proyectos componen la solución y cómo dependen entre sí) y la técnica de construcción (decisiones por proyecto). El orquestador lo lee, valida su completitud en la fase de validación de intake, deriva de él el `SOLUTION-MANIFEST` canónico (con tu confirmación) y recién entonces despacha la generación.
 
 Reemplaza a las dos plantillas anteriores (`PROJECT-BRIEF-template.md` y `PROJECT-README-template.md`), que quedan deprecadas. El usuario completa un solo documento.
 
@@ -17,13 +17,13 @@ Estructura en tres partes:
 
 ## Guía de uso de esta plantilla
 
-1. Copiar este archivo como `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md` en `SDD/Intake/` del repositorio destino.
+1. Copiar este archivo como `SOLUTION-INTAKE-<Nombre-Solucion>.md` en `SDD/Intake/` del repositorio destino.
 2. Completar la cabecera y recorrer §1 a §19 en orden. Las preguntas guía marcadas con `(*)` son bloqueantes: el orquestador no avanza sin ellas.
 3. Replicar el bloque técnico de §17 una vez por cada proyecto declarado en §13.
 4. Borrar los bloques `Ejemplo` y `Lo que NO va en esta sección` una vez completado cada apartado.
 5. Regla de autocontención: cuando una sección del cuerpo se apoye en un ejemplo de instancia (un escenario, un payload, un caso con datos), citarlo por identificador en el cuerpo (`E-1`, `E-2`, …) y transcribir su JSON completo en la Parte D (§20). Si las fuentes aportan esos ejemplos, la Parte D es obligatoria y debe contenerlos enteros; si no aportan ninguno, la Parte D se declara vacía con una línea que lo diga. **Prohibido dejar en el intake final una referencia a un archivo o repositorio externo como único respaldo de un dato: el orquestador aguas abajo no puede resolverla.**
 6. Validar el §19 (checklist) antes de pasar el intake al orquestador.
-7. Versionar siempre como `-v1.0` en la primera emisión.
+7. Declarar `Versión: 1.0` en la cabecera en la primera emisión. El nombre del archivo no lleva la versión.
 
 Para una solución de un solo proyecto (caso degenerado), §13 tiene una sola fila y §17 se replica una vez: el orquestador aplana el layout y reproduce el comportamiento del template de tipo único.
 
@@ -39,7 +39,7 @@ Bloque obligatorio al inicio. Reproducir y completar:
 | Cliente / Stakeholder principal | [Persona, área u organización que la impulsa] |
 | Repositorio | [Repositorio URL] |
 | Lead técnico | [Nombre y rol] |
-| Documento | `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md` |
+| Documento | `SOLUTION-INTAKE-<Nombre-Solucion>.md` |
 | Versión | 1.0 |
 | Fecha | [YYYY-MM-DD] |
 | Stack principal | [Lenguaje + framework principal de la solución] |
@@ -532,10 +532,10 @@ Este documento alimenta las siguientes secciones SDD. La parte de negocio (A) es
 |---|---|---|
 | §1 a §12 (negocio) | `00-Contexto/`, `01-Necesidades-Negocio/` | visión, alcance, NB-XX |
 | §13 (proyectos) | `SOLUTION-MANIFEST` derivado; todas las categorías por proyecto | manifiesto canónico; selector de variantes D8 |
-| §14 estilo de solución | `05-Arquitectura-Tecnica/` (vista de solución) | `Arquitectura-Solucion-v1.0.md` |
+| §14 estilo de solución | `05-Arquitectura-Tecnica/` (vista de solución) | `Arquitectura-Solucion.md` |
 | §16 estructura | `05-Arquitectura-Tecnica/`, `11-Documentacion/` | árbol, README de carpeta |
 | §17 P.x (técnica por proyecto) | `05`, `08`, `09`, `00` (según P) por proyecto | ADRs, estrategia testing, pipeline, NFR |
-| §18 samples | `10-Examples/` | `Ejemplo-XX-v1.0.md` |
+| §18 samples | `10-Examples/` | `Ejemplo-XX.md` |
 | §20–§21 anexos de datos | `02-Especificacion-Funcional/`, `10-Examples/`, `SDD/Maquetas/` | modelo conceptual con ejemplos, fixtures de prueba, `Datos-Maqueta.js` |
 
 ---

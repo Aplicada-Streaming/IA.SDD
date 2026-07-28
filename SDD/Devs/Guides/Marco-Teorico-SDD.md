@@ -1,6 +1,6 @@
 # Marco Teórico SDD
 
-**Documento:** Marco-Teorico-SDD-v1.0.md
+**Documento:** Marco-Teorico-SDD.md
 **Versión:** 1.8
 **Estado:** Aprobado
 **Fecha:** 2026-07-19
@@ -109,8 +109,8 @@ workspace/
 │
 └── <Repositorio-Destino>/          Repositorio destino de la solución
     └── SDD/
-        ├── Intake/                  SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md (humano)
-        │                            SOLUTION-MANIFEST-<Nombre-Solucion>-v1.0.md (derivado)
+        ├── Intake/                  SOLUTION-INTAKE-<Nombre-Solucion>.md (humano)
+        │                            SOLUTION-MANIFEST-<Nombre-Solucion>.md (derivado)
         ├── Docs/                    Plano operativo de la solución generada
         │   ├── 00-Contexto/         AG-00  Product Manager        (nivel solución)
         │   ├── 01-Necesidades-Negocio/     AG-01  Analista de Negocio  (nivel solución)
@@ -295,7 +295,7 @@ El consolidado se guarda como `intake-source.md` o se mantiene en el chat como m
 
 ## 3.4 Paso 3 — Volcado al documento único de intake
 
-El template provee un único documento de intake que el humano completa manualmente a partir del consolidado: `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md`. Este documento reemplaza y deja deprecados a los dos artefactos previos (`PROJECT-BRIEF`, que capturaba el negocio, y `PROJECT-README`, que capturaba la técnica): ambos quedan subsumidos como partes de un solo documento de entrada.
+El template provee un único documento de intake que el humano completa manualmente a partir del consolidado: `SOLUTION-INTAKE-<Nombre-Solucion>.md`. Este documento reemplaza y deja deprecados a los dos artefactos previos (`PROJECT-BRIEF`, que capturaba el negocio, y `PROJECT-README`, que capturaba la técnica): ambos quedan subsumidos como partes de un solo documento de entrada.
 
 El intake se organiza en tres partes:
 
@@ -315,7 +315,7 @@ En el modelo reformulado, el humano no copia el árbol del template dentro del r
 - Las reglas de nomenclatura (`../IA.SDD/SDD/Devs/Rules/`), incluida la regla meta `Intake-Rules.md` que dirige la validación de intake, viven en la fuente.
 - Las plantillas de artefactos (`../IA.SDD/SDD/Devs/Intake/`) viven en la fuente.
 - Los prompts del orquestador y de los subagentes (`../IA.SDD/SDD/Devs/Orchestrator/`) y el prompt de entrada (`../IA.SDD/PROMPTS/`) viven en la fuente.
-- Este marco teórico (`../IA.SDD/SDD/Devs/Guides/Marco-Teorico-SDD-v1.0.md`) vive en la fuente.
+- Este marco teórico (`../IA.SDD/SDD/Devs/Guides/Marco-Teorico-SDD.md`) vive en la fuente.
 
 La separación es deliberada: las reglas, plantillas y prompts maestros quedan fuera del repositorio destino, de modo que las mejoras al template se propaguen a nuevas soluciones sin re-copiarlo; los artefactos generados del SDD quedan del lado del repositorio destino. El humano verifica que el intake está bien cargado (no hay placeholders sin completar) y que las decisiones D1–D9 están explícitas. El SOLUTION-MANIFEST no se completa en este paso: es un artefacto derivado que el orquestador construye en la Fase de validación de intake (ver §3.6) a partir del §13 del intake y escribe en `SDD/Intake/` del destino.
 
@@ -491,7 +491,7 @@ A partir del DAG se obtiene un orden topológico: primero se generan y se constr
 
 ### 3.10.5 Intake a nivel solución
 
-El intake del modelo reformulado opera a nivel solución, coherente con la asimetría negocio/técnica, y se consolida en un único documento: `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md`. Este documento reemplaza y deja deprecados a los dos artefactos previos (`PROJECT-BRIEF` de negocio y `PROJECT-README` técnico), que dejan de usarse como archivos separados y pasan a ser partes del documento único. La asimetría negocio/técnica se preserva como secciones:
+El intake del modelo reformulado opera a nivel solución, coherente con la asimetría negocio/técnica, y se consolida en un único documento: `SOLUTION-INTAKE-<Nombre-Solucion>.md`. Este documento reemplaza y deja deprecados a los dos artefactos previos (`PROJECT-BRIEF` de negocio y `PROJECT-README` técnico), que dejan de usarse como archivos separados y pasan a ser partes del documento único. La asimetría negocio/técnica se preserva como secciones:
 
 - Una Parte A de negocio por solución, que captura la visión y el problema una sola vez (el negocio es uno).
 - Una Parte C técnica con un bloque repetible por proyecto (la técnica es por proyecto).
@@ -602,7 +602,7 @@ Las 13 especialidades siguen siendo válidas sin cambios en el modelo de soluci�
 
 **Alias.** Software Architect, Solution Architect técnico.
 **Responsabilidad principal.** Diseño técnico del sistema, decisiones de arquitectura (ADR), contratos, modelo lógico de datos.
-**Documentos que produce.** Arquitectura de la solución, ADRs individuales (`ADR-XX-<Nombre>-v1.0.md`), contratos, modelo lógico, extensibilidad, diagramas (C4 o equivalente).
+**Documentos que produce.** Arquitectura de la solución, ADRs individuales (`ADR-XX-<Nombre>.md`), contratos, modelo lógico, extensibilidad, diagramas (C4 o equivalente).
 **Variantes por tipo de proyecto.** Ver §7 para la decisión arquitectónica por tipo D8.
 **Motor de configuración dirigida por esquema.** Cuando el proyecto tiene superficies de configuración, AG-05 diseña el motor detrás de la frontera `PropuestaDeConfiguracion`: el registro de descriptores como fuente única, la validación contra esos descriptores, las salidas estructuradas / tool calling del asistente de IA y la mecánica de plan-and-apply. El catálogo de diseño (AG-03) define el lado UX; la arquitectura define el motor.
 **Interacciones cross-rol.** Consume requisitos de AG-02 y AG-03, alimenta a AG-06 (BT técnico), AG-08 (testabilidad), AG-09 (deploy).
@@ -1244,7 +1244,7 @@ Cuando el "usuario" es un desarrollador integrador, las heurísticas se instanci
 
 ## 8.7 Catálogo de reglas de diseño
 
-El plano `devs/` incluye un catálogo de reglas de diseño en `devs/References/Design/`, insumo normativo de la categoría 03. Sigue un modelo base→especialización: un documento base de diseño web genérico (`Design-Rules-Web-Generico-v1.0.md`), agnóstico de framework, y especializaciones por stack que heredan del base y mapean cada token y patrón a su tecnología concreta (la primera es `Design-Rules-Blazor-Mudblazor-v1.0.md`; están previstas las de HTML puro, MAUI y Blazor en MAUI). El AG-03 carga el catálogo a través de su índice `Index-Design-Rules.md`, aplica siempre el documento base y, si existe, la especialización del stack declarado en el intake. Los tokens, patrones, estados e iconografía del catálogo son normativos: el subagente los hereda en lugar de definir decisiones visuales ad hoc por proyecto. Este subárbol es metodológico, vive en `devs/` y no en `docs/`.
+El plano `devs/` incluye un catálogo de reglas de diseño en `devs/References/Design/`, insumo normativo de la categoría 03. Sigue un modelo base→especialización: un documento base de diseño web genérico (`Design-Rules-Web-Generico.md`), agnóstico de framework, y especializaciones por stack que heredan del base y mapean cada token y patrón a su tecnología concreta (la primera es `Design-Rules-Blazor-Mudblazor.md`; están previstas las de HTML puro, MAUI y Blazor en MAUI). El AG-03 carga el catálogo a través de su índice `Index-Design-Rules.md`, aplica siempre el documento base y, si existe, la especialización del stack declarado en el intake. Los tokens, patrones, estados e iconografía del catálogo son normativos: el subagente los hereda en lugar de definir decisiones visuales ad hoc por proyecto. Este subárbol es metodológico, vive en `devs/` y no en `docs/`.
 
 Además de las especializaciones por stack, el catálogo admite extensiones por capacidad transversal. La primera es la configuración dirigida por esquema (`Design-Rules-Config-Esquema`): en superficies donde el usuario fija parámetros, cada parámetro se describe con un descriptor único, fuente de verdad de su default, límites, leyenda y ejemplos, que alimenta cuatro consumidores a la vez: el render del campo, la ayuda contextual, la validación y el contrato para una IA futura. Toda forma de cambiar la configuración (formulario, preset o, más adelante, una sugerencia de IA) llena una misma frontera `PropuestaDeConfiguracion`, que se previsualiza y se confirma antes de aplicar: plan-and-apply con human-in-the-loop, con el modo simulación como red de seguridad. El enganche de IA queda forward-compatible (registro de descriptores, frontera validable, simulación y una ranura de UI reservada), de modo que la IA se conecta después sin tocar el dominio. AG-03 carga esta extensión solo cuando el proyecto tiene superficies de configuración.
 
@@ -1546,9 +1546,9 @@ Todo prompt destinado a generar artefactos comienza con una lista explícita de 
 
 ```text
 Antes de escribir nada, leé en orden:
-1. SDD/Intake/SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md (en el repositorio destino)
+1. SDD/Intake/SOLUTION-INTAKE-<Nombre-Solucion>.md (en el repositorio destino)
 2. SDD/Devs/Rules/Rules-<Categoria>.md (la regla de la categoría que vas a generar)
-3. SDD/Devs/Guides/Marco-Teorico-SDD-v1.0.md (sección §4 si el rol que asumis es AG-XX)
+3. SDD/Devs/Guides/Marco-Teorico-SDD.md (sección §4 si el rol que asumis es AG-XX)
 
 Respondeme solo con:
 - Los puntos clave que entendiste del contexto
@@ -1565,9 +1565,9 @@ Para generación de múltiples artefactos, se exige creación secuencial con con
 ```text
 Crea estos archivos en orden, uno a la vez, esperando mi confirmación entre cada uno:
 
-ARCHIVO 1 — Docs/00-Contexto/Vision-Producto-v1.0.md
-ARCHIVO 2 — Docs/00-Contexto/Alcance-Proyecto-v1.0.md
-ARCHIVO 3 — Docs/00-Contexto/Roadmap-Producto-v1.0.md
+ARCHIVO 1 — Docs/00-Contexto/Vision-Producto.md
+ARCHIVO 2 — Docs/00-Contexto/Alcance-Proyecto.md
+ARCHIVO 3 — Docs/00-Contexto/Roadmap-Producto.md
 
 Al terminar cada archivo, mostrá su contenido para verificación.
 ```
@@ -1772,7 +1772,7 @@ Términos canónicos del template SDD. Cada uno con definición operativa en una
 | **Given/When/Then** | Formato BDD para criterios de aceptación: contexto inicial, evento, resultado esperado. |
 | **Human-in-the-loop** | Esquema en el que un cambio propuesto (por un formulario o por IA) requiere confirmación humana explícita antes de aplicarse. |
 | **Intake** | Documento inicial único que el humano completa para alimentar al template: `SOLUTION-INTAKE`, con tres partes (A negocio, B composición, C técnica por proyecto). Reemplaza a `PROJECT-BRIEF` y `PROJECT-README`, ahora deprecados. |
-| **SOLUTION-INTAKE** | Documento único de entrada del template (`SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md`). Parte A negocio (§1-§12), Parte B composición (§13 tabla de proyectos tipados, §14 estilo, §15 descomposición, §16 estructura), Parte C técnica por proyecto (§17, bloque P.1-P.12), más §18 samples y §19 checklist. Su §13 es la fuente desde la que se deriva el SOLUTION-MANIFEST. |
+| **SOLUTION-INTAKE** | Documento único de entrada del template (`SOLUTION-INTAKE-<Nombre-Solucion>.md`). Parte A negocio (§1-§12), Parte B composición (§13 tabla de proyectos tipados, §14 estilo, §15 descomposición, §16 estructura), Parte C técnica por proyecto (§17, bloque P.1-P.12), más §18 samples y §19 checklist. Su §13 es la fuente desde la que se deriva el SOLUTION-MANIFEST. |
 | **ISO 25010** | Norma ISO que define ocho atributos de calidad de producto de software. |
 | **ISO 29148** | Norma ISO de ingeniería de requisitos de software y sistemas. |
 | **Manifest-driven** | Patrón donde cada componente expone un manifest declarativo que un sistema consumidor lee para configurar UI o comportamiento. |
@@ -1950,7 +1950,7 @@ W3C. (2024). *ARIA — Accessible Rich Internet Applications*. https://www.w3.or
 | 1.0 | 2026-05-17 | Versión inicial — 14 capítulos, 50+ términos en glosario, 40+ referencias APA 7, 8 tipos D8 cubiertos. |
 | 1.1 | 2026-06-10 | Actualización al modelo de solución más jerarquía de proyectos: fundamentación del modelo (solución, proyecto como unidad de especialización, manifiesto como fuente única de verdad, orden topológico, caso degenerado como garantía de no ruptura), estructura del template con niveles solución/proyecto y Solucion/, y aclaración de que las variantes D8 y la trazabilidad se aplican por proyecto. Conjunto D8 sin cambios (8 valores). |
 | 1.2 | 2026-06-10 | Actualización al intake unificado: un único documento `SOLUTION-INTAKE` reemplaza a `PROJECT-BRIEF` y `PROJECT-README`; el `SOLUTION-MANIFEST` pasa a artefacto derivado del §13 del intake; se incorpora la fundamentación de la Fase de validación de intake (validación de completitud semántica, batería de preguntas, derivación y confirmación del manifiesto). Conjunto D8 sin cambios. |
-| 1.3 | 2026-06-10 | Higiene (resolución de P3): el archivo se renombra a `Marco-Teorico-SDD-v1.0.md` para alinear el marcador de variante con `guia-usuario-SDD` (se actualizan metadato y auto-referencias). Se agrega en §3.9 la aclaración del alcance de D3: el casing Título-Con-Guiones gobierna los artefactos generados; los identificadores de variante de la metodología (`SDD1.0`, `SDD`, `SDD2.1M`, `SDD2.1R`) y los prefijos de organización quedan fuera de su alcance. | Reformulación SDD |
+| 1.3 | 2026-06-10 | Higiene (resolución de P3): el archivo se renombra a `Marco-Teorico-SDD.md` para alinear el marcador de variante con `guia-usuario-SDD` (se actualizan metadato y auto-referencias). Se agrega en §3.9 la aclaración del alcance de D3: el casing Título-Con-Guiones gobierna los artefactos generados; los identificadores de variante de la metodología (`SDD1.0`, `SDD`, `SDD2.1M`, `SDD2.1R`) y los prefijos de organización quedan fuera de su alcance. | Reformulación SDD |
 | 1.4 | 2026-06-20 | Auditoría de reflexión de la configuración dirigida por esquema: §1.5 (eje por capacidad en `references/`), §2.5 (descriptor como contrato + frontera validable + simulación + propone/confirma/valida como encaje con IA), §4.2 (AG-03 carga la extensión; AG-05 el motor de la frontera; AG-04 el asistente como tool definitions), §7.5 (`PropuestaDeConfiguracion` como patrón transversal agnóstico de D8), §8.3 (divulgación progresiva ligada a Hick/Miller y ayuda contextual a la heurística 10), §11.1 (propone/confirma/valida como instancia de plan-then-confirm con human-in-the-loop), §12.3 (anti-patrones nuevos) y §13 (nueve términos de glosario). | Reformulación SDD (auditoría config-esquema) |
 | 1.5 | 2026-07-18 | Incorporación del arquetipo de panel de control monolítico: §8.7 suma las tres extensiones por capacidad nuevas (primer arranque, acceso de operador único, identidad de versión) y su lectura conjunta como perfil del arquetipo. Fila agregada a posteriori: el cambio de contenido se había incorporado sin subir versión ni registrar entrada, en incumplimiento de la política de versionado D5 del propio template. | Reformulación SDD (arquetipo de panel monolítico) |
 | 1.6 | 2026-07-19 | Fundamentación de la Fase B2 de validación visual de maqueta y del sensado de deriva: §8.8 (la maqueta como instrumento de diseño y de control, su doble validación de experiencia y de modelo de datos, y sus dos capitalizaciones hacia el proyecto y hacia el template) y §9.7 (la deriva como separación acumulativa, la insuficiencia de la trazabilidad D6 y de la auditoría estructural por ser verificaciones internas, la línea de base como referente externo falsable, la invariante D9 de evidencia verificable con su alcance acotado y su vigencia hacia adelante, y los umbrales como condición de sostenibilidad del instrumento). | Framework SDD (validación visual y sensado de deriva) |

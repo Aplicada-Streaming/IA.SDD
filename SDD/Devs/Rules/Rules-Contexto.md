@@ -2,7 +2,7 @@
 
 **Carpeta target:** `SDD/Docs/00-Contexto/`
 **Subagente target del orquestador:** Product Manager Senior (AG-00) en conjunción con Analista de Negocio Senior (AG-01) si el proyecto tiene stakeholders múltiples.
-**Versión de las reglas:** 1.5
+**Versión de las reglas:** 2.0
 
 ---
 
@@ -46,11 +46,11 @@ En proyectos pequeños (1 a 2 stakeholders, sin regulación), AG-00 trabaja solo
 
 | Archivo | Obligatorio para | Recomendado para | Omitir para | Descripción |
 | --- | --- | --- | --- | --- |
-| `Vision-Producto-v1.0.md` | Todos los tipos D8 | — | — | Por qué existe el sistema, audiencia, propuesta de valor, objetivos SMART, métricas de éxito. |
-| `Alcance-Proyecto-v1.0.md` | Todos los tipos D8 | — | — | Qué entra y qué no entra en el sistema, supuestos, restricciones, criterios de aceptación del proyecto. |
-| `Roadmap-Producto-v1.0.md` | web-monolith, web-microservices, desktop-app, mobile-app-maui, rest-api, worker-service | cli-tool, library | — | Hitos, fases y criterios de transición entre fases. |
-| `Compatibilidad-Plataformas-v1.0.md` | desktop-app, mobile-app-maui, cli-tool | web-monolith, rest-api, worker-service | library de puro lenguaje sin runtime particular | Versiones de SO, runtimes, navegadores y dispositivos soportados. |
-| `Acuerdo-Equipo-v1.0.md` | Todos los tipos con equipo de más de 2 personas | Equipos de 2 personas que coordinan con stakeholders externos | Proyectos de 1 desarrollador solo, sin equipo | Convenciones de trabajo, ceremonias, herramientas, branching strategy. |
+| `Vision-Producto.md` | Todos los tipos D8 | — | — | Por qué existe el sistema, audiencia, propuesta de valor, objetivos SMART, métricas de éxito. |
+| `Alcance-Proyecto.md` | Todos los tipos D8 | — | — | Qué entra y qué no entra en el sistema, supuestos, restricciones, criterios de aceptación del proyecto. |
+| `Roadmap-Producto.md` | web-monolith, web-microservices, desktop-app, mobile-app-maui, rest-api, worker-service | cli-tool, library | — | Hitos, fases y criterios de transición entre fases. |
+| `Compatibilidad-Plataformas.md` | desktop-app, mobile-app-maui, cli-tool | web-monolith, rest-api, worker-service | library de puro lenguaje sin runtime particular | Versiones de SO, runtimes, navegadores y dispositivos soportados. |
+| `Acuerdo-Equipo.md` | Todos los tipos con equipo de más de 2 personas | Equipos de 2 personas que coordinan con stakeholders externos | Proyectos de 1 desarrollador solo, sin equipo | Convenciones de trabajo, ceremonias, herramientas, branching strategy. |
 
 ### 2.2 Reglas de inclusión/exclusión por tipo de proyecto
 
@@ -73,7 +73,7 @@ Regla general: si el documento se omite, dejar nota explícita en el README de l
 
 ### 3.1 Patrón de nombres
 
-Patrón único: `<nombre-documento>-v<X.Y>.md`. El sufijo `-v<X.Y>` usa guion medio antes de la letra `v`. Prohibido el patrón `-v<X.Y>.md` (punto) observado en SDD 1.0. Ejemplos válidos: `Vision-Producto-v1.0.md`, `Alcance-Proyecto-v1.0.md`, `Roadmap-Producto-v1.0.md`. Ejemplo inválido: `Vision-Producto-v1.0.md`.
+Patrón único: `<Nombre-Documento>.md`, sin sufijo de versión en el nombre. El archivo vivo lleva su nombre lógico estable, sin sufijo de versión, y declara su versión en el campo `Versión` de la cabecera (D4). El sufijo `-v<X.Y>.md`, con guion medio, identifica únicamente a las copias archivadas en `_legacy/`. Ejemplos válidos: `Vision-Producto.md`, `Alcance-Proyecto.md`, `Roadmap-Producto.md`. Ejemplos inválidos: `Vision-Producto-v1.0.md` (el archivo vivo no lleva versión) y `vision_producto.md` (rompe Título-Con-Guiones).
 
 ### 3.2 Convenciones de prefijos / sufijos
 
@@ -89,6 +89,8 @@ No se aplica en esta categoría. Los documentos de contexto no usan prefijos del
 
 Recomendado. La carpeta `SDD/Docs/00-Contexto/` lleva un `README.md` (sin versión) que enumera los 5 documentos con su propósito, su estado y el orden de lectura sugerido. Si algún documento fue omitido por aplicación de §2.2, el README declara el motivo. El README también lista los stakeholders del proyecto con nombre o rol.
 
+**Al archivarse sí recibe el sufijo de versión**: `_legacy/<YYYY-MM-DD>/README-v<X.Y>.md`, con la versión tomada del campo `Versión` de su cabecera. El nombre sin sufijo rige para el archivo vivo, porque es el punto de entrada de la carpeta y su nombre debe ser estable; en el snapshot, la versión es lo que lo identifica, y sin ella dos archivados del mismo día colisionan y el segundo sobrescribe al primero sin que ningún actor reciba error. La regla general y su tabla de exenciones viven en `Master-Prompt.md` §5.1.
+
 ---
 
 ## 4. Estructura de redacción de cada documento
@@ -101,7 +103,7 @@ Todos los documentos de la categoría 00 arrancan con un bloque markdown estánd
 # <Título del documento>
 
 **Proyecto:** <nombre-del-proyecto>
-**Documento:** <nombre-archivo>-v<X.Y>.md
+**Documento:** <nombre-archivo>.md
 **Versión:** <X.Y>
 **Estado:** Borrador | Propuesto | Aprobado | Vigente | Superado
 **Fecha:** <YYYY-MM-DD>
@@ -116,7 +118,7 @@ El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente
 
 ### 4.2 Secciones obligatorias
 
-#### Vision-Producto-v1.0.md
+#### Vision-Producto.md
 
 - §1 Problema de negocio.
 - §2 Audiencia y stakeholders.
@@ -129,7 +131,7 @@ El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente
 - §9 Glosario del dominio.
 - §10 Trazabilidad.
 
-#### Alcance-Proyecto-v1.0.md
+#### Alcance-Proyecto.md
 
 - §1 Propósito.
 - §2 Descripción general.
@@ -142,7 +144,7 @@ El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente
 - §9 Gestión de cambios de alcance.
 - §10 Trazabilidad.
 
-#### Roadmap-Producto-v1.0.md
+#### Roadmap-Producto.md
 
 - §1 Propósito.
 - §2 Fases del producto (objetivo, épicas asociadas, entregable, release target).
@@ -151,7 +153,7 @@ El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente
 - §5 Criterios de transición entre fases.
 - §6 Trazabilidad downstream a 06 backlog y 07 sprint plan.
 
-#### Compatibilidad-Plataformas-v1.0.md
+#### Compatibilidad-Plataformas.md
 
 - §1 Resumen ejecutivo.
 - §2 Matriz de compatibilidad (componente x plataforma).
@@ -160,7 +162,7 @@ El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente
 - §5 Estado de implementación por plataforma.
 - §6 Trazabilidad downstream a 09 DevOps.
 
-#### Acuerdo-Equipo-v1.0.md
+#### Acuerdo-Equipo.md
 
 - §1 Propósito.
 - §2 Equipo y roles (Scrum o el modelo de gestión adoptado).
@@ -216,7 +218,7 @@ El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente
 - ¿Qué dice el SOLUTION-INTAKE §9 sobre exclusiones declaradas por el cliente?
 - ¿Qué dice el SOLUTION-INTAKE §10 sobre restricciones del cliente (presupuesto, fecha, normativa, integración obligatoria)?
 - ¿Qué dice el SOLUTION-INTAKE §11 sobre riesgos detectados desde el negocio?
-- ¿El SOLUTION-INTAKE §13 declara un tipo de proyecto que requiera `Compatibilidad-Plataformas-v1.0.md`?
+- ¿El SOLUTION-INTAKE §13 declara un tipo de proyecto que requiera `Compatibilidad-Plataformas.md`?
 - ¿El SOLUTION-INTAKE §17 P.9 enumera plataformas target que deban reflejarse en compatibilidad?
 
 ### 5.2 Decisiones de scope
@@ -254,7 +256,7 @@ El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente
 - [ ] La compatibilidad-plataformas declara todas las plataformas target listadas en el SOLUTION-INTAKE §17 P.9 cuando aplica por tipo D8.
 - [ ] El acuerdo-equipo declara herramientas, ceremonias, branching strategy y SLA de respuesta cuando aplica.
 - [ ] Cada documento de la carpeta declara su trazabilidad upstream (SOLUTION-INTAKE con secciones específicas) y downstream (categorías 01, 02, 05, 07, 11 con detalle).
-- [ ] El nombre de cada archivo respeta el patrón `<Nombre>-v1.0.md` con guion medio antes de la versión.
+- [ ] Ningún archivo de la carpeta de trabajo lleva sufijo de versión en el nombre; cada uno declara su versión en el campo `Versión` de su cabecera (D4).
 - [ ] Ningún documento contiene emojis, negritas decorativas ni referencias hardcoded a stack, frameworks o ejemplos del dominio fuente del bootstrap.
 - [ ] Todo documento con más de tres secciones de primer nivel incluye tabla de contenido inmediatamente después de la cabecera, con enlaces ancla a las secciones de primer y de segundo nivel. Los documentos breves quedan exceptuados.
 
@@ -264,13 +266,13 @@ El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente
 
 ### 7.1 Ejemplo 1 — Sistema de turnos médicos (web-monolith)
 
-Fragmento representativo de `Vision-Producto-v1.0.md` para un sistema de turnos médicos:
+Fragmento representativo de `Vision-Producto.md` para un sistema de turnos médicos:
 
 ```markdown
 # Visión de Producto
 
 **Proyecto:** turnos-medicos-clinica
-**Documento:** Vision-Producto-v1.0.md
+**Documento:** Vision-Producto.md
 **Versión:** 1.0
 **Estado:** Propuesto
 **Fecha:** 2026-04-10
@@ -296,13 +298,13 @@ competidores que ya ofrecen reserva online.
 
 ### 7.2 Ejemplo 2 — Librería de parsing CSV (library)
 
-Fragmento representativo de `Alcance-Proyecto-v1.0.md` para una librería utilitaria:
+Fragmento representativo de `Alcance-Proyecto.md` para una librería utilitaria:
 
 ```markdown
 # Alcance del Proyecto
 
 **Proyecto:** csv-parser-lib
-**Documento:** Alcance-Proyecto-v1.0.md
+**Documento:** Alcance-Proyecto.md
 **Versión:** 1.0
 **Estado:** Aprobado
 **Fecha:** 2026-04-12
@@ -346,11 +348,11 @@ Insumos:
 - Documentos upstream: ninguno (sos el inicio de la cadena de trazabilidad D6).
 
 Documentos a generar (según tipo de proyecto {{TIPO}} y reglas de §2.2):
-- Vision-Producto-v1.0.md (obligatorio para todos los tipos)
-- Alcance-Proyecto-v1.0.md (obligatorio para todos los tipos)
-- Roadmap-Producto-v1.0.md (según matriz §2.2)
-- Compatibilidad-Plataformas-v1.0.md (según matriz §2.2)
-- Acuerdo-Equipo-v1.0.md (si equipo > 2 personas)
+- Vision-Producto.md (obligatorio para todos los tipos)
+- Alcance-Proyecto.md (obligatorio para todos los tipos)
+- Roadmap-Producto.md (según matriz §2.2)
+- Compatibilidad-Plataformas.md (según matriz §2.2)
+- Acuerdo-Equipo.md (si equipo > 2 personas)
 - README.md de la sección 00 (recomendado, sin versión)
 
 Reglas de redacción: §4 de Rules-Contexto.md.
@@ -358,7 +360,7 @@ Trazabilidad esperada: declarar upstream a SOLUTION-INTAKE y downstream a 01, 02
 Criterios de calidad: §6 de Rules-Contexto.md (11 ítems verificables).
 Restricciones: idioma rioplatense técnico, UTF-8 LF, sin emojis, sin negritas decorativas, sin referencias a stack en visión y alcance.
 
-Salida: SDD/Docs/00-Contexto/<archivos>-v1.0.md.
+Salida: SDD/Docs/00-Contexto/<archivos>.md.
 ```
 
 ---
@@ -373,3 +375,5 @@ Salida: SDD/Docs/00-Contexto/<archivos>-v1.0.md.
 | 1.3 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |
 | 1.4 | 2026-07-26 | Normalización del vocabulario de actores: «consumidor» pasa a «integrador» donde designa un rol de intervención. La trazabilidad downstream de §7 apunta a `10-Examples` tras el intercambio de categorías 10 ↔ 11. Se conserva «implementador» donde designa la categoría de stakeholder del intake (propietario / implementador / beneficiario) y «audiencia» donde designa el público del producto. |
 | 1.5 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |
+| 1.6 | 2026-07-28 | Reparación de la política de archivado (Revisión SDD): §3.4 declara que el `README.md` de la sección 00 recibe el sufijo de versión al archivarse. Es uno de los dos artefactos cuyo estado v1.0 se perdió en una corrida real por sobrescritura silenciosa del segundo archivado del mismo día. La regla general y su tabla de exenciones viven en `Master-Prompt.md` §5.1. |
+| 2.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |

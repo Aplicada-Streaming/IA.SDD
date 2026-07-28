@@ -1,7 +1,7 @@
 # Nota de coherencia — Auditoría del marco teórico contra configuración dirigida por esquema
 
 **Proyecto:** Template SDD
-**Documento:** _Coherencia-Auditoria-Marco-v1.0.md
+**Documento:** Coherencia-Auditoria-Marco.md
 **Versión:** 1.0
 **Estado:** Vigente
 **Fecha:** 2026-06-20
@@ -11,7 +11,7 @@
 
 ## 1. Alcance
 
-Pase de verificación en lectura sobre la auditoría de `Marco-Teorico-SDD-v1.0.md` contra las mejoras de configuración dirigida por esquema (schema-driven UI) y su AI-readiness. La auditoría diagnosticó sección por sección, convirtió cada brecha en una tarea con especialidad asignada y ejecutó las ediciones de forma quirúrgica y serializada sobre el documento. Esta nota verifica el resultado contra las invariantes D1–D8 (con énfasis en D7) y la cadena de trazabilidad con el catálogo de diseño, la regla 03 y el master-prompt.
+Pase de verificación en lectura sobre la auditoría de `Marco-Teorico-SDD.md` contra las mejoras de configuración dirigida por esquema (schema-driven UI) y su AI-readiness. La auditoría diagnosticó sección por sección, convirtió cada brecha en una tarea con especialidad asignada y ejecutó las ediciones de forma quirúrgica y serializada sobre el documento. Esta nota verifica el resultado contra las invariantes D1–D8 (con énfasis en D7) y la cadena de trazabilidad con el catálogo de diseño, la regla 03 y el master-prompt.
 
 ## 2. Inventario de archivos
 
@@ -19,11 +19,11 @@ Pase de verificación en lectura sobre la auditoría de `Marco-Teorico-SDD-v1.0.
 
 | Archivo | Rol |
 | --- | --- |
-| `Devs/Guides/_coherencia-Auditoria-Marco-v1.0.md` | Esta nota de coherencia. |
+| `Devs/Guides/Coherencia-Auditoria-Marco.md` | Esta nota de coherencia. |
 
 ### 2.2 Editado
 
-`Devs/Guides/Marco-Teorico-SDD-v1.0.md` (1.3 → 1.4). Secciones tocadas, una por tarea de la auditoría:
+`Devs/Guides/Marco-Teorico-SDD.md` (1.3 → 1.4). Secciones tocadas, una por tarea de la auditoría:
 
 | Tarea | Sección | Cambio | Lente |
 | --- | --- | --- | --- |
@@ -47,8 +47,8 @@ Secciones sin cambio: §8.7 ya reflejaba el núcleo de la mejora (Cumple en el d
 | --- | --- | --- |
 | D1 — Idioma | Cumple | Adiciones en español rioplatense técnico, tono alineado con el marco; sin emojis ni negritas decorativas (salvo las etiquetas de término del glosario, que siguen el estilo preexistente de esa tabla). |
 | D2 — Encoding | Cumple | El archivo nuevo se creó en UTF-8 sin BOM; las ediciones no introducen BOM. |
-| D3 — Nombres | Cumple | `_Coherencia-Auditoria-Marco-v1.0.md` en Título-Con-Guiones con prefijo `_` de meta-archivo, igual que `_coherencia-config-esquema`. |
-| D4 — Versionado de nombre | Cumple | Sufijo `-v1.0` con guion medio; no aparece `.v1.0`. |
+| D3 — Nombres | Cumple | `Coherencia-Auditoria-Marco.md` en Título-Con-Guiones con prefijo `_` de meta-archivo, igual que `Coherencia-config-esquema`. |
+| D4 — Versionado de nombre | Cumple | Los archivos declaran su versión en el campo `Versión` de su cabecera y ninguno lleva sufijo de versión en el nombre. Reexpresado bajo la D4 vigente desde el framework 4.0; la verificación original de esta nota se hizo contra la D4 anterior, que exigía el sufijo en el nombre. |
 | D5 — Una sola versión vigente | Cumple | El marco sube de versión in situ (1.3 → 1.4); no hay copias paralelas. |
 | D6 — Trazabilidad de cabecera | Cumple | Esta nota declara Proyecto/Documento/Versión/Estado/Fecha/Autor y lleva control de cambios; el marco mantiene su cabecera con la versión actualizada. |
 | D7 — Neutralidad de dominio (crítica) | Cumple | Ningún literal del dominio de moderación de la fuente se filtró al marco: la búsqueda de baneo/banear/spam/timeout/fan-out/"palabra prohibida"/moderación no arroja coincidencias en las adiciones. El vocabulario es neutro: parámetro, descriptor, default, límite, ejemplo, preset, propuesta, simulación. |

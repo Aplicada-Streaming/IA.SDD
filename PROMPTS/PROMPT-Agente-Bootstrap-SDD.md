@@ -38,8 +38,8 @@ workspace/
 │       └── Guides/         # Guía de usuario
 └── <RUTA-DESTINO>/         # repositorio de la solución (los artefactos se escriben acá)
     └── SDD/
-        ├── Intake/         # SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md (humano)
-        │                   # SOLUTION-MANIFEST-<Nombre-Solucion>-v1.0.md (derivado por el orquestador)
+        ├── Intake/         # SOLUTION-INTAKE-<Nombre-Solucion>.md (humano)
+        │                   # SOLUTION-MANIFEST-<Nombre-Solucion>.md (derivado por el orquestador)
         ├── Docs/           # documentación generada (salida del orquestador)
         └── README.md
 ```
@@ -60,11 +60,11 @@ Esta separación mantiene las reglas, plantillas y prompts maestros fuera del re
 Antes de delegar en el orquestador, verificá:
 
 1. El repositorio fuente `IA.SDD` está clonado y accesible en la `<RUTA-FUENTE>` derivada de la invocación. Verificable: `<RUTA-FUENTE>/SDD/Devs/Orchestrator/Master-Prompt.md` existe y es legible. La posición relativa respecto del destino es indistinta.
-2. Existe `SDD/Intake/SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md` en el repositorio destino, completo, con el checklist de §19 del intake íntegramente tildado.
+2. Existe `SDD/Intake/SOLUTION-INTAKE-<Nombre-Solucion>.md` en el repositorio destino, completo, con el checklist de §19 del intake íntegramente tildado.
 3. Cada proyecto declarado en la §13 del intake tiene un `project_type` que pertenece al conjunto cerrado D8 (`library`, `web-monolith`, `web-microservices`, `desktop-app`, `mobile-app-maui`, `rest-api`, `cli-tool`, `worker-service`).
-4. La carpeta `SDD/Docs/` del destino está vacía o no existe. Si tiene contenido previo, el orquestador se detiene y pide decidir entre archivar en `SDD/Docs/_legacy/<fecha>/` o abortar.
+4. La carpeta `SDD/Docs/` del destino está vacía o no existe. Si tiene contenido previo, el orquestador ejecuta la reconciliación normativa (`Master-Prompt.md` §2.1): compara la versión del framework con la que se generó ese árbol contra la vigente, te muestra qué documentos quedaron potencialmente invalidados y te deja elegir entre un plan de adecuación, regenerar desde cero o continuar bajo la versión anterior. No modifica nada hasta que elegís.
 
-Si el intake no está listo, este prompt se detiene y pide completarlo. La generación del intake a partir del contexto de la solución se hace antes, partiendo de la plantilla `<RUTA-FUENTE>/SDD/Devs/Intake/SOLUTION-INTAKE-template.md` (ver la guía de usuario `<RUTA-FUENTE>/SDD/Guides/Guia-Usuario-SDD-v1.0.md`).
+Si el intake no está listo, este prompt se detiene y pide completarlo. La generación del intake a partir del contexto de la solución se hace antes, partiendo de la plantilla `<RUTA-FUENTE>/SDD/Devs/Intake/SOLUTION-INTAKE-template.md` (ver la guía de usuario `<RUTA-FUENTE>/SDD/Guides/Guia-Usuario-SDD.md`).
 
 ---
 

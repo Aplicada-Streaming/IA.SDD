@@ -3,7 +3,7 @@
 **Carpeta target:** `SDD/Docs/`
 **Archivo target:** `SDD/Docs/README.md`
 **Subagente target del orquestador:** Arquitecto de Soluciones Senior (AG-ROOT)
-**Versión de las reglas:** 1.4
+**Versión de las reglas:** 2.0
 
 ---
 
@@ -68,18 +68,20 @@ Los archivos `CHANGELOG.md`, `CONTRIBUTING.md` y `LICENSE.md` se incluyen en `SD
 
 El archivo es `README.md` literal, sin versión en el nombre. El versionado vive en la cabecera del documento mediante el campo `Versión` y se actualiza siguiendo la regla D5 (inicio en v1.0). Los archivos satélite mencionados en §2.1 también van en mayúsculas convencionales: `CHANGELOG.md`, `CONTRIBUTING.md`, `LICENSE.md`.
 
+**Al archivarse, el README raíz sí recibe el sufijo de versión**: `_legacy/<YYYY-MM-DD>/README-v<X.Y>.md`, con la versión tomada de su cabecera. El nombre estable rige para el archivo vivo, que es el punto de entrada del árbol; sin sufijo en el snapshot, dos archivados del mismo artefacto colisionan y el segundo sobrescribe al primero sin error. La regla completa, con su tabla de exenciones, vive en `Master-Prompt.md` §5.1. De los tres archivos satélite, `CHANGELOG.md` está exento por acumulativo; `CONTRIBUTING.md` y `LICENSE.md` siguen la regla del README.
+
 ### 3.2 Convenciones de prefijos / sufijos
 
 El propio README raíz no usa prefijos. Para los archivos linkeados desde el README, se respetan los patrones canónicos de las 12 categorías:
 
-- `NB-XX-<Nombre>-v<X.Y>.md` (necesidades de negocio).
-- `CU-XX-<Nombre>-v<X.Y>.md` (casos de uso).
-- `RN-XX-<Nombre>-v<X.Y>.md` (reglas de negocio).
-- `ADR-XX-<Nombre>-v<X.Y>.md` (decisiones de arquitectura).
-- `US-XX-<Nombre>-v<X.Y>.md` (historias de usuario).
-- `BT-XX-<Nombre>-v<X.Y>.md` (backlog técnico).
-- `sprint-XX-<Nombre>-v<X.Y>.md` (planes de sprint).
-- `ejemplo-XX-<Nombre>-v<X.Y>.md` (ejemplos progresivos).
+- `NB-XX-<Nombre>.md` (necesidades de negocio).
+- `CU-XX-<Nombre>.md` (casos de uso).
+- `RN-XX-<Nombre>.md` (reglas de negocio).
+- `ADR-XX-<Nombre>.md` (decisiones de arquitectura).
+- `US-XX-<Nombre>.md` (historias de usuario).
+- `BT-XX-<Nombre>.md` (backlog técnico).
+- `sprint-XX-<Nombre>.md` (planes de sprint).
+- `ejemplo-XX-<Nombre>.md` (ejemplos progresivos).
 
 Todos los nombres respetan Título-Con-Guiones estricto (D3) y sufijo de versión con guion medio (D4).
 
@@ -187,7 +189,7 @@ Tabla C: Estado actual.
 | Stack mencionado sin versión | Imposible reproducir entornos y validar compatibilidad | Declarar siempre `tecnología @ versión` en la cabecera y en §2. |
 | Flujo de lectura único sin variantes por rol | Cada rol de intervención se pierde en información no relevante | Producir mínimo 3 flujos por rol en Tabla B. |
 | README como wiki extensa | Duplica contenido de las categorías y se desactualiza primero | Mantener el README en 200 a 400 líneas y delegar el detalle a cada categoría. |
-| Roadmap inline en el README | Genera dos fuentes de verdad sobre el roadmap | Enlazar a `00-Contexto/Roadmap-Producto-v1.0.md` y no replicar contenido. |
+| Roadmap inline en el README | Genera dos fuentes de verdad sobre el roadmap | Enlazar a `00-Contexto/Roadmap-Producto.md` y no replicar contenido. |
 | Glosario que reemplaza al de UX/UI | El glosario rápido se convierte en glosario completo y diverge | Limitar a 10 a 20 términos esenciales y enlazar al glosario de la categoría UX/UI. |
 | Estado libre fuera del enum | Estados ambiguos como "casi listo" o "WIP" | Usar exclusivamente: Borrador, Propuesto, Aprobado, Vigente, Superado, Archivado. |
 
@@ -369,3 +371,5 @@ Salida: SDD/Docs/README.md (sin versión en el nombre, con versión 1.0 en la ca
 | 1.2 | 2026-06-09 | Reformulación ST-08: el README raíz se reformula a documento de solución. La cabecera (§4.1) declara la solución, su composición y el proyecto principal en lugar de un único tipo D8. Se agrega la sección obligatoria "Proyectos de la solución" (§4.2) con la tabla de proyectos (D8, rol, dependencias, redistribuible). El mapa de documentación (§4.4) refleja las categorías de solución (00, 01), `Solucion/` y la carpeta de cada proyecto. Se actualizan §1.1, §3.3, anti-patrones, criterios de aceptación, preguntas guía, ejemplos (uno multi-proyecto y el caso degenerado) y el prompt-snippet. |
 | 1.3 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |
 | 1.4 | 2026-07-26 | Intercambio de categorías 10 ↔ 11 en el layout canónico: el mapa de documentación pasa a listar `10-Examples/` (AG-10) y `11-Documentacion/` (AG-11), y el flujo de lectura del integrador invierte su orden a 10 → 11 → 02. Se reasignan los subagentes citados en §1.3. Se normaliza el vocabulario de actores: «consumidor» pasa a «integrador» y «audiencia» a «rol de intervención». |
+| 1.5 | 2026-07-28 | Reparación de la política de archivado (Revisión SDD): §3.1 declara que el README raíz recibe el sufijo de versión al archivarse, tomado del campo `Versión` de su cabecera, y que `CHANGELOG.md` queda exento por acumulativo. Corrige la colisión silenciosa por la que dos archivados del mismo artefacto el mismo día se sobrescribían. La regla general y su tabla de exenciones viven en `Master-Prompt.md` §5.1. |
+| 2.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |

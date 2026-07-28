@@ -3,13 +3,13 @@ doc_id: GUIDE-SDD-DEVELOPMENT
 doc_type: development-guide
 title: Guía de desarrollo y extensibilidad del framework SDD
 status: vigente
-version: 1.1
+version: 1.2
 owner: Framework SDD
 last_review: 2026-07-26
 audience: [mantenedor-del-framework, agente-ia]
 language: es-rioplatense-neutro-tecnico
 traces:
-  - Marco-Teorico-SDD-v1.0.md
+  - Marco-Teorico-SDD.md
   - Master-Prompt.md
   - Root-Rules.md
 ---
@@ -17,7 +17,7 @@ traces:
 # Guía de desarrollo y extensibilidad del framework SDD
 
 **Documento:** SDD-Development-Guide.md
-**Versión:** 1.1
+**Versión:** 1.2
 **Estado:** Vigente
 **Fecha:** 2026-07-26
 **Rol de intervención:** Mantenedor del framework
@@ -26,7 +26,7 @@ traces:
 
 Esta guía explica cómo está construido el framework SDD por dentro y cómo modificarlo sin romperlo. Sirve a quien desarrolla y extiende el framework mismo, no a quien lo usa sobre una solución. Documenta la anatomía del repositorio, los contratos implícitos entre sus piezas, un procedimiento por cada eje de extensión, los criterios para decidir antes de tocar nada, los errores conocidos al extender y el procedimiento de cambio con su versionado.
 
-No repite el marco teórico. Los fundamentos, la metodología, el catálogo de especialidades y los estilos arquitectónicos viven en [`../Devs/Guides/Marco-Teorico-SDD-v1.0.md`](../Devs/Guides/Marco-Teorico-SDD-v1.0.md), con catorce secciones que esta guía referencia y no duplica.
+No repite el marco teórico. Los fundamentos, la metodología, el catálogo de especialidades y los estilos arquitectónicos viven en [`../Devs/Guides/Marco-Teorico-SDD.md`](../Devs/Guides/Marco-Teorico-SDD.md), con catorce secciones que esta guía referencia y no duplica.
 
 ---
 
@@ -70,7 +70,7 @@ El framework tiene cuatro documentos de cara al lector y cada uno responde una p
 | --- | --- | --- |
 | [`SDD-Getting-Started-Guide.md`](SDD-Getting-Started-Guide.md) | Quien arranca por primera vez | «¿Cómo pongo esto a andar hoy?» |
 | [`SDD-User-Guide.md`](SDD-User-Guide.md) | Quien **usa** el framework en una solución real | «¿Cómo lo aplico paso a paso?» |
-| [`../Devs/Guides/Marco-Teorico-SDD-v1.0.md`](../Devs/Guides/Marco-Teorico-SDD-v1.0.md) | Quien quiere entender los fundamentos | «¿Por qué está diseñado así?» |
+| [`../Devs/Guides/Marco-Teorico-SDD.md`](../Devs/Guides/Marco-Teorico-SDD.md) | Quien quiere entender los fundamentos | «¿Por qué está diseñado así?» |
 | **Esta guía** | Quien **desarrolla y extiende el framework mismo** | «¿Cómo está construido por dentro y cómo lo modifico sin romperlo?» |
 
 Es una audiencia que hasta esta versión no tenía documento: el mantenedor del framework, no el de una solución. La diferencia práctica es de dirección de escritura. Quien usa el framework escribe en el repositorio destino y nunca toca este repositorio; quien lo desarrolla escribe acá y no toca ninguna solución.
@@ -122,11 +122,12 @@ Las líneas punteadas señalan una relación distinta de las demás. El marco te
 | --- | --- | --- |
 | `SDD/Devs/Rules/` | Los dieciséis archivos normativos: doce de categoría más `Root-Rules`, `Intake-Rules`, `Maqueta-Rules` y `Deriva-Rules`. Cada uno define qué produce su categoría, con qué estructura y bajo qué criterios | En casi toda extensión |
 | `SDD/Devs/Orchestrator/` | El master-prompt. Despacha subagentes por fase, aplica el gating, ordena topológicamente y corta para confirmación humana | Al agregar fases, categorías o flags |
-| `SDD/Devs/Intake/` | `SOLUTION-INTAKE-template.md`, que completa el usuario, y `SOLUTION-MANIFEST-template.md`, que deriva el orquestador. El subdirectorio `_legacy/` conserva las plantillas del modelo anterior | Al agregar una sección de intake o un flag derivable |
+| `SDD/Devs/Intake/` | `SOLUTION-INTAKE-template.md`, que completa el usuario, y `SOLUTION-MANIFEST-template.md`, que deriva el orquestador | Al agregar una sección de intake o un flag derivable |
 | `SDD/Devs/Guides/` | Marco teórico y notas de coherencia de auditoría | Al cambiar fundamentos, o al cerrar una intervención |
 | `SDD/Devs/References/Design/` | Catálogo de reglas de diseño, por stack y por capacidad transversal, con su índice | Al agregar una capacidad de diseño reutilizable |
 | `SDD/Devs/Modelos-UX-UI/` | Modelos UX-UI capturados de maquetas aprobadas, con su índice y su plantilla de registro | Al capturar un modelo nuevo desde una Fase B2 |
 | `SDD/Devs/Bootstrap/` | Auditoría del fuente que originó el framework. **Fuente citada, no archivo muerto**: siete archivos de reglas la referencian como origen del rationale de sus correcciones | Nunca se edita; se cita |
+| `_legacy/` | Una subcarpeta por versión publicada, con el conjunto normativo completo tal como estaba al publicarse. Permite reconstruir con qué reglas exactas se generó un destino sin recurrir al control de versiones | Al publicar una versión nueva. Lo ya archivado no se toca nunca |
 | `SDD/Guides/` | Las tres guías de cara al usuario | Al cambiar algo que el usuario percibe |
 | `PROMPTS/` | El prompt de entrada del agente de bootstrap | Al cambiar el modelo de repositorios o el arranque |
 | `Templates/` | Maquetas ejecutables de referencia, ofuscadas | Al capturar un template desde una Fase B2 |
@@ -208,7 +209,7 @@ Hay un tercer discriminador que se suma a los dos anteriores: los **flags** de �
 
 La categoría 11 introdujo una variante que conviene conocer porque puede repetirse: su gating es **por cuerpo**, un nivel intermedio entre categoría y artefacto. La categoría existe siempre, y lo que varía es cuál de sus tres cuerpos —integrador, mantenedor, operador— se materializa. Cuando una categoría agrupa artefactos por rol de lector, ese nivel intermedio resulta más expresivo que la tabla plana de artefactos, porque permite decir «este proyecto no tiene integradores externos» sin tener que repetir la exclusión en siete filas.
 
-**Regla de cierre.** Toda omisión por gating se registra en `Decisiones-Proyecto-v1.0.md` del proyecto. Cuando el equipo omite algo que el gating declara obligatorio, se requiere ADR.
+**Regla de cierre.** Toda omisión por gating se registra en `Decisiones-Proyecto.md` del proyecto. Cuando el equipo omite algo que el gating declara obligatorio, se requiere ADR.
 
 ### II.4 Cómo se encadena la trazabilidad
 
@@ -274,7 +275,7 @@ Cada eje sigue la misma estructura: qué estás agregando, qué archivos tocar y
 4. Los archivos de reglas de las categorías **vecinas**, para declarar la frontera recíproca.
 5. `SDD/Guides/SDD-User-Guide.md` — la descripción de fases, el mapa de carpetas y las FAQ.
 6. `README.md` raíz — el mapa de las categorías y la matriz de ruteo.
-7. `SDD/Devs/Guides/Marco-Teorico-SDD-v1.0.md` — solo donde el agregado lo desactualice.
+7. `SDD/Devs/Guides/Marco-Teorico-SDD.md` — solo donde el agregado lo desactualice.
 
 **Invariantes que no se pueden romper.** D3 y D4 en el nombre del archivo y de la carpeta. D6: la categoría declara su upstream y su downstream, y ninguno queda vacío. D8: el gating cubre los ocho tipos, sin dejar ninguno sin decisión.
 
@@ -501,7 +502,7 @@ Las filas ya escritas **no se reescriben**, aunque un cambio posterior invalide 
 
 ### VI.3 Cómo se verifica la coherencia después de un cambio
 
-Toda intervención que toque más de un archivo emite una nota de coherencia siguiendo el patrón de [`../Devs/Guides/Coherencia-Auditoria-Marco-v1.0.md`](../Devs/Guides/Coherencia-Auditoria-Marco-v1.0.md), que define la forma: alcance, inventario de archivos tocados, verificación de invariantes, verificación de trazabilidad, observaciones y veredicto.
+Toda intervención que toque más de un archivo emite una nota de coherencia siguiendo el patrón de [`../Devs/Guides/Coherencia-Auditoria-Marco.md`](../Devs/Guides/Coherencia-Auditoria-Marco.md), que define la forma: alcance, inventario de archivos tocados, verificación de invariantes, verificación de trazabilidad, observaciones y veredicto.
 
 Lista de comprobación mínima:
 
@@ -535,6 +536,28 @@ Lo que **no** es una opción es dejar documentación emitida contra una versión
 
 **Registro obligatorio.** Todo bump major se anota en el `CHANGELOG.md` de la raíz declarando explícitamente el impacto sobre la documentación ya emitida, aunque la decisión sea no regenerar nada.
 
+La opción 3 depende de dos cosas que el framework provee desde la versión 4.0: que el destino declare contra qué versión se generó, en el bloque de procedencia de su `SOLUTION-MANIFEST`, y que esa versión siga siendo reconstruible, en `_legacy/`. Sin las dos, «congelar la versión anterior» es una intención sin instrumento.
+
+### VI.5 Cómo se versiona el framework como conjunto
+
+Los archivos se versionan uno por uno según VI.1. El framework además se versiona **como conjunto**, y esa es la versión que un destino cita para declarar bajo qué normativa se generó.
+
+**Dónde vive.** En el `CHANGELOG.md` de la raíz. Una entrada equivale a una versión publicada. No hace falta ningún otro registro: el log del control de versiones registra commits, que es otra cosa y no se mezcla con esto.
+
+**Cómo se deriva.** De la mayor severidad de sus partes:
+
+| La versión del conjunto sube… | Cuando… |
+| --- | --- |
+| **major** | alguna regla sube major, o se modifica una invariante D1-D9 |
+| **minor** | alguna regla sube minor y ninguna sube major |
+| **patch** | no cambia ninguna regla ni el comportamiento del orquestador |
+
+**Qué obliga.** Publicar una versión nueva incluye, en la misma intervención, copiar el conjunto normativo que queda superado a `_legacy/<version>/`. Se copia el conjunto entero y no solo los archivos que cambiaron, porque las reglas son interdependientes: un `Rules-Contexto` de una versión junto a un `Master-Prompt` de otra puede producir una combinación que nunca existió y nunca se auditó. Lo que hay que poder reconstruir es el estado coherente.
+
+Quedan fuera del snapshot el propio `CHANGELOG.md`, que es acumulativo y cuya historia es su contenido, la carpeta `_legacy/` misma, y los archivos de configuración del repositorio, que no condicionan lo que el orquestador genera.
+
+**Intocabilidad.** Una subcarpeta de versión, una vez creada, no se modifica nunca. Es la misma razón por la que las filas de control de cambios no se reescriben: un registro que se corrige después deja de ser un registro.
+
 ---
 
 ## Control de cambios
@@ -543,3 +566,4 @@ Lo que **no** es una opción es dejar documentación emitida contra una versión
 | --- | --- | --- | --- |
 | 1.0 | 2026-07-26 | Versión inicial de la guía de desarrollo del framework. Parte I anatomía, con mapa de dependencias en Mermaid, despiece por carpeta y matriz de quién lee y escribe cada pieza. Parte II con los seis contratos internos: estructura canónica de nueve secciones, decisión de generación, gating de doble granularidad, encadenamiento de la trazabilidad, expectativas del auditor y derivación de flags. Parte III con siete ejes de extensión, cada uno con archivos a tocar, invariantes, verificación y ejemplo trabajado, más el fundamento del conjunto cerrado D8. Parte IV con las preguntas guía agrupadas por decisión. Parte V con once anti-patrones de extensión. Parte VI con versionado, control de cambios, verificación de coherencia, segmentación de intervenciones grandes y tratamiento de la documentación ya emitida. | Reformulación SDD |
 | 1.1 | 2026-07-26 | Dos ejes de extensión nuevos en la Parte III: §III.8 agregar una regla transversal, con la distinción respecto de agregar una categoría y el ejemplo del sensado de deriva atravesando tres categorías; y §III.9 agregar un flag de gating, con el patrón obligatorio de derivar, presentar y confirmar, y el ejemplo de `requiere_maqueta`. El fundamento del conjunto cerrado D8 se renumera a §III.10. | Reformulación SDD |
+| 1.2 | 2026-07-28 | Normalización del versionado (framework 4.0). §I.2 suma la carpeta `_legacy/` a la anatomía. §VI.4 declara que la opción de congelar la versión anterior depende del bloque de procedencia del destino y de que la versión siga siendo reconstruible. **§VI.5 es nueva**: versionado del framework como conjunto, con el `CHANGELOG.md` como registro único, la derivación de la severidad a partir de sus partes, la obligación de copiar el conjunto normativo superado a `_legacy/<version>/` y la regla de intocabilidad de lo archivado. | Revisión SDD |

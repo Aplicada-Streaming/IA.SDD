@@ -2,7 +2,7 @@
 
 **Carpeta target (por proyecto visual):** `SDD/Maquetas/<Nombre-Proyecto>/` del repositorio destino
 **Subagente target del orquestador:** Maquetador de validación visual (AG-03M)
-**Versión de las reglas:** 1.1
+**Versión de las reglas:** 2.0
 
 ---
 
@@ -80,9 +80,9 @@ Si el humano desactiva la fase en un proyecto con `tiene_ui_final == true`, la o
 | `assets/js/Maqueta.js` | `SDD/Maquetas/<Nombre-Proyecto>/assets/js/` | Sí | Render de los datos, navegación y conmutación de estados. |
 | `assets/img/` | `SDD/Maquetas/<Nombre-Proyecto>/assets/img/` | Si hay assets | Imágenes de la maqueta. Los íconos van SVG inline, no acá. |
 | `README.md` | `SDD/Maquetas/<Nombre-Proyecto>/` | Sí | Cómo se abre, qué superficies cubre, qué CU materializa, cómo se corrige a mano y cómo se le avisa al orquestador. |
-| `Linea-Base-Visual-v1.0.md` | `SDD/Docs/Proyectos/<Nombre-Proyecto>/03-UX-UI-DX/` | Sí, al aprobar | Inventario identificado de superficies, componentes, estados y rutas de navegación de la maqueta aprobada. Insumo del sensado de deriva. |
-| `Contrato-Datos-Maqueta-v1.0.md` | `SDD/Docs/Proyectos/<Nombre-Proyecto>/03-UX-UI-DX/` | Sí, al aprobar | Los campos del modelo de datos que la maqueta exhibe, con tipo, ejemplo y trazabilidad al modelo conceptual de 02. |
-| `Bitacora-Validacion-Maqueta-v1.0.md` | `SDD/Docs/Proyectos/<Nombre-Proyecto>/03-UX-UI-DX/` | Sí | Registro de las iteraciones de validación: qué observó el humano, cómo se corrigió, qué documento se retroalimentó. |
+| `Linea-Base-Visual.md` | `SDD/Docs/Proyectos/<Nombre-Proyecto>/03-UX-UI-DX/` | Sí, al aprobar | Inventario identificado de superficies, componentes, estados y rutas de navegación de la maqueta aprobada. Insumo del sensado de deriva. |
+| `Contrato-Datos-Maqueta.md` | `SDD/Docs/Proyectos/<Nombre-Proyecto>/03-UX-UI-DX/` | Sí, al aprobar | Los campos del modelo de datos que la maqueta exhibe, con tipo, ejemplo y trazabilidad al modelo conceptual de 02. |
+| `Bitacora-Validacion-Maqueta.md` | `SDD/Docs/Proyectos/<Nombre-Proyecto>/03-UX-UI-DX/` | Sí | Registro de las iteraciones de validación: qué observó el humano, cómo se corrigió, qué documento se retroalimentó. |
 
 Los tres documentos markdown viven en la categoría 03 del proyecto porque son especificación de experiencia, no salida de maqueta. La maqueta en sí vive en `SDD/Maquetas/`, fuera de `SDD/Docs/`, porque `SDD/Docs/` es exclusivamente prosa generada por el orquestador y la maqueta es material ejecutable que el humano edita a mano.
 
@@ -91,7 +91,7 @@ Los tres documentos markdown viven en la categoría 03 del proyecto porque son e
 - Carpeta del proyecto: `SDD/Maquetas/<Nombre-Proyecto>/`, con el `Nombre-Proyecto` derivado en §3.2 del master-prompt.
 - Archivos HTML de superficie: Título-Con-Guiones, sin sufijo de versión. Ejemplo: `Pantalla-Asignacion-Turno.html`. La maqueta se versiona con el repositorio, no con sufijo de archivo: hay una sola maqueta vigente por proyecto.
 - Archivos de assets: Título-Con-Guiones. Ejemplo: `Estilos-Maqueta.css`, `Datos-Maqueta.js`.
-- Documentos markdown de la fase: Título-Con-Guiones con sufijo `-v<X.Y>.md`, como cualquier artefacto de `SDD/Docs/`.
+- Documentos markdown de la fase: Título-Con-Guiones sin sufijo de versión en el nombre; la versión vive en el campo `Versión` de la cabecera (D4), como cualquier artefacto de `SDD/Docs/`.
 - `index.html` es la única excepción en minúscula: es la convención universal del punto de entrada de un sitio estático y romperla rompe el servido por defecto.
 
 ---
@@ -211,7 +211,7 @@ Vía B, corrección manual del humano. El humano edita a mano los HTML, el CSS, 
 4. Presenta esa lectura al humano para que confirme la interpretación antes de propagarla. Una corrección manual mal interpretada que se propaga a la documentación es peor que no haberla tomado.
 5. Preserva las correcciones manuales: en las iteraciones siguientes AG-03M no las pisa. Si un cambio pedido por prompt entra en conflicto con una corrección manual previa, AG-03M se detiene y pregunta.
 
-Cada iteración, por cualquiera de las dos vías, agrega una entrada a `Bitacora-Validacion-Maqueta-v1.0.md` con fecha, vía, observación del humano, cambio aplicado y documento a retroalimentar.
+Cada iteración, por cualquiera de las dos vías, agrega una entrada a `Bitacora-Validacion-Maqueta.md` con fecha, vía, observación del humano, cambio aplicado y documento a retroalimentar.
 
 El paso cierra cuando el humano responde con la aprobación explícita de la maqueta.
 
@@ -252,7 +252,7 @@ Maqueta aprobada y documentación retroalimentada.
 ¿Querés incorporar este diseño como modelo UX-UI reutilizable del Framework SDD?
 Si aceptás, se generan dos artefactos en el repositorio fuente IA.SDD:
 1. Las reglas constructivas del modelo en
-   SDD/Devs/Modelos-UX-UI/Rules-Design-<Nombre-Modelo>-v1.0.md
+   SDD/Devs/Modelos-UX-UI/Rules-Design-<Nombre-Modelo>.md
 2. Un ejemplo genérico y ofuscado del modelo en
    Templates/<Nombre-Modelo>/
 
@@ -327,7 +327,7 @@ La maqueta exhibe en el pie de cada superficie el nombre del proyecto, el modelo
 
 ## 5. Captura del modelo UX-UI
 
-Cuando el humano acepta capitalizar el diseño (§3.7), AG-03M redacta `../IA.SDD/SDD/Devs/Modelos-UX-UI/Rules-Design-<Nombre-Modelo>-v1.0.md` siguiendo la plantilla `Rules-Design-Modelo-Template.md` del mismo directorio.
+Cuando el humano acepta capitalizar el diseño (§3.7), AG-03M redacta `../IA.SDD/SDD/Devs/Modelos-UX-UI/Rules-Design-<Nombre-Modelo>.md` siguiendo la plantilla `Rules-Design-Modelo-Template.md` del mismo directorio.
 
 El documento no describe la maqueta: extrae de ella las reglas constructivas que permitirían a otro agente producir algo equivalente sin haberla visto. El criterio de inclusión de una regla es este: se incluye si su ausencia haría que un diseño posterior salga distinto de forma perceptible.
 
@@ -430,11 +430,11 @@ Si un proyecto futuro necesitara compilar para maquetar (por ejemplo, una librer
 - [ ] La barra de validación ofrece el interruptor de recarga automática, apagado por defecto y degradado con su razón cuando la maqueta se abre desde `file://`.
 - [ ] Al cerrar la fase, el servidor estático levantado por el orquestador quedó apagado y se lo informó.
 - [ ] Las dos vías de corrección del §3.5 se ofrecieron explícitamente al humano, y las correcciones manuales fueron releídas, interpretadas y confirmadas antes de propagarse.
-- [ ] `Bitacora-Validacion-Maqueta-v1.0.md` tiene una entrada por iteración, con vía, observación, cambio y documento retroalimentado.
+- [ ] `Bitacora-Validacion-Maqueta.md` tiene una entrada por iteración, con vía, observación, cambio y documento retroalimentado.
 - [ ] La aprobación de la maqueta es explícita del humano; no se infiere del silencio.
 - [ ] Todo documento afectado por la matriz de propagación del §3.6 fue retroalimentado y subió versión con su entrada de control de cambios.
-- [ ] Existen `Linea-Base-Visual-v1.0.md` y `Contrato-Datos-Maqueta-v1.0.md` con los identificadores del §2 de `Deriva-Rules.md`.
-- [ ] Si el humano aceptó capitalizar, existen el documento de modelo en `Modelos-UX-UI/`, su entrada en el índice y el template en `Templates/`, y la verificación de ofuscación del §6.5 está declarada.
+- [ ] Existen `Linea-Base-Visual.md` y `Contrato-Datos-Maqueta.md` con los identificadores del §2 de `Deriva-Rules.md`.
+- [ ] Si el humano aceptó capitalizar, existen el documento de modelo en `Modelos-UX-UI/`, su entrada en el índice y el template en `Templates/`, y la verificación de ofuscación del §6 punto 5 está declarada.
 - [ ] Ningún artefacto escrito en `IA.SDD` contiene nombres, datos, assets ni decisiones del dominio del proyecto destino.
 
 ---
@@ -512,3 +512,4 @@ Devolución:
 | --- | --- | --- |
 | 1.0 | 2026-07-19 | Reglas iniciales de la Fase B2 de validación visual de maqueta. Define el subagente AG-03M y sus variantes por D8, el flag `requiere_maqueta`, los artefactos de maqueta en `SDD/Maquetas/<Nombre-Proyecto>/` y los tres documentos de 03 que la fase produce, la secuencia de siete pasos con sus detenciones, las dos vías de corrección (por prompt y manual con relectura e interpretación confirmada), la matriz de propagación de la retroalimentación, las reglas constructivas de la maqueta, la captura del modelo UX-UI en `Modelos-UX-UI/`, la generación del template ofuscado en `Templates/` con verificación bloqueante, el lanzado automático del paso 4 con degradación a URL informada, el método de relanzado con sus cuatro formas soportadas, la recarga automática propia de la barra de validación y la decisión de no incorporar un paso de build, criterios de aceptación, anti-patrones y prompt-snippet. |
 | 1.1 | 2026-07-26 | Intercambio de categorías 10 ↔ 11: la analogía de §3.7 entre el template y un sample pasa a referenciar `10-Examples`. |
+| 2.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |

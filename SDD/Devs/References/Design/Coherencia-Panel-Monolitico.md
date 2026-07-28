@@ -1,7 +1,7 @@
 # Nota de coherencia — Incorporación del arquetipo de panel de control monolítico
 
 **Proyecto:** Template SDD
-**Documento:** _Coherencia-Panel-Monolitico-v1.0.md
+**Documento:** Coherencia-Panel-Monolitico.md
 **Versión:** 1.0
 **Estado:** Vigente
 **Fecha:** 2026-07-18
@@ -19,23 +19,23 @@ Pase de verificación en lectura sobre la incorporación de tres extensiones por
 
 | Archivo | Rol |
 | --- | --- |
-| `Devs/References/Design/Design-Rules-Primer-Arranque-v1.0.md` | Documento de capacidad: primer arranque y aprovisionamiento inicial (§0–§12), agnóstico de framework. |
-| `Devs/References/Design/Design-Rules-Acceso-Monousuario-v1.0.md` | Documento de capacidad: acceso de operador único en panel monolítico (§0–§12), agnóstico de framework. |
-| `Devs/References/Design/Design-Rules-Identidad-De-Version-v1.0.md` | Documento de capacidad: identidad de versión y su superficie (§0–§12), agnóstico de framework. |
-| `Devs/References/Design/_Coherencia-Panel-Monolitico-v1.0.md` | Esta nota de coherencia. |
+| `Devs/References/Design/Design-Rules-Primer-Arranque.md` | Documento de capacidad: primer arranque y aprovisionamiento inicial (§0–§12), agnóstico de framework. |
+| `Devs/References/Design/Design-Rules-Acceso-Monousuario.md` | Documento de capacidad: acceso de operador único en panel monolítico (§0–§12), agnóstico de framework. |
+| `Devs/References/Design/Design-Rules-Identidad-De-Version.md` | Documento de capacidad: identidad de versión y su superficie (§0–§12), agnóstico de framework. |
+| `Devs/References/Design/Coherencia-Panel-Monolitico.md` | Esta nota de coherencia. |
 
 ### 2.2 Editados
 
 | Archivo | Cambios | Versión |
 | --- | --- | --- |
-| `Devs/References/Design/Design-Rules-Config-Esquema-v1.0.md` | §2.1 nueva (frontera entre configuración de aplicación y de entorno), §4.4 con la derivación de presets desde `ejemplos` y `default`, §9 criterios, §10 tres anti-patrones, §11 extensión hermana y cross-ref de despliegue, control de cambios. | 1.0 → 1.1 |
-| `Devs/References/Design/Design-Rules-Web-Generico-v1.0.md` | §10 dos anti-patrones (chrome sin sesión, instancia sin versión visible), §11 registro de las tres extensiones nuevas, control de cambios. | 1.1 → 1.2 |
-| `Devs/References/Design/Design-Rules-Blazor-Mudblazor-v1.0.md` | Nueva §4.2: mapeo de los patrones de las tres extensiones a componentes MudBlazor, con notas de fidelidad sobre formularios de identidad por POST; §11 registra las extensiones mapeadas; control de cambios. | 1.1 → 1.2 |
+| `Devs/References/Design/Design-Rules-Config-Esquema.md` | §2.1 nueva (frontera entre configuración de aplicación y de entorno), §4.4 con la derivación de presets desde `ejemplos` y `default`, §9 criterios, §10 tres anti-patrones, §11 extensión hermana y cross-ref de despliegue, control de cambios. | 1.0 → 1.1 |
+| `Devs/References/Design/Design-Rules-Web-Generico.md` | §10 dos anti-patrones (chrome sin sesión, instancia sin versión visible), §11 registro de las tres extensiones nuevas, control de cambios. | 1.1 → 1.2 |
+| `Devs/References/Design/Design-Rules-Blazor-Mudblazor.md` | Nueva §4.2: mapeo de los patrones de las tres extensiones a componentes MudBlazor, con notas de fidelidad sobre formularios de identidad por POST; §11 registra las extensiones mapeadas; control de cambios. | 1.1 → 1.2 |
 | `Devs/References/Design/Index-Design-Rules.md` | §2 registra las tres extensiones y la nota del arquetipo que las agrupa; §4 reemplaza el criterio de carga en prosa por tabla de condiciones y declara la ortogonalidad mutua; control de cambios. | 1.1 → 1.2 |
 | `Devs/Rules/Rules-UX-UI-DX.md` | §1.4 extendida con la condición de carga y los requisitos sobre `experiencia-de-uso`/`wireframes` de cada extensión, más la frontera aplicación/entorno; §4.3 tres filas de trazabilidad; §4.4 siete anti-patrones; control de cambios. | 1.4 → 1.5 |
 | `Devs/Orchestrator/Master-Prompt.md` | Notas operativas en §6 (tres insumos condicionales nuevos para AG-03 y declaración de ortogonalidad); fila 3.3 en §16; cabecera. | 3.2 → 3.3 |
-| `Devs/Guides/Marco-Teorico-SDD-v1.0.md` | Párrafo en §8.7 sobre las tres extensiones y el arquetipo que describen en conjunto. | sin marca de versión interna; solo edición |
-| `Guides/Guia-Usuario-SDD-v1.0.md` | Los tres documentos nuevos sumados al árbol del plano `devs/` en §10.2. | sin marca de versión interna; solo edición |
+| `Devs/Guides/Marco-Teorico-SDD.md` | Párrafo en §8.7 sobre las tres extensiones y el arquetipo que describen en conjunto. | sin marca de versión interna; solo edición |
+| `Guides/SDD-User-Guide.md` | Los tres documentos nuevos sumados al árbol del plano `devs/` en §10.2. | sin marca de versión interna; solo edición |
 
 No se modificó `docs/`. No se sobrescribió ninguna plantilla. No se modificó el proyecto fuente del que se extrajeron las características.
 
@@ -45,8 +45,8 @@ No se modificó `docs/`. No se sobrescribió ninguna plantilla. No se modificó 
 | --- | --- | --- |
 | D1 — Idioma | Cumple | Todo el contenido nuevo en español rioplatense técnico, tono normativo en presente indicativo; sin emojis ni negritas decorativas; la negrita queda reservada a las etiquetas de cabecera. |
 | D2 — Encoding | Cumple | Archivos nuevos en UTF-8 sin BOM. |
-| D3 — Nombres | Cumple | `Design-Rules-Primer-Arranque-v1.0.md`, `Design-Rules-Acceso-Monousuario-v1.0.md` y `Design-Rules-Identidad-De-Version-v1.0.md` en Título-Con-Guiones, sin espacios, tildes ni eñes; la nota de coherencia sigue la convención vigente del subárbol. |
-| D4 — Versionado de nombre | Cumple | Sufijo `-v1.0` con guion medio en los cuatro archivos nuevos; no aparece el patrón prohibido `.v1.0`. Los documentos editados suben versión interna conservando el nombre de archivo, como en las incorporaciones previas. |
+| D3 — Nombres | Cumple | `Design-Rules-Primer-Arranque.md`, `Design-Rules-Acceso-Monousuario.md` y `Design-Rules-Identidad-De-Version.md` en Título-Con-Guiones, sin espacios, tildes ni eñes; la nota de coherencia sigue la convención vigente del subárbol. |
+| D4 — Versionado de nombre | Cumple | Los archivos declaran su versión en el campo `Versión` de su cabecera y ninguno lleva sufijo de versión en el nombre. Reexpresado bajo la D4 vigente desde el framework 4.0; la verificación original de esta nota se hizo contra la D4 anterior, que exigía el sufijo en el nombre. |
 | D5 — Una sola versión vigente | Cumple | Un único archivo por nombre lógico; sin copias paralelas ni entradas en `_legacy/`. |
 | D6 — Trazabilidad de cabecera | Cumple | Los tres documentos de capacidad declaran Proyecto/Documento/Versión/Estado/Fecha/Autor/Ámbito/Hereda de/Posición, y cierran con Trazabilidad (§11) y Control de cambios (§12) como últimas secciones. |
 | D7 — Neutralidad de dominio (crítica) | Cumple | El catálogo no contiene literales del dominio de la fuente ni de su stack: la búsqueda de términos del servicio original y de su tecnología no arroja ninguna ocurrencia en los tres documentos nuevos. Los únicos aciertos de la búsqueda son falsos positivos léxicos ("botón" contra el término de dominio, en contexto de UI). El vocabulario es neutro: instancia, predicado, aprovisionamiento, artefacto mínimo, identidad, operador, sesión, secreto, shell, sello, construcción. El mapeo a tecnología concreta vive donde corresponde: en la especialización por stack (§4.2 de `Design-Rules-Blazor-Mudblazor`). |
@@ -57,12 +57,12 @@ No se modificó `docs/`. No se sobrescribió ninguna plantilla. No se modificó 
 | Eslabón | Resultado | Evidencia |
 | --- | --- | --- |
 | Índice → documentos de capacidad | Cumple | `Index-Design-Rules.md` §2 registra los tres en la subtabla de extensiones por capacidad; §4 fija la condición de carga de cada uno en tabla. |
-| Documentos de capacidad → base | Cumple | Las tres cabeceras declaran "Hereda de `Design-Rules-Web-Generico-v1.0.md`" y §0/§11 lo confirman; el base los registra en §11 y remite a dos de ellos desde los anti-patrones de §10. |
+| Documentos de capacidad → base | Cumple | Las tres cabeceras declaran "Hereda de `Design-Rules-Web-Generico.md`" y §0/§11 lo confirman; el base los registra en §11 y remite a dos de ellos desde los anti-patrones de §10. |
 | Extensiones entre sí | Cumple | Primer arranque y acceso monousuario se declaran extensión hermana mutua (shell de acceso compartido); identidad de versión declara la superficie de acceso como una de sus ubicaciones obligatorias; configuración por esquema declara a primer arranque como hermana por la frontera de entorno. |
-| Especialización Blazor → documentos de capacidad | Cumple | `Design-Rules-Blazor-Mudblazor-v1.0.md` §4.2 mapea los patrones de las tres extensiones a componentes MudBlazor; §11 las registra. |
+| Especialización Blazor → documentos de capacidad | Cumple | `Design-Rules-Blazor-Mudblazor.md` §4.2 mapea los patrones de las tres extensiones a componentes MudBlazor; §11 las registra. |
 | Regla 03 → índice / extensiones | Cumple | `Rules-UX-UI-DX.md` §1.4 indica cargar cada extensión vía el índice según su condición, y fija los requisitos sobre `experiencia-de-uso` y `wireframes`; §4.3 suma la fila de trazabilidad de cada una. |
-| Marco teórico → subárbol | Cumple | `Marco-Teorico-SDD-v1.0.md` §8.7 describe las tres extensiones y el arquetipo que conforman. |
-| Guía de usuario → árbol | Cumple | `Guia-Usuario-SDD-v1.0.md` §10.2 incluye los tres documentos en el árbol del plano `devs/`. |
+| Marco teórico → subárbol | Cumple | `Marco-Teorico-SDD.md` §8.7 describe las tres extensiones y el arquetipo que conforman. |
+| Guía de usuario → árbol | Cumple | `SDD-User-Guide.md` §10.2 incluye los tres documentos en el árbol del plano `devs/`. |
 | Master-prompt → insumo | Cumple | `Master-Prompt.md` §6 suma las tres como insumo condicional de AG-03 y declara su ortogonalidad; §16 lo registra en la fila 3.3. |
 | Límite con 05/02/09 | Cumple | Los tres documentos acotan el lado UX y referencian como cross-ref lo que no les pertenece: el predicado técnico, la transaccionalidad, el esquema de credenciales y la credencial de sesión a 05; el qué funcional a 02; la instalación, la provisión del secreto, el cálculo de la versión y el etiquetado de artefactos a 09. |
 
@@ -71,7 +71,7 @@ No se modificó `docs/`. No se sobrescribió ninguna plantilla. No se modificó 
 1. Esqueletos de referencia en ASCII (nueva, deliberada). Los documentos de primer arranque, acceso monousuario e identidad de versión incorporan una sección §7 con esqueletos de composición en bloques `text`. Es una desviación respecto de las References previas, que no usaban arte ASCII y dejaban el wireframe como artefacto exclusivo de salida de AG-03. Se adoptó porque las tres capacidades se definen tanto por la composición de sus superficies como por sus reglas, y describirlas solo en prosa obligaba a que cada proyecto reinventara el layout. Los esqueletos fijan composición y no valores, y se declaran explícitamente como referencia, no como wireframe del proyecto: el artefacto `wireframes-<superficie>` sigue siendo responsabilidad de AG-03 y referencia los patrones por nombre.
 2. Ubicación de la identidad de versión en `Design/` (informativa). La mecánica de versionado es materia de la categoría 09, no de diseño. El documento incorporado acota deliberadamente su alcance al contrato que la superficie consume y a su presentación, y remite el resto a 09 por cross-ref. Si el catálogo incorpora en el futuro un subárbol de References para entrega, corresponde revisar si la parte no visual migra allí.
 3. Longitud de los documentos (informativa). Los tres nuevos quedan entre 198 y 234 líneas, dentro del rango del catálogo (190–270) y por debajo del techo de facto de 300.
-4. Fin de línea LF (correctiva). Se verificó el fin de línea real de los archivos del repositorio y es LF, coincidente con lo documentado en las invariantes del `Master-Prompt.md` §5. Los archivos nuevos se crearon en LF. Esto contradice la observación registrada en las dos notas de coherencia previas del subárbol (`Coherencia-Incorporacion-v1.0.md` y `Coherencia-Config-Esquema-v1.0.md`), que declaraban un CRLF de facto y una discrepancia con la invariante: esa observación es incorrecta y queda anulada. No hay discrepancia de EOL abierta en el subárbol.
+4. Fin de línea LF (correctiva). Se verificó el fin de línea real de los archivos del repositorio y es LF, coincidente con lo documentado en las invariantes del `Master-Prompt.md` §5. Los archivos nuevos se crearon en LF. Esto contradice la observación registrada en las dos notas de coherencia previas del subárbol (`Coherencia-Incorporacion.md` y `Coherencia-Config-Esquema.md`), que declaraban un CRLF de facto y una discrepancia con la invariante: esa observación es incorrecta y queda anulada. No hay discrepancia de EOL abierta en el subárbol.
 
 ## 6. Veredicto
 

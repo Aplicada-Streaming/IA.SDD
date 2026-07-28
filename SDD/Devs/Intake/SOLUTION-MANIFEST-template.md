@@ -1,12 +1,12 @@
 # SOLUTION-MANIFEST-template
 
-Referencia de formato del artefacto `SOLUTION-MANIFEST-<Nombre-Solucion>-v1.0.md`. El manifiesto declara la jerarquía de proyectos de una solución: enumera los proyectos, su tipo D8, su rol, sus dependencias y sus nombres de código. Es la fuente única de verdad de la enumeración de proyectos para el resto del orquestador.
+Referencia de formato del artefacto `SOLUTION-MANIFEST-<Nombre-Solucion>.md`. El manifiesto declara la jerarquía de proyectos de una solución: enumera los proyectos, su tipo D8, su rol, sus dependencias y sus nombres de código. Es la fuente única de verdad de la enumeración de proyectos para el resto del orquestador.
 
-A partir de SDD con intake unificado, el manifiesto NO lo completa el usuario a mano: es un artefacto derivado. El usuario completa un único documento, `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md`, y de su §13 (Proyectos de la solución) el orquestador construye este manifiesto durante la Fase de validación de intake, siguiendo las reglas de derivación de `rules/Intake-Rules.md` §4, y lo presenta para confirmación humana. Este archivo describe el formato del artefacto generado; no es una plantilla a llenar.
+A partir de SDD con intake unificado, el manifiesto NO lo completa el usuario a mano: es un artefacto derivado. El usuario completa un único documento, `SOLUTION-INTAKE-<Nombre-Solucion>.md`, y de su §13 (Proyectos de la solución) el orquestador construye este manifiesto durante la Fase de validación de intake, siguiendo las reglas de derivación de `rules/Intake-Rules.md` §4, y lo presenta para confirmación humana. Este archivo describe el formato del artefacto generado; no es una plantilla a llenar.
 
 ## Guía de uso de esta referencia
 
-1. El orquestador genera `SOLUTION-MANIFEST-<Nombre-Solucion>-v1.0.md` en `SDD/Intake/` del repositorio destino a partir de `SOLUTION-INTAKE` §13, con la convención de nombres declarada en el perfil del intake.
+1. El orquestador genera `SOLUTION-MANIFEST-<Nombre-Solucion>.md` en `SDD/Intake/` del repositorio destino a partir de `SOLUTION-INTAKE` §13, con la convención de nombres declarada en el perfil del intake.
 2. Compone el bloque de solución y la tabla de proyectos según el esquema de §1 y §2 de esta referencia.
 3. Aplica las validaciones de §4 (tipos D8, proyecto principal único, sin colisión de nombres, dependencias resueltas, grafo acíclico). Si alguna falla, no deriva el manifiesto y lo reporta en la batería de validación de intake.
 4. Presenta el manifiesto derivado al humano y espera confirmación explícita antes de tratarlo como canónico.
@@ -26,13 +26,41 @@ Bloque obligatorio al inicio del documento. Reproducir y completar los placehold
 | `Nombre-Solucion` | [slug derivado del nombre, Título-Con-Guiones] |
 | `NombreSolucionCodigo` | [forma PascalCase del nombre de la solución] |
 | Proyecto principal | [`Nombre-Proyecto` del proyecto cabeza] |
-| Intake (origen) | `SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md` (de su §13 se deriva este manifiesto) |
-| Documento | `SOLUTION-MANIFEST-<Nombre-Solucion>-v1.0.md` |
+| Intake (origen) | `SOLUTION-INTAKE-<Nombre-Solucion>.md` (de su §13 se deriva este manifiesto) |
+| Documento | `SOLUTION-MANIFEST-<Nombre-Solucion>.md` |
 | Versión | 1.0 |
 | Fecha | [YYYY-MM-DD] |
 | Estado | Borrador / En revisión / Aprobado |
 
-### §1.1 Perfil de convención de nombres
+### §1.1 Procedencia del framework
+
+Bloque obligatorio. Declara bajo qué normativa se generó esta documentación. El orquestador lo completa al derivar el manifiesto, leyendo el campo `Versión` de la cabecera de cada archivo que efectivamente usa; no agrega ninguna lectura, porque ya abre cada archivo de reglas para construir sus despachos.
+
+| Artefacto del framework | Versión |
+|---|---|
+| Framework SDD (conjunto) | [entrada vigente del `CHANGELOG.md` del framework] |
+| `Master-Prompt` | [versión de su cabecera] |
+| `Root-Rules` | [versión de su cabecera] |
+| `Rules-<Categoria>` | [una fila por cada regla de categoría efectivamente aplicada] |
+| Reglas transversales aplicadas | [`Intake-Rules`, y `Maqueta-Rules` y `Deriva-Rules` si se ejecutó la Fase B2] |
+
+**Para qué sirve.** Un árbol de `SDD/Docs/` generado hoy va a sobrevivir a varias versiones del framework. Sin este bloque no hay forma de saber contra qué reglas se produjo, y por lo tanto tampoco de saber qué documentos quedaron invalidados cuando una regla sube major, que es lo que el propio framework declara que ocurre. Con el bloque, y con el conjunto normativo de esa versión conservado en `_legacy/` del framework, se puede reconstruir la normativa exacta y planificar la actualización.
+
+**Cuándo se actualiza.** Solo cuando el árbol se regenera bajo una versión distinta. Una corrección dentro de la misma versión del framework no lo toca: seguiría siendo cierto.
+
+#### Decisiones de reconciliación
+
+Tabla opcional, vacía mientras no haya habido ninguna. El orquestador agrega una fila cada vez que la reconciliación normativa de `Master-Prompt.md` §2.1 se resuelve con la salida **C**, es decir cuando el usuario decide continuar bajo la versión de origen teniendo una versión más nueva disponible.
+
+| Fecha | Versión evaluada | Decisión | Motivo declarado |
+|---|---|---|---|
+| [YYYY-MM-DD] | [versión vigente del framework en ese momento] | Continuar bajo [versión de origen] | [lo que dijo el usuario] |
+
+**Por qué se registra.** Sin este registro, el arranque siguiente vuelve a presentar la misma comparación y el usuario vuelve a contestarla, sin memoria de haberlo hecho. Con el registro, el orquestador informa la postergación en una línea y solo vuelve a preguntar si el framework avanzó más allá de la versión ya evaluada.
+
+Las salidas **A** y **B** no dejan fila acá: la A emite su propio informe en `SDD/Docs/Audit/` y la B reescribe el bloque de procedencia con la versión nueva, que es registro suficiente de lo que pasó.
+
+### §1.2 Perfil de convención de nombres
 
 Configuración que el orquestador aplica de forma reproducible para derivar los nombres de código de cada proyecto. Declarar una vez por solución:
 
@@ -75,7 +103,7 @@ library, web-monolith, web-microservices, desktop-app, mobile-app-maui, rest-api
 | `library` | `.Core`, `.Abstractions`, `.Domain`, `.Infrastructure` u otro rol |
 | `web-microservices` | un proyecto por servicio bajo `<NombreSolucionCodigo>.Services.<Servicio>` más `.Gateway` y `.BuildingBlocks` |
 
-La regla se expresa de forma agnóstica de stack a propósito. El perfil de convención de §1.1 es donde una solución concreta materializa la convención de su ecosistema.
+La regla se expresa de forma agnóstica de stack a propósito. El perfil de convención de §1.2 es donde una solución concreta materializa la convención de su ecosistema.
 
 ### §2.2 Derivación de nombres (a cargo del orquestador)
 
@@ -120,7 +148,7 @@ Bloque de solución:
 | `Nombre-Solucion` | `gestion-de-turnos` |
 | `NombreSolucionCodigo` | `GestionDeTurnos` |
 | Proyecto principal | `gestion-de-turnos-api` |
-| Intake (origen) | `SOLUTION-INTAKE-Gestion-De-Turnos-v1.0.md` |
+| Intake (origen) | `SOLUTION-INTAKE-Gestion-De-Turnos.md` |
 
 Perfil de convención: PascalCase; separador `.`; prefijo de redistribuibles `Aplicada`.
 
@@ -163,7 +191,7 @@ Bloque de solución:
 | `Nombre-Solucion` | `parser-csv` |
 | `NombreSolucionCodigo` | `ParserCsv` |
 | Proyecto principal | `parser-csv` |
-| Intake (origen) | `SOLUTION-INTAKE-Parser-CSV-v1.0.md` |
+| Intake (origen) | `SOLUTION-INTAKE-Parser-CSV.md` |
 
 Tabla de proyectos:
 

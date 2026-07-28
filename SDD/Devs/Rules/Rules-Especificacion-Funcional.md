@@ -2,7 +2,7 @@
 
 **Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/02-Especificacion-Funcional/`
 **Subagente target del orquestador:** Analista Funcional / Ingeniero de Requisitos (AG-02)
-**Versión de las reglas:** 1.3
+**Versión de las reglas:** 2.0
 
 ---
 
@@ -50,12 +50,12 @@ El AG-02 mantiene siempre la titularidad del artefacto; las demás especialidade
 
 | Archivo | Obligatorio para | Recomendado | Omitir para | Descripción |
 | --- | --- | --- | --- | --- |
-| `Especificacion-Funcional-v1.0.md` | Todos los tipos D8 | — | — | Índice maestro de CU, RN y referencia al modelo. Incluye matriz NB→CU→RN→US. |
-| `definicion-<concepto-central>-v1.0.md` | Proyectos con un concepto técnico central (por ejemplo lenguaje declarativo, modelo de pagos, taxonomía de eventos) | library con superficie estrecha | Tipos sin concepto central | Define vocabulario, semántica y elementos del concepto en un único documento. |
-| `Casos-De-Uso/CU-XX-<Nombre>-v1.0.md` | Todos los tipos D8, con un mínimo declarado en §2.2 | — | — | Un caso de uso por archivo. |
-| `Reglas-De-Negocio/RN-XX-<Nombre>-v1.0.md` | Proyectos con reglas regulatorias o dominio fuerte | Resto de los proyectos | Proyectos triviales sin estado ni invariantes | Una regla de negocio por archivo. Invariante atemporal. |
-| `Modelo-Datos/Modelo-Conceptual-v1.0.md` | Proyectos con persistencia (web-monolith, web-microservices, rest-api, worker-service, mobile-app-maui) | desktop-app si guarda local | library puro sin estado, cli-tool sin estado | Modelo conceptual estilo ER o de clases de dominio. |
-| `Modelo-Datos/reglas-conceptuales-de-modelo/RC-XX-<Nombre>-v1.0.md` | Proyectos con modelo rico (más de diez entidades o invariantes de integridad explícitas) | — | Resto | Una regla conceptual por archivo, focalizada en integridad de dominio. |
+| `Especificacion-Funcional.md` | Todos los tipos D8 | — | — | Índice maestro de CU, RN y referencia al modelo. Incluye matriz NB→CU→RN→US. |
+| `definicion-<concepto-central>.md` | Proyectos con un concepto técnico central (por ejemplo lenguaje declarativo, modelo de pagos, taxonomía de eventos) | library con superficie estrecha | Tipos sin concepto central | Define vocabulario, semántica y elementos del concepto en un único documento. |
+| `Casos-De-Uso/CU-XX-<Nombre>.md` | Todos los tipos D8, con un mínimo declarado en §2.2 | — | — | Un caso de uso por archivo. |
+| `Reglas-De-Negocio/RN-XX-<Nombre>.md` | Proyectos con reglas regulatorias o dominio fuerte | Resto de los proyectos | Proyectos triviales sin estado ni invariantes | Una regla de negocio por archivo. Invariante atemporal. |
+| `Modelo-Datos/Modelo-Conceptual.md` | Proyectos con persistencia (web-monolith, web-microservices, rest-api, worker-service, mobile-app-maui) | desktop-app si guarda local | library puro sin estado, cli-tool sin estado | Modelo conceptual estilo ER o de clases de dominio. |
+| `Modelo-Datos/reglas-conceptuales-de-modelo/RC-XX-<Nombre>.md` | Proyectos con modelo rico (más de diez entidades o invariantes de integridad explícitas) | — | Resto | Una regla conceptual por archivo, focalizada en integridad de dominio. |
 | `README.md` de la sección | Recomendado para todos | — | — | Índice navegable de CU, RN, modelo y RC con su estado actual. |
 
 ### 2.2 Reglas de inclusión y exclusión por tipo
@@ -79,12 +79,12 @@ El mínimo es piso, no techo. La cota superior queda definida por la cobertura c
 
 ### 3.1 Patrón de nombres
 
-- `CU-XX-<Nombre>-v<X.Y>.md`, con dos dígitos en `XX`, Título-Con-Guiones en el slug y guion medio antes de la versión.
-- `RN-XX-<Nombre>-v<X.Y>.md`, mismas reglas.
-- `RC-XX-<Nombre>-v<X.Y>.md` para reglas conceptuales del modelo.
-- `modelo-conceptual-v<X.Y>.md` para el modelo conceptual de datos.
-- `definicion-<concepto>-v<X.Y>.md` para el documento opcional de concepto central.
-- `especificacion-funcional-v<X.Y>.md` para el índice maestro.
+- `CU-XX-<Nombre>.md`, con dos dígitos en `XX`, Título-Con-Guiones en el slug y guion medio antes de la versión.
+- `RN-XX-<Nombre>.md`, mismas reglas.
+- `RC-XX-<Nombre>.md` para reglas conceptuales del modelo.
+- `modelo-conceptual.md` para el modelo conceptual de datos.
+- `definicion-<concepto>.md` para el documento opcional de concepto central.
+- `especificacion-funcional.md` para el índice maestro.
 
 Queda prohibido el patrón heredado `nb-01-desacople.v1.0.md` u homólogos. La versión siempre va con guion medio `-v`, jamás con guion bajo `_v` ni con punto `.v`. El slug va en Título-Con-Guiones (cada palabra capitalizada, separadas por guion medio); quedan prohibidas las variantes todo-minúsculas, camelCase, con espacios o con acentos.
 
@@ -93,7 +93,7 @@ Queda prohibido el patrón heredado `nb-01-desacople.v1.0.md` u homólogos. La v
 - `CU-`: caso de uso. Acción funcional con flujo, actores y criterios de aceptación.
 - `RN-`: regla de negocio. Invariante atemporal del dominio. No describe acción; describe restricción.
 - `RC-`: regla conceptual del modelo. Restricción de integridad expresada sobre entidades y relaciones.
-- Sufijo `-v<X.Y>.md` uniforme. La versión menor avanza por aclaración o corrección; la mayor avanza por cambio de alcance del CU/RN/RC.
+- Nombre lógico sin sufijo de versión en el nombre; la versión vive en el campo `Versión` de la cabecera (D4). La versión menor avanza por aclaración o corrección; la mayor avanza por cambio de alcance del CU/RN/RC.
 
 ### 3.3 Vinculación cross-doc
 
@@ -111,12 +111,12 @@ Recomendado para todos los tipos. Debe listar CU, RN, modelo y RC vigentes con p
 
 Una sola versión vigente por nombre lógico. Cuando un CU pasa de `v1.0` a `v2.0`:
 
-1. Se crea `CU-XX-<Nombre>-v2.0.md` en la carpeta principal.
+1. Se crea `CU-XX-<Nombre>.md` en la carpeta principal.
 2. La versión `v1.0` se mueve a `Casos-De-Uso/_legacy/` con estado `Superado` y una nota al inicio que apunte a la versión vigente.
-3. El índice `especificacion-funcional-v<X.Y>.md` referencia únicamente la versión vigente.
+3. El índice `especificacion-funcional.md` referencia únicamente la versión vigente.
 4. Las RN, RC y referencias downstream se actualizan en la misma operación.
 
-Queda prohibido mantener `v1.0` y `v2.0` conviviendo en la carpeta principal sin marcado de deprecación. La lección está documentada en `Bootstrap/Audit-SDD1.md` Fase 0.
+Un nombre lógico tiene un solo archivo en la carpeta principal. Al superarse, se copia a `_legacy/` con el sufijo de la versión que preserva y el archivo vivo pasa a la versión nueva. La lección está documentada en la auditoría de Fase 0 del bootstrap: en el fuente convivían versiones paralelas sin marcado de deprecación y no había forma de saber cuál regía. en `Bootstrap/Audit-SDD1.md` Fase 0.
 
 ---
 
@@ -130,7 +130,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 # CU-XX — <Nombre del caso de uso>
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** CU-XX-<Nombre>-v<X.Y>.md
+**Documento:** CU-XX-<Nombre>.md
 **Versión:** <X.Y>
 **Estado:** Borrador | Propuesto | Aprobado | Vigente | Superado | Archivado
 **Fecha:** YYYY-MM-DD
@@ -233,9 +233,9 @@ Diagrama de flujo del CU expresado como pasos numerados o Mermaid sequenceDiagra
 | CU que mezcla flujo funcional con detalle de interfaz | Invade 03 UX/UI y vuelve frágil el CU | Mover el detalle visual a 03; mantener en 02 sólo qué hace y para quién |
 | RN escrita como CU | Confunde acción con invariante; rompe la trazabilidad | Reescribir como enunciado declarativo atemporal |
 | Modelo conceptual con tipos físicos (varchar(255), int(11)) | Invade 05 modelo lógico | Mantener nombres y semántica; los tipos viven en 05 |
-| Versionado paralelo `CU-06-v1.0` y `CU-06-v2.0` sin marcar deprecación | Ambigüedad sobre cuál vigencia leer | Aplicar §3.5: una vigente, anteriores a `_legacy/` |
+| Sufijo de versión en el nombre del archivo vivo | Reintroduce la segunda lógica de versionado que D4 eliminó, y con ella la colisión silenciosa al archivar | Un solo archivo por nombre lógico; la versión en la cabecera y el sufijo solo en `_legacy/` |
 | Casing inconsistente (`NB-01-Desacople` vs `NB-02-estandarizacion`) | Inconsistencia que rompe automatizaciones | Forzar Título-Con-Guiones estricto |
-| Patrón `.v1.0` heredado del fuente | Convención prohibida en SDD | Forzar `-v1.0` |
+| Sufijo de versión en el nombre del archivo vivo | Reintroduce la segunda lógica de versionado que D4 eliminó, y con ella la colisión al archivar | El archivo vivo no lleva sufijo; la versión va en la cabecera |
 | CU sin escenarios de error | Solo flujo feliz; el sistema queda subdefinido | Agregar al menos una excepción por CU |
 | Criterios de aceptación narrativos sin valores concretos | No automatizables; no anclan tests | Reescribir Given/When/Then con valores explícitos |
 | CU con más de un actor primario | Ambigüedad de responsabilidad | Separar en dos CU o reorganizar el flujo |
@@ -281,16 +281,16 @@ Diagrama de flujo del CU expresado como pasos numerados o Mermaid sequenceDiagra
 
 ## 6. Criterios de aceptación
 
-- [ ] Existe `Especificacion-Funcional-v1.0.md` con índice maestro y matriz NB→CU→RN→US.
+- [ ] Existe `Especificacion-Funcional.md` con índice maestro y matriz NB→CU→RN→US.
 - [ ] La cantidad de CU cumple el mínimo declarado para el tipo D8 del proyecto.
 - [ ] Cada CU contiene las once secciones obligatorias del §4.2.
 - [ ] Cada CU declara trazabilidad NB→CU→US y al menos tres criterios Given/When/Then con valores concretos.
 - [ ] Cada RN contiene las siete secciones obligatorias del §4.2.1 y enumera CU afectados explícitos.
-- [ ] Si el tipo D8 exige modelo de datos, existe `Modelo-Datos/Modelo-Conceptual-v1.0.md` con diagrama o tabla equivalente.
+- [ ] Si el tipo D8 exige modelo de datos, existe `Modelo-Datos/Modelo-Conceptual.md` con diagrama o tabla equivalente.
 - [ ] Si el modelo supera diez entidades, existen RC-XX en `Modelo-Datos/reglas-conceptuales-de-modelo/` con las seis secciones obligatorias del §4.2.3.
-- [ ] Ningún archivo usa el patrón `-v<X.Y>.md`; todos usan `-v<X.Y>.md`.
+- [ ] Ningún archivo de la carpeta de trabajo lleva sufijo de versión en el nombre; cada uno declara su versión en el campo `Versión` de su cabecera (D4).
 - [ ] Ningún slug contiene mayúsculas, espacios, acentos ni caracteres no permitidos.
-- [ ] No coexisten versiones distintas del mismo nombre lógico en la carpeta principal; las superadas viven en `_legacy/`.
+- [ ] Existe un solo archivo por nombre lógico en la carpeta principal; las versiones superadas viven en `_legacy/` con su sufijo de versión.
 - [ ] No hay menciones a stacks concretos, productos comerciales ni protocolos específicos del dominio fuente.
 - [ ] Existe `README.md` de la sección si así lo decide el equipo (recomendado).
 - [ ] Todo documento con más de tres secciones de primer nivel incluye tabla de contenido inmediatamente después de la cabecera, con enlaces ancla a las secciones de primer y de segundo nivel. Los documentos breves quedan exceptuados.
@@ -307,7 +307,7 @@ Fragmento ilustrativo, no documento completo:
 # CU-03 — Asignar turno médico
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** CU-03-Asignar-Turno-Medico-v1.0.md
+**Documento:** CU-03-Asignar-Turno-Medico.md
 **Versión:** 1.0
 **Estado:** Propuesto
 **Fecha:** 2026-05-17
@@ -344,7 +344,7 @@ Permitir que un agente administrativo asigne un turno a un paciente sobre la age
 # RN-02 — Validez del identificador de pago
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** RN-02-Validez-Identificador-Pago-v1.0.md
+**Documento:** RN-02-Validez-Identificador-Pago.md
 **Versión:** 1.0
 **Estado:** Aprobada
 **Fecha:** 2026-05-17
@@ -404,15 +404,15 @@ Insumos:
 - Upstream: 00 (visión, alcance), 01 (NB-XX).
 
 A generar (según tipo {{TIPO}} de D8):
-- Especificacion-Funcional-v1.0.md (índice maestro con matriz NB→CU→RN→US).
-- Casos-De-Uso/CU-XX-<Nombre>-v1.0.md (mínimo según §2.2).
-- Reglas-De-Negocio/RN-XX-<Nombre>-v1.0.md (si aplica).
-- Modelo-Datos/Modelo-Conceptual-v1.0.md (si aplica).
-- Modelo-Datos/reglas-conceptuales-de-modelo/RC-XX-<Nombre>-v1.0.md (si el modelo supera 10 entidades).
+- Especificacion-Funcional.md (índice maestro con matriz NB→CU→RN→US).
+- Casos-De-Uso/CU-XX-<Nombre>.md (mínimo según §2.2).
+- Reglas-De-Negocio/RN-XX-<Nombre>.md (si aplica).
+- Modelo-Datos/Modelo-Conceptual.md (si aplica).
+- Modelo-Datos/reglas-conceptuales-de-modelo/RC-XX-<Nombre>.md (si el modelo supera 10 entidades).
 - README.md de la sección (recomendado).
 
 Reglas de redacción: §4 de Rules-Especificacion-Funcional.md.
-Nomenclatura: `CU-XX-<Nombre>-v1.0.md` con guion medio `-v` (no `_v` ni `.v`); slug en Título-Con-Guiones estricto.
+Nomenclatura: `CU-XX-<Nombre>.md` con guion medio `-v` (no `_v` ni `.v`); slug en Título-Con-Guiones estricto.
 Trazabilidad: cada CU debe enlazar a una NB y enumerar US a generar en 06.
 Criterios de calidad: §6 de Rules-Especificacion-Funcional.md.
 Política de versionado: §3.5; una sola versión vigente; anteriores a `_legacy/` con estado Superado.
@@ -432,3 +432,4 @@ Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/02-Especificacion-Funcional/<estr
 | 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `Proyectos/<Nombre-Proyecto>/02-Especificacion-Funcional/`; la frase de cierre de §1.2 y la ruta de salida del prompt-snippet referencian el `project_type` del proyecto en curso (manifiesto). Tablas §1.2 sin reescritura. |
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |
 | 1.3 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |
+| 2.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |

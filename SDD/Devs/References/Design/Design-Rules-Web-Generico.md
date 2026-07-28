@@ -1,7 +1,7 @@
 # Reglas de diseño — Web genérico
 
 **Proyecto:** {{nombre-solucion}}
-**Documento:** Design-Rules-Web-Generico-v1.0.md
+**Documento:** Design-Rules-Web-Generico.md
 **Versión:** 1.2
 **Estado:** Vigente
 **Fecha:** 2026-07-18
@@ -256,13 +256,13 @@ Una superficie cumple el catálogo cuando: usa solo tokens del sistema (cero lit
 | --- | --- |
 | Especialidad dueña | AG-03 UX/UI |
 | Regla que lo invoca | `devs/Rules/Rules-UX-UI-DX.md` |
-| Documentos hijos | `Design-Rules-Blazor-Mudblazor-v1.0.md` y futuros por stack |
-| Extensión por capacidad | `Design-Rules-Config-Esquema-v1.0.md` (configuración dirigida por esquema) |
-| Extensión por capacidad | `Design-Rules-Primer-Arranque-v1.0.md` (primer arranque y aprovisionamiento inicial) |
-| Extensión por capacidad | `Design-Rules-Acceso-Monousuario-v1.0.md` (acceso de operador único en panel monolítico) |
-| Extensión por capacidad | `Design-Rules-Identidad-De-Version-v1.0.md` (identidad de versión y su superficie) |
+| Documentos hijos | `Design-Rules-Blazor-Mudblazor.md` y futuros por stack |
+| Extensión por capacidad | `Design-Rules-Config-Esquema.md` (configuración dirigida por esquema) |
+| Extensión por capacidad | `Design-Rules-Primer-Arranque.md` (primer arranque y aprovisionamiento inicial) |
+| Extensión por capacidad | `Design-Rules-Acceso-Monousuario.md` (acceso de operador único en panel monolítico) |
+| Extensión por capacidad | `Design-Rules-Identidad-De-Version.md` (identidad de versión y su superficie) |
 | Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>`, `representacion-<concepto>` por proyecto |
-| Marco teórico | `Guides/Marco-Teorico-SDD-v1.0.md`, cap. UX/UI/DX |
+| Marco teórico | `Guides/Marco-Teorico-SDD.md`, cap. UX/UI/DX |
 
 ---
 

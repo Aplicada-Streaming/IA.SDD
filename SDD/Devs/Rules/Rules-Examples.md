@@ -2,7 +2,7 @@
 
 **Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/10-Examples/`
 **Subagente target del orquestador:** Developer Advocate / Sample Engineer Senior (AG-10)
-**Versión de las reglas:** 2.0
+**Versión de las reglas:** 3.0
 
 ---
 
@@ -14,7 +14,7 @@ A diferencia de la categoría 11, que explica los conceptos y guía el recorrido
 
 Esta categoría es opcional según el tipo D8. Es obligatoria para `library`, `cli-tool`, `mobile-app-maui`, `rest-api`, `desktop-app` y `web-microservices` porque el integrador del artefacto necesita ejemplos reproducibles para arrancar. Es recomendada para `web-monolith` y `worker-service` cuando el proyecto se expone como referencia para otros equipos. Es omisible cuando el proyecto es estrictamente interno y no hay nuevos integradores previsibles.
 
-La auditoría de Fase 0 (`Bootstrap/Audit-SDD1.md`) detectó dos déficits del fuente SDD 1.0 que SDD corrige aquí. Primero, los archivos del fuente nombran los ejemplos por dominio (`ejemplo-02-multa.md`, `ejemplo-03-multaapp-nuget.md`), atando el sample al producto particular y descartando la idea de progresión didáctica. SDD obliga a nombrar por nivel de complejidad o por capacidad demostrada (`ejemplo-01-basico`, `ejemplo-02-intermedio`, `ejemplo-03-avanzado`, o variantes por capacidad como `ejemplo-01-cliente-http-basico`, `ejemplo-02-postman-collection`). Segundo, los markdown del fuente no llevan sufijo de versión; SDD obliga al sufijo uniforme `-v<X.Y>.md` para todos los archivos versionables de esta categoría, incluyendo `README.md` cuando se considere artefacto versionable (en este caso se mantiene `README.md` sin sufijo por convención de índice).
+La auditoría de Fase 0 (`Bootstrap/Audit-SDD1.md`) detectó dos déficits del fuente SDD 1.0 que SDD corrige aquí. Primero, los archivos del fuente nombran los ejemplos por dominio (`ejemplo-02-multa.md`, `ejemplo-03-multaapp-nuget.md`), atando el sample al producto particular y descartando la idea de progresión didáctica. SDD obliga a nombrar por nivel de complejidad o por capacidad demostrada (`ejemplo-01-basico`, `ejemplo-02-intermedio`, `ejemplo-03-avanzado`, o variantes por capacidad como `ejemplo-01-cliente-http-basico`, `ejemplo-02-postman-collection`). Segundo, los markdown del fuente no llevan sufijo de versión; SDD obliga al sufijo uniforme `.md` para todos los archivos versionables de esta categoría, incluyendo `README.md` cuando se considere artefacto versionable (en este caso se mantiene `README.md` sin sufijo por convención de índice).
 
 ### 0.1 Las dos aristas del sample
 
@@ -88,9 +88,9 @@ El AG-10 mantiene titularidad de los artefactos. Las demás especialidades aport
 | Archivo | Obligatorio para | Recomendado | Omitir para | Descripción |
 | --- | --- | --- | --- | --- |
 | `README.md` | library, cli-tool, mobile-app-maui, rest-api, desktop-app, web-microservices | web-monolith, worker-service | Proyectos estrictamente internos sin integradores externos | Índice de samples con tabla maestra (nivel, tiempo de setup, CU ilustrados, ubicación en `/samples`). |
-| `ejemplo-01-basico-v<X.Y>.md` o `ejemplo-01-<Progresion>-v<X.Y>.md` | library, cli-tool, mobile-app-maui, rest-api, desktop-app, web-microservices | web-monolith, worker-service | — | Markdown explicativo del sample de nivel básico. |
-| `ejemplo-02-intermedio-v<X.Y>.md` o `ejemplo-02-<Progresion>-v<X.Y>.md` | library, cli-tool, mobile-app-maui, rest-api | desktop-app, web-microservices, web-monolith, worker-service | — | Markdown explicativo del sample de nivel intermedio. |
-| `ejemplo-03-avanzado-v<X.Y>.md` o `ejemplo-03-<Progresion>-v<X.Y>.md` | library, cli-tool, mobile-app-maui, rest-api | desktop-app, web-microservices | — | Markdown explicativo del sample de nivel avanzado o de integración. |
+| `ejemplo-01-basico.md` o `ejemplo-01-<Progresion>.md` | library, cli-tool, mobile-app-maui, rest-api, desktop-app, web-microservices | web-monolith, worker-service | — | Markdown explicativo del sample de nivel básico. |
+| `ejemplo-02-intermedio.md` o `ejemplo-02-<Progresion>.md` | library, cli-tool, mobile-app-maui, rest-api | desktop-app, web-microservices, web-monolith, worker-service | — | Markdown explicativo del sample de nivel intermedio. |
+| `ejemplo-03-avanzado.md` o `ejemplo-03-<Progresion>.md` | library, cli-tool, mobile-app-maui, rest-api | desktop-app, web-microservices | — | Markdown explicativo del sample de nivel avanzado o de integración. |
 | `Imagenes/` (carpeta) | Cuando los markdown referencian screenshots o assets visuales | — | Samples sin UI | Carpeta de assets versionados (PNG, SVG). Sin assets binarios pesados; preferir vectoriales. |
 
 Cada markdown explicativo se acompaña de un proyecto ejecutable en `/samples/<carpeta-correspondiente>/` del repositorio. La categoría 10 documenta el sample; la materialización en código vive en `/samples` y se gobierna desde §16.1 del SOLUTION-INTAKE (materialización de `/samples`).
@@ -112,7 +112,7 @@ Estos son pisos. Un proyecto puede agregar samples adicionales para cubrir capac
 
 ### 2.3 Matriz tipo D8 → carpetas en `/samples`
 
-La carpeta `/samples` del repositorio refleja directamente los archivos documentados en `docs/10-Examples/`. Hay correspondencia 1:1 entre cada `ejemplo-XX-<Nombre>-v<X.Y>.md` y una carpeta ejecutable en `/samples/`.
+La carpeta `/samples` del repositorio refleja directamente los archivos documentados en `docs/10-Examples/`. Hay correspondencia 1:1 entre cada `ejemplo-XX-<Nombre>.md` y una carpeta ejecutable en `/samples/`.
 
 | Tipo D8 | Estructura mínima de `/samples` |
 | --- | --- |
@@ -133,11 +133,11 @@ Esta tabla es vinculante: el contenido de `/samples` no se inventa; se deriva de
 
 ### 3.1 Patrón de nombres
 
-- `ejemplo-XX-<Progresion>-v<X.Y>.md` para el markdown explicativo de cada sample.
+- `ejemplo-XX-<Progresion>.md` para el markdown explicativo de cada sample.
 - `XX` es el número correlativo en dos dígitos, empezando en `01` y respetando la progresión.
 - `<Progresion>` describe nivel de complejidad o capacidad demostrada, en Título-Con-Guiones estricto. Valores admitidos por nivel: `basico`, `intermedio`, `avanzado`. Valores admitidos por capacidad: `cliente-http-basico`, `postman-collection`, `sdk-tipado-generado`, `plugin-demo`, `tema-custom`, `compose-minimo`, `compose-end-to-end`, `recetas-windows`, `recetas-linux`, `recetas-mac`, `compose-broker`, `productor-de-prueba`, `app-basica`, `sync-offline`, `multiplatform-demo`, `datos-seed`, `con-extensiones`, `integracion-real`.
-- Sufijo `-v<X.Y>.md` obligatorio y uniforme. Queda prohibido el patrón heredado sin versión (por ejemplo `ejemplo-01-simple.md` del fuente). Queda prohibido el sufijo de dominio (por ejemplo `ejemplo-02-multa`, `ejemplo-03-multaapp-nuget`, `ejemplo-04-factura`, `ejemplo-05-recibo`, o cualquier otro nombre atado al producto particular).
-- `README.md` de la sección sin sufijo de versión. Es el índice navegable.
+- Sufijo `.md` obligatorio y uniforme. Queda prohibido el patrón heredado sin versión (por ejemplo `ejemplo-01-simple.md` del fuente). Queda prohibido el sufijo de dominio (por ejemplo `ejemplo-02-multa`, `ejemplo-03-multaapp-nuget`, `ejemplo-04-factura`, `ejemplo-05-recibo`, o cualquier otro nombre atado al producto particular).
+- `README.md` de la sección sin sufijo de versión. Es el índice navegable. Al archivarse sí recibe el sufijo: `_legacy/<YYYY-MM-DD>/README-v<X.Y>.md`, con la versión tomada del campo `Versión` de su cabecera, porque en el snapshot la versión es lo que lo identifica y sin ella dos archivados del mismo día colisionan. La regla general y su tabla de exenciones viven en `Master-Prompt.md` §5.1.
 
 ### 3.2 Reglas de progresión
 
@@ -153,7 +153,7 @@ Está prohibida la numeración por dominio del proyecto. La progresión `multa �
 
 ### 3.4 Política de versionado
 
-Cada markdown se versiona como `-v<X.Y>.md`. La primera emisión es siempre `-v1.0`. Cuando el sample se reescribe sustancialmente (cambia el escenario, el nivel o el conjunto de capacidades demostradas), se promueve a `-v2.0` y la versión anterior se archiva en `_legacy/` con estado `Superado`. Cambios menores que no alteran la progresión ni el escenario (correcciones de typos, refresh de screenshots, ajustes de prerequisitos) van en `-v1.1`, `-v1.2`, etc. dentro de la misma rama mayor.
+Cada markdown declara su versión en la cabecera y no en el nombre. La primera emisión es siempre `1.0`. Cuando el sample se reescribe sustancialmente (cambia el escenario, el nivel o el conjunto de capacidades demostradas), se promueve a `-v2.0` y la versión anterior se archiva en `_legacy/` con estado `Superado`. Cambios menores que no alteran la progresión ni el escenario (correcciones de typos, refresh de screenshots, ajustes de prerequisitos) van en `-v1.1`, `-v1.2`, etc. dentro de la misma rama mayor.
 
 El código en `/samples/` se versiona junto con el repositorio principal: no lleva sufijo propio, pero su CI debe garantizar que siempre compila contra la versión actual del producto.
 
@@ -173,7 +173,7 @@ Cada markdown explicativo inicia con un H1 y un bloque de metadatos uniforme:
 # Ejemplo XX — <Nombre descriptivo del sample>
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** ejemplo-XX-<Progresion>-v<X.Y>.md
+**Documento:** ejemplo-XX-<Progresion>.md
 **Versión:** <X.Y>
 **Estado:** Borrador | Propuesto | Aprobado | Vigente | Superado | Archivado
 **Fecha:** YYYY-MM-DD
@@ -211,9 +211,9 @@ Tabla maestra del `README.md`:
 
 | Sample | Nivel | Tiempo de setup | CU ilustrados | Ubicación |
 | --- | --- | --- | --- | --- |
-| `Ejemplo-01-Basico-v1.0.md` | Básico | < 5 min | CU-01, CU-02 | `/samples/01-basico/` |
-| `Ejemplo-02-Intermedio-v1.0.md` | Intermedio | 10-15 min | CU-03, CU-04, CU-05 | `/samples/02-intermedio/` |
-| `Ejemplo-03-Avanzado-v1.0.md` | Avanzado | 20-30 min | CU-06, CU-07, CU-08 | `/samples/03-avanzado/` |
+| `Ejemplo-01-Basico.md` | Básico | < 5 min | CU-01, CU-02 | `/samples/01-basico/` |
+| `Ejemplo-02-Intermedio.md` | Intermedio | 10-15 min | CU-03, CU-04, CU-05 | `/samples/02-intermedio/` |
+| `Ejemplo-03-Avanzado.md` | Avanzado | 20-30 min | CU-06, CU-07, CU-08 | `/samples/03-avanzado/` |
 
 Tabla tipo de proyecto vs estructura de `/samples` (replica resumida de §2.3 al pie del README):
 
@@ -236,9 +236,9 @@ Tabla de contratos de verificación del `README.md` de la sección, que da la vi
 
 | Sonda | Sample | Verifica | Comando | Estado | Última corrida |
 | --- | --- | --- | --- | --- | --- |
-| `VER-01` | `Ejemplo-01-Basico-v1.0.md` | CU-01, CU-02 | `make sample-01` | Verificado | 2026-08-14 |
-| `VER-02` | `Ejemplo-02-Intermedio-v1.0.md` | CU-03, US-12 | `make sample-02` | Falla | 2026-08-14 |
-| `VER-03` | `Ejemplo-03-Avanzado-v1.0.md` | CU-06, CU-07 | `make sample-03` | No verificado — sin código | — |
+| `VER-01` | `Ejemplo-01-Basico.md` | CU-01, CU-02 | `make sample-01` | Verificado | 2026-08-14 |
+| `VER-02` | `Ejemplo-02-Intermedio.md` | CU-03, US-12 | `make sample-02` | Falla | 2026-08-14 |
+| `VER-03` | `Ejemplo-03-Avanzado.md` | CU-06, CU-07 | `make sample-03` | No verificado — sin código | — |
 
 El estado `Falla` no se oculta ni se resuelve borrando la fila: se escala como hallazgo del incremento en curso.
 
@@ -251,7 +251,7 @@ El estado `Falla` no se oculta ni se resuelve borrando la fila: se escala como h
 | Samples no ejecutables o desactualizados | El dev clona y no le compila; la documentación pierde credibilidad | CI que compila y ejecuta cada sample en cada push |
 | Samples que duplican el `/src` sin agregar valor demostrativo | Inflan el repositorio sin enseñar nada nuevo | Cada sample demuestra una capacidad distinta o un punto de extensión |
 | Falta de trazabilidad a CU | El sample existe en el vacío y no se sabe qué requisito ejercita | §8 obligatoria con tabla de upstream |
-| Samples sin versión en el nombre | Hace imposible saber a qué versión del producto pertenecen (lección del fuente: `ejemplo-01-simple.md` sin sufijo) | Sufijo `-v<X.Y>.md` obligatorio en todos los markdown explicativos |
+| Samples sin versión en el nombre | Hace imposible saber a qué versión del producto pertenecen (lección del fuente: `ejemplo-01-simple.md` sin sufijo) | Sufijo `.md` obligatorio en todos los markdown explicativos |
 | Más de cinco pasos para correr el sample | Fricción de adopción; el dev abandona antes de ver el resultado | Refactorizar a scripts de bootstrap o usar contenedores |
 | Dependencias externas no documentadas | El sample falla en máquinas limpias y nadie sabe por qué | Prerequisites exhaustivos con versión mínima |
 | Output esperado no documentado | El dev no sabe si su ejecución fue exitosa | §6 con output exacto o screenshot |
@@ -375,12 +375,12 @@ Lo único que cambia entre una pasada y la otra es el bloque `evidencia`. El res
 
 - [ ] Existe `README.md` con tabla maestra de samples, columnas nivel, tiempo de setup, CU ilustrados, ubicación.
 - [ ] Existen al menos los samples mínimos declarados en §2.2 para el tipo D8 del proyecto.
-- [ ] Cada sample tiene su markdown explicativo `ejemplo-XX-<Progresion>-v1.0.md` con las diez secciones obligatorias.
+- [ ] Cada sample tiene su markdown explicativo `ejemplo-XX-<Progresion>.md` con las diez secciones obligatorias.
 - [ ] Cada sample es ejecutable con comandos copiables en entorno limpio en menos o igual a cinco pasos.
 - [ ] Cada sample declara su nivel (básico, intermedio o avanzado) explícitamente en §2.
 - [ ] Cada sample declara trazabilidad a CU, ADR o NFR en §8 con al menos una fila.
 - [ ] Los nombres de archivo usan progresión por nivel o por capacidad, nunca por dominio del proyecto.
-- [ ] Todos los markdown explicativos llevan sufijo `-v<X.Y>.md` (corrección obligatoria respecto al fuente, que omitía la versión).
+- [ ] Todos los markdown explicativos declaran su versión en el campo `Versión` de su cabecera; ninguno la lleva en el nombre.
 - [ ] El README de la carpeta lista los samples en tabla con todas las columnas declaradas en §4.4.
 - [ ] Cada sample declara tiempo de setup estimado en la tabla maestra del README.
 - [ ] Cada sample documenta el output esperado en §6 con texto exacto o screenshot.
@@ -394,7 +394,7 @@ Criterios propios de la arista B:
 - [ ] Ningún `criterio_aceptacion` está redactado como prosa: todos son exit code, respuesta HTTP con código y cuerpo, o snapshot de salida comparable.
 - [ ] El `comando` de cada contrato se ejecuta desde la raíz del repositorio y es copy-paste.
 - [ ] Las `precondiciones` de cada contrato bastan para reproducir la corrida en una máquina limpia.
-- [ ] Todo CU declarado crítico en 02 tiene al menos una sonda `VER-XX` que lo ejercita, o la ausencia está justificada en `Decisiones-Proyecto-v1.0.md`.
+- [ ] Todo CU declarado crítico en 02 tiene al menos una sonda `VER-XX` que lo ejercita, o la ausencia está justificada en `Decisiones-Proyecto.md`.
 - [ ] En la pasada de diseño: el campo `evidencia` de cada contrato declara `No verificado — sin código`, y ninguna carpeta de `/samples` promete una corrida que no se hizo.
 - [ ] En la pasada de ejecución: cada `evidencia` contiene la salida textual real de la última corrida con su fecha, y ningún contrato queda en estado `Falla` sin hallazgo abierto.
 - [ ] El `README.md` de la sección incluye la tabla de contratos de verificación de §4.4 con el estado de cada sonda.
@@ -404,7 +404,7 @@ Criterios propios de la arista B:
 
 ## 7. Ejemplos genéricos
 
-### 7.1 Ejemplo 1 — `Ejemplo-02-Intermedio-Extensibilidad-v1.0.md` para una librería de parsing CSV
+### 7.1 Ejemplo 1 — `Ejemplo-02-Intermedio-Extensibilidad.md` para una librería de parsing CSV
 
 Fragmento ilustrativo, no documento completo:
 
@@ -412,7 +412,7 @@ Fragmento ilustrativo, no documento completo:
 # Ejemplo 02 — Parser custom con extensión de tipo
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** Ejemplo-02-Intermedio-Extensibilidad-v1.0.md
+**Documento:** Ejemplo-02-Intermedio-Extensibilidad.md
 **Versión:** 1.0
 **Estado:** Vigente
 **Fecha:** 2026-05-17
@@ -504,7 +504,7 @@ verificacion:
 | 1.0 | 2026-05-17 | Versión inicial. |
 ```
 
-### 7.2 Ejemplo 2 — `Ejemplo-01-Basico-Cliente-HTTP-v1.0.md` para una REST API de pagos
+### 7.2 Ejemplo 2 — `Ejemplo-01-Basico-Cliente-HTTP.md` para una REST API de pagos
 
 Fragmento ilustrativo, no documento completo:
 
@@ -512,7 +512,7 @@ Fragmento ilustrativo, no documento completo:
 # Ejemplo 01 — Cliente HTTP básico con curl
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** Ejemplo-01-Basico-Cliente-HTTP-v1.0.md
+**Documento:** Ejemplo-01-Basico-Cliente-HTTP.md
 **Versión:** 1.0
 **Estado:** Vigente
 **Fecha:** 2026-05-17
@@ -620,12 +620,12 @@ Insumos:
 
 A generar (según el `project_type` del proyecto, leído del manifiesto):
 - README.md con tabla maestra de samples.
-- ejemplo-XX-<Progresion>-v1.0.md por cada sample (mínimo según §2.2 de Rules-Examples.md).
+- ejemplo-XX-<Progresion>.md por cada sample (mínimo según §2.2 de Rules-Examples.md).
 - Carpeta /samples/XX-<Progresion>/ con código ejecutable, README propio, tests de verificación.
 - Contrato de verificación VER-XX por sample, en la sección 9 del markdown explicativo.
 
 Reglas de redacción: §4 de Rules-Examples.md (diez secciones obligatorias por markdown).
-Nomenclatura: sufijo uniforme `-v<X.Y>.md` (corrección obligatoria del fuente, que omitía la versión). Progresión por nivel (basico/intermedio/avanzado) o por capacidad. Prohibido nombrar por dominio del proyecto (corrección obligatoria respecto al fuente: nada de `multa`, `multaapp-nuget`, `factura`, `recibo`).
+Nomenclatura: sufijo uniforme `.md` (corrección obligatoria del fuente, que omitía la versión). Progresión por nivel (basico/intermedio/avanzado) o por capacidad. Prohibido nombrar por dominio del proyecto (corrección obligatoria respecto al fuente: nada de `multa`, `multaapp-nuget`, `factura`, `recibo`).
 Trazabilidad: cada sample referencia al menos un CU, ADR o NFR en §8.
 Doble arista: cada sample declara qué ilustra (arista A) y qué verifica (arista B). El contrato de §9 lleva `verifica`, `comando`, `precondiciones`, `criterio_aceptacion` y `evidencia`, según §4.6.
 Aserción evaluable: el `criterio_aceptacion` es exit code, respuesta HTTP con código y cuerpo, o snapshot comparable. Prohibida la prosa del tipo «verificar que responda correctamente».
@@ -646,8 +646,10 @@ Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/10-Examples/<estructura> + /sampl
 
 | Versión | Fecha | Descripción |
 | --- | --- | --- |
-| 1.0 | 2026-05-17 | Versión inicial de las reglas constructivas de la categoría 11. Define el README de la sección y los markdown explicativos por sample con sufijo uniforme `-v<X.Y>.md`, fija la matriz tipo D8 vs estructura de `/samples`, establece cantidades mínimas de samples por tipo, formaliza las nueve secciones obligatorias del markdown explicativo y corrige dos antecedentes del fuente SDD 1.0: la nomenclatura por dominio (`multa`, `multaapp-nuget`) se reemplaza por progresión de complejidad o capacidad, y la ausencia de sufijo de versión se reemplaza por `-v<X.Y>.md` obligatorio en todos los archivos versionables. |
+| 1.0 | 2026-05-17 | Versión inicial de las reglas constructivas de la categoría 11. Define el README de la sección y los markdown explicativos por sample con sufijo uniforme `.md`, fija la matriz tipo D8 vs estructura de `/samples`, establece cantidades mínimas de samples por tipo, formaliza las nueve secciones obligatorias del markdown explicativo y corrige dos antecedentes del fuente SDD 1.0: la nomenclatura por dominio (`multa`, `multaapp-nuget`) se reemplaza por progresión de complejidad o capacidad, y la ausencia de sufijo de versión se reemplaza por `.md` obligatorio en todos los archivos versionables. |
 | 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `Proyectos/<Nombre-Proyecto>/11-Examples/`; la frase de cierre de §1.2 y la ruta de salida del prompt-snippet referencian el `project_type` del proyecto en curso (manifiesto), y la referencia a la materialización de `/samples` apunta a §4.1 del PROJECT-README. Tablas §1.2 sin reescritura. |
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |
 | 1.3 | 2026-07-26 | Intercambio de categorías 10 ↔ 11. La categoría de ejemplos pasa de 11 a 10 y su carpeta target de `11-Examples/` a `10-Examples/`; el subagente titular pasa de AG-11 a AG-10. Se invierte la dependencia declarada con la categoría de documentación: los ejemplos dejan de recibir upstream de la guía y pasan a ser upstream del cuerpo documental de entrega, con la formulación «10 demuestra con código ejecutable y verificable, 11 explica, referencia y enlaza». Se normaliza el vocabulario de actores: «consumidor» pasa a «integrador» y «audiencia» a rol de intervención donde designaban un actor. Las filas 1.0 y 1.1 conservan su redacción original por ser registro histórico. |
 | 2.0 | 2026-07-26 | Redefinición de la categoría con doble arista (S2). Nuevo §0.1 con las aristas A de referencia de integración y B de arnés de autovalidación, y regla dura de no bifurcar el sample. Nuevo §0.2 con las dos pasadas de generación, de diseño pre-código y de ejecución durante la codificación. Nuevo §4.6 `Contrato de verificación` con sus cinco campos, su formato YAML, la regla de aserción evaluable y el identificador `VER-XX`. §4.2 pasa de nueve a diez secciones obligatorias del markdown explicativo. §4.4 suma la tabla de contratos del README de sección. §4.5 suma siete anti-patrones propios de la arista B. Nuevo §5.5 de preguntas guía, con renumeración de mantenimiento a §5.6. §6 suma nueve criterios de aceptación. Los dos ejemplos de §7 incorporan su contrato, uno verificado y otro sin código todavía. §8 refleja la doble arista y la pasada en curso. Sube major porque la categoría incorpora un rol nuevo y un artefacto obligatorio; lo ya definido se conserva íntegro. |
+| 2.1 | 2026-07-28 | Reparación de la política de archivado (Revisión SDD): §3.1 declara que el `README.md` índice de la sección recibe el sufijo de versión al archivarse, pese a emitirse sin sufijo. La regla general y su tabla de exenciones viven en `Master-Prompt.md` §5.1. |
+| 3.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |

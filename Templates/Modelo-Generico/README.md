@@ -8,7 +8,7 @@ No es un producto ni el punto de partida de uno. Es un instrumento de validació
 
 ## Qué patrones demuestra
 
-La maqueta materializa las reglas de `SDD/Devs/References/Design/Design-Rules-Web-Generico-v1.0.md` y su extensión `Design-Rules-Config-Esquema-v1.0.md`.
+La maqueta materializa las reglas de `SDD/Devs/References/Design/Design-Rules-Web-Generico.md` y su extensión `Design-Rules-Config-Esquema.md`.
 
 **Del catálogo base:**
 

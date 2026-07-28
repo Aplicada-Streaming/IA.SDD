@@ -1,13 +1,13 @@
 # Reglas de diseño — Identidad de versión y su superficie
 
 **Proyecto:** {{nombre-solucion}}
-**Documento:** Design-Rules-Identidad-De-Version-v1.0.md
+**Documento:** Design-Rules-Identidad-De-Version.md
 **Versión:** 1.0
 **Estado:** Vigente
 **Fecha:** 2026-07-18
 **Autor:** {{equipo-o-rol}} (AG-03 UX/UI)
 **Ámbito:** Capacidad transversal — identidad de versión de una instancia desplegada (agnóstico de framework)
-**Hereda de:** `Design-Rules-Web-Generico-v1.0.md`
+**Hereda de:** `Design-Rules-Web-Generico.md`
 **Posición:** Insumo normativo de la categoría 03. Extensión por capacidad del catálogo `References/Design/`. No es un artefacto operativo de `docs/`.
 
 ---
@@ -179,14 +179,14 @@ Una superficie cumple esta extensión cuando: la versión que se muestra se deri
 | Dimensión | Referencia |
 | --- | --- |
 | Especialidad dueña | AG-03 UX/UI |
-| Hereda de | `Design-Rules-Web-Generico-v1.0.md` |
-| Mapeado por | especializaciones por stack (por ejemplo `Design-Rules-Blazor-Mudblazor-v1.0.md`) |
-| Extensión hermana | `Design-Rules-Acceso-Monousuario-v1.0.md` (aloja el sello en la superficie de acceso) |
+| Hereda de | `Design-Rules-Web-Generico.md` |
+| Mapeado por | especializaciones por stack (por ejemplo `Design-Rules-Blazor-Mudblazor.md`) |
+| Extensión hermana | `Design-Rules-Acceso-Monousuario.md` (aloja el sello en la superficie de acceso) |
 | Regla que lo invoca | `devs/Rules/Rules-UX-UI-DX.md` (cuando el proyecto produce artefactos desplegables identificables) |
 | Cross-ref de entrega | categoría 09 (cálculo de la versión, sellado en binarios, etiquetado de artefactos, notas de publicación) |
 | Cross-ref técnico | categoría 05 (decisiones de compatibilidad que la versión comunica, punto de composición del contrato) |
 | Cross-ref funcional | categoría 02 (qué funcional de identificar una instancia) |
-| Marco teórico | `Guides/Marco-Teorico-SDD-v1.0.md`, cap. UX/UI/DX |
+| Marco teórico | `Guides/Marco-Teorico-SDD.md`, cap. UX/UI/DX |
 | Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>` de las superficies que alojan el sello y el diagnóstico |
 
 ---

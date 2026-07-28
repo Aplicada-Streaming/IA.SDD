@@ -1,8 +1,8 @@
 # Reglas de validación del intake unificado
 
-**Archivo target:** `SDD/Intake/SOLUTION-INTAKE-<Nombre-Solucion>-v1.0.md`
+**Archivo target:** `SDD/Intake/SOLUTION-INTAKE-<Nombre-Solucion>.md`
 **Lector:** la Fase de validación de intake del `Master-Prompt.md` (previa a la Fase A).
-**Versión de las reglas:** 1.1
+**Versión de las reglas:** 2.0
 
 ---
 
@@ -45,7 +45,7 @@ Disparan pregunta, además de los de §2 del master-prompt:
 
 ## §4 Reglas de derivación del `SOLUTION-MANIFEST`
 
-A partir de §13 del intake (y del perfil de convención declarado), el orquestador construye el `SOLUTION-MANIFEST-<Nombre-Solucion>-v1.0.md` en el formato de referencia de `SOLUTION-MANIFEST-template.md`. Pasos:
+A partir de §13 del intake (y del perfil de convención declarado), el orquestador construye el `SOLUTION-MANIFEST-<Nombre-Solucion>.md` en el formato de referencia de `SOLUTION-MANIFEST-template.md`. Pasos:
 
 1. Derivar `Nombre-Solucion` y `NombreSolucionCodigo` (PascalCase) del nombre de la solución, con el algoritmo de normalización de `Master-Prompt.md` §3.2.
 2. Por cada fila de §13, derivar `nombre-proyecto-codigo` como `<NombreSolucionCodigo>.<Sufijo>`, salvo `redistribuible: true`, que arranca con el prefijo de organización del perfil (`Aplicada` por defecto). Derivar el path `src/<nombre-proyecto-codigo>/`.
@@ -135,3 +135,4 @@ Reglas de la batería:
 |---|---|---|---|
 | 1.0 | 2026-06-10 | Reglas iniciales de validación del intake unificado: campos bloqueantes, patrones de placeholder, derivación del `SOLUTION-MANIFEST` desde §13 del intake con sus validaciones, validaciones de completitud semántica, formato de la batería de preguntas consolidada, niveles de bloqueo y articulación con §2 y §9 del master-prompt. | Reformulación SDD (unificación de intake) |
 | 1.1 | 2026-07-26 | Normalización del vocabulario de actores: el campo de cabecera «Consumidor» pasa a «Lector», porque designa quién lee estas reglas y no un rol de intervención sobre el producto. |
+| 2.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |

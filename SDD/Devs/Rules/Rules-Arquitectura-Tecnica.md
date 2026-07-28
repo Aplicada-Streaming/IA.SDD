@@ -3,7 +3,7 @@
 **Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/05-Arquitectura-Tecnica/`
 **Carpeta target (nivel solución):** `SDD/Docs/Solucion/`
 **Subagente target del orquestador:** Arquitecto de Software Senior (AG-05)
-**Versión de las reglas:** 1.4
+**Versión de las reglas:** 2.0
 
 ---
 
@@ -63,34 +63,34 @@ Artefactos de nivel proyecto (uno por proyecto, bajo `Proyectos/<Nombre-Proyecto
 
 | Archivo | Obligatorio para | Recomendado | Omitir para | Descripción |
 | --- | --- | --- | --- | --- |
-| `Arquitectura-Solucion-v1.0.md` | Todos los tipos D8 | — | — | Documento maestro con las cuatro vistas mínimas (lógica, procesos, despliegue, datos), cross-cutting concerns y NFR. |
-| `Decisiones-Arquitectura-v1.0.md` | Todos los tipos D8 | — | — | Índice navegable de ADRs con estado, fecha y categoría. No contiene el cuerpo de las decisiones. |
-| `Adrs/ADR-XX-<Nombre>-v1.0.md` | Todos los tipos D8, mínimo tres ADRs | — | — | Un ADR por archivo individual. Una decisión, un documento, un estado declarado. |
-| `Modelo-Datos-Logico-v1.0.md` | web-monolith, web-microservices, rest-api, worker-service, mobile-app-maui con almacenamiento | desktop-app con persistencia local | library puro sin estado, cli-tool sin estado | Modelo lógico con tipos físicos, índices, restricciones y migración inicial. |
-| `Flujo-Ejecucion-v1.0.md` | worker-service, cli-tool con pipeline, library con motor de procesamiento | rest-api con orquestación compleja | web-monolith CRUD trivial | Pipeline de ejecución paso a paso con transformaciones de datos. |
-| `contratos-<area>-v1.0.md` | rest-api (OpenAPI), worker-service (mensajes AsyncAPI o referencia a esquema), library (Abstractions públicas) | web-microservices (contratos inter-servicio), cli-tool (contrato stdout/stderr) | web-monolith sin API externa | Contrato externo formal por área funcional. Un documento por área. |
-| `Extensibilidad-v1.0.md` | library con plugins, cli-tool con plugins, web-microservices con plugins | rest-api con webhooks o handlers externos | Tipos sin puntos de extensión | Puntos de extensión, contratos de plugin y ejemplo de registro. |
+| `Arquitectura-Solucion.md` | Todos los tipos D8 | — | — | Documento maestro con las cuatro vistas mínimas (lógica, procesos, despliegue, datos), cross-cutting concerns y NFR. |
+| `Decisiones-Arquitectura.md` | Todos los tipos D8 | — | — | Índice navegable de ADRs con estado, fecha y categoría. No contiene el cuerpo de las decisiones. |
+| `Adrs/ADR-XX-<Nombre>.md` | Todos los tipos D8, mínimo tres ADRs | — | — | Un ADR por archivo individual. Una decisión, un documento, un estado declarado. |
+| `Modelo-Datos-Logico.md` | web-monolith, web-microservices, rest-api, worker-service, mobile-app-maui con almacenamiento | desktop-app con persistencia local | library puro sin estado, cli-tool sin estado | Modelo lógico con tipos físicos, índices, restricciones y migración inicial. |
+| `Flujo-Ejecucion.md` | worker-service, cli-tool con pipeline, library con motor de procesamiento | rest-api con orquestación compleja | web-monolith CRUD trivial | Pipeline de ejecución paso a paso con transformaciones de datos. |
+| `contratos-<area>.md` | rest-api (OpenAPI), worker-service (mensajes AsyncAPI o referencia a esquema), library (Abstractions públicas) | web-microservices (contratos inter-servicio), cli-tool (contrato stdout/stderr) | web-monolith sin API externa | Contrato externo formal por área funcional. Un documento por área. |
+| `Extensibilidad.md` | library con plugins, cli-tool con plugins, web-microservices con plugins | rest-api con webhooks o handlers externos | Tipos sin puntos de extensión | Puntos de extensión, contratos de plugin y ejemplo de registro. |
 | `README.md` de la sección | Recomendado para todos | — | — | Índice navegable de la arquitectura, ADRs vigentes y NFR. |
 
 Artefactos de nivel solución (una vez para toda la solución, bajo `Solucion/`):
 
 | Archivo | Obligatorio para | Recomendado | Omitir para | Descripción |
 | --- | --- | --- | --- | --- |
-| `Vista-Solucion-v1.0.md` | Soluciones con más de un proyecto | — | Solución de un único proyecto (caso degenerado) | Vista de solución por encima de la arquitectura de cada proyecto: mapa de proyectos, grafo de dependencias, contratos inter-proyecto, decisiones de nivel solución, cross-cutting compartido y riesgos de integración. |
-| `Contratos-Inter-Proyecto-v1.0.md` | Soluciones donde un proyecto expone un contrato consumido por otro proyecto de la misma solución | — | Soluciones sin dependencias inter-proyecto con contrato formal | Detalle de cada contrato que cruza la frontera entre dos proyectos de la solución, referenciando el `contratos-<area>` del proyecto productor. Puede integrarse como sección de `vista-solucion` si los contratos son pocos. |
-| `Solucion/Adrs/ADR-XX-<Nombre>-v1.0.md` | Soluciones con decisiones que afectan a más de un proyecto | — | Soluciones donde toda decisión es interna a un proyecto | ADRs de nivel solución (estilo de composición, política de versionado inter-proyecto, estrategia de comunicación entre proyectos). Mismas reglas de individualidad e inmutabilidad que los ADRs de proyecto. |
+| `Vista-Solucion.md` | Soluciones con más de un proyecto | — | Solución de un único proyecto (caso degenerado) | Vista de solución por encima de la arquitectura de cada proyecto: mapa de proyectos, grafo de dependencias, contratos inter-proyecto, decisiones de nivel solución, cross-cutting compartido y riesgos de integración. |
+| `Contratos-Inter-Proyecto.md` | Soluciones donde un proyecto expone un contrato consumido por otro proyecto de la misma solución | — | Soluciones sin dependencias inter-proyecto con contrato formal | Detalle de cada contrato que cruza la frontera entre dos proyectos de la solución, referenciando el `contratos-<area>` del proyecto productor. Puede integrarse como sección de `vista-solucion` si los contratos son pocos. |
+| `Solucion/Adrs/ADR-XX-<Nombre>.md` | Soluciones con decisiones que afectan a más de un proyecto | — | Soluciones donde toda decisión es interna a un proyecto | ADRs de nivel solución (estilo de composición, política de versionado inter-proyecto, estrategia de comunicación entre proyectos). Mismas reglas de individualidad e inmutabilidad que los ADRs de proyecto. |
 
 ### 2.2 Reglas de inclusión y exclusión por tipo
 
 | Tipo D8 | Mínimo de ADRs | Modelo lógico | Flujo de ejecución | Contratos |
 | --- | --- | --- | --- | --- |
-| library | 3 (estilo, superficie pública, estrategia de versionado) | No | Recomendado si hay motor de procesamiento | `Contratos-Abstractions-v1.0.md` |
+| library | 3 (estilo, superficie pública, estrategia de versionado) | No | Recomendado si hay motor de procesamiento | `Contratos-Abstractions.md` |
 | web-monolith | 5 (estilo, persistencia, autenticación, separación de capas, manejo de errores) | Sí | Solo si hay orquestación compleja | Solo si expone API externa |
 | web-microservices | 6 mínimo por bounded context (estilo, comunicación, persistencia, autenticación, transacciones distribuidas, observabilidad) | Sí, uno por contexto | Sí, sagas y eventos | Sí, por área: REST y AsyncAPI |
 | desktop-app | 3 (estilo, persistencia local, estrategia de actualización) | Recomendado si guarda local | No | No (salvo integración externa) |
 | mobile-app-maui | 4 (estilo, persistencia local, sincronización, gestión de permisos) | Sí si hay almacenamiento offline | Recomendado para sync engine | Solo si consume API propietaria |
 | rest-api | 5 (estilo, persistencia, autenticación, paginación, manejo de errores) | Sí | Solo si hay orquestación de varios pasos | Sí, OpenAPI obligatorio |
-| cli-tool | 3 (estilo, parser de argumentos, contrato stdout/stderr) | No (salvo persistencia local) | Sí, pipeline command/handler | `Contratos-Stdout-Stderr-v1.0.md` |
+| cli-tool | 3 (estilo, parser de argumentos, contrato stdout/stderr) | No (salvo persistencia local) | Sí, pipeline command/handler | `Contratos-Stdout-Stderr.md` |
 | worker-service | 5 (estilo, mensajería, idempotencia, dead-letter, observabilidad) | Sí si guarda estado | Sí, obligatorio | Sí, AsyncAPI o esquema equivalente |
 
 El mínimo es piso, no techo. La cantidad real queda determinada por el conjunto de decisiones técnicas que el equipo necesita registrar para mantener trazabilidad.
@@ -101,31 +101,31 @@ El mínimo es piso, no techo. La cantidad real queda determinada por el conjunto
 
 ### 3.1 Patrón de nombres
 
-- `arquitectura-solucion-v<X.Y>.md` para el documento maestro.
-- `decisiones-arquitectura-v<X.Y>.md` para el índice de ADRs.
-- `Adrs/ADR-XX-<Nombre>-v<X.Y>.md` para cada ADR, con dos dígitos en `XX`, Título-Con-Guiones en el slug y guion medio antes de la versión.
-- `Modelo-Datos-logico-v<X.Y>.md` para el modelo lógico.
-- `flujo-ejecucion-v<X.Y>.md` para el pipeline de ejecución.
-- `contratos-<area>-v<X.Y>.md` para cada contrato externo (por ejemplo `Contratos-REST-v1.0.md`, `Contratos-Mensajes-v1.0.md`, `Contratos-Abstractions-v1.0.md`, `Contratos-Stdout-Stderr-v1.0.md`).
-- `extensibilidad-v<X.Y>.md` para los puntos de extensión.
-- `vista-solucion-v<X.Y>.md` para la vista de solución de nivel `Solucion/`.
-- `contratos-inter-proyecto-v<X.Y>.md` para el detalle de contratos que cruzan proyectos de la solución.
-- `Solucion/Adrs/ADR-XX-<Nombre>-v<X.Y>.md` para los ADRs de nivel solución, con las mismas reglas de los ADRs de proyecto.
+- `arquitectura-solucion.md` para el documento maestro.
+- `decisiones-arquitectura.md` para el índice de ADRs.
+- `Adrs/ADR-XX-<Nombre>.md` para cada ADR, con dos dígitos en `XX`, Título-Con-Guiones en el slug y guion medio antes de la versión.
+- `Modelo-Datos-logico.md` para el modelo lógico.
+- `flujo-ejecucion.md` para el pipeline de ejecución.
+- `contratos-<area>.md` para cada contrato externo (por ejemplo `Contratos-REST.md`, `Contratos-Mensajes.md`, `Contratos-Abstractions.md`, `Contratos-Stdout-Stderr.md`).
+- `extensibilidad.md` para los puntos de extensión.
+- `vista-solucion.md` para la vista de solución de nivel `Solucion/`.
+- `contratos-inter-proyecto.md` para el detalle de contratos que cruzan proyectos de la solución.
+- `Solucion/Adrs/ADR-XX-<Nombre>.md` para los ADRs de nivel solución, con las mismas reglas de los ADRs de proyecto.
 
 Queda prohibido el patrón heredado `decisiones-arquitectura.v1.0.md` o el patrón consolidado `decisiones-arquitectura-todo-junto.v1.0.md`. La versión siempre va con guion medio `-v`, jamás con guion bajo `_v` ni con punto `.v`. El slug va en Título-Con-Guiones (cada palabra capitalizada, separadas por guion medio); quedan prohibidas las variantes todo-minúsculas, camelCase, con espacios o con acentos.
 
 ### 3.2 Convenciones de prefijos y sufijos
 
 - `ADR-`: Architecture Decision Record. Una decisión técnica formal, individual, inmutable una vez aceptada.
-- Sufijo `-v<X.Y>.md` uniforme para todos los artefactos.
+- Nombre lógico sin sufijo de versión en el nombre; la versión vive en el campo `Versión` de la cabecera (D4), uniforme para todos los artefactos.
 - Los contratos llevan prefijo `contratos-<area>`. El área va en Título-Con-Guiones y refleja el dominio del contrato (rest, mensajes, abstractions, stdout-stderr, grpc).
 
 ### 3.3 Convención crítica de ADR individuales
 
-La auditoría de Fase 0 del bootstrap (`Bootstrap/Audit-SDD1.md`) detectó que el fuente Motor DSL consolida todas las decisiones en un único archivo `Decisiones-Arquitectura-v1.0.md` con secciones internas, sin archivos individuales por ADR. SDD corrige esta práctica de manera obligatoria:
+La auditoría de Fase 0 del bootstrap (`Bootstrap/Audit-SDD1.md`) detectó que el fuente Motor DSL consolida todas las decisiones en un único archivo `Decisiones-Arquitectura.md` con secciones internas, sin archivos individuales por ADR. SDD corrige esta práctica de manera obligatoria:
 
 1. Cada ADR vive en un archivo independiente bajo `Adrs/`.
-2. El archivo `Decisiones-Arquitectura-v1.0.md` se reduce a un índice navegable con identificador, título, estado, fecha y categoría.
+2. El archivo `Decisiones-Arquitectura.md` se reduce a un índice navegable con identificador, título, estado, fecha y categoría.
 3. Cada ADR es inmutable una vez aceptada. Si la decisión cambia, se crea una nueva `ADR-YY` con estado `Aceptado` y la anterior pasa a estado `Superado por ADR-YY` sin reescribirse.
 4. Queda prohibido editar el cuerpo de una ADR aceptada para reflejar nuevas decisiones.
 
@@ -162,7 +162,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 # ADR-XX — <Título de la decisión>
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** ADR-XX-<Nombre>-v<X.Y>.md
+**Documento:** ADR-XX-<Nombre>.md
 **Versión:** <X.Y>
 **Estado:** Propuesto | Aceptado | Superado por ADR-YY | Rechazado
 **Fecha:** YYYY-MM-DD
@@ -176,7 +176,7 @@ Para `arquitectura-solucion`, `Modelo-Datos-logico`, `flujo-ejecucion`, `contrat
 
 El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente de IA que recorre la cadena de especificación acumulando contexto, y para ese lector la tabla de contenido es indiferente. Existe para el agente humano que entra a consultar un punto concreto sin haber leído el documento entero.
 
-### 4.2 Secciones obligatorias de `Arquitectura-Solucion-v1.0.md`
+### 4.2 Secciones obligatorias de `Arquitectura-Solucion.md`
 
 1. Objetivo. Una a tres oraciones que respondan qué documenta el archivo y para quién.
 2. Estilo arquitectónico. Estilo elegido (pipeline, capas, microkernel, microservicios, event-driven, hexagonal) con justificación contra al menos dos alternativas descartadas.
@@ -202,7 +202,7 @@ El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente
 9. Referencias. Enlaces a CU, RN, NFR, otras ADR relacionadas y referencias externas si aplica.
 10. Control de cambios. Tabla con versión, fecha y descripción. Para ADR aceptadas, la única edición permitida es el cambio de estado a `Superado por ADR-YY`.
 
-### 4.4 Secciones obligatorias de `Modelo-Datos-Logico-v1.0.md`
+### 4.4 Secciones obligatorias de `Modelo-Datos-Logico.md`
 
 1. Tablas o colecciones. Una por subsección, con propósito y referencia a la entidad conceptual de 02.
 2. Atributos con tipo de dato físico. Nombre, tipo, nulabilidad, default. Aquí sí viven los tipos físicos; en 02 solo viven los nombres y la semántica.
@@ -212,7 +212,7 @@ El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente
 6. Estrategia multi-tenant. Si aplica, declarar partición por tenant (columna discriminadora, esquema por tenant o base por tenant) y mecanismo de aislamiento.
 7. Trazabilidad. Tabla que liga cada tabla o colección a la entidad conceptual de origen y a los CU que la consumen.
 
-### 4.5 Secciones obligatorias de `contratos-<area>-v1.0.md`
+### 4.5 Secciones obligatorias de `contratos-<area>.md`
 
 1. Alcance del contrato. Qué CU se materializan a través de este contrato.
 2. Formato. OpenAPI inline o referencia a archivo `.yaml`, esquema AsyncAPI, contrato gRPC con `.proto`, o contrato textual para stdout/stderr y exit codes.
@@ -265,7 +265,7 @@ Tabla de trazabilidad del componente:
 | --- | --- | --- |
 | Arquitectura sin ADRs (todo decidido inline) | No queda registro de por qué se eligió cada opción; rompe la trazabilidad histórica | Forzar al menos tres ADRs aceptadas por proyecto, una por categoría relevante |
 | ADRs sin estado declarado | Imposible distinguir lo vigente de lo superado | Forzar el campo Estado en la cabecera y rechazar ADR sin estado |
-| ADR consolidada en un único archivo | Lección documentada del fuente Motor DSL; impide búsquedas por decisión y bloquea la inmutabilidad por archivo | Forzar archivos individuales `ADR-XX-<Nombre>-v1.0.md` bajo `Adrs/` |
+| ADR consolidada en un único archivo | Lección documentada del fuente Motor DSL; impide búsquedas por decisión y bloquea la inmutabilidad por archivo | Forzar archivos individuales `ADR-XX-<Nombre>.md` bajo `Adrs/` |
 | Estilo arquitectónico implícito | El lector deduce el estilo por inspección; ambigüedad | Declarar el estilo en §2 del documento maestro con justificación |
 | NFR sin métrica numérica | "Debe ser rápido"; no verificable | Cada NFR con valor numérico y mecanismo de medición |
 | Modelo lógico sin migración versionada | Imposible reconstruir el esquema o auditar cambios | Referenciar migración inicial con identificador |
@@ -275,14 +275,14 @@ Tabla de trazabilidad del componente:
 | Componente como sinónimo de clase | Confunde diseño arquitectónico con diseño de código | Componente es un módulo con responsabilidad cohesiva |
 | Casing inconsistente en ADRs | Rompe automatizaciones | Forzar Título-Con-Guiones estricto en el slug |
 
-### 4.8 Secciones obligatorias de `Vista-Solucion-v1.0.md`
+### 4.8 Secciones obligatorias de `Vista-Solucion.md`
 
 Aplica solo a soluciones con más de un proyecto. La vista de solución se sitúa por encima de la arquitectura de cada proyecto y no la duplica: referencia, no reescribe..
 
 1. Objetivo y alcance. Qué documenta la vista de solución y para quién. Aclara que el detalle interno de cada proyecto vive en su propia `arquitectura-solucion`.
 2. Mapa de proyectos. Tabla con `Nombre-Proyecto`, `project_type` D8, rol en la solución, `nombre-proyecto-codigo` y bandera `redistribuible`. Refleja el manifiesto.
 3. Grafo de dependencias. El DAG del manifiesto representado como vista navegable, con el orden topológico de construcción. Debe ser acíclico; cualquier ciclo es un defecto del manifiesto y detiene la generación.
-4. Contratos inter-proyecto. Por cada arista de dependencia con contrato formal, qué expone el proyecto productor al consumidor, con referencia al `contratos-<area>` del productor. Si los contratos son numerosos, se detallan en `Contratos-Inter-Proyecto-v1.0.md` y esta sección los indexa.
+4. Contratos inter-proyecto. Por cada arista de dependencia con contrato formal, qué expone el proyecto productor al consumidor, con referencia al `contratos-<area>` del productor. Si los contratos son numerosos, se detallan en `Contratos-Inter-Proyecto.md` y esta sección los indexa.
 5. Decisiones de nivel solución. Índice de los ADRs de `Solucion/Adrs/` que afectan a más de un proyecto (estilo de composición, política de versionado inter-proyecto, estrategia de comunicación entre proyectos). Si no hay decisiones de nivel solución, declararlo explícitamente.
 6. Cross-cutting compartido. Convenciones transversales que la solución impone a todos sus proyectos: correlación de logging y tracing entre proyectos, formato de errores común, gestión de versiones de los paquetes compartidos y redistribuibles.
 7. Riesgos de integración inter-proyecto. Cada riesgo con impacto, probabilidad y mitigación, enfocado en las fronteras entre proyectos (incompatibilidad de contratos, acoplamiento de versiones, orden de despliegue).
@@ -326,29 +326,29 @@ Para una solución de un único proyecto, la vista de solución se omite por com
 
 - ¿Hay alguna ADR aceptada que se haya editado en su cuerpo en vez de ser superada por una nueva ADR?
 - ¿Las versiones superadas de `arquitectura-solucion` y `Modelo-Datos-logico` están en `_legacy/` con estado correcto?
-- ¿El índice `Decisiones-Arquitectura-v1.0.md` refleja todas las ADRs con su estado real?
+- ¿El índice `Decisiones-Arquitectura.md` refleja todas las ADRs con su estado real?
 
 ---
 
 ## 6. Criterios de aceptación
 
-- [ ] Existe `Arquitectura-Solucion-v1.0.md` con las cuatro vistas mínimas (lógica, procesos, despliegue, datos) y las secciones §1 a §10 del §4.2.
-- [ ] Existe `Decisiones-Arquitectura-v1.0.md` que indexa los ADRs con su estado y fecha actual.
+- [ ] Existe `Arquitectura-Solucion.md` con las cuatro vistas mínimas (lógica, procesos, despliegue, datos) y las secciones §1 a §10 del §4.2.
+- [ ] Existe `Decisiones-Arquitectura.md` que indexa los ADRs con su estado y fecha actual.
 - [ ] Hay al menos tres ADRs en `Adrs/` como archivos individuales, cada uno con las diez secciones obligatorias del §4.3.
 - [ ] Cada ADR tiene estado declarado (Propuesto, Aceptado, Superado por ADR-YY o Rechazado).
-- [ ] Si el tipo D8 exige persistencia, existe `Modelo-Datos-Logico-v1.0.md` con migración inicial referenciada y trazabilidad al modelo conceptual de 02.
-- [ ] Si el tipo D8 exige contratos externos, existe `contratos-<area>-v1.0.md` por cada área con esquema, errores y versionado declarados.
+- [ ] Si el tipo D8 exige persistencia, existe `Modelo-Datos-Logico.md` con migración inicial referenciada y trazabilidad al modelo conceptual de 02.
+- [ ] Si el tipo D8 exige contratos externos, existe `contratos-<area>.md` por cada área con esquema, errores y versionado declarados.
 - [ ] El estilo arquitectónico tiene justificación explícita contra al menos dos alternativas descartadas.
 - [ ] Cada NFR declara objetivo numérico y mecanismo de medición.
 - [ ] Trazabilidad NFR↔arquitectura↔ADR explícita en al menos una tabla del documento maestro.
-- [ ] Ningún archivo usa el patrón `-v<X.Y>.md`; todos usan `-v<X.Y>.md`.
+- [ ] Ningún archivo de la carpeta de trabajo lleva sufijo de versión en el nombre; cada uno declara su versión en el campo `Versión` de su cabecera (D4).
 - [ ] Ningún ADR está consolidado dentro de otro documento; cada decisión vive en su archivo individual.
 - [ ] No hay menciones a stacks concretos, productos comerciales ni protocolos específicos del dominio fuente.
 - [ ] Existe `README.md` de la sección si así lo decide el equipo (recomendado).
 
 Criterios adicionales de nivel solución (solo si la solución tiene más de un proyecto):
 
-- [ ] Existe `Solucion/Vista-Solucion-v1.0.md` con las ocho secciones del §4.8.
+- [ ] Existe `Solucion/Vista-Solucion.md` con las ocho secciones del §4.8.
 - [ ] El mapa de proyectos de la vista refleja el manifiesto sin divergencias (mismos proyectos, mismos D8, mismos nombres de código).
 - [ ] El grafo de dependencias de la vista es acíclico y coincide con las dependencias del manifiesto.
 - [ ] Cada contrato inter-proyecto corresponde a una arista de dependencia del manifiesto y referencia el `contratos-<area>` del proyecto productor.
@@ -368,7 +368,7 @@ Fragmento ilustrativo, no documento completo:
 # ADR-03 — Elección de base de datos relacional para turnos médicos
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** ADR-03-Eleccion-Base-Datos-Postgres-v1.0.md
+**Documento:** ADR-03-Eleccion-Base-Datos-Postgres.md
 **Versión:** 1.0
 **Estado:** Aceptado
 **Fecha:** 2026-05-17
@@ -409,7 +409,7 @@ Fragmento ilustrativo, no documento completo:
 # Arquitectura de solución — Microservicio de pagos
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** Arquitectura-Solucion-v1.0.md
+**Documento:** Arquitectura-Solucion.md
 **Versión:** 1.0
 **Estado:** Propuesto
 **Fecha:** 2026-05-17
@@ -455,17 +455,17 @@ Insumos:
 - Upstream: 00 (visión, restricciones), 01 (NB-XX), 02 (CU, RN, modelo conceptual, RC), 04 (contratos de prompts si aplica).
 
 A generar (según tipo {{TIPO}} de D8):
-- Arquitectura-Solucion-v1.0.md con las cuatro vistas mínimas y NFR con métricas numéricas.
-- Decisiones-Arquitectura-v1.0.md como índice navegable de ADRs.
-- Adrs/ADR-XX-<Nombre>-v1.0.md, uno por decisión, mínimo según §2.2. Crítico: archivos individuales, no consolidado.
-- Modelo-Datos-Logico-v1.0.md si el tipo D8 exige persistencia.
-- Flujo-Ejecucion-v1.0.md si el tipo D8 tiene pipeline o motor de procesamiento.
-- contratos-<area>-v1.0.md por cada contrato externo según §2.2.
-- Extensibilidad-v1.0.md si el tipo D8 tiene puntos de extensión.
+- Arquitectura-Solucion.md con las cuatro vistas mínimas y NFR con métricas numéricas.
+- Decisiones-Arquitectura.md como índice navegable de ADRs.
+- Adrs/ADR-XX-<Nombre>.md, uno por decisión, mínimo según §2.2. Crítico: archivos individuales, no consolidado.
+- Modelo-Datos-Logico.md si el tipo D8 exige persistencia.
+- Flujo-Ejecucion.md si el tipo D8 tiene pipeline o motor de procesamiento.
+- contratos-<area>.md por cada contrato externo según §2.2.
+- Extensibilidad.md si el tipo D8 tiene puntos de extensión.
 - README.md de la sección (recomendado).
 
 Reglas de redacción: §4 de Rules-Arquitectura-Tecnica.md.
-Nomenclatura: `ADR-XX-<Nombre>-v1.0.md` con guion medio `-v` (no `_v` ni `.v`); slug en Título-Con-Guiones estricto.
+Nomenclatura: `ADR-XX-<Nombre>.md` con guion medio `-v` (no `_v` ni `.v`); slug en Título-Con-Guiones estricto.
 Convención crítica: cada ADR es un archivo individual bajo Adrs/. Prohibido consolidar todas las decisiones en un único archivo (corrección del antecedente Motor DSL).
 Inmutabilidad: ADR aceptada no se edita; si la decisión cambia, se crea ADR-YY nueva y la anterior pasa a `Superado por ADR-YY`.
 Trazabilidad: cada ADR referencia NB, CU, RN o NFR que la motivan; cada componente lista CU cubiertos.
@@ -486,9 +486,9 @@ Insumos:
 - Las arquitecturas de cada proyecto ya generadas y aprobadas en Proyectos/<Nombre>/05-Arquitectura-Tecnica/.
 
 A generar:
-- Solucion/Vista-Solucion-v1.0.md con las ocho secciones del §4.8.
-- Solucion/Contratos-Inter-Proyecto-v1.0.md si los contratos que cruzan proyectos son numerosos.
-- Solucion/Adrs/ADR-XX-<Nombre>-v1.0.md por cada decisión que afecte a más de un proyecto.
+- Solucion/Vista-Solucion.md con las ocho secciones del §4.8.
+- Solucion/Contratos-Inter-Proyecto.md si los contratos que cruzan proyectos son numerosos.
+- Solucion/Adrs/ADR-XX-<Nombre>.md por cada decisión que afecte a más de un proyecto.
 
 Reglas: el mapa y el grafo reflejan el manifiesto sin divergencias; cada contrato inter-proyecto corresponde a una arista de dependencia; no duplicar la arquitectura interna de cada proyecto, referenciarla.
 Criterios de calidad: §6 de Rules-Arquitectura-Tecnica.md (criterios de nivel solución).
@@ -503,7 +503,8 @@ Salida: SDD/Docs/Solucion/<estructura>.
 | Versión | Fecha | Descripción |
 | --- | --- | --- |
 | 1.0 | 2026-05-17 | Versión inicial de las reglas constructivas de la categoría 05. Establece la convención obligatoria de ADRs individuales bajo `Adrs/` como corrección del antecedente Motor DSL, define las cuatro vistas mínimas del documento maestro, las diez secciones obligatorias del ADR, las variantes por tipo D8 y los criterios de aceptación. |
-| 1.1 | 2026-06-09 | Reformulación a solución más jerarquía (ST-05). La categoría 05 opera en dos niveles: por proyecto (bajo `Proyectos/<Nombre>/05-Arquitectura-Tecnica/`, con la variante §1.2 del D8 del proyecto, sin cambios respecto del template de tipo único) y de solución (bajo `Solucion/`). Se introduce la vista de solución `Vista-Solucion-v1.0.md` con sus ocho secciones (§4.8): mapa de proyectos, grafo de dependencias, contratos inter-proyecto, decisiones de nivel solución, cross-cutting compartido, riesgos de integración y trazabilidad. Se agregan `Contratos-Inter-Proyecto-v1.0.md` y `Solucion/Adrs/`. La vista de solución es obligatoria para soluciones de más de un proyecto y se omite en el caso degenerado de un proyecto. | Reformulación SDD |
+| 1.1 | 2026-06-09 | Reformulación a solución más jerarquía (ST-05). La categoría 05 opera en dos niveles: por proyecto (bajo `Proyectos/<Nombre>/05-Arquitectura-Tecnica/`, con la variante §1.2 del D8 del proyecto, sin cambios respecto del template de tipo único) y de solución (bajo `Solucion/`). Se introduce la vista de solución `Vista-Solucion.md` con sus ocho secciones (§4.8): mapa de proyectos, grafo de dependencias, contratos inter-proyecto, decisiones de nivel solución, cross-cutting compartido, riesgos de integración y trazabilidad. Se agregan `Contratos-Inter-Proyecto.md` y `Solucion/Adrs/`. La vista de solución es obligatoria para soluciones de más de un proyecto y se omite en el caso degenerado de un proyecto. | Reformulación SDD |
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). | Migración SDD |
 | 1.3 | 2026-07-26 | Se declara en §0 la frontera con la categoría 11: esta categoría documenta la arquitectura como decisión de diseño; el sistema como hecho consumado, con la ubicación de cada componente en el repositorio, lo documenta la categoría 11. Sin cambios de artefactos ni de gating.  Reformulación SDD |
 | 1.4 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |
+| 2.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |

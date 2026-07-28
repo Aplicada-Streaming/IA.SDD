@@ -4,7 +4,7 @@
 **Carpeta target (nivel solución):** `SDD/Docs/Solucion/11-Documentacion/`
 **Carpeta target (caso degenerado, solución de un proyecto):** `SDD/Docs/11-Documentacion/`
 **Subagente target del orquestador:** Technical Writer / Documentation Lead (AG-11)
-**Versión de las reglas:** 2.0
+**Versión de las reglas:** 3.0
 
 ---
 
@@ -165,7 +165,7 @@ Durante la construcción, el despliegue y las primeras corridas aparecen situaci
 
 El caso testigo es un servicio que se comunica con un dispositivo físico conectado por USB. Al containerizarlo aparece que necesita *passthrough* del dispositivo del host, con su regla de permisos y su ruta. Ninguna vista de arquitectura lo predijo, ninguna decisión de diseño lo registra, y es la primera cosa con la que se choca quien lo despliega. Es exactamente el conocimiento que hay que capitalizar.
 
-`Bitacora-Eventualidades-v<X.Y>.md` es el artefacto de captura, de nivel solución, con una entrada por eventualidad identificada `EVE-XX`. Su estructura de campos vive en §4.2.
+`Bitacora-Eventualidades.md` es el artefacto de captura, de nivel solución, con una entrada por eventualidad identificada `EVE-XX`. Su estructura de campos vive en §4.2.
 
 **Triaje obligatorio.** Cada eventualidad se clasifica y se propaga a un documento permanente. La bitácora es un buffer de captura, no el destino final.
 
@@ -277,14 +277,14 @@ Se generan una sola vez para toda la solución, bajo `SDD/Docs/Solucion/11-Docum
 | Archivo | Rol de intervención | Contenido |
 | --- | --- | --- |
 | `README.md` de la categoría | Todos | Landing de la documentación. Su núcleo obligatorio es la **matriz de ruteo**: tabla `actor × intención → documento`, de modo que el lector no necesite conocer la estructura de carpetas para encontrar su camino. Es el único nombre de archivo que hace falta recordar |
-| `Vision-General-Sistema-v<X.Y>.md` | Todos | Mapa del sistema legible en diez minutos: qué hace la solución, qué proyectos la componen y qué hace cada uno en una línea, cómo se comunican entre sí, dónde vive el código de cada uno. Incluye diagrama de contexto y diagrama de contenedores en Mermaid. Es el plano que permite formarse una idea del producto sin leer arquitectura |
-| `Guia-Inicio-Rapido-v<X.Y>.md` | Mantenedor, Operador | Levantar la **solución completa** en una máquina limpia, con el orden de arranque derivado del grafo de dependencias del manifiesto. Objetivo duro: un solo comando, o la menor cantidad posible, con verificación al final que confirme que el sistema quedó operativo |
-| `Guia-Despliegue-v<X.Y>.md` | Operador | Procedimiento de despliegue por topología: prerrequisitos, orden de arranque entre proyectos, cómo se resuelven entre sí, configuración por ambiente, verificación paso a paso y rollback |
-| `Bitacora-Eventualidades-v<X.Y>.md` | Operador, Mantenedor | Registro de las situaciones no previstas que aparecieron durante la construcción, el despliegue y la operación, con síntoma, causa, resolución e intentos descartados. Cada entrada se identifica `EVE-XX` y se triaja hacia un documento permanente, según §0.6 |
-| `Contrato-Agentes-v<X.Y>.md` | Todos | Artefacto versionado del cual se deriva el `AGENTS.md` de la raíz. Es el que sigue la convención de nomenclatura del framework y el que se audita |
+| `Vision-General-Sistema.md` | Todos | Mapa del sistema legible en diez minutos: qué hace la solución, qué proyectos la componen y qué hace cada uno en una línea, cómo se comunican entre sí, dónde vive el código de cada uno. Incluye diagrama de contexto y diagrama de contenedores en Mermaid. Es el plano que permite formarse una idea del producto sin leer arquitectura |
+| `Guia-Inicio-Rapido.md` | Mantenedor, Operador | Levantar la **solución completa** en una máquina limpia, con el orden de arranque derivado del grafo de dependencias del manifiesto. Objetivo duro: un solo comando, o la menor cantidad posible, con verificación al final que confirme que el sistema quedó operativo |
+| `Guia-Despliegue.md` | Operador | Procedimiento de despliegue por topología: prerrequisitos, orden de arranque entre proyectos, cómo se resuelven entre sí, configuración por ambiente, verificación paso a paso y rollback |
+| `Bitacora-Eventualidades.md` | Operador, Mantenedor | Registro de las situaciones no previstas que aparecieron durante la construcción, el despliegue y la operación, con síntoma, causa, resolución e intentos descartados. Cada entrada se identifica `EVE-XX` y se triaja hacia un documento permanente, según §0.6 |
+| `Contrato-Agentes.md` | Todos | Artefacto versionado del cual se deriva el `AGENTS.md` de la raíz. Es el que sigue la convención de nomenclatura del framework y el que se audita |
 | `AGENTS.md` (emitido en la **raíz del repositorio destino**) | Agentes de IA | Contrato de contexto para agentes: cómo se construye el proyecto, cómo se corren los tests, convenciones de código, comandos de validación, límites de intervención, y punteros a los documentos de 11 por intención |
 
-**Sobre `AGENTS.md`.** Es un formato abierto y establecido para instruir agentes de codificación, gobernado bajo la Agentic AI Foundation de la Linux Foundation, que los agentes cargan automáticamente al iniciar sesión en un repositorio. Se lo adopta tal cual, sin renombrarlo ni versionarlo con el sufijo del framework, porque su valor depende de que las herramientas lo encuentren en la ruta convencional. El artefacto versionado que lo gobierna, y del cual se deriva, sí sigue la convención: `Contrato-Agentes-v<X.Y>.md`, dentro de la carpeta de la categoría.
+**Sobre `AGENTS.md`.** Es un formato abierto y establecido para instruir agentes de codificación, gobernado bajo la Agentic AI Foundation de la Linux Foundation, que los agentes cargan automáticamente al iniciar sesión en un repositorio. Se lo adopta tal cual, sin renombrarlo ni versionarlo con el sufijo del framework, porque su valor depende de que las herramientas lo encuentren en la ruta convencional. El artefacto versionado que lo gobierna, y del cual se deriva, sí sigue la convención: `Contrato-Agentes.md`, dentro de la carpeta de la categoría.
 
 Es la única excepción admitida a la regla de nomenclatura D3 y D4 dentro de esta categoría, y se admite por una razón funcional, no estética: un archivo que las herramientas no encuentran no cumple su función, por bien nombrado que esté.
 
@@ -296,23 +296,23 @@ Migra desde la categoría 10 anterior, conservando su estructura Diátaxis y su 
 
 | Archivo | Cuadrante Diátaxis | Contenido |
 | --- | --- | --- |
-| `Conceptos-Fundamentales-v<X.Y>.md` | Explanation | Modelo mental, vocabulario, decisiones de diseño relevantes para el integrador y qué NO hace el sistema |
-| `Guia-Onboarding-Developer-v<X.Y>.md` | Tutorial | De cero a primer éxito en cinco pasos, con Hello world en menos de cinco minutos |
-| `guia-integracion-<sistema-objetivo>-v<X.Y>.md` | How-to | Una por stack objetivo. El nombre se parametriza con un slug genérico |
-| `Referencia-Api-v<X.Y>.md` | Reference | Tipos públicos, métodos, eventos, excepciones, esquemas. Para HTTP, generada o curada desde OpenAPI |
-| `Referencia-Cli-v<X.Y>.md` | Reference | Comandos, subcomandos, flags, exit codes, variables de entorno |
-| `Troubleshooting-v<X.Y>.md` | How-to orientado a diagnóstico | Errores comunes con identificador `ISSUE-XX`, diagnóstico paso a paso, logs útiles y cómo reportar un bug |
-| `Glosario-Tecnico-v<X.Y>.md` | Reference | Vocabulario canónico con definición y referencia cross-doc. Reemplaza glosarios duplicados |
+| `Conceptos-Fundamentales.md` | Explanation | Modelo mental, vocabulario, decisiones de diseño relevantes para el integrador y qué NO hace el sistema |
+| `Guia-Onboarding-Developer.md` | Tutorial | De cero a primer éxito en cinco pasos, con Hello world en menos de cinco minutos |
+| `guia-integracion-<sistema-objetivo>.md` | How-to | Una por stack objetivo. El nombre se parametriza con un slug genérico |
+| `Referencia-Api.md` | Reference | Tipos públicos, métodos, eventos, excepciones, esquemas. Para HTTP, generada o curada desde OpenAPI |
+| `Referencia-Cli.md` | Reference | Comandos, subcomandos, flags, exit codes, variables de entorno |
+| `Troubleshooting.md` | How-to orientado a diagnóstico | Errores comunes con identificador `ISSUE-XX`, diagnóstico paso a paso, logs útiles y cómo reportar un bug |
+| `Glosario-Tecnico.md` | Reference | Vocabulario canónico con definición y referencia cross-doc. Reemplaza glosarios duplicados |
 
-Se conservan las dos correcciones que la regla anterior ya imponía y que siguen siendo válidas: sufijo `-v<X.Y>.md` uniforme y obligatorio en todos los artefactos, y prohibición de hardcodear un sistema comercial concreto en el nombre de la guía de integración, que se parametriza con un slug genérico.
+Se conservan las dos correcciones que la regla anterior ya imponía y que siguen siendo válidas: nomenclatura uniforme y obligatoria en todos los artefactos, y prohibición de hardcodear un sistema comercial concreto en el nombre de la guía de integración, que se parametriza con un slug genérico.
 
 ### 2.3 Cuerpo mantenedor (nivel proyecto)
 
 | Archivo | Contenido |
 | --- | --- |
-| `Recorrido-Codigo-v<X.Y>.md` | El puente entre la arquitectura y el repositorio real. Mapea cada componente declarado en 05 contra su ubicación exacta en el árbol de archivos: «la capa Application del ADR-002 vive en `src/<Proyecto>/Application/`». Recorre el flujo principal del sistema nombrando los archivos que se atraviesan en orden. Sin este documento, retomar un proyecto obliga a reconstruir el mapa leyendo código |
-| `Guia-Contribucion-v<X.Y>.md` | Setup del entorno de desarrollo desde cero, cómo correr los tests y qué debería devolver, convenciones de código y de commits, y —el núcleo del documento— cómo agregar una funcionalidad de punta a punta: qué archivos se tocan, en qué orden, qué se actualiza en la documentación y qué verifica que quedó bien |
-| `Guia-Extension-v<X.Y>.md` | Puntos de extensión publicados con identificador `EXT-XX`, contrato de cada uno y ejemplo de registro. Solo cuando el proyecto declara extensibilidad en 05 |
+| `Recorrido-Codigo.md` | El puente entre la arquitectura y el repositorio real. Mapea cada componente declarado en 05 contra su ubicación exacta en el árbol de archivos: «la capa Application del ADR-002 vive en `src/<Proyecto>/Application/`». Recorre el flujo principal del sistema nombrando los archivos que se atraviesan en orden. Sin este documento, retomar un proyecto obliga a reconstruir el mapa leyendo código |
+| `Guia-Contribucion.md` | Setup del entorno de desarrollo desde cero, cómo correr los tests y qué debería devolver, convenciones de código y de commits, y —el núcleo del documento— cómo agregar una funcionalidad de punta a punta: qué archivos se tocan, en qué orden, qué se actualiza en la documentación y qué verifica que quedó bien |
+| `Guia-Extension.md` | Puntos de extensión publicados con identificador `EXT-XX`, contrato de cada uno y ejemplo de registro. Solo cuando el proyecto declara extensibilidad en 05 |
 
 `Recorrido-Codigo` es el artefacto más específico de esta versión de las reglas y el que cierra el déficit central: la categoría 05 registra qué se decidió —vistas, ADRs, contratos— pero no existía puente entre esa arquitectura conceptual y el árbol de archivos real del repositorio.
 
@@ -320,8 +320,8 @@ Se conservan las dos correcciones que la regla anterior ya imponía y que siguen
 
 | Archivo | Contenido |
 | --- | --- |
-| `Guia-Contenedor-v<X.Y>.md` | Contrato de ejecución del servicio: tabla de variables de entorno con tipo, default, obligatoriedad y efecto; puertos expuestos; volúmenes y su propósito; healthcheck con su endpoint y respuesta esperada; dependencias de arranque; dispositivos del host requeridos; límites de recursos sugeridos. Responde la pregunta «quiero montar este servicio en un contenedor, ¿qué necesito saber?» |
-| `Runbook-Operacion-v<X.Y>.md` | Procedimientos de operación: arrancar, parar, reiniciar, verificar salud, leer logs y qué patrón buscar, métricas relevantes y sus umbrales. Incluye los incidentes conocidos con identificador `OPS-XX`, cada uno con síntoma, diagnóstico paso a paso y resolución |
+| `Guia-Contenedor.md` | Contrato de ejecución del servicio: tabla de variables de entorno con tipo, default, obligatoriedad y efecto; puertos expuestos; volúmenes y su propósito; healthcheck con su endpoint y respuesta esperada; dependencias de arranque; dispositivos del host requeridos; límites de recursos sugeridos. Responde la pregunta «quiero montar este servicio en un contenedor, ¿qué necesito saber?» |
+| `Runbook-Operacion.md` | Procedimientos de operación: arrancar, parar, reiniciar, verificar salud, leer logs y qué patrón buscar, métricas relevantes y sus umbrales. Incluye los incidentes conocidos con identificador `OPS-XX`, cada uno con síntoma, diagnóstico paso a paso y resolución |
 
 ### 2.5 Reglas de inclusión y exclusión por tipo D8
 
@@ -353,7 +353,7 @@ Dentro del cuerpo integrador, el gating fino por artefacto es el siguiente:
 | `mobile-app-maui` | Solo si hay SDK público | Si hay SDK | Si hay SDK | Si hay SDK | No | Solo si hay SDK | Solo si hay SDK |
 | `worker-service` | No | No | No | No | No | Sí (semántica de mensajes) | No |
 
-Cuando un cuerpo o un artefacto se omite por gating, la decisión se registra en `Decisiones-Proyecto-v1.0.md`. Cuando el equipo omite un cuerpo que el gating declara obligatorio, se requiere ADR con justificación.
+Cuando un cuerpo o un artefacto se omite por gating, la decisión se registra en `Decisiones-Proyecto.md`. Cuando el equipo omite un cuerpo que el gating declara obligatorio, se requiere ADR con justificación.
 
 ---
 
@@ -361,14 +361,16 @@ Cuando un cuerpo o un artefacto se omite por gating, la decisión se registra en
 
 ### 3.1 Patrón de nombres
 
-Todos los artefactos llevan Título-Con-Guiones y sufijo `-v<X.Y>.md` uniforme y obligatorio (D3, D4). Queda prohibido el patrón heredado sin sufijo y queda prohibido hardcodear un nombre comercial concreto en el nombre de archivo.
+Todos los artefactos llevan Título-Con-Guiones y sin sufijo de versión en el nombre; la versión vive en el campo `Versión` de la cabecera (D4) (D3, D4). Queda prohibido hardcodear un nombre comercial concreto en el nombre de archivo.
 
-- Nivel solución: `Vision-General-Sistema-v<X.Y>.md`, `Guia-Inicio-Rapido-v<X.Y>.md`, `Guia-Despliegue-v<X.Y>.md`, `Bitacora-Eventualidades-v<X.Y>.md`, `Contrato-Agentes-v<X.Y>.md`.
-- Cuerpo integrador: `Conceptos-Fundamentales-v<X.Y>.md`, `Guia-Onboarding-Developer-v<X.Y>.md`, `guia-integracion-<sistema-objetivo>-v<X.Y>.md`, `Referencia-Api-v<X.Y>.md`, `Referencia-Cli-v<X.Y>.md`, `Troubleshooting-v<X.Y>.md`, `Glosario-Tecnico-v<X.Y>.md`.
-- Cuerpo mantenedor: `Recorrido-Codigo-v<X.Y>.md`, `Guia-Contribucion-v<X.Y>.md`, `Guia-Extension-v<X.Y>.md`.
-- Cuerpo operador: `Guia-Contenedor-v<X.Y>.md`, `Runbook-Operacion-v<X.Y>.md`.
-- Índices sin sufijo por convención: `README.md`.
-- Excepción declarada: `AGENTS.md`, en la raíz del repositorio destino, por la razón funcional de §2.1.
+- Nivel solución: `Vision-General-Sistema.md`, `Guia-Inicio-Rapido.md`, `Guia-Despliegue.md`, `Bitacora-Eventualidades.md`, `Contrato-Agentes.md`.
+- Cuerpo integrador: `Conceptos-Fundamentales.md`, `Guia-Onboarding-Developer.md`, `guia-integracion-<sistema-objetivo>.md`, `Referencia-Api.md`, `Referencia-Cli.md`, `Troubleshooting.md`, `Glosario-Tecnico.md`.
+- Cuerpo mantenedor: `Recorrido-Codigo.md`, `Guia-Contribucion.md`, `Guia-Extension.md`.
+- Cuerpo operador: `Guia-Contenedor.md`, `Runbook-Operacion.md`.
+- Índices sin sufijo por convención: `README.md`. Al archivarse sí reciben el sufijo: `_legacy/<YYYY-MM-DD>/README-v<X.Y>.md`, con la versión tomada del campo `Versión` de su cabecera, porque en el snapshot la versión es lo que lo identifica y sin ella dos archivados del mismo día colisionan.
+- Excepción declarada: `AGENTS.md`, en la raíz del repositorio destino, por la razón funcional de §2.1. Está además **exento del archivado**: se regenera completo desde `Contrato-Agentes.md` en cada corrida (`Master-Prompt.md` §7.2), y el artefacto versionado y archivable es ese contrato, no el archivo derivado.
+
+La regla general de archivado, con su ruta única y su tabla de exenciones, vive en `Master-Prompt.md` §5.1.
 
 El segmento `<sistema-objetivo>` es Título-Con-Guiones y describe el stack o sistema receptor de la integración (por ejemplo `cli`, `servicio-web`, `aplicacion-de-escritorio`, `pipeline-ci`). No se admite hardcodear un nombre comercial.
 
@@ -465,7 +467,7 @@ El resumen ejecutivo es obligatorio en todos los artefactos. Es lo primero que l
 
 ### 4.2 Artefactos de nivel solución
 
-**`Vision-General-Sistema-v<X.Y>.md`**
+**`Vision-General-Sistema.md`**
 
 1. Qué hace la solución. Dos a cuatro párrafos, en el vocabulario del negocio, sin jerga de implementación.
 2. Diagrama de contexto en Mermaid: la solución como caja negra, los actores y los sistemas externos con los que habla.
@@ -476,7 +478,7 @@ El resumen ejecutivo es obligatorio en todos los artefactos. Es lo primero que l
 
 Se apoya en los dos primeros niveles del modelo C4, contexto y contenedores. No baja a componentes: ese nivel vive en 05.
 
-**`Guia-Inicio-Rapido-v<X.Y>.md`**
+**`Guia-Inicio-Rapido.md`**
 
 1. Objetivo y resultado esperado, declarado como aserción verificable.
 2. Prerrequisitos con versión mínima y comando de verificación de cada uno.
@@ -485,7 +487,7 @@ Se apoya en los dos primeros niveles del modelo C4, contexto y contenedores. No 
 5. Verificación final: qué comando corro y qué tiene que responder para saber que el sistema quedó operativo.
 6. Qué hacer si falla: los tres errores más frecuentes con su solución, enlazando al runbook para el resto.
 
-**`Guia-Despliegue-v<X.Y>.md`**
+**`Guia-Despliegue.md`**
 
 1. Topologías soportadas y cuál elegir según el caso.
 2. Prerrequisitos del entorno destino.
@@ -494,7 +496,7 @@ Se apoya en los dos primeros niveles del modelo C4, contexto y contenedores. No 
 5. Verificación post-despliegue como aserción evaluable.
 6. Rollback: procedimiento, punto de no retorno y cómo saber que se completó.
 
-**`Bitacora-Eventualidades-v<X.Y>.md`**
+**`Bitacora-Eventualidades.md`**
 
 Una entrada por eventualidad, con estos campos:
 
@@ -512,7 +514,7 @@ Una entrada por eventualidad, con estos campos:
 
 El campo `intentos_descartados` es el que distingue a una bitácora útil de un registro ceremonial. Un documento permanente registra la solución que funcionó; solo la bitácora conserva las tres que no, que es lo que evita que el siguiente las repita.
 
-**`Contrato-Agentes-v<X.Y>.md` y `AGENTS.md`**
+**`Contrato-Agentes.md` y `AGENTS.md`**
 
 1. Qué es este repositorio, en dos a tres oraciones.
 2. Cómo se construye: comando verbatim y salida esperada.
@@ -526,23 +528,23 @@ El `AGENTS.md` se deriva del contrato versionado, no se escribe aparte. Si diver
 
 ### 4.3 Cuerpo integrador
 
-**`Conceptos-Fundamentales-v<X.Y>.md` (Explanation).** Concepto central en una a tres oraciones · modelo mental con diagrama del flujo principal y tabla concepto/qué es/ejemplo · decisiones de diseño relevantes para el integrador, cada una citando su ADR fuente en 05 · vocabulario con el subconjunto crítico · qué NO hace el sistema.
+**`Conceptos-Fundamentales.md` (Explanation).** Concepto central en una a tres oraciones · modelo mental con diagrama del flujo principal y tabla concepto/qué es/ejemplo · decisiones de diseño relevantes para el integrador, cada una citando su ADR fuente en 05 · vocabulario con el subconjunto crítico · qué NO hace el sistema.
 
-**`Guia-Onboarding-Developer-v<X.Y>.md` (Tutorial).** Prerequisites con comando de obtención · Hello world en menos de 5 min con output textual · primer caso real en menos de 30 min con datos representativos · integración con un sistema en menos de 1 hora, enlazando al how-to · siguientes pasos con tres rutas. El criterio de éxito es duro: si el tiempo medido supera el objetivo, se reescribe.
+**`Guia-Onboarding-Developer.md` (Tutorial).** Prerequisites con comando de obtención · Hello world en menos de 5 min con output textual · primer caso real en menos de 30 min con datos representativos · integración con un sistema en menos de 1 hora, enlazando al how-to · siguientes pasos con tres rutas. El criterio de éxito es duro: si el tiempo medido supera el objetivo, se reescribe.
 
-**`guia-integracion-<sistema-objetivo>-v<X.Y>.md` (How-to).** Objetivo · prerequisites del sistema objetivo · pasos numerados con título imperativo, código copy-paste y efecto esperado · verificación · troubleshooting específico enlazando al `ISSUE-XX` global. Sin desviaciones explicativas: el porqué vive en conceptos fundamentales.
+**`guia-integracion-<sistema-objetivo>.md` (How-to).** Objetivo · prerequisites del sistema objetivo · pasos numerados con título imperativo, código copy-paste y efecto esperado · verificación · troubleshooting específico enlazando al `ISSUE-XX` global. Sin desviaciones explicativas: el porqué vive en conceptos fundamentales.
 
-**`Referencia-Api-v<X.Y>.md` (Reference).** Tipos públicos con invariantes · métodos con firma exacta, parámetros, retorno y excepciones · eventos con payload y semántica de orden y entrega · excepciones con código y cuándo se lanzan · ejemplos breves por bloque. Cuando la API es HTTP, se genera o cura desde OpenAPI 3.x, con ejemplos en `curl` y en al menos un cliente, y errores según RFC 9457.
+**`Referencia-Api.md` (Reference).** Tipos públicos con invariantes · métodos con firma exacta, parámetros, retorno y excepciones · eventos con payload y semántica de orden y entrega · excepciones con código y cuándo se lanzan · ejemplos breves por bloque. Cuando la API es HTTP, se genera o cura desde OpenAPI 3.x, con ejemplos en `curl` y en al menos un cliente, y errores según RFC 9457.
 
-**`Referencia-Cli-v<X.Y>.md` (Reference).** Comandos · subcomandos con ejemplo invocacional · flags con tipo, default y obligatoriedad · variables de entorno con precedencia frente a flags · códigos de salida exhaustivos · al menos un ejemplo por subcomando con stdout y stderr esperados.
+**`Referencia-Cli.md` (Reference).** Comandos · subcomandos con ejemplo invocacional · flags con tipo, default y obligatoriedad · variables de entorno con precedencia frente a flags · códigos de salida exhaustivos · al menos un ejemplo por subcomando con stdout y stderr esperados.
 
-**`Troubleshooting-v<X.Y>.md` (How-to de diagnóstico).** Errores comunes con `ISSUE-XX` en tabla síntoma/causa/solución · diagnóstico paso a paso con comandos que permitan confirmar la causa antes de aplicar la solución · logs útiles con nivel y patrón a buscar · cómo reportar un bug con plantilla y datos mínimos.
+**`Troubleshooting.md` (How-to de diagnóstico).** Errores comunes con `ISSUE-XX` en tabla síntoma/causa/solución · diagnóstico paso a paso con comandos que permitan confirmar la causa antes de aplicar la solución · logs útiles con nivel y patrón a buscar · cómo reportar un bug con plantilla y datos mínimos.
 
-**`Glosario-Tecnico-v<X.Y>.md` (Reference).** Tabla término / definición operativa / referencia cross-doc. Es la fuente canónica del vocabulario; el resto de los documentos enlaza acá en lugar de redefinir. Los sinónimos se registran como alias del término canónico.
+**`Glosario-Tecnico.md` (Reference).** Tabla término / definición operativa / referencia cross-doc. Es la fuente canónica del vocabulario; el resto de los documentos enlaza acá en lugar de redefinir. Los sinónimos se registran como alias del término canónico.
 
 ### 4.4 Cuerpo mantenedor
 
-**`Recorrido-Codigo-v<X.Y>.md`**
+**`Recorrido-Codigo.md`**
 
 1. Resumen ejecutivo: qué encuentra el lector acá y qué no.
 2. **Mapa arquitectura → repositorio.** Tabla con una fila por componente declarado en 05: identificador del componente, ADR que lo decide, ruta exacta en el árbol de archivos, responsabilidad en una línea. Es el corazón del documento.
@@ -554,7 +556,7 @@ El `AGENTS.md` se deriva del contrato versionado, no se escribe aparte. Si diver
 
 **Regla dura de este documento**: toda ruta citada existe. Una ruta que no resuelve es un hallazgo P0 del ensayo automatizado, porque es el error que más caro le sale al mantenedor: lo manda a buscar algo que no está.
 
-**`Guia-Contribucion-v<X.Y>.md`**
+**`Guia-Contribucion.md`**
 
 1. Setup del entorno desde cero, con comando verbatim por paso y verificación de cada uno.
 2. Cómo correr los tests, qué devuelven, cuánto tardan, y cómo correr un subconjunto. Cita la estrategia de 08, no la redefine.
@@ -563,13 +565,13 @@ El `AGENTS.md` se deriva del contrato versionado, no se escribe aparte. Si diver
 5. Qué no hacer: los patrones que rompen el diseño, con el motivo.
 6. Preguntas guía de cierre.
 
-**`Guia-Extension-v<X.Y>.md`**
+**`Guia-Extension.md`**
 
 Una sección por punto de extensión, identificada `EXT-XX`: qué permite extender, contrato de la interfaz o del punto de enganche, ejemplo de registro completo, límites de lo que la extensión puede hacer, y enlace al sample de 10 que lo demuestra cuando existe.
 
 ### 4.5 Cuerpo operador
 
-**`Guia-Contenedor-v<X.Y>.md`**
+**`Guia-Contenedor.md`**
 
 1. Resumen ejecutivo y qué imagen o artefacto documenta.
 2. **Variables de entorno**: tabla nombre / tipo / default / obligatoriedad / efecto. Sin secretos en claro; los secretos se declaran por nombre y origen.
@@ -581,7 +583,7 @@ Una sección por punto de extensión, identificada `EXT-XX`: qué permite extend
 8. **Límites de recursos sugeridos**, con el criterio con el que se estimaron.
 9. Bloque `entradas` / `salidas` / `validaciones` para la cara agente.
 
-**`Runbook-Operacion-v<X.Y>.md`**
+**`Runbook-Operacion.md`**
 
 1. Resumen ejecutivo y alcance del runbook.
 2. **Procedimientos base**: arrancar, parar, reiniciar, verificar salud. Cada uno con comando verbatim y salida esperada.
@@ -624,24 +626,24 @@ Aplica solo a las zonas de prosa —resúmenes, explicaciones, racional, narraci
 
 | Vengo a… | Rol | Leé |
 | --- | --- | --- |
-| Entender qué es esto y qué hace | Todos | `Vision-General-Sistema-v1.0.md` |
-| Levantar todo en mi máquina | Mantenedor, Operador | `Guia-Inicio-Rapido-v1.0.md` |
-| Usar el proyecto desde mi aplicación | Integrador | `Guia-Onboarding-Developer-v1.0.md` |
-| Buscar la firma exacta de un método o flag | Integrador | `Referencia-Api-v1.0.md`, `Referencia-Cli-v1.0.md` |
-| Encontrar dónde está una parte del código | Mantenedor | `Recorrido-Codigo-v1.0.md` |
-| Agregar una funcionalidad | Mantenedor | `Guia-Contribucion-v1.0.md` |
-| Montar el servicio en un contenedor | Operador | `Guia-Contenedor-v1.0.md` |
-| Desplegar en un ambiente | Operador | `Guia-Despliegue-v1.0.md` |
-| El servicio se comporta raro | Operador | `Runbook-Operacion-v1.0.md` |
-| Me da un error al integrar | Integrador | `Troubleshooting-v1.0.md` |
+| Entender qué es esto y qué hace | Todos | `Vision-General-Sistema.md` |
+| Levantar todo en mi máquina | Mantenedor, Operador | `Guia-Inicio-Rapido.md` |
+| Usar el proyecto desde mi aplicación | Integrador | `Guia-Onboarding-Developer.md` |
+| Buscar la firma exacta de un método o flag | Integrador | `Referencia-Api.md`, `Referencia-Cli.md` |
+| Encontrar dónde está una parte del código | Mantenedor | `Recorrido-Codigo.md` |
+| Agregar una funcionalidad | Mantenedor | `Guia-Contribucion.md` |
+| Montar el servicio en un contenedor | Operador | `Guia-Contenedor.md` |
+| Desplegar en un ambiente | Operador | `Guia-Despliegue.md` |
+| El servicio se comporta raro | Operador | `Runbook-Operacion.md` |
+| Me da un error al integrar | Integrador | `Troubleshooting.md` |
 
 **Estado del cuerpo documental**, en el README de la sección:
 
 | Documento | Rol | Estado | Última revisión | Momento |
 | --- | --- | --- | --- | --- |
-| `Vision-General-Sistema-v1.0.md` | Todos | Vigente | 2026-08-14 | 2 |
-| `Recorrido-Codigo-v1.0.md` | Mantenedor | Potencialmente desactualizado | 2026-06-30 | 2 |
-| `Guia-Extension-v1.0.md` | Mantenedor | Planificado | — | 1 |
+| `Vision-General-Sistema.md` | Todos | Vigente | 2026-08-14 | 2 |
+| `Recorrido-Codigo.md` | Mantenedor | Potencialmente desactualizado | 2026-06-30 | 2 |
+| `Guia-Extension.md` | Mantenedor | Planificado | — | 1 |
 
 **Mapa arquitectura a repositorio**, en `Recorrido-Codigo`:
 
@@ -671,7 +673,7 @@ validaciones:
 
 | Anti-patrón | Problema | Solución |
 | --- | --- | --- |
-| Documentos sin sufijo de versión | Pierde trazabilidad entre release y documentación | Sufijo `-v<X.Y>.md` obligatorio, salvo la excepción declarada de `AGENTS.md` |
+| Documentos sin sufijo de versión | Pierde trazabilidad entre release y documentación | Sufijo `.md` obligatorio, salvo la excepción declarada de `AGENTS.md` |
 | Nombre de archivo hardcodeado con un sistema concreto | Ata el template a un stack particular | Parametrizar con slug genérico |
 | Mezcla de cuadrantes Diátaxis en el cuerpo integrador | Un tutorial con explicaciones largas se vuelve ilegible; una referencia con narrativa pierde rigor | Declarar `Tipo Diátaxis` en la cabecera y respetarlo |
 | **Producir una versión «para humanos» y otra «para la IA»** | Divergen en el segundo cambio y nadie sabe cuál vale | Un documento, dos caras. Ante divergencia se corrige, nunca se bifurca |
@@ -698,7 +700,7 @@ validaciones:
 
 - ¿Los tres roles tienen su cuerpo, o alguno quedó implícito porque el proyecto «no lo necesita»?
 - ¿El cuerpo mantenedor existe? Es obligatorio para los ocho tipos D8, sin excepción.
-- Cuando un cuerpo se omitió, ¿la omisión está registrada en `Decisiones-Proyecto-v1.0.md`, y con ADR si el gating lo declaraba obligatorio?
+- Cuando un cuerpo se omitió, ¿la omisión está registrada en `Decisiones-Proyecto.md`, y con ADR si el gating lo declaraba obligatorio?
 - ¿Algún documento sirve a dos roles sin declararlo en `rol_intervencion`?
 
 ### 5.2 Doble audiencia
@@ -761,10 +763,10 @@ validaciones:
 
 - [ ] La categoría existe para el proyecto. Es obligatoria para los ocho tipos D8.
 - [ ] El cuerpo mantenedor está materializado, con `Recorrido-Codigo` y `Guia-Contribucion` como mínimo.
-- [ ] Los cuerpos integrador y operador se materializaron o se omitieron según la tabla de §2.5, y toda omisión está registrada en `Decisiones-Proyecto-v1.0.md`, con ADR cuando el gating los declaraba obligatorios.
+- [ ] Los cuerpos integrador y operador se materializaron o se omitieron según la tabla de §2.5, y toda omisión está registrada en `Decisiones-Proyecto.md`, con ADR cuando el gating los declaraba obligatorios.
 - [ ] Existen los artefactos de nivel solución bajo `Solucion/11-Documentacion/`, o bajo `SDD/Docs/11-Documentacion/` en el caso degenerado.
 - [ ] Existe `README.md` de la sección con su matriz de ruteo y su tabla de estado del cuerpo documental.
-- [ ] Todos los artefactos llevan sufijo `-v<X.Y>.md`, salvo `README.md` y la excepción declarada de `AGENTS.md`.
+- [ ] Ningún artefacto lleva sufijo de versión en el nombre; cada uno declara su versión en la cabecera, salvo `AGENTS.md`, que se deriva del contrato versionado.
 - [ ] Ningún nombre de archivo hardcodea un sistema comercial concreto.
 
 **Doble audiencia**
@@ -798,7 +800,7 @@ validaciones:
 - [ ] Ningún documento afectado por el corte quedó sin revisar antes de declararlo cerrado.
 - [ ] Los documentos sin revisar desde hace más de dos cortes están marcados `Potencialmente desactualizado` en el README.
 - [ ] El `AGENTS.md` se emitió en la primera corrida del Momento 2 y se refrescó en la última.
-- [ ] `Contrato-Agentes-v<X.Y>.md` y `AGENTS.md` no divergen.
+- [ ] `Contrato-Agentes.md` y `AGENTS.md` no divergen.
 
 **Ensayo de entrega**
 
@@ -809,7 +811,7 @@ validaciones:
 
 **Bitácora**
 
-- [ ] Existe `Bitacora-Eventualidades-v<X.Y>.md` de nivel solución.
+- [ ] Existe `Bitacora-Eventualidades.md` de nivel solución.
 - [ ] Cada `EVE-XX` tiene sus nueve campos completos, incluido `intentos_descartados`.
 - [ ] Ninguna eventualidad quedó cerrada sin destino asignado; las `No absorbida` tienen su motivo.
 - [ ] Ninguna eventualidad quedó abierta más de un corte sin triaje.
@@ -825,7 +827,7 @@ validaciones:
 
 ## 7. Ejemplos genéricos
 
-### 7.1 Fragmento de `Recorrido-Codigo-v1.0.md` para un `rest-api`
+### 7.1 Fragmento de `Recorrido-Codigo.md` para un `rest-api`
 
 ```markdown
 ---
@@ -891,7 +893,7 @@ handler se saltea el día que aparece un segundo punto de entrada.
 - ¿Por qué la invariante vive en la entidad y no en el handler?
 ```
 
-### 7.2 Fragmento de `Guia-Contenedor-v1.0.md` con dispositivo del host
+### 7.2 Fragmento de `Guia-Contenedor.md` con dispositivo del host
 
 Ilustra la absorción de una eventualidad de tipo requisito del entorno, que es el caso testigo de §0.6.
 
@@ -940,8 +942,8 @@ intentos_descartados: >
   producción). Montar el dispositivo como volumen (no aplica: es un dispositivo de
   caracteres, no un archivo).
 destino: >
-  Guia-Contenedor-v1.0.md, sección «Dispositivos del host requeridos», y
-  Runbook-Operacion-v1.0.md, entrada OPS-07 «El servicio no registra lecturas».
+  Guia-Contenedor.md, sección «Dispositivos del host requeridos», y
+  Runbook-Operacion.md, entrada OPS-07 «El servicio no registra lecturas».
 ```
 
 Los tres fragmentos son ilustrativos. Cada proyecto adapta el dominio respetando la estructura, la nomenclatura y el contrato de doble audiencia.
@@ -992,8 +994,10 @@ Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/11-Documentacion/<estructura> y S
 
 | Versión | Fecha | Cambio | Autor |
 | --- | --- | --- | --- |
-| 1.0 | 2026-05-17 | Versión inicial. Define la categoría 10 developer guide, sus artefactos obligatorios y opcionales por tipo D8, su estructura por cuadrante Diátaxis, el TTFS objetivo y los anti-patrones. Corrige los dos déficits del fuente SDD 1.0: impone sufijo `-v<X.Y>.md` uniforme en todos los artefactos de esta carpeta y parametriza el nombre de la guía de integración como `guia-integracion-<sistema-objetivo>-v<X.Y>.md` para evitar atar la plantilla a un stack comercial concreto. | AG-10 Technical Writer / Developer Advocate Senior |
+| 1.0 | 2026-05-17 | Versión inicial. Define la categoría 10 developer guide, sus artefactos obligatorios y opcionales por tipo D8, su estructura por cuadrante Diátaxis, el TTFS objetivo y los anti-patrones. Corrige los dos déficits del fuente SDD 1.0: impone sufijo `.md` uniforme en todos los artefactos de esta carpeta y parametriza el nombre de la guía de integración como `guia-integracion-<sistema-objetivo>.md` para evitar atar la plantilla a un stack comercial concreto. | AG-10 Technical Writer / Developer Advocate Senior |
 | 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `Proyectos/<Nombre-Proyecto>/10-Developer-Guide/`; la frase de selección de variante y la carpeta target referencian el `project_type` del proyecto en curso (manifiesto). Tablas §1.2 sin reescritura. | Reformulación SDD |
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). | Migración SDD |
 | 1.3 | 2026-07-26 | Intercambio de categorías 10 ↔ 11. El archivo pasa a llamarse `Rules-Documentacion.md`, la categoría de documentación pasa de 10 a 11 y su carpeta target de `10-Developer-Guide/` a `11-Documentacion/`, con carpeta de nivel solución en `Solucion/11-Documentacion/`; el subagente titular pasa de AG-10 a AG-11 Technical Writer / Documentation Lead. Se invierte la dependencia declarada con la categoría de ejemplos: 10 pasa a ser upstream de 11, con la formulación «10 demuestra con código ejecutable y verificable, 11 explica, referencia y enlaza». Se normaliza el vocabulario de actores: «consumidor» pasa a «integrador», «constructor» a «mantenedor» y «audiencia» a rol de intervención. Las filas 1.0 a 1.2 conservan su redacción original por ser registro histórico. La redefinición completa del cuerpo documental de entrega es objeto de la versión siguiente. | Reformulación SDD |
 | 2.0 | 2026-07-26 | Redefinición completa de la categoría como cuerpo documental de entrega organizado por rol de intervención. §0 incorpora los dos ejes (rol de intervención y naturaleza del lector) con la prohibición de bifurcar documentos por tipo de lector, las cinco fronteras con las categorías vecinas, el modelo de documentación viva en tres momentos, la cadencia anclada al cierre de sprint, el ensayo de entrega con sus dos niveles y su gate humano, y la bitácora de eventualidades con su triaje obligatorio. §1 suma la faceta Documentation Lead y embebe el estilo narrativo formativo y el contrato de doble audiencia. §2 reorganiza los artefactos en nivel solución más tres cuerpos de proyecto, incorporando `Vision-General-Sistema`, `Guia-Inicio-Rapido`, `Guia-Despliegue`, `Bitacora-Eventualidades`, `Contrato-Agentes` y `AGENTS.md` a nivel solución, y `Recorrido-Codigo`, `Guia-Contribucion`, `Guia-Extension`, `Guia-Contenedor` y `Runbook-Operacion` a nivel proyecto. §2.5 sustituye el gating por categoría por gating de granularidad por cuerpo: **el cuerpo mantenedor pasa a ser obligatorio para los ocho tipos D8**, y la categoría deja de ser opcional. §3 fija los identificadores `OPS-XX`, `EXT-XX` y `EVE-XX`, conserva `ISSUE-XX` y cita `VER-XX` sin redefinirlo. §4 suma frontmatter YAML obligatorio, resumen ejecutivo obligatorio, la estructura de los diez artefactos nuevos, la voz narrativa y el formato markdown. §5 reorganiza las preguntas guía en ocho bloques. §6 reescribe los criterios de aceptación en siete grupos. §7 reemplaza los ejemplos por tres fragmentos que ilustran el recorrido de código, la absorción de una eventualidad de entorno y una entrada de bitácora. Se descarta expresamente toda regla de indexado de conocimiento. Sube major porque cambia el alcance, el gating y el conjunto de artefactos de la categoría. | Reformulación SDD |
+| 2.1 | 2026-07-28 | Reparación de la política de archivado (Revisión SDD): §3.1 declara que los índices `README.md` reciben el sufijo de versión al archivarse y que `AGENTS.md` queda exento del archivado, porque se regenera completo desde `Contrato-Agentes.md` en cada corrida y es ese contrato el artefacto versionado y archivable. La regla general y su tabla de exenciones viven en `Master-Prompt.md` §5.1. |
+| 3.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |

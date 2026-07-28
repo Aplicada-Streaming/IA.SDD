@@ -2,7 +2,7 @@
 
 **Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/04-Prompts-AI/`
 **Subagente target del orquestador:** Ingeniero de Prompts / AI Specialist (AG-04)
-**Versión de las reglas:** 1.4
+**Versión de las reglas:** 2.0
 
 ---
 
@@ -61,10 +61,10 @@ Queda prohibido producir documentos de 04 sin el flag positivo. Queda prohibido 
 
 | Archivo | Obligatorio si la categoría está activa | Recomendado | Omitir | Descripción |
 | --- | --- | --- | --- | --- |
-| `Politica-Uso-AI-v1.0.md` | Sí | — | — | Política transversal de uso responsable, datos sensibles, validación humana, costos, vendor lock-in y disclaimer al usuario final. |
-| `prompt-<Tarea>-v1.0.md` | Sí, uno por tarea LLM identificada | — | — | Un prompt por tarea funcional. Incluye contrato, prompt completo, few-shot, métricas, costos y trazabilidad a CU. |
-| `Evaluacion-Prompts-v1.0.md` | Sí | — | — | Marco de evaluación: métricas, dataset referenciado, protocolo de A/B, umbrales mínimos y frecuencia de re-evaluación. |
-| `Dataset-Evaluacion-v1.0.md` | — | Sí | Proyectos con un único prompt trivial y dataset embebido | Dataset de evaluación versionado: muestras de entrada, salidas esperadas y origen de cada muestra. |
+| `Politica-Uso-AI.md` | Sí | — | — | Política transversal de uso responsable, datos sensibles, validación humana, costos, vendor lock-in y disclaimer al usuario final. |
+| `prompt-<Tarea>.md` | Sí, uno por tarea LLM identificada | — | — | Un prompt por tarea funcional. Incluye contrato, prompt completo, few-shot, métricas, costos y trazabilidad a CU. |
+| `Evaluacion-Prompts.md` | Sí | — | — | Marco de evaluación: métricas, dataset referenciado, protocolo de A/B, umbrales mínimos y frecuencia de re-evaluación. |
+| `Dataset-Evaluacion.md` | — | Sí | Proyectos con un único prompt trivial y dataset embebido | Dataset de evaluación versionado: muestras de entrada, salidas esperadas y origen de cada muestra. |
 | `README.md` de la sección | Recomendado | — | — | Índice de prompts vigentes, estado y vínculo a la política y a la evaluación. |
 
 ### 2.3 Reglas de inclusión y exclusión por tipo
@@ -86,20 +86,20 @@ Queda prohibido producir documentos de 04 sin el flag positivo. Queda prohibido 
 
 ### 3.1 Patrón de nombres
 
-- `prompt-<Tarea>-v<X.Y>.md` para cada prompt productivo.
-- `politica-uso-ai-v<X.Y>.md` para la política transversal.
-- `evaluacion-prompts-v<X.Y>.md` para el marco de evaluación.
-- `dataset-evaluacion-v<X.Y>.md` para el dataset versionado.
+- `prompt-<Tarea>.md` para cada prompt productivo.
+- `politica-uso-ai.md` para la política transversal.
+- `evaluacion-prompts.md` para el marco de evaluación.
+- `dataset-evaluacion.md` para el dataset versionado.
 - `README.md` para el índice navegable.
 
-El sufijo `-v<X.Y>.md` es uniforme para los cuatro tipos. Queda prohibido el patrón heredado `-v<X.Y>`. Todos los slugs son Título-Con-Guiones estricto.
+El archivo vivo lleva su nombre lógico estable, sin sufijo de versión, y declara su versión en el campo `Versión` de la cabecera (D4). El sufijo `-v<X.Y>.md`, con guion medio, identifica únicamente a las copias archivadas en `_legacy/`. Todos los slugs son Título-Con-Guiones estricto.
 
 ### 3.2 Convenciones de prefijos y semántica
 
 - `prompt-`: artefacto de tarea concreta delegada en LLM. Una tarea por archivo.
 - `politica-uso-ai`: artefacto transversal, único en toda la categoría.
 - `evaluacion-prompts`: marco metodológico de evaluación, único en toda la categoría.
-- `dataset-evaluacion`: dataset común; puede haber datasets específicos por prompt, en cuyo caso se nombran `dataset-evaluacion-<Tarea>-v<X.Y>.md`.
+- `dataset-evaluacion`: dataset común; puede haber datasets específicos por prompt, en cuyo caso se nombran `dataset-evaluacion-<Tarea>.md`.
 
 ### 3.3 Vinculación cross-doc
 
@@ -117,12 +117,12 @@ Una sola versión vigente por nombre lógico. La versión menor avanza cuando el
 
 Cuando un prompt pasa de `v1.0` a `v2.0`:
 
-1. Se crea `prompt-<tarea>-v2.0.md` en la carpeta principal.
+1. Se crea `prompt-<tarea>.md` en la carpeta principal.
 2. La versión `v1.0` se mueve a `_legacy/` con estado `Superado` y nota inicial que apunte a la versión vigente.
 3. El README de la sección referencia únicamente la versión vigente.
 4. Las métricas y el dataset se reevalúan antes de declarar vigente la versión nueva.
 
-Queda prohibido mantener `v1.0` y `v2.0` conviviendo en la carpeta principal sin marcado de deprecación.
+Un nombre lógico tiene un solo archivo en la carpeta principal. Al superarse, se copia a `_legacy/` con el sufijo de la versión que preserva y el archivo vivo pasa a la versión nueva. La lección está documentada en la auditoría de Fase 0 del bootstrap: en el fuente convivían versiones paralelas sin marcado de deprecación y no había forma de saber cuál regía.
 
 ---
 
@@ -136,7 +136,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 # Prompt — <Nombre descriptivo de la tarea>
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** prompt-<Tarea>-v<X.Y>.md
+**Documento:** prompt-<Tarea>.md
 **Versión:** <X.Y>
 **Estado:** Borrador | Propuesto | Aprobado | Vigente | Superado | Archivado
 **Fecha:** YYYY-MM-DD
@@ -151,7 +151,7 @@ El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente
 
 ### 4.2 Secciones obligatorias de un prompt
 
-Un archivo `prompt-<tarea>-v<X.Y>.md` tiene exactamente las siguientes secciones, en orden:
+Un archivo `prompt-<tarea>.md` tiene exactamente las siguientes secciones, en orden:
 
 1. Objetivo de la tarea. Una a tres oraciones que respondan qué resuelve el prompt y para quién.
 2. Modelo LLM target. Familia (por ejemplo Claude Sonnet, GPT-4o, Gemini Pro) y tamaño esperado, con justificación y plan de portabilidad a una familia alternativa.
@@ -244,12 +244,12 @@ Tabla de trazabilidad del prompt:
 | Prompt sin contrato de salida formal | La salida no es parseable y rompe el consumidor | Forzar JSON con JSON Schema o markdown con headings fijos |
 | Prompt sin few-shot cuando la tarea lo requiere | El modelo no tiene referencia de calidad esperada y alucina | Mínimo dos few-shot por prompt; tres si es generación abierta |
 | Política de uso sin sección de datos sensibles | Se exponen datos personales al proveedor sin control | Sección §2 obligatoria con clasificación de datos y política de redacción |
-| Evaluación sin dataset versionado | No hay forma de comparar versiones del prompt | Versionar `dataset-evaluacion` con sufijo `-v<X.Y>.md` |
+| Evaluación sin dataset versionado | No hay forma de comparar versiones del prompt | Versionar `dataset-evaluacion` con sufijo `.md` |
 | Vendor lock-in sin alternativa documentada | Si el proveedor sube precios o cambia política, no hay plan B | Sección §7 de la política con alternativa primaria y plan de portabilidad |
 | Confiar ciegamente en la salida del LLM | Efectos críticos aplicados sin validación humana | Declarar bucle de control humano para tareas con efecto irreversible |
 | Prompt monolítico con varias tareas | Difícil de evaluar y de versionar | Chain of prompts: un archivo por tarea con contrato propio |
 | Métricas sin umbral numérico | "Debe ser buena" no es evaluable | Cada métrica con umbral cuantitativo y acción si no se alcanza |
-| Patrón heredado `-v<X.Y>` | Convención prohibida en SDD | Forzar `-v<X.Y>` |
+| Sufijo de versión en el nombre del archivo vivo | Reintroduce la segunda lógica de versionado que D4 eliminó, y con ella la colisión al archivar | El archivo vivo no lleva sufijo; la versión va en la cabecera |
 | Casing inconsistente en el slug | Rompe automatizaciones | Forzar Título-Con-Guiones estricto |
 
 ---
@@ -301,17 +301,17 @@ Tabla de trazabilidad del prompt:
 ## 6. Criterios de aceptación
 
 - [ ] La categoría se activa solamente si SOLUTION-INTAKE declara explícitamente que el sistema usa LLMs; caso contrario la carpeta no existe.
-- [ ] Existe `Politica-Uso-AI-v1.0.md` antes de cualquier `prompt-<tarea>` productivo.
+- [ ] Existe `Politica-Uso-AI.md` antes de cualquier `prompt-<tarea>` productivo.
 - [ ] Cada `prompt-<tarea>` declara contrato de entrada y contrato de salida (con JSON Schema si la salida es JSON).
 - [ ] Cada `prompt-<tarea>` tiene mínimo dos few-shot; tres si la tarea es generación abierta.
 - [ ] Cada `prompt-<tarea>` enumera casos de borde con respuesta esperada.
 - [ ] Cada `prompt-<tarea>` declara costo esperado por request y latencia esperada p50 y p99.
-- [ ] Existe `Evaluacion-Prompts-v1.0.md` con métricas, dataset referenciado, umbrales numéricos y frecuencia de re-evaluación.
-- [ ] Existe `Dataset-Evaluacion-v1.0.md` versionado, salvo justificación documentada en `evaluacion-prompts`.
+- [ ] Existe `Evaluacion-Prompts.md` con métricas, dataset referenciado, umbrales numéricos y frecuencia de re-evaluación.
+- [ ] Existe `Dataset-Evaluacion.md` versionado, salvo justificación documentada en `evaluacion-prompts`.
 - [ ] Cada prompt declara trazabilidad NB→CU→ADR→tests en 08.
-- [ ] Ningún archivo usa el patrón `-v<X.Y>.md`; todos usan `-v<X.Y>.md`.
+- [ ] Ningún archivo de la carpeta de trabajo lleva sufijo de versión en el nombre; cada uno declara su versión en el campo `Versión` de su cabecera (D4).
 - [ ] Ningún slug contiene mayúsculas, espacios, acentos ni caracteres no permitidos.
-- [ ] No coexisten versiones distintas del mismo nombre lógico en la carpeta principal; las superadas viven en `_legacy/`.
+- [ ] Existe un solo archivo por nombre lógico en la carpeta principal; las versiones superadas viven en `_legacy/` con su sufijo de versión.
 - [ ] Todo documento con más de tres secciones de primer nivel incluye tabla de contenido inmediatamente después de la cabecera, con enlaces ancla a las secciones de primer y de segundo nivel. Los documentos breves quedan exceptuados.
 
 ---
@@ -326,7 +326,7 @@ Los ejemplos son ilustrativos y de dominios distintos al material fuente. No deb
 # Prompt — Clasificación de tickets de soporte
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** Prompt-Clasificacion-Tickets-Soporte-v1.0.md
+**Documento:** Prompt-Clasificacion-Tickets-Soporte.md
 **Versión:** 1.0
 **Estado:** Propuesto
 **Fecha:** 2026-05-17
@@ -363,7 +363,7 @@ JSON estricto:
 # Prompt — Resumen de actas legales
 
 **Proyecto:** {{nombre-proyecto}}
-**Documento:** Prompt-Resumen-Documentos-Legales-v1.0.md
+**Documento:** Prompt-Resumen-Documentos-Legales.md
 **Versión:** 1.0
 **Estado:** Propuesto
 **Fecha:** 2026-05-17
@@ -382,7 +382,7 @@ Markdown estructurado con secciones fijas: Partes, Antecedentes, Hechos, Resoluc
 | Caso | Respuesta esperada |
 | --- | --- |
 | Documento sin estructura legal reconocible | Devolver `FORMATO_NO_RECONOCIDO` |
-| Documento con datos personales sin redactar | Aplicar redacción definida en `Politica-Uso-AI-v1.0.md` §2 y continuar |
+| Documento con datos personales sin redactar | Aplicar redacción definida en `Politica-Uso-AI.md` §2 y continuar |
 | Documento truncado por límite de tokens | Devolver hasta donde alcanza y declarar `TRUNCADO=true` |
 ```
 
@@ -416,14 +416,14 @@ Insumos:
 - Upstream: 01 (NB que motivan IA), 02 (CU que delegan en LLM si ya existe).
 
 A generar (si la categoría está activa):
-- Politica-Uso-AI-v1.0.md (obligatorio, primero).
-- prompt-<Tarea>-v1.0.md (uno por tarea LLM identificada).
-- Evaluacion-Prompts-v1.0.md (obligatorio).
-- Dataset-Evaluacion-v1.0.md (recomendado).
+- Politica-Uso-AI.md (obligatorio, primero).
+- prompt-<Tarea>.md (uno por tarea LLM identificada).
+- Evaluacion-Prompts.md (obligatorio).
+- Dataset-Evaluacion.md (recomendado).
 - README.md de la sección (recomendado).
 
 Reglas de redacción: §4 de Rules-Prompts-AI.md.
-Nomenclatura: `prompt-<Tarea>-v1.0.md` con guion medio `-v` (no `_v` ni `.v`); slug en Título-Con-Guiones estricto.
+Nomenclatura: `prompt-<Tarea>.md` con guion medio `-v` (no `_v` ni `.v`); slug en Título-Con-Guiones estricto.
 Trazabilidad: cada prompt debe enlazar a una NB y a un CU consumidor.
 Criterios de calidad: §6 de Rules-Prompts-AI.md.
 Política de versionado: §3.5; una sola versión vigente; anteriores a `_legacy/` con estado Superado.
@@ -444,3 +444,4 @@ Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/04-Prompts-AI/<estructura>.
 | 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |
 | 1.3 | 2026-07-26 | Normalización del vocabulario de actores: «consumidor» pasa a «integrador» donde designa el rol que consume la librería. Se conserva el término donde designa el componente que consume la salida de un prompt o el caso de uso que lo invoca, usos técnicos en los que no refiere a un actor. |
 | 1.4 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |
+| 2.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |

@@ -1,13 +1,13 @@
 # Reglas de diseño — Primer arranque y aprovisionamiento inicial
 
 **Proyecto:** {{nombre-solucion}}
-**Documento:** Design-Rules-Primer-Arranque-v1.0.md
+**Documento:** Design-Rules-Primer-Arranque.md
 **Versión:** 1.0
 **Estado:** Vigente
 **Fecha:** 2026-07-18
 **Autor:** {{equipo-o-rol}} (AG-03 UX/UI)
 **Ámbito:** Capacidad transversal — primer arranque de un despliegue sin configurar (agnóstico de framework)
-**Hereda de:** `Design-Rules-Web-Generico-v1.0.md`
+**Hereda de:** `Design-Rules-Web-Generico.md`
 **Posición:** Insumo normativo de la categoría 03. Extensión por capacidad del catálogo `References/Design/`. No es un artefacto operativo de `docs/`.
 
 ---
@@ -206,14 +206,14 @@ Una superficie de primer arranque cumple esta extensión cuando: existe un únic
 | Dimensión | Referencia |
 | --- | --- |
 | Especialidad dueña | AG-03 UX/UI |
-| Hereda de | `Design-Rules-Web-Generico-v1.0.md` |
-| Mapeado por | especializaciones por stack (por ejemplo `Design-Rules-Blazor-Mudblazor-v1.0.md`) |
-| Extensión hermana | `Design-Rules-Acceso-Monousuario-v1.0.md` (comparte el shell partido y el catálogo de códigos de resultado) |
+| Hereda de | `Design-Rules-Web-Generico.md` |
+| Mapeado por | especializaciones por stack (por ejemplo `Design-Rules-Blazor-Mudblazor.md`) |
+| Extensión hermana | `Design-Rules-Acceso-Monousuario.md` (comparte el shell partido y el catálogo de códigos de resultado) |
 | Regla que lo invoca | `devs/Rules/Rules-UX-UI-DX.md` (cuando el proyecto se despliega por instancia y arranca vacío) |
 | Cross-ref técnico | categoría 05 (predicado, guard de ruteo, transaccionalidad e idempotencia del alta) |
 | Cross-ref funcional | categoría 02 (qué funcional del artefacto mínimo y del acto de aprovisionar) |
 | Cross-ref de despliegue | categoría 09 (instalación, empaquetado, parámetros de entorno previos a la primera pantalla) |
-| Marco teórico | `Guides/Marco-Teorico-SDD-v1.0.md`, cap. UX/UI/DX |
+| Marco teórico | `Guides/Marco-Teorico-SDD.md`, cap. UX/UI/DX |
 | Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>` de las superficies de arranque y orientación del proyecto |
 
 ---

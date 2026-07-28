@@ -1,13 +1,13 @@
 # Reglas de diseño — Acceso de operador único en panel monolítico
 
 **Proyecto:** {{nombre-solucion}}
-**Documento:** Design-Rules-Acceso-Monousuario-v1.0.md
+**Documento:** Design-Rules-Acceso-Monousuario.md
 **Versión:** 1.0
 **Estado:** Vigente
 **Fecha:** 2026-07-18
 **Autor:** {{equipo-o-rol}} (AG-03 UX/UI)
 **Ámbito:** Capacidad transversal — autenticación y sesión de un solo operador (agnóstico de framework)
-**Hereda de:** `Design-Rules-Web-Generico-v1.0.md`
+**Hereda de:** `Design-Rules-Web-Generico.md`
 **Posición:** Insumo normativo de la categoría 03. Extensión por capacidad del catálogo `References/Design/`. No es un artefacto operativo de `docs/`.
 
 ---
@@ -215,14 +215,14 @@ Una superficie de acceso cumple esta extensión cuando: existe una sola identida
 | Dimensión | Referencia |
 | --- | --- |
 | Especialidad dueña | AG-03 UX/UI |
-| Hereda de | `Design-Rules-Web-Generico-v1.0.md` |
-| Mapeado por | especializaciones por stack (por ejemplo `Design-Rules-Blazor-Mudblazor-v1.0.md`) |
-| Extensión hermana | `Design-Rules-Primer-Arranque-v1.0.md` (crea la identidad única y comparte el shell de acceso) |
+| Hereda de | `Design-Rules-Web-Generico.md` |
+| Mapeado por | especializaciones por stack (por ejemplo `Design-Rules-Blazor-Mudblazor.md`) |
+| Extensión hermana | `Design-Rules-Primer-Arranque.md` (crea la identidad única y comparte el shell de acceso) |
 | Regla que lo invoca | `devs/Rules/Rules-UX-UI-DX.md` (cuando el proyecto declara acceso de operador único) |
 | Cross-ref técnico | categoría 05 (esquema de credenciales, credencial de sesión, protección de formulario, control de intentos) |
 | Cross-ref funcional | categoría 02 (qué funcional de autenticar, cambiar el secreto y cerrar sesión) |
 | Cross-ref de operación | categoría 09 (provisión y rotación operativa del secreto) |
-| Marco teórico | `Guides/Marco-Teorico-SDD-v1.0.md`, cap. UX/UI/DX |
+| Marco teórico | `Guides/Marco-Teorico-SDD.md`, cap. UX/UI/DX |
 | Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>` de las superficies de acceso e identidad del proyecto |
 
 ---

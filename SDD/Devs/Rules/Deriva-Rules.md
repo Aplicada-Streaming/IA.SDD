@@ -2,7 +2,7 @@
 
 **Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/03-UX-UI-DX/` para la línea de base, `SDD/Docs/Proyectos/<Nombre-Proyecto>/08-Calidad-Y-Pruebas/` para la matriz de sensado
 **Subagente target del orquestador:** el subagente de la categoría que emite la afirmación; el auditor independiente para la verificación
-**Versión de las reglas:** 1.1
+**Versión de las reglas:** 2.0
 
 ---
 
@@ -65,7 +65,7 @@ La línea de base se emite al cierre de la Fase B2, con la maqueta aprobada. Son
 
 A esos tres se suma una cuarta fuente de sondas que no proviene de la maqueta: los contratos de verificación de la categoría 10, descriptos en §2.4. La distinción importa porque cubren dimensiones distintas. Las sondas de maqueta miden si el sistema construido se parece a lo que el humano aprobó mirando; las sondas de verificación miden si el sistema construido sigue haciendo lo que la especificación dice que hace. Un proyecto sin interfaz visual no tiene línea de base de maqueta y aun así tiene deriva que sensar.
 
-### 2.1 `Linea-Base-Visual-v1.0.md`
+### 2.1 `Linea-Base-Visual.md`
 
 Ubicación: `SDD/Docs/Proyectos/<Nombre-Proyecto>/03-UX-UI-DX/`.
 
@@ -80,7 +80,7 @@ Inventario de lo que el humano aprobó al mirar la maqueta. Cuatro tablas, cada 
 
 Los identificadores son de dos dígitos uniformes, como el resto de los identificadores del template (D3, D4). Son estables: un elemento que se elimina no libera su número; su fila queda con estado `Retirado` y la fecha, para que una referencia vieja no apunte a otra cosa.
 
-### 2.2 `Contrato-Datos-Maqueta-v1.0.md`
+### 2.2 `Contrato-Datos-Maqueta.md`
 
 Ubicación: `SDD/Docs/Proyectos/<Nombre-Proyecto>/03-UX-UI-DX/`.
 
@@ -96,7 +96,7 @@ Reglas del contrato:
 - Todo campo del modelo conceptual que ninguna superficie exhibe se declara explícitamente en una sección de campos no exhibidos, con el motivo. Un campo que el humano nunca vio no está validado visualmente, y eso hay que saberlo.
 - El formato de presentación de cada campo es parte del contrato: una fecha que se aprobó en formato largo y aparece en el sistema construido como marca de tiempo cruda es deriva, aunque el dato sea el mismo.
 
-### 2.3 `Matriz-Sensado-Deriva-v1.0.md`
+### 2.3 `Matriz-Sensado-Deriva.md`
 
 Ubicación: `SDD/Docs/Proyectos/<Nombre-Proyecto>/08-Calidad-Y-Pruebas/`.
 
@@ -120,7 +120,7 @@ Cuando el proyecto no ejecuta Fase B2 pero sí tiene categoría 10, la matriz se
 
 ### 2.4 Contratos de verificación de la categoría 10 (`VER-XX`)
 
-Ubicación: dentro de cada `ejemplo-XX-<Progresion>-v<X.Y>.md` de `SDD/Docs/Proyectos/<Nombre-Proyecto>/10-Examples/`, en su sección 9. Los define `Rules-Examples.md` §4.6; esta regla solo declara cómo entran al sensado.
+Ubicación: dentro de cada `ejemplo-XX-<Progresion>.md` de `SDD/Docs/Proyectos/<Nombre-Proyecto>/10-Examples/`, en su sección 9. Los define `Rules-Examples.md` §4.6; esta regla solo declara cómo entran al sensado.
 
 | Prefijo | Elemento | Qué registra cada sonda |
 | --- | --- | --- |
@@ -194,17 +194,17 @@ Reglas de uso:
 
 ## 6. Criterios de aceptación
 
-- [ ] En proyectos con Fase B2: existen `Linea-Base-Visual-v1.0.md` y `Contrato-Datos-Maqueta-v1.0.md` en 03 del proyecto, con los identificadores `SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX` y `DM-XX` de dos dígitos uniformes.
+- [ ] En proyectos con Fase B2: existen `Linea-Base-Visual.md` y `Contrato-Datos-Maqueta.md` en 03 del proyecto, con los identificadores `SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX` y `DM-XX` de dos dígitos uniformes.
 - [ ] Toda superficie de la maqueta aprobada tiene su `SUP-XX`, y toda superficie con `SUP-XX` existe en la maqueta.
 - [ ] Todo campo que la maqueta exhibe tiene su `DM-XX` con su correspondencia al modelo conceptual de 02.
 - [ ] Los campos del modelo conceptual que ninguna superficie exhibe están declarados con su motivo.
-- [ ] Existe `Matriz-Sensado-Deriva-v1.0.md` en 08 del proyecto, con una fila `SD-XX` por elemento verificable, su método de verificación, su evidencia esperada y su umbral.
+- [ ] Existe `Matriz-Sensado-Deriva.md` en 08 del proyecto, con una fila `SD-XX` por elemento verificable, su método de verificación, su evidencia esperada y su umbral.
 - [ ] Los umbrales de deriva de cada fila son coherentes con la tabla del §3.
 - [ ] Toda afirmación sobre el estado del sistema en los artefactos de la fase cita evidencia en el formato del §1.
 - [ ] Ninguna evidencia citada apunta a una ruta, identificador o comando que no resuelve.
 - [ ] El resumen ejecutivo del handoff incluye la matriz de sensado con el estado de cada fila.
 - [ ] En proyectos con categoría 10: la matriz tiene una fila `VER-XX` por cada contrato de verificación declarado en `10-Examples`, sin contratos huérfanos ni filas sin contrato que las respalde.
-- [ ] Ningún proyecto con categoría 10 queda sin `Matriz-Sensado-Deriva-v1.0.md`, aunque no haya ejecutado Fase B2.
+- [ ] Ningún proyecto con categoría 10 queda sin `Matriz-Sensado-Deriva.md`, aunque no haya ejecutado Fase B2.
 - [ ] El método de verificación de cada fila `VER-XX` es el comando declarado en su contrato, o su desvío está justificado en la propia fila.
 - [ ] La evidencia de cada fila `VER-XX` cita el campo `evidencia` del sample por identificador, con su fecha, y no se transcribe duplicada en la matriz.
 
@@ -240,14 +240,14 @@ Sos el subagente responsable de emitir la línea de base de sensado de deriva de
 
 Insumos obligatorios:
 - La maqueta aprobada: SDD/Maquetas/{{NOMBRE_PROYECTO}}/ (todos sus archivos).
-- Bitacora-Validacion-Maqueta-v1.0.md con las iteraciones de validación.
+- Bitacora-Validacion-Maqueta.md con las iteraciones de validación.
 - 03 del proyecto: Experiencia-De-Uso y wireframes-<superficie> ya retroalimentados.
 - 02 del proyecto: modelo conceptual de datos, CU y RN.
 
 A generar:
-- SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/03-UX-UI-DX/Linea-Base-Visual-v1.0.md
-- SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/03-UX-UI-DX/Contrato-Datos-Maqueta-v1.0.md
-- SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/08-Calidad-Y-Pruebas/Matriz-Sensado-Deriva-v1.0.md
+- SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/03-UX-UI-DX/Linea-Base-Visual.md
+- SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/03-UX-UI-DX/Contrato-Datos-Maqueta.md
+- SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/08-Calidad-Y-Pruebas/Matriz-Sensado-Deriva.md
 
 Reglas: §1 a §5 de Deriva-Rules.md.
 Identificadores: SUP-XX, CMP-XX, EST-XX, NAV-XX, DM-XX, SD-XX, dos dígitos uniformes, estables.
@@ -273,3 +273,4 @@ Devolución:
 | --- | --- | --- |
 | 1.0 | 2026-07-19 | Reglas iniciales del sensado de deriva. Define la regla de evidencia verificable D9 con su alcance acotado a las afirmaciones sobre el estado del sistema, las cuatro condiciones de una evidencia y su formato de cita `EV-XX`; los tres artefactos de línea de base (`Linea-Base-Visual`, `Contrato-Datos-Maqueta`, `Matriz-Sensado-Deriva`) con sus sistemas de identificadores; los umbrales de deriva menor y mayor por dimensión; los cuatro puntos de sensado; el uso de la línea de base como guía tutora para el humano y para el agente; criterios de aceptación, anti-patrones y prompt-snippet. |
 | 1.1 | 2026-07-26 | Extensión del sensado de deriva a contratos y comportamiento (S2). Nuevo §2.4 con las sondas `VER-XX` aportadas por los contratos de verificación de la categoría 10, que no dependen de la maqueta y traen su propio comando y su propia evidencia. §2.3 admite `VER-XX` en la columna de elemento de línea de base y en la de método de verificación, y declara que un proyecto con categoría 10 emite matriz aunque no ejecute Fase B2. §3 suma la dimensión de contratos y comportamiento con sus dos umbrales. §4 pasa de cuatro a cinco puntos de sensado, con el alta de sondas al cerrar la fase que genera la categoría 10. §6 suma cuatro criterios de aceptación. |
+| 2.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |
