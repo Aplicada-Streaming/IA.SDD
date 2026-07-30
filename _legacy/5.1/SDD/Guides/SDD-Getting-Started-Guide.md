@@ -3,7 +3,7 @@ doc_id: GUIDE-SDD-GETTING-STARTED
 doc_type: getting-started-guide
 title: SDD Getting Started Guide
 status: vigente
-version: 1.5
+version: 1.3
 origin: ai-assisted
 confidence: alta
 owner: Framework SDD
@@ -19,7 +19,7 @@ traces:
 
 ```yaml
 Documento: SDD-Getting-Started-Guide.md
-Versión: 1.5
+Versión: 1.3
 Fecha: 2026-07-29
 Audiencia: desarrolladores que arrancan por primera vez un producto con el Framework SDD
 Idioma: español rioplatense neutro técnico
@@ -96,8 +96,8 @@ SDD trabaja sobre repositorios **separados por responsabilidad**. La [Guía de u
 
 | Rol | Ejemplo | Escritura | Contiene |
 |---|---|---|---|
-| **Framework SDD** (fuente, solo lectura) | `IA.SDD` | Nunca lo tocás | Reglas, plantillas de intake, los dos master-prompts, guías, los dos prompts de entrada |
-| **Repositorio destino** | `<Slug-Producto>` | Los orquestadores escriben acá | El intake (`SDD/Intake/`), la documentación generada (`SDD/Docs/`) y, más adelante, el código |
+| **Framework SDD** (fuente, solo lectura) | `IA.SDD` | Nunca lo tocás | Reglas, plantillas de intake, master-prompt, guías, prompt de entrada |
+| **Repositorio destino** | `<Slug-Producto>` | El orquestador escribe acá | El intake (`SDD/Intake/`), la documentación generada (`SDD/Docs/`) y, más adelante, el código |
 | **Repositorio de documentación** | `<Slug-Producto>.Documentacion` | Vos, a mano | Los tool-prompts reejecutables (`Prompts/`), el material de investigación (`INPUTs/`), indexación y análisis |
 
 > **Definición — tool-prompt.** Un prompt operativo, versionado y reejecutable, que se invoca desde Claude Code con la fórmula «Lee y ejecuta `<ruta>`». Vive en el repositorio de documentación y dispara una tarea concreta sobre el repositorio destino (por ejemplo, «generar el intake» o «arrancar el orquestador»).
@@ -384,7 +384,7 @@ Checklist de los tropiezos más comunes la primera vez:
 - **Escribir en el framework.** `IA.SDD` es de solo lectura. Si necesitás cambiar una regla, es un cambio de framework, no de tu producto. Nunca edites la fuente para un caso puntual.
 - **Avanzar con el intake incompleto.** Si el integrador dejó `PENDIENTE`s, resolvelos antes del PASO-5. El intake incompleto es la principal fuente de documentación pobre; el orquestador se va a frenar igual.
 - **Completar el `PRODUCT-MANIFEST` a mano.** No se hace: lo deriva el orquestador de la §13. Vos solo completás el `PRODUCT-INTAKE`.
-- **`SDD/Docs/` con contenido previo.** Si el destino ya tiene documentación de una corrida anterior, el orquestador no arranca de una: ejecuta la reconciliación normativa ([Master-Prompt §2.1](../Devs/Orchestrator/Master-Prompt.md)). Lee con qué versión del framework se generó ese árbol, la compara con la vigente y te dice qué cambió y qué documentos quedaron potencialmente invalidados. Después te ofrece tres caminos: un plan de migración normativa documento por documento, regenerar todo desde cero, o seguir bajo la versión anterior. Hasta que elijas, no toca nada. Ejecutar el plan es una corrida aparte, con [`PROMPT-Agente-Migracion-SDD.md`](../../PROMPTS/PROMPT-Agente-Migracion-SDD.md), que lleva el destino a la versión vigente preservando su contenido.
+- **`SDD/Docs/` con contenido previo.** Si el destino ya tiene documentación de una corrida anterior, el orquestador no arranca de una: ejecuta la reconciliación normativa ([Master-Prompt §2.1](../Devs/Orchestrator/Master-Prompt.md)). Lee con qué versión del framework se generó ese árbol, la compara con la vigente y te dice qué cambió y qué documentos quedaron potencialmente invalidados. Después te ofrece tres caminos: un plan de adecuación documento por documento, regenerar todo desde cero, o seguir bajo la versión anterior. Hasta que elijas, no toca nada.
 - **Aprobar el plan sin leerlo.** Revisá tipos D8, proyecto de código principal, orden topológico y flags (`usa_llm`, `tiene_auth`, `equipo_n`). Un flag mal puesto genera categorías de más o de menos.
 - **Perder el material de investigación en un chat.** Dejalo en `INPUTs/` del repo de documentación. Es lo que hace el arranque reproducible (§5).
 - **Un `tipo_proyecto_codigo` fuera de D8.** Cada proyecto de código declara exactamente uno de los 8 tipos cerrados. Cualquier otro valor es un error bloqueante.
@@ -408,9 +408,7 @@ Referencias de esta guía:
 |---|---|
 | Guía de usuario del template SDD | `/IA/IA.SDD/SDD/Guides/SDD-User-Guide.md` |
 | Prompt de entrada Bootstrap | `/IA/IA.SDD/PROMPTS/PROMPT-Agente-Bootstrap-SDD.md` |
-| Master-prompt (orquestador de generación) | `/IA/IA.SDD/SDD/Devs/Orchestrator/Master-Prompt.md` |
-| Prompt de entrada Migración normativa | `/IA/IA.SDD/PROMPTS/PROMPT-Agente-Migracion-SDD.md` |
-| Master-prompt (orquestador de migración) | `/IA/IA.SDD/SDD/Devs/Orchestrator/Master-Prompt-Migracion.md` |
+| Master-prompt (orquestador) | `/IA/IA.SDD/SDD/Devs/Orchestrator/Master-Prompt.md` |
 | Plantilla de intake | `/IA/IA.SDD/SDD/Devs/Intake/PRODUCT-INTAKE-template.md` |
 | Reglas de validación de intake | `/IA/IA.SDD/SDD/Devs/Rules/Intake-Rules.md` |
 | Tool-prompt integrador (ejemplo) | `<RUTA-DOCUMENTACION>/Prompts/01-Ejecutar-Prompt-Integrador-Documento-Intake/Ejecutar-Prompt-Integrador-Documento-Intake.md` |
@@ -424,8 +422,8 @@ Solo los términos que necesitás para el primer arranque. El glosario completo 
 
 | Término | Definición breve |
 |---|---|
-| Framework SDD | El template de solo lectura (`IA.SDD`): reglas, plantillas, los dos master-prompts, guías. No se toca por producto. |
-| Repositorio destino | Repositorio del producto donde los orquestadores escriben el intake, la documentación (`SDD/Docs/`) y luego el código. |
+| Framework SDD | El template de solo lectura (`IA.SDD`): reglas, plantillas, master-prompt, guías. No se toca por producto. |
+| Repositorio destino | Repositorio del producto donde el orquestador escribe el intake, la documentación (`SDD/Docs/`) y luego el código. |
 | Repositorio de documentación | Repositorio `<Producto>.Documentacion` que persiste los tool-prompts (`Prompts/`) y el material de investigación (`INPUTs/`). Aporte de la experiencia última. |
 | Tool-prompt | Prompt operativo, versionado y reejecutable, invocado con «Lee y ejecuta `<ruta>`», que dispara una tarea sobre el destino. |
 | Intake (`PRODUCT-INTAKE`) | Documento único de entrada del producto. Fuente de verdad del negocio, la composición y la técnica. El único documento que completás. |
@@ -453,8 +451,6 @@ Solo los términos que necesitás para el primer arranque. El glosario completo 
 | 1.1 | 2026-07-26 | Preservación de la autosuficiencia del repositorio: las rutas absolutas a un repositorio de documentación nominado se reemplazan por el placeholder `<RUTA-DOCUMENTACION>` y la carpeta de tool-prompts del repositorio de documentación se nombra `Prompts/`, de modo que ningún archivo de `IA.SDD` contenga una ruta que apunte fuera de su propio árbol. El modelo de tres repositorios y el ejemplo aplicado no cambian. |
 | 1.2 | 2026-07-26 | Neutralidad de dominio (D7): el nombre de la solución concreta del ejemplo aplicado de §6 se reemplaza por el placeholder `<Nombre-Solucion>` en las dieciocho ocurrencias del cuerpo, incluidos el título de sección, su ancla, el diagrama de topología, los comandos de clonado y el árbol de carpetas. La descripción del dominio y los flujos de usuario se enuncian en términos genéricos. §6 abre declarando que el recorrido es un caso real con los nombres reemplazados. La fila 1.0 conserva su redacción original por ser registro histórico. |
 | 1.3 | 2026-07-29 | Vocabulario normativo (framework 5.0 y 5.1), en una sola fila porque la migración de la 5.0 modificó el archivo sin registrarlo. **Unificada la versión del documento**, que se declaraba dos veces y distinto: `version: 1.2` en el front-matter y `Versión: 1.0` en el bloque de cabecera. **§9** suma al glosario mínimo los términos que el vocabulario normativo fija y que un primer arranque necesita: producto, proyecto de código, proyecto como emprendimiento, solución de código, los cuatro nombres del producto con la aclaración de que `Raiz-Codigo` la declara el usuario, y la regla `Vocabulario-Rules.md`. **§7** corrige «catálogo completo de reproducto de problemas», una de las treinta ocurrencias que produjo la sustitución global de la cadena en la 5.0, y el rango de la FAQ, que citaba `F-01 a F-23` cuando hay 29 entradas desde la 3.0 del framework. |
-| 1.4 | 2026-07-29 | Ruteo a la migración normativa. El troubleshooting de «`SDD/Docs/` con contenido previo» nombra la salida A con su nombre vigente, «plan de migración normativa», y declara que ejecutarlo es una corrida aparte con el prompt de entrada `PROMPT-Agente-Migracion-SDD.md`, que lleva el destino a la versión vigente preservando su contenido. Sube minor: agrega al troubleshooting la salida que antes no existía, sin cambiar ningún paso del recorrido de arranque. | Framework SDD (migración normativa) |
-| 1.5 | 2026-07-29 | Puesta al día del inventario de la fuente, detectada al auditar la guía completa en lugar de solo los puntos que el plan de la intervención listaba. **§2** enumeraba el contenido del repositorio fuente como «master-prompt … prompt de entrada», en singular, y hay dos de cada uno; es el mismo defecto que arrastraba la tabla equivalente del `README.md` raíz, en la tabla que esa misma sección declara como la que más caro sale confundir. **§8** etiqueta la fila de referencias del master-prompt como orquestador de generación y suma las dos filas del orquestador de migración, de modo que el lector que llega desde el troubleshooting de §7 encuentre la ruta. **§9** corrige las mismas enumeraciones en el glosario mínimo: la entrada *Framework SDD* listaba un master-prompt, y las dos entradas de repositorio destino decían que «el orquestador» escribe, en singular. Sube minor: corrige una enumeración y completa una tabla de referencias, sin cambiar ningún paso. | Framework SDD (migración normativa) |
 
 ---
 

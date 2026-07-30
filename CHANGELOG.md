@@ -3,6 +3,61 @@
 Todos los cambios relevantes de este repositorio (`IA.SDD`) se documentan acá.
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/).
 
+## [6.0] - 2026-07-29
+
+Capacidad de **migración normativa**: llevar un destino generado con una versión anterior del framework a la versión vigente, preservando su contenido. Sube major porque `PRODUCT-MANIFEST-template.md` sube major y un manifiesto ya emitido deja de cumplir. Ninguna invariante D1-D9 modificada, el conjunto D8 intacto, el orden de fases y la mecánica plan-then-confirm sin cambios.
+
+**Qué faltaba.** El framework sabía diagnosticar el desfasaje de un destino y no sabía repararlo. La reconciliación normativa de `Master-Prompt.md` §2.1 leía la procedencia, la comparaba contra las versiones vigentes, clasificaba los saltos y enumeraba los documentos potencialmente invalidados; sus tres salidas eran emitir un plan sin tocar nada, regenerar desde cero archivando lo anterior, o seguir con las reglas viejas. Ninguna llevaba el destino a la versión vigente conservando lo que ya decía: regenerar lo conseguía tirando lo que había, y seguir con las reglas viejas lo conseguía no avanzando. Además la reconciliación no alcanzaba a los dos documentos de entrada, y sobre un destino generado con la 4.1 **ni llegaba a correr**, porque §2 resolvía el producto buscando `PRODUCT-INTAKE-*.md` y en la 4.1 el intake se llamaba `SOLUTION-INTAKE`.
+
+La nota de coherencia es [`Coherencia-Migracion.md`](SDD/Devs/Guides/Coherencia-Migracion.md).
+
+### Añadido — la capacidad de migración
+
+- **`Migracion-Rules.md` 1.0**, decimoctava regla del framework y sexta transversal. Fija el **principio de estado objetivo**: la normativa vigente es la especificación del estado al que hay que llegar, el documento existente es la fuente del contenido, y la migración re-expresa el segundo bajo la primera. No hay recetas por salto de versión; el salto sirve para priorizar, no para transformar. Se descartaron explícitamente los playbooks por par de versiones, con cinco fundamentos, el primero de ellos siendo que `Vocabulario-Rules.md` §9.5 ya prohíbe la transformación mecánica de texto con el daño de la 5.0 como prueba. Declara además la **regla de no invención** (§4.1): todo contenido de un documento migrado proviene del documento de origen, de un documento hermano o de una respuesta del humano, y no hay cuarta fuente; la sección exigida sin fuente se emite como pendiente y **no se rellena**. Catorce criterios de aceptación, seis hallazgos P0 y ocho anti-patrones.
+- **`Master-Prompt-Migracion.md` 1.1**, orquestador contiguo con siete fases M0 a M6: reconocimiento del destino con tolerancia de nombres legados, diff normativo, migración del intake, re-derivación del manifiesto, migración de `SDD/Docs/` en orden de la cadena D6, cierre condicional de la procedencia y auditoría. **No redefine despacho ni auditoría**: cita §8 y §10 del master-prompt de generación, junto con su archivado de §5, su manejo de ambigüedad de §9 y su orden topológico de §3.3. La duplicación que no existe no se desincroniza.
+- **`PROMPT-Agente-Migracion-SDD.md` 1.0**, prompt de entrada par del de bootstrap, con la tabla que decide cuál de los dos corresponde según el estado del destino.
+- **Destinos sin procedencia declarada**: pasan de tener solo regenerar o abortar a ser migrables, con la clasificación degradada a «revisar todo». Es posible porque la migración opera contra el estado objetivo y no contra el conjunto de origen. La degradación se declara y **no se supone ninguna versión de origen**.
+- **Migración parcial** como estado final legítimo, con dos condiciones bloqueantes: la procedencia no se reescribe y el estado parcial se declara documento por documento en el informe.
+
+### Añadido — la instrumentación que la migración necesitaba
+
+- **`PRODUCT-MANIFEST-template.md` (3.1 → 4.0 → 4.1).** El bloque de procedencia de §1.1 suma **dos filas obligatorias**: la versión de `PRODUCT-INTAKE-template` y la de `PRODUCT-MANIFEST-template`. Las plantillas se versionan aparte de las reglas, así que un cambio de su estructura no movía ninguna versión declarada y era invisible para el diff normativo: los dos documentos de entrada del destino no podían resultar candidatos de nada. Sube **major** por el criterio de `SDD-Development-Guide.md` §VI.1. En la 4.1 se completa además la fila de reglas transversales, que omitía `Vocabulario-Rules` pese a que `Master-Prompt.md` §8 la inyecta en todo despacho, y suma `Migracion-Rules`.
+- **`Intake-Rules.md` (3.1 → 3.2).** **§2.1 nueva**, tabla maestra de sus dos artefactos. El paso 4 del diff normativo enumera los documentos que una regla gobierna leyendo «su tabla maestra de documentos (§2.1 de la regla)», y esta regla no la tenía: el intake y el manifiesto nunca podían aparecer entre los documentos potencialmente invalidados, ni siquiera ante el salto major de 2.1 a 3.0 de esta misma regla.
+- **`Master-Prompt.md` (5.1 → 5.2).** §2 paso 1 **tolera nombres de artefacto legados**, buscándolos en `_legacy/` y en los bloques de impacto del `CHANGELOG.md` antes de concluir que no hay intake; un intake bajo nombre legado deja de detener la cadena y pasa a declararse como destino a migrar. §2.1 nombra el instrumento de su salida A y renombra su plan; sus tres prohibiciones y su detención quedan intactas y **no se agrega una cuarta salida**, porque ejecutar el plan sigue siendo una decisión aparte. §13 regla 2 pasa de un caso de escritura del intake a **dos**, con el segundo siendo la migración estructural bajo tres condiciones acumulativas.
+- **`SDD-Development-Guide.md` (1.4 → 1.5 → 1.6).** §VI.4 especifica el bloque **«Impacto sobre destinos existentes»** con sus tres tablas, obligatorio en toda entrada major: hay una clase de cambio que ningún diff de versiones puede inferir, porque un renombre de artefacto no se deduce de que su regla haya subido de 2.1 a 3.0. §VI.5 declara la obligación correlativa. En la 1.6, tres conteos y el mapa de dependencias al día, y la **tabla de derivación del conjunto corregida**: hacía subir major solo por reglas e invariantes y no contemplaba las plantillas de intake.
+
+### Cambiado — el término
+
+- **`Vocabulario-Rules.md` (2.0 → 2.1).** **§9.6 nueva**: declara la familia calificada **«migración normativa»** con sus tres referentes verificados por barrido, porque la palabra ya tenía dos sentidos vigentes en el framework. Se adopta la forma calificada obligatoria —segundo escalón de la escalera de §9.3—, con el primero declarado insuficiente y su evidencia: los dos sentidos coexisten dentro de §9.5 de ese mismo archivo, y por §9.2 el criterio de colisión es la sección. Frente al tercer referente, las migraciones de datos del producto documentado, **no se desambigua nada** por contextos disjuntos, y la constancia queda escrita para que una auditoría posterior no lo levante como hallazgo. **§4 suma R6.** «Reconciliación normativa» conserva su nombre porque compara y no transforma.
+- **Renombre léxico de «plan de adecuación» a «plan de migración normativa»**, por el procedimiento por ocurrencia de `Vocabulario-Rules.md` §9.5 y **no** por sustitución global de cadena: **diecinueve ocurrencias de «adecua\*» revisadas, siete sustituidas**, cero filas históricas de control de cambios reescritas y cero ocurrencias no normativas tocadas. Barrido negativo sin hallazgos. Alcanzó a `Master-Prompt.md`, `PROMPT-Agente-Bootstrap-SDD.md` (2.3 → 2.4), `SDD-User-Guide.md` (1.7 → 1.9) y `SDD-Getting-Started-Guide.md` (1.3 → 1.5).
+
+### Impacto sobre destinos existentes
+
+**Renombres de artefacto**
+
+| Nombre anterior | Nombre vigente | Naturaleza |
+| --- | --- | --- |
+| `SDD/Docs/Audit/Reconciliacion-<origen>-a-<vigente>.md` | `SDD/Docs/Audit/Plan-Migracion-<origen>-a-<vigente>.md` | archivo |
+| «plan de adecuación» | «plan de migración normativa» | término de la salida A de `Master-Prompt.md` §2.1 |
+
+Los renombres de la 5.0 —`SOLUTION-INTAKE` a `PRODUCT-INTAKE`, `SOLUTION-MANIFEST` a `PRODUCT-MANIFEST`, `SDD/Docs/Solucion/` a `SDD/Docs/Producto/`, y los cinco identificadores— siguen vigentes y son los que la tolerancia de nombres legados de §2 paso 1 resuelve. No se repiten acá: su declaración vive en la entrada `[5.0]`.
+
+**Secciones movidas o partidas**
+
+| Documento | Sección anterior | Destino vigente |
+| --- | --- | --- |
+| `Intake-Rules.md` | §2 Campos bloqueantes | §2.2 Campos bloqueantes, dentro de §2 «Artefactos gobernados y campos bloqueantes». Las referencias externas apuntan a §2, que sigue conteniéndolos |
+| `Master-Prompt.md` | §13 regla 2, caso único de escritura | §13 regla 2 caso (a). El caso (b) es nuevo |
+
+**Campos bloqueantes nuevos**
+
+| Documento | Campo | Regla que lo exige |
+| --- | --- | --- |
+| `PRODUCT-MANIFEST-<Slug-Producto>.md` | Fila de procedencia con la versión de `PRODUCT-INTAKE-template` | `PRODUCT-MANIFEST-template.md` §1.1 y su checklist de §7 |
+| `PRODUCT-MANIFEST-<Slug-Producto>.md` | Fila de procedencia con la versión de `PRODUCT-MANIFEST-template` | `PRODUCT-MANIFEST-template.md` §1.1 y su checklist de §7 |
+
+**Qué le pasa a un destino ya emitido.** Su manifiesto no declara las dos filas de plantilla y por lo tanto deja de cumplir. La vía de reparación es la que esta misma versión introduce: la migración normativa, que las completa en la fase M3 al re-derivar el manifiesto. Un destino que no se migre sigue siendo legible y utilizable; lo que pierde es la capacidad de que un diff normativo futuro detecte cambios de estructura de plantilla. No hay pérdida de contenido y no se requiere ninguna acción inmediata.
+
 ## [5.1] - 2026-07-29
 
 Gobierno del glosario de la documentación generada, y reparación del método con que se aplicó la 5.0. Sube minor: agrega criterios de aceptación y un artefacto obligatorio a una categoría, sin modificar ninguna invariante D1-D9, el conjunto D8, el orden de fases ni la mecánica plan-then-confirm. Dos reglas suben major por su propio artefacto —`Rules-Especificacion-Funcional.md` y `Rules-UX-UI-DX.md`— y su documentación ya emitida sin glosario deja de cumplir.

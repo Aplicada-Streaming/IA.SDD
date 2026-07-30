@@ -1,6 +1,6 @@
 # PRODUCT-MANIFEST-template
 
-**Versión de la plantilla:** 4.1
+**Versión de la plantilla:** 3.1
 
 Este campo versiona la **referencia de formato**. El campo `| Versión |` del bloque de producto de §1 pertenece al manifiesto que el orquestador deriva, y arranca en 1.0 en cada producto nuevo.
 
@@ -41,7 +41,7 @@ Los cuatro primeros campos son los cuatro planos de identidad de [`Vocabulario-R
 
 ### §1.1 Procedencia del framework
 
-Bloque obligatorio. Declara bajo qué normativa se generó esta documentación. El orquestador lo completa al derivar el manifiesto, leyendo la versión que cada archivo declara en su cabecera —el campo `Versión` en el master-prompt y en las reglas, `Versión de la plantilla` en las dos plantillas de intake—; no agrega ninguna lectura, porque ya abre cada uno de esos archivos para validar el intake y construir sus despachos.
+Bloque obligatorio. Declara bajo qué normativa se generó esta documentación. El orquestador lo completa al derivar el manifiesto, leyendo el campo `Versión` de la cabecera de cada archivo que efectivamente usa; no agrega ninguna lectura, porque ya abre cada archivo de reglas para construir sus despachos.
 
 | Artefacto del framework | Versión |
 |---|---|
@@ -49,13 +49,7 @@ Bloque obligatorio. Declara bajo qué normativa se generó esta documentación. 
 | `Master-Prompt` | [versión de su cabecera] |
 | `Root-Rules` | [versión de su cabecera] |
 | `Rules-<Categoria>` | [una fila por cada regla de categoría efectivamente aplicada] |
-| Reglas transversales aplicadas | [`Intake-Rules` y `Vocabulario-Rules` siempre; `Maqueta-Rules` y `Deriva-Rules` si se ejecutó la Fase B2; `Migracion-Rules` si el árbol atravesó una migración normativa. `Root-Rules` lleva fila propia arriba] |
-| `PRODUCT-INTAKE-template` | [versión de la plantilla bajo la que se estructuró el intake] |
-| `PRODUCT-MANIFEST-template` | [versión de la plantilla bajo la que se estructuró este manifiesto] |
-
-Las dos últimas filas son obligatorias como las demás: se completan siempre, porque los dos documentos de entrada existen en todo destino.
-
-**Por qué las plantillas llevan fila propia.** Porque se versionan aparte de las reglas. Un cambio en la estructura de `PRODUCT-INTAKE-template` no mueve la versión de `Intake-Rules` ni la de ninguna regla de categoría, así que sin estas filas una reestructuración de plantilla no aparece en la comparación de versiones que el orquestador arma en `Master-Prompt.md` §2.1: los dos documentos de entrada del destino quedan sin forma de declarar que su estructura quedó atrás, y el intake nunca resulta candidato a nada. Es el mismo razonamiento que justifica el resto del bloque, aplicado a los dos artefactos que lo estaban dejando afuera.
+| Reglas transversales aplicadas | [`Intake-Rules`, y `Maqueta-Rules` y `Deriva-Rules` si se ejecutó la Fase B2] |
 
 **Para qué sirve.** Un árbol de `SDD/Docs/` generado hoy va a sobrevivir a varias versiones del framework. Sin este bloque no hay forma de saber contra qué reglas se produjo, y por lo tanto tampoco de saber qué documentos quedaron invalidados cuando una regla sube major, que es lo que el propio framework declara que ocurre. Con el bloque, y con el conjunto normativo de esa versión conservado en `_legacy/` del framework, se puede reconstruir la normativa exacta y planificar la actualización.
 
@@ -225,7 +219,6 @@ El orquestador recorre un solo proyecto de código; el resultado equivale a la e
 El orquestador verifica estos ítems al derivar el manifiesto desde `PRODUCT-INTAKE` §13, antes de presentarlo para confirmación. Todos deben cumplirse; si alguno falla, no deriva el manifiesto y lo reporta en la batería de validación de intake.
 
 - [ ] El bloque de producto tiene nombre, `Slug-Producto`, `Raiz-Codigo`, proyecto de código principal y referencias de intake completos.
-- [ ] El bloque de procedencia de §1.1 declara la versión del conjunto, la del master-prompt, la de cada regla aplicada y la de las **dos plantillas de intake**. Ninguna de las dos filas de plantilla queda vacía.
 - [ ] El perfil de convención de nombres está declarado (forma PascalCase, separador, prefijo de redistribuibles).
 - [ ] La tabla de proyectos de código tiene al menos una fila y todos los campos obligatorios completos.
 - [ ] Cada `tipo_proyecto_codigo` pertenece al conjunto cerrado D8 de 8 valores.
@@ -247,5 +240,3 @@ El orquestador verifica estos ítems al derivar el manifiesto desde `PRODUCT-INT
 | 2.1 | 2026-07-29 | La referencia de formato declara su propia versión en cabecera, que no tenía: era el único artefacto de `Intake/` sin campo `Versión` legible, aplicación incompleta de D4 y D6 equivalente a la que la plantilla de intake corrigió en su 1.3. Se normalizan los ejemplos de `Slug-Producto` y `Nombre-Proyecto-Codigo` a Título-Con-Guiones, con lo que el valor declarado y el nombre de archivo del intake citado dejan de contradecirse. Se corrigen dos rutas `rules/Intake-Rules.md` por su nombre lógico. | Revisión SDD |
 | 3.0 | 2026-07-29 | Renombre de vocabulario normativo (framework 5.0). El nivel superior pasa de «solución» a **producto** y la unidad de compilación de «proyecto» a **proyecto de código**; los cuatro planos de identidad se separan en `Nombre-Producto`, `Slug-Producto`, `Raiz-Codigo` y `Artefacto-Agrupacion`. | Reformulación SDD |
 | 3.1 | 2026-07-29 | Restitución de la fila histórica del control de cambios que la migración de la 5.0 había reescrito con el vocabulario nuevo, contra `SDD-Development-Guide.md` §VI.2: una fila ya escrita no se reescribe aunque un cambio posterior invalide lo que describe, porque corregirla hace que el registro mienta. La fila nueva declara el renombre; la vieja sigue nombrando lo que nombraba. | Revisión SDD |
-| 4.0 | 2026-07-29 | Instrumentación de la comparación de versiones sobre los documentos de entrada (prerrequisito F1 de la migración normativa). **§1.1 suma dos filas obligatorias** al bloque de procedencia: la versión de `PRODUCT-INTAKE-template` y la de `PRODUCT-MANIFEST-template`, con el fundamento de que las plantillas se versionan aparte de las reglas y por lo tanto un cambio de su estructura no movía ninguna versión declarada; sin las filas, una reestructuración de plantilla era invisible para el diff normativo de `Master-Prompt.md` §2.1 y los dos documentos de entrada del destino no podían resultar candidatos de nada. El intro de la sección precisa que la versión de las plantillas se lee del campo `Versión de la plantilla` y no del campo `Versión`, que en ellas designa otra cosa. **§7 suma su ítem de checklist**, para que la omisión de cualquiera de las dos filas detenga la derivación en lugar de pasar sin verificarse. Sube **major** por el criterio de `SDD-Development-Guide.md` §VI.1: un manifiesto ya emitido no declara esas filas y deja de cumplir. El impacto sobre destinos existentes se declara en la entrada del `CHANGELOG.md` de la versión del conjunto que publica esta intervención. | Framework SDD (migración normativa) |
-| 4.1 | 2026-07-29 | Completitud de la fila de reglas transversales de §1.1, que enumeraba `Intake-Rules`, `Maqueta-Rules` y `Deriva-Rules` y omitía a `Vocabulario-Rules`, pese a que `Master-Prompt.md` §8 la inyecta en **todo** despacho sin excepción de categoría. Era la misma clase de defecto que la 4.0 corrigió para las plantillas: una pieza que gobierna la generación sin poder declarar su versión en la procedencia, y por lo tanto con su salto de versión invisible para la comparación normativa. La fila pasa a distinguir las transversales que se aplican siempre de las condicionales, suma `Migracion-Rules` para los árboles que atravesaron una migración normativa, y remite a la fila propia de `Root-Rules` para no duplicarla. Sube minor: completa una enumeración sin cambiar la estructura del bloque. | Framework SDD (migración normativa) |

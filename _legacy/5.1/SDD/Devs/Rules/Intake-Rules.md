@@ -3,7 +3,7 @@
 **Archivo target:** `SDD/Intake/PRODUCT-INTAKE-<Slug-Producto>.md`
 **Nivel de aplicación (`Vocabulario-Rules.md` §4 R3):** Producto
 **Lector:** la Fase de validación de intake del `Master-Prompt.md` (previa a la Fase A).
-**Versión de las reglas:** 3.2
+**Versión de las reglas:** 3.1
 
 ---
 
@@ -21,24 +21,7 @@ El orden es: el orquestador lee el intake, corre §2 (placeholders), corre esta 
 
 ---
 
-## §2 Artefactos gobernados y campos bloqueantes
-
-Esta sección declara dos cosas: qué artefactos gobierna esta regla (§2.1) y qué campos de ellos detienen la cadena cuando faltan (§2.2).
-
-### §2.1 Tabla maestra de documentos
-
-| Archivo | Obligatorio para | Recomendado para | Omitir para | Descripción |
-|---|---|---|---|---|
-| `PRODUCT-INTAKE-<Slug-Producto>.md` | Todos los tipos D8 | — | — | Documento de entrada único del producto, en sus tres partes: negocio (§1 a §12), composición (§13 a §16) y técnica por proyecto de código (§17). Lo escribe y lo aprueba el Product Owner; su formato de referencia es `PRODUCT-INTAKE-template.md` |
-| `PRODUCT-MANIFEST-<Slug-Producto>.md` | Todos los tipos D8 | — | — | Manifiesto canónico de la jerarquía de proyectos de código, derivado por el orquestador de §13 del intake según §4 de esta regla y confirmado por el humano; su formato de referencia es `PRODUCT-MANIFEST-template.md` |
-
-Los dos artefactos viven en `SDD/Intake/` del repositorio destino y son obligatorios para los ocho tipos D8. No hay gating por tipo: todo producto tiene exactamente un intake y exactamente un manifiesto, cualquiera sea la composición de sus proyectos de código. Es por eso que las tres columnas de gating quedan sin discriminar, y no por omisión.
-
-**Por qué una regla transversal declara tabla maestra.** Porque es la dirección contra la cual el orquestador enumera artefactos. El paso 4 del diff normativo de `Master-Prompt.md` §2.1 enumera los documentos que una regla gobierna «leyendo su tabla maestra de documentos (§2.1 de la regla)», y esta regla no la tenía: el intake y el manifiesto no podían aparecer entre los documentos potencialmente invalidados, ni siquiera cuando esta misma regla subió major. La evidencia está en su propio control de cambios: subió de 2.1 a 3.0 renombrando identificadores y nombres de artefacto, y ningún documento de destino quedó marcado por ese salto.
-
-La versión de formato bajo la que cada uno de los dos artefactos se estructuró la declara el destino en el bloque de procedencia de `PRODUCT-MANIFEST-template.md` §1.1, que lleva una fila por plantilla. Las dos piezas son complementarias: esta tabla dice qué artefactos hay que enumerar, y la procedencia dice bajo qué versión se estructuraron.
-
-### §2.2 Campos bloqueantes
+## §2 Campos bloqueantes
 
 Son bloqueantes todos los campos del intake marcados con `(*)` en sus preguntas guía, más los siguientes, sin los cuales el orquestador no puede operar:
 
@@ -168,4 +151,3 @@ Reglas de la batería:
 | 2.1 | 2026-07-28 | §5 incorpora la validación de la Parte D, hasta ahora sin verificar: presencia de los cuatro bloques por escenario, `Estado` dentro del enum cerrado, tabla de contenido con los escenarios listados por identificador, regla de resolución de identificadores en las dos direcciones y regla de autocontención. La plantilla declaraba estas reglas desde su 1.3 y ninguna validación las comprobaba. |
 | 3.0 | 2026-07-29 | Renombre de vocabulario normativo (framework 5.0). El nivel superior pasa de «solución» a **producto**, la unidad de compilación de «proyecto» a **proyecto de código**, y los cuatro planos de identidad del producto se separan en campos propios (`Nombre-Producto`, `Slug-Producto`, `Raiz-Codigo`, `Artefacto-Agrupacion`). Se declara el nivel de aplicación de la regla en su cabecera, según `Vocabulario-Rules.md` §4 R3. Sube major porque los identificadores y los nombres de artefacto cambian, y la documentación generada con la nomenclatura anterior deja de cumplir. | Reformulación SDD |
 | 3.1 | 2026-07-29 | Corrección de la sustitución global de cadena de la 5.0. §5 decía «Regla de **reproducto** de la Parte D», palabra inexistente producida al sustituir `soluci*` por `producto` sobre «re**soluci**ón». La clase de defecto y su prohibición quedan documentadas en `Vocabulario-Rules.md` §9.5. La restitución de las filas históricas de este control de cambios, que la migración había reescrito contra `SDD-Development-Guide.md` §VI.2, se registra una sola vez en `CHANGELOG.md` [5.1] por alcanzar a veintitrés archivos. | Revisión SDD |
-| 3.2 | 2026-07-29 | Instrumentación de la enumeración de los documentos de entrada (prerrequisito F2 de la migración normativa). **§2.1 es nueva**: tabla maestra de los dos artefactos que esta regla gobierna, `PRODUCT-INTAKE-<Slug-Producto>.md` y `PRODUCT-MANIFEST-<Slug-Producto>.md`, con columnas homólogas a las de las reglas de categoría y con la declaración explícita de que no hay gating por tipo D8 porque todo producto tiene exactamente uno de cada uno. La regla no la tenía, y el paso 4 del diff normativo de `Master-Prompt.md` §2.1 enumera los documentos gobernados leyendo precisamente esa dirección: sin tabla maestra, el intake y el manifiesto nunca podían aparecer entre los documentos potencialmente invalidados, ni siquiera ante el salto major de 2.1 a 3.0 de esta misma regla. §2 pasa a titularse «Artefactos gobernados y campos bloqueantes» para alojar las dos subsecciones, y los campos bloqueantes se numeran como **§2.2** sin cambiar de contenido; la referencia externa vigente apunta a §2, que sigue conteniéndolos. Sube **minor**: incorpora una declaración que no invalida nada de lo vigente. | Framework SDD (migración normativa) |

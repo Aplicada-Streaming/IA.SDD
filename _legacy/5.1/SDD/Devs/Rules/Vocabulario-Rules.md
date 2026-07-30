@@ -2,7 +2,7 @@
 
 **Archivo target:** todo artefacto del framework y toda documentación que el framework genera
 **Lector:** el orquestador, todo subagente AG-XX, el auditor de cada fase y quien interviene el framework
-**Versión de las reglas:** 2.1
+**Versión de las reglas:** 2.0
 
 ---
 
@@ -73,8 +73,6 @@ Reglas de derivación y de declaración:
 **R4. «Módulo» conserva su sentido funcional.** Designa un área funcional del producto, no una unidad de compilación. El uso que ya hacen las reglas de UX-UI-DX, de maqueta y de calidad es el correcto y no se toca.
 
 **R5. Un término, un concepto.** Ningún artefacto del framework introduce un sinónimo de los seis términos de §2 sin incorporarlo acá primero.
-
-**R6. «Migración» a secas no designa la capacidad del framework.** Llevar un destino generado con una versión anterior a la versión vigente se escribe **siempre completo**: «migración normativa». La palabra desnuda queda para los otros dos referentes que ya tenía —la intervención sobre el propio framework y las migraciones de datos o de esquema del producto documentado—, y para su uso corriente en prosa. La familia calificada, la colisión que la obliga y la única excepción admitida están en §9.6.
 
 ---
 
@@ -178,34 +176,10 @@ La verificación es por ocurrencia y es afirmación sobre el estado del sistema:
 
 Renombrar un término a lo largo de documentación existente es una intervención léxica, no una operación de texto. **Queda prohibida la sustitución global de una cadena.** Dos razones, las dos verificadas sobre este mismo framework:
 
-1. **La cadena de un término es subcadena de otras palabras.** Sustituir `soluci*` por `producto` convierte «re**soluci**ón» en «reproducto». En la intervención del framework 5.0 esto produjo treinta ocurrencias de una palabra inexistente en doce archivos, incluidos un título de sección, un ancla de tabla de contenido y el nombre de un campo de contrato.
-2. **La misma palabra puede llevar un sentido no normativo que las reglas de uso preservan.** R2 conserva «solución» en prosa de negocio y como remedio de un problema. La misma intervención pisó veintitrés cabeceras de tabla de anti-patrones —cuya columna de remedio se llama «Solución»— y varios usos de prosa, dejando concordancias de género rotas del tipo «producto técnica».
+1. **La cadena de un término es subcadena de otras palabras.** Sustituir `soluci*` por `producto` convierte «re**soluci**ón» en «reproducto». En la migración del framework 5.0 esto produjo treinta ocurrencias de una palabra inexistente en doce archivos, incluidos un título de sección, un ancla de tabla de contenido y el nombre de un campo de contrato.
+2. **La misma palabra puede llevar un sentido no normativo que las reglas de uso preservan.** R2 conserva «solución» en prosa de negocio y como remedio de un problema. La misma migración pisó veintitrés cabeceras de tabla de anti-patrones —cuya columna de remedio se llama «Solución»— y varios usos de prosa, dejando concordancias de género rotas del tipo «producto técnica».
 
 Procedimiento obligatorio: enumerar las ocurrencias, clasificar cada una por sentido, sustituir solo las que cambian de referente y verificar el resultado con un barrido que busque la palabra nueva en contextos donde no puede aparecer. El registro de la sustitución declara cuántas ocurrencias se revisaron y cuántas se cambiaron.
-
-### §9.6 Familia calificada declarada: «migración normativa»
-
-El framework incorporó la capacidad de llevar un destino generado con una versión anterior a la versión vigente. La palabra que la nombra **ya tenía dos referentes vigentes**, así que antes de adoptarla se corrió el barrido que §9.4 exige. Esta subsección deja constancia del barrido y de su resolución, que es lo que convierte a R6 en una regla con premisa verificada en lugar de un patrón aplicado por analogía.
-
-**Los tres referentes de «migración» en el framework:**
-
-| Id | Qué designa | Dónde vive | Estado |
-| --- | --- | --- | --- |
-| **R1** | La intervención sobre el propio framework que renombró su vocabulario en la versión 5.0 | Las filas de control de cambios de diez archivos del árbol vivo, que la nombran «la migración de la 5.0» | Preexistente |
-| **R2** | Las migraciones de datos y de esquema del **producto documentado** | `Rules-Arquitectura-Tecnica.md` (migración inicial del modelo lógico, su anti-patrón de modelo sin migración versionada y el plan de migraciones de un estilo arquitectónico), `Rules-Devops.md` (guía de migración ante un cambio incompatible y su ejemplo de mensaje de commit) y el ejemplo de dolor de `PRODUCT-INTAKE-template.md` | Preexistente |
-| **R3** | Llevar un destino de la versión de origen a la vigente preservando su contenido | La capacidad nueva: `Migracion-Rules.md` y el orquestador que la ejecuta | Nuevo |
-
-**Resolución, por la escalera de §9.3:**
-
-| Frente | Forma adoptada | Por qué la anterior no alcanzaba |
-| --- | --- | --- |
-| R3 contra R1 | **Forma calificada obligatoria**: el término canónico es «migración normativa», hermano de «reconciliación normativa», que ya existía | La entrada de glosario sola no resuelve, porque los dos referentes coexisten **en la misma sección**: §9.5 de este archivo habla de la intervención 5.0 y es precisamente donde se explica cómo no hacer una sustitución léxica. Por §9.2 el criterio de colisión es la sección, no el documento |
-| R1 en prosa normativa vigente | Se sustituye por **«intervención»**, término que el framework ya usa para eso en su `README.md` y en `SDD-Development-Guide.md` §VI | El sentido viejo tiene un término mejor y disponible: liberar la palabra sale más barato que calificarla en cada ocurrencia. Alcanzó a las dos ocurrencias de §9.5. **Las filas de control de cambios no se tocan**, por §VI.2 de la guía de desarrollo: una fila ya escrita no se reescribe, y por eso R1 sigue siendo un referente vivo y la calificación de R3 sigue siendo necesaria |
-| R3 contra R2 | **Nada** | Los contextos son disjuntos: R2 vive en la documentación técnica del producto —persistencia, devops, configuración— y R3 en la normativa del framework sobre sus propios destinos. Calificar R2 sería el falso positivo que §9.1 describe y que el criterio negativo de §10 declara defecto del informe. Se declara acá para que una ronda de auditoría posterior no lo levante como hallazgo |
-
-**Forma desnuda admitida.** Dentro de `Migracion-Rules.md` y del master-prompt de migración, donde no hay otro referente en el contexto de lectura, «migración» puede usarse sin calificar. En todo otro archivo la primera mención de cada sección va calificada. Es el tratamiento estándar de una familia calificada según §9.2.
-
-**Lo que conserva su nombre.** «Reconciliación normativa» sigue designando la fase de diagnóstico del orquestador de generación, porque lo que hace es comparar y no transformar. Lo que se renombró es su salida A: de «plan de adecuación» a «plan de migración normativa».
 
 ---
 
@@ -219,7 +193,6 @@ Verificables por el auditor de cualquier fase sobre cualquier artefacto:
 - [ ] Todo documento de nivel producto nombra al producto con `Nombre-Producto` y no con `Raiz-Codigo`.
 - [ ] Si el glosario del dominio del cliente usa un término de §2, el choque está declarado según §6.
 - [ ] Ningún sinónimo nuevo de los seis términos circula sin estar incorporado a §2.
-- [ ] No aparece «migración» a secas designando la capacidad de llevar un destino a la versión vigente, salvo dentro de los dos archivos donde §9.6 admite la forma desnuda.
 
 Sobre desambiguación léxica (§9), en la documentación que el framework genera:
 
@@ -238,4 +211,3 @@ Sobre desambiguación léxica (§9), en la documentación que el framework gener
 | --- | --- | --- | --- |
 | 1.0 | 2026-07-29 | Regla inicial de vocabulario normativo. Fija los seis términos de §2 con definición por frontera, los cuatro planos de identidad de §3, las cinco reglas de uso de §4, la tabla de confusiones de §5, la precedencia frente al glosario del dominio del cliente de §6 y la correspondencia con el vocabulario de industria de §7. Nace de la constatación de que el framework no tenía glosario propio y de que sus dos términos centrales estaban definidos por su papel en la herramienta en lugar de por su frontera. Declara como pendiente la reubicación de las once categorías de nivel producto al nivel de unidad de entrega. | Reformulación SDD |
 | 2.0 | 2026-07-29 | **§9 nueva, criterio de desambiguación léxica.** La regla pasa de fijar el vocabulario del framework a fijar además cómo se decide, en la documentación que el framework genera, si un término con más de un referente es un defecto. Sube major porque agrega criterios de aceptación que el auditor de cualquier fase aplica sobre todo artefacto, y porque §9.5 prohíbe un procedimiento que hasta ahora no estaba prohibido. §9.1 fija la regla de decisión: se desambigua solo cuando los sentidos comparten contexto de lectura. §9.2 declara que **el contexto de lectura de un subagente es la sección y no el documento**, porque el despacho de `Master-Prompt.md` §8 entrega secciones nombradas y no archivos completos; de ahí se sigue que el término desnudo de una familia calificada es el caso a mirar y las formas calificadas no lo son. §9.3 ordena las tres formas de desambiguar por costo creciente y obliga a usar la más barata que resuelva. §9.4 prohíbe declarar una invariante de desambiguación sin verificar la colisión, y remite esa verificación a D9. §9.5 prohíbe la sustitución global de una cadena al renombrar un término en un corpus ya escrito, con las dos clases de daño verificadas sobre la migración de la 5.0 —la subcadena dentro de otra palabra y el sentido no normativo que R2 preserva— y fija el procedimiento por ocurrencia. §6 suma un puntero a §9. §10 suma seis criterios, incluido el criterio negativo del falso positivo. **Origen**: el criterio existía enunciado dentro del intake de un producto real y no como regla del framework; y la propia migración de la 5.0 lo incumplió antes de que existiera. §11 era §10. | Revisión SDD |
-| 2.1 | 2026-07-29 | Adopción del término de la capacidad de migración normativa (prerrequisito F5). **§9.6 nueva**: declara la familia calificada «migración normativa» con sus tres referentes verificados por barrido —la intervención sobre el propio framework en la 5.0, las migraciones de datos y de esquema del producto documentado, y la capacidad nueva—, y su resolución por la escalera de §9.3. Se adopta la **forma calificada obligatoria** frente al primer referente, con el primer escalón declarado insuficiente y su evidencia: los dos sentidos coexisten dentro de §9.5 de este mismo archivo, y por §9.2 el criterio de colisión es la sección. Frente al segundo referente **no se desambigua nada**, por contextos disjuntos, y la constancia queda escrita para que una ronda de auditoría posterior no lo levante como hallazgo. Se declara la forma desnuda admitida y que «reconciliación normativa» conserva su nombre porque compara y no transforma. **§4 suma R6** con la regla de uso operativa. **§9.5** libera el sentido viejo sustituyendo «migración» por «intervención» en sus dos ocurrencias de prosa normativa; las filas de control de cambios que nombran «la migración de la 5.0» **no se tocan**, por `SDD-Development-Guide.md` §VI.2, y por eso ese referente sigue vivo y la calificación sigue siendo necesaria. **§10** suma un criterio. Sube **minor**: incorpora una declaración y una regla de uso sin invalidar ninguna de las anteriores. | Framework SDD (migración normativa) |

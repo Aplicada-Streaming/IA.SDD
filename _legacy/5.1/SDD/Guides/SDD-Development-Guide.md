@@ -3,7 +3,7 @@ doc_id: GUIDE-SDD-DEVELOPMENT
 doc_type: development-guide
 title: Guía de desarrollo y extensibilidad del framework SDD
 status: vigente
-version: 1.6
+version: 1.4
 owner: Framework SDD
 last_review: 2026-07-29
 audience: [mantenedor-del-framework, agente-ia]
@@ -17,7 +17,7 @@ traces:
 # Guía de desarrollo y extensibilidad del framework SDD
 
 **Documento:** SDD-Development-Guide.md
-**Versión:** 1.6
+**Versión:** 1.4
 **Estado:** Vigente
 **Fecha:** 2026-07-29
 **Rol de intervención:** Mantenedor del framework
@@ -91,9 +91,7 @@ graph TD
     IR[Intake-Rules<br/>validacion del intake]
     VOC[Vocabulario-Rules<br/>vocabulario normativo]
     MANIF[PRODUCT-MANIFEST<br/>derivado por el orquestador]
-    MP[Master-Prompt<br/>orquestador de generacion]
-    MPM[Master-Prompt-Migracion<br/>orquestador de migracion]
-    MIG[Migracion-Rules<br/>migracion normativa]
+    MP[Master-Prompt<br/>orquestador]
     RULES[Rules-XX<br/>doce archivos de categoria]
     ROOT[Root-Rules<br/>layout canonico]
     MAQ[Maqueta-Rules<br/>validacion visual]
@@ -115,9 +113,6 @@ graph TD
     RULES --> REF
     MAQ --> MOD
     MOD --> TPL
-    MPM --> MIG
-    MPM -.cita despacho y auditoria.-> MP
-    MIG --> RULES
     MT -.fundamenta.-> RULES
     MT -.fundamenta.-> MP
 ```
@@ -128,8 +123,8 @@ Las líneas punteadas señalan una relación distinta de las demás. El marco te
 
 | Ruta | Responsabilidad | Cuándo se toca |
 | --- | --- | --- |
-| `SDD/Devs/Rules/` | Los dieciocho archivos normativos: doce de categoría más seis transversales, `Root-Rules`, `Intake-Rules`, `Maqueta-Rules`, `Deriva-Rules`, `Vocabulario-Rules` y `Migracion-Rules`. Cada uno define qué produce su categoría, con qué estructura y bajo qué criterios | En casi toda extensión |
-| `SDD/Devs/Orchestrator/` | Los dos master-prompts. `Master-Prompt.md` genera: despacha subagentes por fase, aplica el gating, ordena topológicamente y corta para confirmación humana. `Master-Prompt-Migracion.md` migra: lleva un destino ya especificado a la versión vigente en sus fases M0 a M6, y **cita** el despacho de §8 y la auditoría de §10 del primero en lugar de redefinirlos | Al agregar fases, categorías o flags; el de migración, al cambiar sus fases |
+| `SDD/Devs/Rules/` | Los diecisiete archivos normativos: doce de categoría más cinco transversales, `Root-Rules`, `Intake-Rules`, `Maqueta-Rules`, `Deriva-Rules` y `Vocabulario-Rules`. Cada uno define qué produce su categoría, con qué estructura y bajo qué criterios | En casi toda extensión |
+| `SDD/Devs/Orchestrator/` | El master-prompt. Despacha subagentes por fase, aplica el gating, ordena topológicamente y corta para confirmación humana | Al agregar fases, categorías o flags |
 | `SDD/Devs/Intake/` | `PRODUCT-INTAKE-template.md`, que completa el usuario, y `PRODUCT-MANIFEST-template.md`, que deriva el orquestador | Al agregar una sección de intake o un flag derivable |
 | `SDD/Devs/Guides/` | Marco teórico y notas de coherencia de auditoría | Al cambiar fundamentos, o al cerrar una intervención |
 | `SDD/Devs/References/Design/` | Catálogo de reglas de diseño, por stack y por capacidad transversal, con su índice | Al agregar una capacidad de diseño reutilizable |
@@ -149,9 +144,7 @@ Las líneas punteadas señalan una relación distinta de las demás. El marco te
 | Pieza | La escribe | La lee |
 | --- | --- | --- |
 | Archivo de reglas de una categoría | El mantenedor del framework | El orquestador al armar el plan; el subagente de esa categoría al generar; el auditor al verificar |
-| Master-prompt de generación | El mantenedor del framework | El agente orquestador, en cada corrida |
-| Master-prompt de migración | El mantenedor del framework | El agente orquestador de migración, una vez por salto de versión que el destino atraviese |
-| `Migracion-Rules.md` | El mantenedor del framework | El orquestador de migración, y todo subagente que re-expresa un documento durante una migración. No la lee ninguna corrida de generación |
+| Master-prompt | El mantenedor del framework | El agente orquestador, en cada corrida |
 | Plantilla de intake | El mantenedor del framework | El usuario, que la completa; el orquestador, que la valida y deriva de ella |
 | Catálogo de diseño | El mantenedor del framework | El subagente de UX-UI-DX |
 | Modelos UX-UI | El orquestador, con aceptación humana explícita (única excepción de escritura sobre este repositorio) | El humano, al elegir modelo en la Fase B2 |
@@ -187,9 +180,7 @@ Todo archivo de reglas de categoría comparte la misma estructura, de §0 a §9.
 
 **Dónde la rigidez es real y dónde no.** Los números de §0 a §9 son estables en los doce archivos de categoría. La numeración de las **subsecciones** de §4 no lo es: la sección de anti-patrones va de §4.4 a §4.9 según el archivo. Por eso el master-prompt la ubica por título y no por número, y toda extensión debe hacer lo mismo.
 
-Las seis reglas transversales no siguen exactamente esta estructura, porque no gobiernan una categoría. `Deriva-Rules.md`, `Maqueta-Rules.md` y `Migracion-Rules.md` tienen su propia organización de §0 a §9 con contenido distinto, y `Vocabulario-Rules.md` la suya de §1 a §11; eso es correcto: la estructura canónica aplica a lo que produce documentación de una carpeta numerada.
-
-Dos direcciones sí son contrato incluso en las transversales, porque el orquestador las resuelve por número y no por título: **§1.2** para la variante de especialidad y **§2.1** para la tabla maestra de artefactos. Una transversal que gobierne artefactos enumerables las declara en esas posiciones, aunque el resto de su organización sea propia. Es la razón por la que `Intake-Rules.md` alojó su tabla maestra en §2.1 en lugar de en la sección que le habría quedado más natural.
+Las cinco reglas transversales no siguen exactamente esta estructura, porque no gobiernan una categoría. `Deriva-Rules.md` y `Maqueta-Rules.md` tienen su propia organización de §0 a §9 con contenido distinto, y `Vocabulario-Rules.md` la suya de §1 a §11; eso es correcto: la estructura canónica aplica a lo que produce documentación de una carpeta numerada.
 
 ### II.2 Cómo el orquestador decide qué generar
 
@@ -378,7 +369,7 @@ Cada eje sigue la misma estructura: qué estás agregando, qué archivos tocar y
 
 **Qué estás cambiando.** Una de las reglas D1 a D9 que gobiernan todo el framework.
 
-**Es el cambio de mayor impacto que existe**, y conviene entender por qué antes de intentarlo. Una invariante no vive en un archivo: vive en los dieciocho archivos de reglas que la citan, en los dos master-prompts que la inyectan a cada subagente, en los criterios de todos los auditores, y en **toda la documentación ya emitida en todos los repositorios destino**. Cambiar D3, por ejemplo, invalida el nombre de cada archivo que el framework generó alguna vez.
+**Es el cambio de mayor impacto que existe**, y conviene entender por qué antes de intentarlo. Una invariante no vive en un archivo: vive en los diecisiete archivos de reglas que la citan, en el master-prompt que la inyecta a cada subagente, en los criterios de todos los auditores, y en **toda la documentación ya emitida en todos los repositorios destino**. Cambiar D3, por ejemplo, invalida el nombre de cada archivo que el framework generó alguna vez.
 
 **Archivos a tocar:** todos los que la citen, sin excepción, más el marco teórico donde la fundamenta.
 
@@ -551,34 +542,6 @@ Lo que **no** es una opción es dejar documentación emitida contra una versión
 
 **Registro obligatorio.** Todo bump major se anota en el `CHANGELOG.md` de la raíz declarando explícitamente el impacto sobre la documentación ya emitida, aunque la decisión sea no regenerar nada.
 
-**Forma del registro: el bloque «Impacto sobre destinos existentes».** Declararlo en prosa no alcanza, y el motivo es concreto: hay una clase de cambio que ningún diff de versiones puede inferir. Que un artefacto pasó a llamarse de otra manera no se deduce de que su regla haya subido de 2.1 a 3.0. El número dice que algo incompatible pasó; no dice qué. Ese conocimiento existe, pero vive disperso en la prosa de las entradas y de las notas de coherencia, donde un agente que tiene que reconocer un destino generado con la versión vieja no lo puede resolver.
-
-Por eso toda entrada major del `CHANGELOG.md` incluye un bloque con este título y estas tres tablas. Una tabla sin contenido se declara vacía; no se omite, porque «no hay renombres» y «nadie los enumeró» son dos cosas distintas:
-
-```text
-### Impacto sobre destinos existentes
-
-**Renombres de artefacto**
-
-| Nombre anterior | Nombre vigente | Naturaleza |
-| --- | --- | --- |
-| {{anterior}} | {{vigente}} | archivo / carpeta / identificador / campo |
-
-**Secciones movidas o partidas**
-
-| Documento | Sección anterior | Destino vigente |
-| --- | --- | --- |
-| {{documento}} | {{sección}} | {{una o más secciones vigentes}} |
-
-**Campos bloqueantes nuevos**
-
-| Documento | Campo | Regla que lo exige |
-| --- | --- | --- |
-| {{documento}} | {{campo}} | {{archivo de reglas y sección}} |
-```
-
-**Qué gana el framework con esto.** Un renombre declarado en tabla es resoluble por lectura directa: el agente que arranca sobre un destino viejo puede reconocer los nombres legados en lugar de detenerse al no encontrar los vigentes. Lo que **no** es este bloque: un playbook de migración por salto de versión. Un playbook describiría la transformación paso a paso, duplicando el estado objetivo que las reglas ya declaran en sus §2.1, §2.2 y §6, con la obligación de mantener las dos declaraciones sincronizadas. Esto es un bloque en un archivo que ya existe, que ya era obligatorio en prosa por el párrafo anterior, y que pasa a tener forma legible.
-
 La opción 3 depende de dos cosas que el framework provee desde la versión 4.0: que el destino declare contra qué versión se generó, en el bloque de procedencia de su `PRODUCT-MANIFEST`, y que esa versión siga siendo reconstruible, en `_legacy/`. Sin las dos, «congelar la versión anterior» es una intención sin instrumento.
 
 ### VI.5 Cómo se versiona el framework como conjunto
@@ -591,17 +554,13 @@ Los archivos se versionan uno por uno según VI.1. El framework además se versi
 
 | La versión del conjunto sube… | Cuando… |
 | --- | --- |
-| **major** | alguna regla sube major, **alguna plantilla de intake sube major**, o se modifica una invariante D1-D9 |
-| **minor** | alguna regla o plantilla sube minor y ninguna sube major |
-| **patch** | no cambia ninguna regla ni plantilla, ni el comportamiento de ningún orquestador |
-
-**Por qué las plantillas cuentan.** La tabla hablaba solo de reglas, y las dos plantillas de `SDD/Devs/Intake/` se versionan aparte de ellas: un cambio estructural de `PRODUCT-INTAKE-template.md` o de `PRODUCT-MANIFEST-template.md` no mueve la versión de `Intake-Rules.md` ni de ninguna regla de categoría. El caso quedaba sin contemplar, y el criterio sustantivo de §VI.1 lo resuelve igual: si un documento generado con la versión anterior deja de cumplir, es major, y no importa si lo que subió fue una regla o una plantilla. Se declara acá para no tener que volver a derivarlo cada vez.
+| **major** | alguna regla sube major, o se modifica una invariante D1-D9 |
+| **minor** | alguna regla sube minor y ninguna sube major |
+| **patch** | no cambia ninguna regla ni el comportamiento del orquestador |
 
 **Qué obliga.** Publicar una versión nueva incluye, en la misma intervención, copiar el conjunto normativo que queda superado a `_legacy/<version>/`. Se copia el conjunto entero y no solo los archivos que cambiaron, porque las reglas son interdependientes: un `Rules-Contexto` de una versión junto a un `Master-Prompt` de otra puede producir una combinación que nunca existió y nunca se auditó. Lo que hay que poder reconstruir es el estado coherente.
 
 Quedan fuera del snapshot el propio `CHANGELOG.md`, que es acumulativo y cuya historia es su contenido, la carpeta `_legacy/` misma, y los archivos de configuración del repositorio, que no condicionan lo que el orquestador genera.
-
-**Qué obliga además cuando el conjunto sube major.** La entrada del `CHANGELOG.md` lleva el bloque «Impacto sobre destinos existentes» con la forma que declara §VI.4. Se cumple una vez por entrada, aunque el major provenga de varias partes: el bloque consolida los renombres de artefacto, las secciones movidas y los campos bloqueantes nuevos de la intervención entera, que es la unidad que un destino atraviesa cuando pasa de una versión del conjunto a la siguiente.
 
 **Intocabilidad.** Una subcarpeta de versión, una vez creada, no se modifica nunca. Es la misma razón por la que las filas de control de cambios no se reescriben: un registro que se corrige después deja de ser un registro.
 
@@ -616,5 +575,3 @@ Quedan fuera del snapshot el propio `CHANGELOG.md`, que es acumulativo y cuya hi
 | 1.2 | 2026-07-28 | Normalización del versionado (framework 4.0). §I.2 suma la carpeta `_legacy/` a la anatomía. §VI.4 declara que la opción de congelar la versión anterior depende del bloque de procedencia del destino y de que la versión siga siendo reconstruible. **§VI.5 es nueva**: versionado del framework como conjunto, con el `CHANGELOG.md` como registro único, la derivación de la severidad a partir de sus partes, la obligación de copiar el conjunto normativo superado a `_legacy/<version>/` y la regla de intocabilidad de lo archivado. | Revisión SDD |
 | 1.3 | 2026-07-29 | Vocabulario normativo (framework 5.0). La guía adopta «producto» y «proyecto de código» en las seis partes. Fila registrada retroactivamente en la 5.1: la migración subió la versión de cabecera a 1.3 sin dejar su fila, y §I.2, §II.1 y §III.7 quedaron declarando dieciséis archivos de reglas y cuatro transversales cuando la propia intervención agregó el decimoséptimo. | Reformulación SDD |
 | 1.4 | 2026-07-29 | Puesta al día contra el conjunto 5.1 y el decimoséptimo archivo de reglas. **Corregidos tres conteos** que contradecían al `README.md` raíz: §I.2 decía «los dieciséis archivos normativos … más `Root-Rules`, `Intake-Rules`, `Maqueta-Rules` y `Deriva-Rules`», §II.1 «las cuatro reglas transversales» y §III.7 que una invariante «vive en los dieciséis archivos de reglas»; pasan a diecisiete y cinco. **§I.1** suma el nodo `Vocabulario-Rules` al mapa de dependencias, con sus dos aristas: la del master-prompt, que la inyecta, y la de las reglas de categoría, que la citan. **§I.3** la incorpora a la tabla de quién lee cada pieza, declarándola como la única regla transversal que llega a todo subagente, y corrige la nota que decía que el subagente «recibe un solo archivo de reglas». **§III.8** suma un segundo ejemplo trabajado, el de `Vocabulario-Rules` en la 5.0, cuyo paso 2 quedó incompleto —lector declarado sin cablear en el esqueleto de despacho— con la lección explícita de que declarar el lector no es cablearlo. Se restituye el salto de línea final del archivo, que faltaba, y se unifica la versión, que el front-matter declaraba como 1.2 mientras la cabecera declaraba 1.3: el mismo defecto de doble declaración que traía `SDD-Getting-Started-Guide.md`. | Revisión SDD |
-| 1.6 | 2026-07-29 | Puesta al día contra el conjunto 6.0 y la decimoctava regla. **Tres conteos corregidos**, los mismos ejes que la 1.4 ya había tenido que corregir una vez: §I.2 pasa de diecisiete archivos normativos y cinco transversales a dieciocho y seis, §II.1 de «las cinco reglas transversales» a seis, y §III.7 de «los diecisiete archivos de reglas» a dieciocho, con «el master-prompt» pasando a «los dos master-prompts». **§I.1** suma al mapa de dependencias los nodos `Master-Prompt-Migracion` y `Migracion-Rules`, con la arista punteada que declara que el orquestador de migración **cita** el despacho y la auditoría del de generación en lugar de redefinirlos. **§I.2** reescribe la fila de `Orchestrator/`, que describía un solo archivo. **§I.3** parte la fila del master-prompt en las dos que hoy existen y suma `Migracion-Rules.md`, declarando que ninguna corrida de generación la lee. **§II.1** declara además que §1.2 y §2.1 son contrato incluso en las reglas transversales, porque el orquestador las resuelve por número y no por título, con el caso de `Intake-Rules.md` como ejemplo. **§VI.5** corrige la tabla de derivación del conjunto, que hacía subir major solo por reglas e invariantes y no contemplaba las plantillas de intake, pese a que se versionan aparte de toda regla; la corrección se aplica también a la fila equivalente del `README.md` raíz. Sube minor: pone al día conteos y declaraciones sin cambiar ningún procedimiento. | Framework SDD (migración normativa) |
-| 1.5 | 2026-07-29 | Forma obligatoria del registro de impacto en las entradas major (prerrequisito F4 de la migración normativa). **§VI.4** suma la especificación del bloque «Impacto sobre destinos existentes»: tres tablas —renombres de artefacto, secciones movidas o partidas y campos bloqueantes nuevos—, con la regla de que una tabla sin contenido se declara vacía y no se omite. El fundamento es que hay una clase de cambio que ningún diff de versiones puede inferir: un renombre de artefacto no se deduce de que su regla haya subido de 2.1 a 3.0, y ese conocimiento vivía disperso en prosa, donde un agente que tiene que reconocer un destino legado no lo puede resolver. Se declara además qué **no** es el bloque —un playbook de migración por salto de versión, que duplicaría el estado objetivo ya declarado en las reglas y obligaría a mantener dos declaraciones sincronizadas—, para que la concesión no se lea como habilitación de esa forma. **§VI.5** declara la obligación correlativa al publicar un conjunto major, y que se cumple una vez por entrada consolidando la intervención entera, no una vez por regla que sube. Sube **minor**: precisa la forma de un registro que ya era obligatorio, sin cambiar ningún procedimiento existente. | Framework SDD (migración normativa) |

@@ -1,0 +1,466 @@
+# Reglas constructivas — 02 Especificación funcional
+
+**Carpeta target (por proyecto de código):** `SDD/Docs/Proyectos/<Nombre-Proyecto-Codigo>/02-Especificacion-Funcional/`
+**Nivel de aplicación (`Vocabulario-Rules.md` §4 R3):** Proyecto de código
+**Subagente target del orquestador:** Analista Funcional / Ingeniero de Requisitos (AG-02)
+**Versión de las reglas:** 4.0
+
+---
+
+## 0. Posición en la cadena SDD
+
+La categoría 02 es el nodo central de la cadena de trazabilidad D6. Recibe insumos de 00 (visión, alcance) y 01 (necesidades de negocio NB-XX) y produce los artefactos que sirven como ancla para 03 (UX/UI), 04 (prompts si aplica), 05 (arquitectura y ADR), 06 (US/BT), 07 (sprints), 08 (tests) y 10 (ejemplos). Su salida define el qué del sistema sin invadir el cómo. Aplica de manera obligatoria a los ocho tipos D8.
+
+---
+
+## 1. Especialidad asignada
+
+### 1.1 Especialidad base
+
+Analista Funcional senior, equivalente AG-02 del catálogo SDD. Su perfil profesional combina elicitación, formalización y modelado de requisitos. Traduce cada NB-XX en uno o más casos de uso (CU) verificables, identifica las reglas de negocio (RN) que restringen el dominio y, cuando aplica, levanta el modelo conceptual de datos junto con sus reglas conceptuales (RC). Se alinea con IREB CPRE para elicitación y gestión, con formato de casos de uso al estilo Cockburn y con criterios de aceptación en BDD (Given/When/Then).
+
+### 1.2 Variantes según tipo de proyecto de código (8 valores D8)
+
+| Tipo | Especialidad específica | Justificación |
+| --- | --- | --- |
+| library | Analista Funcional + API Designer | El foco está en la superficie pública. Cada CU describe un contrato de uso. |
+| web-monolith | Analista Funcional senior | Flujos UI/UX-driven, con CU que cruzan presentación, dominio y persistencia. |
+| web-microservices | Analista Funcional + Domain Modeler (DDD) | Bounded contexts, aggregates, eventos de dominio. CU acotado por servicio. |
+| desktop-app | Analista Funcional + UX Researcher | Flujos offline-first, sincronización diferida, criterios de continuidad. |
+| mobile-app-maui | Analista Funcional + Mobile UX Analyst | Flujos táctiles, permisos del sistema operativo y ciclo de vida de la app. |
+| rest-api | Analista Funcional + API Designer (OpenAPI/AsyncAPI) | Cada endpoint público es un CU con contrato declarativo y códigos de error. |
+| cli-tool | Analista Funcional + CLI UX | Comandos, subcomandos y flags como CU, con exit codes definidos. |
+| worker-service | Analista Funcional + Event Modeler | Mensajes y triggers como entrada de cada CU; idempotencia explícita. |
+
+### 1.3 Multi-especialidad
+
+La categoría 02 se combina con otras especialidades cuando el dominio lo requiere:
+
+- AG-05 Arquitecto, en proyectos de código con DDD o con bounded contexts múltiples, para alinear el modelo conceptual con el modelo lógico que se produce en 05.
+- AG-04 Ingeniero de Prompts, cuando algún CU delega parte del flujo en un LLM (clasificación, extracción, generación), para fijar contratos de prompt y criterios de evaluación.
+- AG-03 DX/UX, cuando el CU describe interacción humana significativa, para que las decisiones de experiencia no contaminen el flujo funcional.
+- AG-08 QA, para revisar que cada criterio Given/When/Then sea automatizable y trazable a un test en 08.
+
+El AG-02 mantiene siempre la titularidad del artefacto; las demás especialidades aportan revisiones acotadas.
+
+---
+
+## 2. Documentos que produce esta categoría
+
+### 2.1 Tabla maestra
+
+| Archivo | Obligatorio para | Recomendado | Omitir para | Descripción |
+| --- | --- | --- | --- | --- |
+| `Especificacion-Funcional.md` | Todos los tipos D8 | — | — | Índice maestro de CU, RN y referencia al modelo. Incluye matriz NB→CU→RN→US. |
+| `Definicion-<Concepto-Central>.md` | Proyectos de código con un concepto técnico central (por ejemplo lenguaje declarativo, modelo de pagos, taxonomía de eventos) | library con superficie estrecha | Tipos sin concepto central | Define vocabulario, semántica y elementos del concepto en un único documento. |
+| `Casos-De-Uso/CU-XX-<Nombre>.md` | Todos los tipos D8, con un mínimo declarado en §2.2 | — | — | Un caso de uso por archivo. |
+| `Reglas-De-Negocio/RN-XX-<Nombre>.md` | Proyectos de código con reglas regulatorias o dominio fuerte | Resto de los proyectos de código | Proyectos de código triviales sin estado ni invariantes | Una regla de negocio por archivo. Invariante atemporal. |
+| `Modelo-Datos/Modelo-Conceptual.md` | Proyectos de código con persistencia (web-monolith, web-microservices, rest-api, worker-service, mobile-app-maui) | desktop-app si guarda local | library puro sin estado, cli-tool sin estado | Modelo conceptual estilo ER o de clases de dominio. |
+| `Modelo-Datos/reglas-conceptuales-de-modelo/RC-XX-<Nombre>.md` | Proyectos de código con modelo rico (más de diez entidades o invariantes de integridad explícitas) | — | Resto | Una regla conceptual por archivo, focalizada en integridad de dominio. |
+| `Glosario-Funcional.md` | **Todos los tipos D8** | — | — | Vocabulario del dominio que esta categoría acuña. Regla de inclusión en §3.3. Es artefacto propio y no sección de otro documento: la categoría 02 es la que más vocabulario introduce y alimenta a las siete siguientes, así que su glosario no puede depender de un flag. |
+| `README.md` de la sección | Recomendado para todos | — | — | Índice navegable de CU, RN, modelo, RC y glosario con su estado actual. |
+
+### 2.2 Reglas de inclusión y exclusión por tipo
+
+| Tipo D8 | Mínimo de CU | RN obligatorias | Modelo conceptual | RC obligatorias |
+| --- | --- | --- | --- | --- |
+| library | 5 | No (recomendadas si hay reglas de dominio en la API) | No | No |
+| web-monolith | 8 | Sí | Sí | Solo si modelo > 10 entidades |
+| web-microservices | 6 por bounded context | Sí | Sí, uno por contexto | Solo si modelo > 10 entidades por contexto |
+| desktop-app | 6 | Sí | Recomendado si guarda local | No |
+| mobile-app-maui | 6 | Sí | Sí, si hay almacenamiento offline | No |
+| rest-api | 1 por recurso público + 5 transversales | Sí | Sí | Sí, si modelo > 10 entidades |
+| cli-tool | 1 por comando + 3 transversales | Recomendadas | No (salvo persistencia local) | No |
+| worker-service | 1 por tipo de mensaje + 3 transversales | Sí | Sí, si guarda estado | Sí, si modelo > 10 entidades |
+
+El mínimo es piso, no techo. La cota superior queda definida por la cobertura completa de las NB-XX declaradas en 01.
+
+---
+
+## 3. Nomenclatura y vinculación
+
+### 3.1 Patrón de nombres
+
+- `CU-XX-<Nombre>.md`, con dos dígitos en `XX`, Título-Con-Guiones en el slug y guion medio antes de la versión.
+- `RN-XX-<Nombre>.md`, mismas reglas.
+- `RC-XX-<Nombre>.md` para reglas conceptuales del modelo.
+- `Modelo-Conceptual.md` para el modelo conceptual de datos.
+- `Definicion-<Concepto>.md` para el documento opcional de concepto central.
+- `Especificacion-Funcional.md` para el índice maestro.
+- `Glosario-Funcional.md` para el vocabulario de la categoría: nombre fijo, sin variante de dominio.
+
+Queda prohibido el patrón heredado `nb-01-desacople.v1.0.md` u homólogos. La versión siempre va con guion medio `-v`, jamás con guion bajo `_v` ni con punto `.v`. El slug va en Título-Con-Guiones (cada palabra capitalizada, separadas por guion medio); quedan prohibidas las variantes todo-minúsculas, camelCase, con espacios o con acentos.
+
+### 3.2 Convenciones de prefijos y sufijos
+
+- `CU-`: caso de uso. Acción funcional con flujo, actores y criterios de aceptación.
+- `RN-`: regla de negocio. Invariante atemporal del dominio. No describe acción; describe restricción.
+- `RC-`: regla conceptual del modelo. Restricción de integridad expresada sobre entidades y relaciones.
+- Nombre lógico sin sufijo de versión en el nombre; la versión vive en el campo `Versión` de la cabecera (D4). La versión menor avanza por aclaración o corrección; la mayor avanza por cambio de alcance del CU/RN/RC.
+
+### 3.3 Vinculación cross-doc
+
+- Upstream: cada CU declara una o más NB que implementa. No puede existir CU huérfano. La revisión de cobertura es bidireccional: cada NB debe tener al menos un CU y cada CU debe tener al menos una NB.
+- Downstream: cada CU enumera las US que se generarán en 06, los componentes esperados en 05 y los tests previstos en 08.
+- RN es atemporal: no cambia con la versión del producto. Si cambia, la versión nueva de la RN se publica y la anterior se archiva (ver §3.5).
+- RC se vincula al modelo conceptual y a las RN o CU que la justifican.
+- El modelo conceptual se vincula a CU y RN, no al revés. Es el AG-02 quien decide qué CU lo consumen.
+- **Glosario, regla de inclusión.** Todo término del dominio que aparezca en más de un artefacto de 02 —dos CU, un CU y una RN, el modelo y un CU— debe estar en `Glosario-Funcional.md`. Un término que vive en un solo artefacto se define ahí y no entra.
+- **Glosario, regla de no duplicación.** Si un término ya está declarado en el glosario de 00 (`Vision-Producto` §9, glosario del dominio del cliente) con la misma semántica, se referencia y no se redefine. Si el sentido difiere, el glosario de 02 declara la diferencia en lugar de pisarla.
+- **Glosario, regla de polisemia.** Todo término del dominio con más de un referente lleva entrada que **enumera los referentes** y declara qué forma corresponde a cada uno. El criterio de cuándo esto hace falta es `Vocabulario-Rules.md` §9: se desambigua cuando los sentidos comparten contexto de lectura, y el contexto de lectura de un subagente es la sección. La forma desnuda de una familia calificada —«el registro», cuando el corpus ya usa «registro de auditoría» y «registro del contenedor»— es el caso que hay que resolver; las formas calificadas no lo son.
+- El glosario es upstream de 03: `Rules-UX-UI-DX.md` §3.3 obliga a `Glosario-UX.md` a referenciar los términos de 02 en lugar de duplicarlos, lo que exige que exista un artefacto al que referenciar.
+
+### 3.4 README de la sección
+
+Recomendado para todos los tipos. Debe listar CU, RN, modelo y RC vigentes con propósito en una línea y estado actual. Sirve como punto de entrada navegable para revisores externos (AG-05, AG-06, AG-08).
+
+### 3.5 Política de versionado
+
+Una sola versión vigente por nombre lógico. Cuando un CU pasa de `v1.0` a `v2.0`:
+
+1. Se crea `CU-XX-<Nombre>.md` en la carpeta principal.
+2. La versión `v1.0` se mueve a `Casos-De-Uso/_legacy/` con estado `Superado` y una nota al inicio que apunte a la versión vigente.
+3. El índice `Especificacion-Funcional.md` referencia únicamente la versión vigente.
+4. Las RN, RC y referencias downstream se actualizan en la misma operación.
+
+Un nombre lógico tiene un solo archivo en la carpeta principal. Al superarse, se copia a `_legacy/` con el sufijo de la versión que preserva y el archivo vivo pasa a la versión nueva. La lección está documentada en la auditoría de Fase 0 del bootstrap: en el fuente convivían versiones paralelas sin marcado de deprecación y no había forma de saber cuál regía. en `Bootstrap/Audit-SDD1.md` Fase 0.
+
+---
+
+## 4. Estructura de redacción
+
+### 4.1 Cabecera obligatoria
+
+Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
+
+```markdown
+# CU-XX — <Nombre del caso de uso>
+
+**Proyecto de código:** {{Nombre-Proyecto-Codigo}}
+**Documento:** CU-XX-<Nombre>.md
+**Versión:** <X.Y>
+**Estado:** Borrador | Propuesto | Aprobado | Vigente | Superado | Archivado
+**Fecha:** YYYY-MM-DD
+**Autor:** {{equipo-o-rol}}
+```
+
+Para RN, RC y modelo conceptual aplica la misma cabecera adaptando el prefijo y la descripción del documento.
+
+**Tabla de contenido.** Todo documento generado que supere las tres secciones de primer nivel incluye una tabla de contenido inmediatamente después de la cabecera de metadatos, con enlaces ancla a cada sección de primer y de segundo nivel. La tabla de contenido no cuenta como sección de contenido ni altera la estructura obligatoria del documento: se ubica entre la cabecera y la primera sección, y las secciones obligatorias siguen siendo las que declara §4.2. Los documentos breves —fichas de una sola sección, entradas de índice— quedan exceptuados.
+
+El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente de IA que recorre la cadena de especificación acumulando contexto, y para ese lector la tabla de contenido es indiferente. Existe para el agente humano que entra a consultar un punto concreto sin haber leído el documento entero.
+
+### 4.2 Secciones obligatorias de un CU
+
+1. Propósito. Una a tres oraciones que respondan qué resuelve el CU y para quién.
+2. Actores. Tabla con actor, tipo (primario/secundario/sistema) y rol.
+3. Precondiciones. Lista de condiciones previas verificables.
+4. Flujo principal. Pasos numerados con actor y acción.
+5. Flujos alternativos. Cada uno con su disparador y punto de retorno.
+6. Excepciones y errores. Cada error con código, causa y respuesta del sistema.
+7. Postcondiciones. Estado del sistema en caso de éxito y de fallo.
+8. Criterios de aceptación Given/When/Then. Mínimo tres por CU, con valores concretos.
+9. Trazabilidad. Tabla con NB upstream, RN aplicables, US a generar en 06, componentes en 05, tests en 08.
+10. Notas y supuestos. Decisiones explícitas de alcance y dependencias externas.
+11. Control de cambios. Tabla con versión, fecha y descripción.
+
+#### 4.2.1 Secciones obligatorias de una RN
+
+1. Enunciado de la regla. Formal, declarativo, una sola oración cuando se pueda.
+2. Justificación. Origen regulatorio, contractual o de negocio.
+3. Ámbito de aplicación. Procesos, CU y momentos en los que la regla se evalúa.
+4. Consecuencia si se viola. Rechazo, advertencia, compensación.
+5. CU afectados. Lista explícita.
+6. Pruebas que la verifican. Referencia a casos de prueba previstos en 08.
+7. Control de cambios.
+
+#### 4.2.2 Secciones obligatorias del modelo conceptual
+
+1. Entidades. Una por subsección, con propósito y ejemplo de instancia.
+2. Atributos clave. Sin tipos físicos (eso vive en 05). Solo nombre y semántica.
+3. Relaciones. Verbalizadas en lenguaje natural.
+4. Cardinalidades. Notación uniforme (1, N, 0..1, 1..N).
+5. Reglas conceptuales. Enlace a cada RC-XX que el modelo invoca.
+6. Referencia al glosario. Puntero a `Glosario-Funcional.md`, con la lista de los términos del modelo que ese glosario declara. El glosario **no vive acá**: este documento es condicional según §2.1 y el vocabulario de la categoría no puede depender de que el proyecto de código tenga persistencia.
+7. Diagrama. Mermaid embebido o referencia a archivo aparte.
+8. Trazabilidad. Tabla que liga cada entidad a los CU y RN que la consumen.
+9. Control de cambios.
+
+#### 4.2.3 Secciones obligatorias de una RC
+
+1. Enunciado. Restricción de integridad expresada sobre entidades y relaciones.
+2. Entidades involucradas. Lista explícita.
+3. Tipo de restricción. Identidad, referencial, cardinalidad, valor permitido, derivación.
+4. Mecanismo de verificación conceptual. Cómo se comprueba sin entrar en detalles físicos.
+5. RN o CU que la justifican.
+6. Control de cambios.
+
+#### 4.2.4 Secciones obligatorias del glosario funcional
+
+1. Cabecera obligatoria de §4.1, con trazabilidad upstream al glosario del dominio de 00.
+2. Tabla de términos, una fila por término: término canónico, definición operativa en una o dos líneas, artefactos de 02 donde aparece, y sinónimos o alias si los hay.
+3. Términos con más de un referente. Una subsección por término polisémico: los referentes enumerados, la forma que corresponde a cada uno, y la evidencia de que los contextos colisionan (`Vocabulario-Rules.md` §9.4, que remite a D9). Si ningún término lo requiere, la sección declara «ninguno verificado» y no se omite.
+4. Términos referenciados y no redefinidos. Lista de los términos que ya declara el glosario del dominio de 00, con puntero. Materializa la regla de no duplicación de §3.3.
+5. Control de cambios.
+
+Un glosario cuya tabla de términos está vacía no cumple: la categoría 02 acuña vocabulario por construcción, y cinco casos de uso mínimos no se escriben sin nombrar entidades ni actores.
+
+### 4.3 Secciones opcionales por tipo de proyecto de código
+
+Se permiten secciones adicionales según el tipo D8, sin desplazar las obligatorias:
+
+- §12 Performance esperado del CU, sólo para rest-api, worker-service y mobile-app-maui.
+- §13 Interacción multiusuario y concurrencia, sólo para web-monolith y web-microservices.
+- §14 Permisos del sistema operativo, sólo para mobile-app-maui y desktop-app.
+- §15 Idempotencia y reintento, sólo para worker-service y rest-api.
+- §16 Contrato de stdout/stderr y exit codes, sólo para cli-tool.
+- §17 Compatibilidad de versión pública, sólo para library.
+
+### 4.4 Tablas tipo y formatos recurrentes
+
+Se estandariza el uso de las siguientes tablas:
+
+Tabla de criterios de aceptación:
+
+| ID | Given | When | Then |
+| --- | --- | --- | --- |
+| CA-01 | <contexto> | <acción> | <resultado verificable> |
+
+Tabla de trazabilidad del CU:
+
+| Dimensión | Referencia |
+| --- | --- |
+| Necesidad de negocio | NB-XX |
+| Reglas de negocio aplicables | RN-XX, RN-YY |
+| Historias de usuario a generar | US-XX (en 06) |
+| Componentes esperados | <referencia tentativa a 05> |
+| Tests previstos | <referencia tentativa a 08> |
+
+Tabla del modelo conceptual:
+
+| Entidad | Atributo | Semántica | Restricción conceptual |
+| --- | --- | --- | --- |
+
+Diagrama de flujo del CU expresado como pasos numerados o Mermaid sequenceDiagram cuando el flujo lo amerite.
+
+### 4.5 Anti-patrones a evitar
+
+| Anti-patrón | Problema | Solución |
+| --- | --- | --- |
+| CU que mezcla flujo funcional con detalle de interfaz | Invade 03 UX/UI y vuelve frágil el CU | Mover el detalle visual a 03; mantener en 02 sólo qué hace y para quién |
+| RN escrita como CU | Confunde acción con invariante; rompe la trazabilidad | Reescribir como enunciado declarativo atemporal |
+| Modelo conceptual con tipos físicos (varchar(255), int(11)) | Invade 05 modelo lógico | Mantener nombres y semántica; los tipos viven en 05 |
+| Sufijo de versión en el nombre del archivo vivo | Reintroduce la segunda lógica de versionado que D4 eliminó, y con ella la colisión silenciosa al archivar | Un solo archivo por nombre lógico; la versión en la cabecera y el sufijo solo en `_legacy/` |
+| Casing inconsistente (`NB-01-Desacople` vs `NB-02-estandarizacion`) | Inconsistencia que rompe automatizaciones | Forzar Título-Con-Guiones estricto |
+| Sufijo de versión en el nombre del archivo vivo | Reintroduce la segunda lógica de versionado que D4 eliminó, y con ella la colisión al archivar | El archivo vivo no lleva sufijo; la versión va en la cabecera |
+| CU sin escenarios de error | Solo flujo feliz; el sistema queda subdefinido | Agregar al menos una excepción por CU |
+| Criterios de aceptación narrativos sin valores concretos | No automatizables; no anclan tests | Reescribir Given/When/Then con valores explícitos |
+| CU con más de un actor primario | Ambigüedad de responsabilidad | Separar en dos CU o reorganizar el flujo |
+| RN ambigua o subjetiva | No verificable | Reescribir hasta que un test pueda decidir cumplimiento |
+| Numeración no contigua de CU sin justificación | Huecos confusos en el catálogo | Documentar la causa o renumerar |
+| Glosario ausente porque el proyecto de código no tiene modelo conceptual | El vocabulario de la categoría queda sin declarar en `library` y `cli-tool`, que igual acuñan sus casos de uso y sus reglas | `Glosario-Funcional.md` es obligatorio para los ocho tipos D8 y no depende de ningún flag |
+| Término polisémico fuera del glosario | Un subagente aguas abajo que lee una sección suelta no puede resolver a qué referente apunta, y elige uno | Entrada de glosario que enumera los referentes, o forma calificada en las ocurrencias que colisionan |
+| Calificar todas las ocurrencias de un término cuyos contextos son disjuntos | Carga el texto sin resolver nada; es la corrección típica de un falso positivo | Verificar la colisión antes de corregir (`Vocabulario-Rules.md` §9.1) |
+| Glosario que redefine términos ya declarados en 00 | Dos definiciones del mismo término en la misma cadena documental | Referenciar el término de 00 y declarar solo la diferencia, si la hay |
+
+---
+
+## 5. Preguntas guía para el subagente
+
+### 5.1 Upstream
+
+- ¿Cada CU cubre al menos una NB del proyecto de código? ¿Hay NB sin CU? Esto último debe disparar una alerta y no un silencio.
+- ¿Qué partes de la visión y del alcance (00) y de las NB (01) se materializan como CU? ¿Cuáles quedan deliberadamente fuera y por qué?
+- ¿Existe un concepto técnico central que merezca un documento `Definicion-<Concepto>.md` propio?
+
+### 5.2 Scope
+
+- ¿Cuántos CU son razonables para el tipo D8 del proyecto de código? Library con menos de diez; microservicios con más de quince repartidos por bounded context.
+- ¿Hay CU que en realidad son sub-flujos de otros? Si la respuesta es sí, fusionarlos o anidarlos como flujo alternativo.
+- ¿Hay flujos de error que se repiten en varios CU? Si la respuesta es sí, considerar un CU transversal de manejo de errores.
+
+### 5.3 Trazabilidad
+
+- ¿Cada CU declara explícitamente su NB upstream?
+- ¿Cada CU enumera RN que lo restringen, sin inventarlas?
+- ¿Cada CU lista las US que se realizarán en 06, sin invadir el detalle de implementación?
+- ¿El modelo conceptual referencia los CU y RN que lo justifican?
+
+### 5.4 Calidad
+
+- ¿Cada CU tiene mínimo tres criterios Given/When/Then con valores concretos?
+- ¿Cada flujo alternativo tiene un escenario disparador y un punto de retorno explícito?
+- ¿Cada excepción declara recuperación, handoff o terminación controlada?
+- ¿Cada RN es verificable por un test automatizable?
+- ¿Qué términos del dominio aparecen en más de un artefacto de esta categoría? ¿Están todos en `Glosario-Funcional.md`?
+- ¿Hay algún término usado con más de un referente? Antes de calificarlo: ¿sus contextos **colisionan** en el sentido de `Vocabulario-Rules.md` §9.2, o se distinguen solos? Solo el primer caso se corrige.
+- ¿Queda alguna forma desnuda de un término que ya se usa calificado en otro lado? Ése es el caso a resolver, no las formas calificadas.
+
+### 5.5 Versionado
+
+- ¿Existe alguna versión anterior en la carpeta principal? Si la respuesta es sí, archivarla en `_legacy/` antes de publicar la nueva.
+- ¿El índice maestro apunta solamente a la versión vigente?
+
+---
+
+## 6. Criterios de aceptación
+
+- [ ] Existe `Especificacion-Funcional.md` con índice maestro y matriz NB→CU→RN→US.
+- [ ] La cantidad de CU cumple el mínimo declarado para el tipo D8 del proyecto de código.
+- [ ] Cada CU contiene las once secciones obligatorias del §4.2.
+- [ ] Cada CU declara trazabilidad NB→CU→US y al menos tres criterios Given/When/Then con valores concretos.
+- [ ] Cada RN contiene las siete secciones obligatorias del §4.2.1 y enumera CU afectados explícitos.
+- [ ] Si el tipo D8 exige modelo de datos, existe `Modelo-Datos/Modelo-Conceptual.md` con diagrama o tabla equivalente.
+- [ ] Si el modelo supera diez entidades, existen RC-XX en `Modelo-Datos/reglas-conceptuales-de-modelo/` con las seis secciones obligatorias del §4.2.3.
+- [ ] Existe `Glosario-Funcional.md` con las cinco secciones obligatorias de §4.2.4 y su tabla de términos no está vacía.
+- [ ] Todo término del dominio que aparece en más de un artefacto de 02 está declarado en el glosario, con sus referentes cuando tiene más de uno.
+- [ ] Ningún término del glosario redefine con otra semántica un término ya declarado en el glosario del dominio de 00; los reusados se referencian.
+- [ ] Ninguna forma desnuda de un término polisémico queda sin resolver en un artefacto que se lee por secciones, según `Vocabulario-Rules.md` §9.2.
+- [ ] Ninguna polisemia con contextos disjuntos se reporta como defecto ni se corrige calificando todas las ocurrencias (criterio negativo de `Vocabulario-Rules.md` §9.1).
+- [ ] Ningún archivo de la carpeta de trabajo lleva sufijo de versión en el nombre; cada uno declara su versión en el campo `Versión` de su cabecera (D4).
+- [ ] Ningún slug contiene mayúsculas, espacios, acentos ni caracteres no permitidos.
+- [ ] Existe un solo archivo por nombre lógico en la carpeta principal; las versiones superadas viven en `_legacy/` con su sufijo de versión.
+- [ ] No hay menciones a stacks concretos, productos comerciales ni protocolos específicos del dominio fuente.
+- [ ] Existe `README.md` de la sección si así lo decide el equipo (recomendado).
+- [ ] Todo documento con más de tres secciones de primer nivel incluye tabla de contenido inmediatamente después de la cabecera, con enlaces ancla a las secciones de primer y de segundo nivel. Los documentos breves quedan exceptuados.
+
+---
+
+## 7. Ejemplos genéricos
+
+### 7.1 Ejemplo 1 — Fragmento de CU para un web-monolith de salud
+
+Fragmento ilustrativo, no documento completo:
+
+```markdown
+# CU-03 — Asignar turno médico
+
+**Proyecto de código:** {{Nombre-Proyecto-Codigo}}
+**Documento:** CU-03-Asignar-Turno-Medico.md
+**Versión:** 1.0
+**Estado:** Propuesto
+**Fecha:** 2026-05-17
+**Autor:** Equipo Funcional
+
+## 1. Propósito
+Permitir que un agente administrativo asigne un turno a un paciente sobre la agenda de un profesional, respetando los cupos y las reglas de superposición.
+
+## 2. Actores
+| Actor | Tipo | Rol |
+| --- | --- | --- |
+| Agente administrativo | Primario | Solicita la asignación |
+| Sistema de agendas | Sistema | Valida cupos y reserva el horario |
+| Paciente | Secundario | Recibe la confirmación |
+
+## 8. Criterios de aceptación
+| ID | Given | When | Then |
+| --- | --- | --- | --- |
+| CA-01 | Una agenda con cupo libre a las 10:00 | El agente solicita asignar a las 10:00 | El sistema reserva el turno y emite confirmación |
+| CA-02 | Una agenda sin cupo libre a las 10:00 | El agente solicita asignar a las 10:00 | El sistema rechaza la solicitud con el código TURNO_SIN_CUPO |
+| CA-03 | Un paciente con turno superpuesto vigente | El agente solicita asignar | El sistema rechaza con el código PACIENTE_SOLAPADO |
+
+## 9. Trazabilidad
+| Dimensión | Referencia |
+| --- | --- |
+| Necesidad de negocio | NB-02 |
+| Reglas de negocio aplicables | RN-02, RN-04 |
+| Historias de usuario | US-05, US-06 |
+```
+
+### 7.2 Ejemplo 2 — Fragmento de RN para un rest-api de pagos
+
+```markdown
+# RN-02 — Validez del identificador de pago
+
+**Proyecto de código:** {{Nombre-Proyecto-Codigo}}
+**Documento:** RN-02-Validez-Identificador-Pago.md
+**Versión:** 1.0
+**Estado:** Aprobada
+**Fecha:** 2026-05-17
+
+## 1. Enunciado
+Todo identificador de pago aceptado por el sistema debe ser único, opaco al cliente y emitido por el subsistema autorizado.
+
+## 2. Justificación
+Auditoría regulatoria del proceso de cobro. Evita colisiones de cobro y permite reconciliación trazable.
+
+## 3. Ámbito de aplicación
+- CU-01 Registrar intento de pago.
+- CU-04 Confirmar pago.
+- CU-07 Reembolsar pago.
+
+## 4. Consecuencia si se viola
+El sistema rechaza la operación con el código IDENTIFICADOR_INVALIDO y no registra el intento.
+
+## 5. CU afectados
+CU-01, CU-04, CU-07.
+```
+
+### 7.3 Ejemplo 3 — Fragmento del modelo conceptual para un worker-service
+
+```markdown
+# Modelo conceptual
+
+## 3.1 Mensaje recibido
+Representa cada mensaje entrante procesado por el worker.
+
+**Atributos clave**
+- IdentificadorMensaje
+- TipoEvento
+- FechaRecepcion
+- EstadoProcesamiento
+
+## 4.1 MensajeRecibido — ResultadoProcesamiento
+Un mensaje recibido produce uno y solo un resultado de procesamiento.
+**Cardinalidad:** MensajeRecibido (1) —— (1) ResultadoProcesamiento
+
+## 5. Reglas conceptuales
+- RC-01: IdentificadorMensaje es único en toda la historia del worker (idempotencia).
+- RC-02: Todo MensajeRecibido referencia un TipoEvento del catálogo vigente.
+```
+
+Los tres fragmentos son ilustrativos. Cada proyecto de código adapta el dominio respetando la estructura.
+
+---
+
+## 8. Prompt-snippet sugerido
+
+```text
+Sos un {{ESPECIALIDAD-VARIANTE}} responsable de redactar la especificación funcional del proyecto de código {{NOMBRE_PROYECTO_CODIGO}}.
+
+Insumos:
+- PRODUCT-INTAKE: {{path}}
+- Upstream: 00 (visión, alcance), 01 (NB-XX).
+
+A generar (según tipo {{TIPO}} de D8):
+- Especificacion-Funcional.md (índice maestro con matriz NB→CU→RN→US).
+- Casos-De-Uso/CU-XX-<Nombre>.md (mínimo según §2.2).
+- Reglas-De-Negocio/RN-XX-<Nombre>.md (si aplica).
+- Modelo-Datos/Modelo-Conceptual.md (si aplica).
+- Modelo-Datos/reglas-conceptuales-de-modelo/RC-XX-<Nombre>.md (si el modelo supera 10 entidades).
+- README.md de la sección (recomendado).
+
+Reglas de redacción: §4 de Rules-Especificacion-Funcional.md.
+Nomenclatura: `CU-XX-<Nombre>.md` con guion medio `-v` (no `_v` ni `.v`); slug en Título-Con-Guiones estricto.
+Trazabilidad: cada CU debe enlazar a una NB y enumerar US a generar en 06.
+Criterios de calidad: §6 de Rules-Especificacion-Funcional.md.
+Política de versionado: §3.5; una sola versión vigente; anteriores a `_legacy/` con estado Superado.
+
+Restricciones: no introducir stacks concretos, productos comerciales ni protocolos del dominio fuente. Idioma rioplatense técnico, tildes correctas, sin emojis.
+
+Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO_CODIGO}}/02-Especificacion-Funcional/<estructura>.
+```
+
+---
+
+## 9. Control de cambios
+
+| Versión | Fecha | Cambios |
+| --- | --- | --- |
+| 1.0 | 2026-05-17 | Reglas iniciales generadas durante bootstrap SDD. |
+| 1.1 | 2026-06-09 | Validación ST-06: la categoría se genera por proyecto bajo `Proyectos/<Nombre-Proyecto>/02-Especificacion-Funcional/`; la frase de cierre de §1.2 y la ruta de salida del prompt-snippet referencian el `project_type` del proyecto en curso (manifiesto). Tablas §1.2 sin reescritura. |
+| 1.2 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |
+| 1.3 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |
+| 2.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |
+| 3.0 | 2026-07-29 | Renombre de vocabulario normativo (framework 5.0). El nivel superior pasa de «solución» a **producto**, la unidad de compilación de «proyecto» a **proyecto de código**, y los cuatro planos de identidad del producto se separan en campos propios (`Nombre-Producto`, `Slug-Producto`, `Raiz-Codigo`, `Artefacto-Agrupacion`). Se declara el nivel de aplicación de la regla en su cabecera, según `Vocabulario-Rules.md` §4 R3. Sube major porque los identificadores y los nombres de artefacto cambian, y la documentación generada con la nomenclatura anterior deja de cumplir. |
+| 4.0 | 2026-07-29 | **Gobierno del glosario de la categoría.** Sube major porque incorpora un artefacto obligatorio para los ocho tipos D8 y la documentación de 02 emitida sin él deja de cumplir. §2.1 declara `Glosario-Funcional.md` como artefacto propio: el glosario deja de ser el punto 6 de `Modelo-Conceptual.md`, que es condicional a la persistencia, de modo que un `library` o un `cli-tool` ya no queda sin glosario aunque acuñe sus cinco casos de uso mínimos y sus reglas de negocio. §4.2.2 punto 6 pasa a ser referencia al artefacto. §4.2.4 nueva fija sus cinco secciones obligatorias, incluida la de términos con más de un referente, que no se omite: si ninguno lo requiere, declara «ninguno verificado». §3.3 suma la regla de inclusión (todo término en más de un artefacto de 02), la de no duplicación frente al glosario del dominio de 00 y la de polisemia, que remite al criterio de `Vocabulario-Rules.md` §9. §5.4 suma tres preguntas guía y §4.5 cuatro anti-patrones, entre ellos calificar todas las ocurrencias de un término cuyos contextos son disjuntos. §6 suma cinco criterios verificables. **Corregido**: §0 citaba «11 (ejemplos)», número nuevo con el significado viejo, residuo del intercambio 10 ↔ 11; y §3.1, §3.5 y §5.1 nombraban `especificacion-funcional.md`, `modelo-conceptual.md` y `definicion-<concepto>.md` en todo-minúsculas, variante que el párrafo siguiente de la propia §3.1 prohíbe y que contradecía a §2.1. **Origen**: la categoría 02 es la que más vocabulario acuña y la única de las trece cuya palabra «glosario» aparecía una sola vez en todo el archivo, sin criterio de inclusión y sin verificación en §6. |
