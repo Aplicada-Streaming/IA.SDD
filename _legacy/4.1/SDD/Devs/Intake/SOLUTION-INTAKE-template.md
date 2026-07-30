@@ -1,6 +1,6 @@
 # SOLUTION-INTAKE-template
 
-**Versión de la plantilla:** 1.4
+**Versión de la plantilla:** 1.5
 
 Este campo versiona la **plantilla**. El campo `| Versión |` de la cabecera de abajo pertenece al documento de intake que la plantilla genera, y arranca en 1.0 en cada solución nueva.
 
@@ -37,6 +37,7 @@ Bloque obligatorio al inicio. Reproducir y completar:
 | Campo | Valor |
 |---|---|
 | Nombre de la solución | [Nombre legible de la solución] |
+| Product Owner | [Persona que conoce el producto y es responsable del contenido de este documento] |
 | Cliente / Stakeholder principal | [Persona, área u organización que la impulsa] |
 | Repositorio | [Repositorio URL] |
 | Lead técnico | [Nombre y rol] |
@@ -48,6 +49,8 @@ Bloque obligatorio al inicio. Reproducir y completar:
 
 > Este documento captura qué quiere el cliente, cómo se compone la solución y cómo se construye cada proyecto.
 > El orquestador deriva de §13 el `SOLUTION-MANIFEST` canónico; no completes el manifiesto a mano.
+
+**Quién es responsable de este documento.** El **Product Owner** es el autor responsable: es quien conoce el producto al detalle, reúne el material que lo define y aprueba el resultado. La redacción puede estar asistida por un agente que estructura ese material bajo esta plantilla, pero la autoría del contenido y la aprobación no se delegan. El Product Owner es además el dueño de las decisiones de producto que este documento registra —la priorización MoSCoW de §4 y las exclusiones de §9—, y ninguna especialidad aguas abajo las toma por él: si faltan, la generación se detiene y pregunta.
 
 ## Tabla de contenido
 
@@ -94,17 +97,22 @@ Lo que NO va en esta sección:
 
 Instrucción: Identificar a quién usa la solución día a día, quién paga y quién decide su rumbo. Completar la tabla con al menos un representante por categoría (propietario, implementador, beneficiario). Sin genéricos como "los usuarios".
 
+Un stakeholder y el Product Owner no son lo mismo, y conviene no fusionarlos en una sola respuesta. El **stakeholder** aporta un interés parcial y legítimo: pide, se queja, juzga, y puede pedir cosas incompatibles con las de otro stakeholder. El **Product Owner** arbitra entre esos intereses y cierra. El Product Owner cae en la categoría «propietario» de la tríada, pero no la agota: quien financia también es propietario y no por eso es el Product Owner.
+
 Preguntas guía:
-- (*) ¿Quién es el propietario del problema y aprueba el intake?
+- (*) ¿Quién es el Product Owner: la persona que conoce el producto, redacta este documento, arbitra entre intereses en conflicto y aprueba el intake?
+- (*) ¿Quién es el propietario del problema, entendido como categoría de stakeholder: quién lo padece, quién financia y quién decide el rumbo?
 - (*) ¿Quiénes son los usuarios finales y qué rol cumple cada uno?
-- ¿Quién financia y a quién hay que rendir resultados? ¿Hay actores indirectos (auditoría, legal, soporte)?
+- (*) ¿Cuántas personas componen el equipo de desarrollo? De este dato deriva el flag `equipo_n` (`Master-Prompt.md` §4), que condiciona la emisión de `Acuerdo-Equipo.md` y la forma del plan de sprint de la categoría 07.
+- ¿Hay actores indirectos (auditoría, legal, soporte)?
 
 Ejemplo:
 
 | Rol | Nombre o cargo | Categoría | Responsabilidad principal |
 |---|---|---|---|
-| Dueño del problema | [Nombre] | Propietario | Aprueba el intake |
-| Equipo de desarrollo | [Estudio/equipo] | Implementador | Construye y mantiene |
+| Product Owner | [Nombre] | Propietario | Redacta y aprueba el intake; arbitra prioridades y exclusiones |
+| Dueño del problema | [Nombre] | Propietario | Padece el problema, financia o decide el rumbo |
+| Equipo de desarrollo | [Estudio/equipo, N personas] | Implementador | Construye y mantiene |
 | Usuarios finales | [Rol] | Beneficiario | Operan la solución |
 
 Lo que NO va en esta sección:
@@ -350,7 +358,9 @@ Lo que NO va en esta sección:
 
 ## §16 Estructura de repositorio de la solución
 
-Instrucción: Proponer el árbol `tree` con `/src`, `/tests`, `/samples`, `/docs`, `/devs`. Se deriva de la jerarquía de §13 y de la convención de nombres: cada proyecto es `src/<NombreProyectoCodigo>/`, salvo redistribuibles con prefijo de organización. Incluir la subsección §16.1 sobre `/samples`.
+Instrucción: Proponer el árbol `tree` con `/src`, `/tests`, `/samples` y la carpeta `SDD/` del framework. Se deriva de la jerarquía de §13 y de la convención de nombres: cada proyecto es `src/<NombreProyectoCodigo>/`, salvo redistribuibles con prefijo de organización. Incluir la subsección §16.1 sobre `/samples`.
+
+Las rutas del framework no se eligen: las fija `Master-Prompt.md` §3.5. El intake va en `SDD/Intake/`, la documentación generada en `SDD/Docs/` y las maquetas de la Fase B2 en `SDD/Maquetas/`. Lo único que esta sección propone es el árbol de código.
 
 Preguntas guía:
 - (*) ¿Cada proyecto de §13 tiene su carpeta en `/src` con su nombre de código?
@@ -359,7 +369,7 @@ Preguntas guía:
 
 Ejemplo (solución Gestión de Turnos):
 ```text
-gestion-de-turnos/
+Gestion-De-Turnos/
 ├── src/
 │   ├── GestionDeTurnos.WebApi/         # rest-api (principal)
 │   ├── GestionDeTurnos.Domain/         # library de dominio
@@ -367,8 +377,10 @@ gestion-de-turnos/
 │   └── Aplicada.Validaciones/          # library redistribuible
 ├── tests/
 ├── samples/
-├── docs/                               # categorías 00-11 SDD (por proyecto bajo Proyectos/<Nombre>/)
-└── devs/Intake/                        # SOLUTION-INTAKE
+└── SDD/
+    ├── Intake/                         # SOLUTION-INTAKE y SOLUTION-MANIFEST derivado
+    ├── Docs/                           # categorías 00-11 (por proyecto bajo Proyectos/<Nombre-Proyecto>/)
+    └── Maquetas/                       # solo si algún proyecto ejecuta la Fase B2
 ```
 
 ### §16.1 Materialización de `/samples`
@@ -533,9 +545,9 @@ Lo que NO va en esta sección:
 Verificar antes de pasar el intake al orquestador. Todos los ítems deben estar tildados.
 
 Negocio (Parte A):
-- [ ] La cabecera tiene nombre de solución, cliente, fecha y estado.
+- [ ] La cabecera tiene nombre de solución, Product Owner, cliente, fecha y estado.
 - [ ] §1 describe un problema concreto y qué pasa si no se construye.
-- [ ] §2 tiene al menos un stakeholder por categoría con rol explícito.
+- [ ] §2 tiene al menos un stakeholder por categoría con rol explícito, identifica al Product Owner como rol distinto del dueño del problema, y declara la cantidad de personas del equipo de desarrollo (origen de `equipo_n`).
 - [ ] §4 tiene al menos un ítem en cada categoría MoSCoW y el Must Have es el mínimo razonable.
 - [ ] §5 tiene al menos 3 historias en formato `Como/quiero/para`, cubriendo 2 roles si hay más de uno.
 - [ ] §7 lista al menos 5 casos límite con espacio para respuesta del cliente.
@@ -592,3 +604,4 @@ Este documento alimenta las siguientes secciones SDD. La parte de negocio (A) es
 | 1.2 | 2026-07-26 | Intercambio de categorías 10 ↔ 11: los destinos declarados en §17 P.11, §18 y la tabla de mapeo intake → documentación pasan a `10-Examples/` para los samples y `11-Documentacion/` para el cuerpo documental de entrega. Normalización del vocabulario de actores. | Reformulación SDD |
 | 1.3 | 2026-07-26 | La plantilla declara su propia versión en cabecera, con la aclaración de que el campo `Versión` del cuerpo pertenece al documento generado y no a la plantilla. Corrige una aplicación incompleta de D6 sobre las plantillas.  Reformulación SDD |
 | 1.4 | 2026-07-28 | Navegabilidad y anexos de datos. Se incorpora la **tabla de contenido obligatoria** después de la cabecera, con cada escenario de la Parte D listado por identificador: un intake real supera las dos mil líneas y sin índice no es navegable ni por el humano ni por el agente que lo lee por partes. El formato por escenario de §20 pasa de tres piezas a cinco: suma **contexto**, **qué ejercita** y **qué verificar**, este último porque es lo que `08-Calidad-Y-Pruebas` toma como criterio de aceptación y `10-Examples` convierte en contrato de verificación. El `Estado` del dato pasa a enum cerrado (`medido`, `declarado`, `derivado`, `reconstruido`), que es D9 aplicada a los datos de ejemplo. Se agrega la recomendación de encadenar los escenarios como una única línea de tiempo. Sintetizado del patrón que dos intakes reales desarrollaron por su cuenta sobre la versión 1.3. |
+| 1.5 | 2026-07-29 | Product Owner declarado y correcciones de coherencia. La cabecera suma el campo **Product Owner** y una nota que declara quién es responsable del documento: el PO es el autor del contenido y quien aprueba, la redacción puede estar asistida por un agente, y las decisiones de producto de §4 y §9 son suyas. §2 desdobla la pregunta bloqueante, que fusionaba al Product Owner con la categoría de stakeholder «propietario», e incorpora la pregunta por la cantidad de personas del equipo, origen declarado del flag `equipo_n` que ninguna sección pedía. §16 corrige el árbol de ejemplo, que mostraba `docs/` y `devs/Intake/` en lugar de las rutas `SDD/Docs/` y `SDD/Intake/` que fija `Master-Prompt.md` §3.5. Ejemplos de `Nombre-Solucion` normalizados a Título-Con-Guiones. Checklist de §19 actualizado. |

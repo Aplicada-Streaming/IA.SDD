@@ -1,14 +1,15 @@
 # Reglas constructivas — 07 Plan de sprint
 
-**Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/07-Plan-Sprint/`
-**Subagente target del orquestador:** Scrum Master / Gestión Ágil de Proyectos senior (AG-07)
-**Versión de las reglas:** 2.0
+**Carpeta target (por proyecto de código):** `SDD/Docs/Proyectos/<Nombre-Proyecto-Codigo>/07-Plan-Sprint/`
+**Nivel de aplicación (`Vocabulario-Rules.md` §4 R3):** Proyecto de código
+**Subagente target del orquestador:** Scrum Master / Gestión Ágil de Proyectos de código senior (AG-07)
+**Versión de las reglas:** 3.1
 
 ---
 
 ## 0. Posición en la cadena SDD
 
-La categoría 07 es la primera categoría de ejecución iterativa de la cadena de trazabilidad D6. Recibe upstream de 06 (backlog técnico priorizado, US y BT con estimación), 02 (CU y RN cuya trazabilidad sobrevive sprint a sprint) y 05 (arquitectura y ADRs que condicionan el alcance técnico). Alimenta 08 (acceptance tests del sprint vigente y plan de pruebas por iteración), 09 (DevOps si el sprint introduce cambios de pipeline o despliegue) y 10 (developer guide cuando una decisión del sprint impacta convenciones de código). La categoría 07 no decide qué se construye en el largo plazo, eso lo hace 06; decide qué se construye en la ventana timeboxed del sprint vigente, con compromiso del equipo y métrica de cumplimiento. Es obligatoria para todos los proyectos con equipo mayor a un desarrollador; para proyectos de un solo dev se reduce a un mini-plan documentado, pero no se omite.
+La categoría 07 es la primera categoría de ejecución iterativa de la cadena de trazabilidad D6. Recibe upstream de 06 (backlog técnico priorizado, US y BT con estimación), 02 (CU y RN cuya trazabilidad sobrevive sprint a sprint) y 05 (arquitectura y ADRs que condicionan el alcance técnico). Alimenta 08 (acceptance tests del sprint vigente y plan de pruebas por iteración), 09 (DevOps si el sprint introduce cambios de pipeline o despliegue) y 10 (developer guide cuando una decisión del sprint impacta convenciones de código). La categoría 07 no decide qué se construye en el largo plazo, eso lo hace 06; decide qué se construye en la ventana timeboxed del sprint vigente, con compromiso del equipo y métrica de cumplimiento. Es obligatoria para todos los proyectos de código con equipo mayor a un desarrollador; para proyectos de código de un solo dev se reduce a un mini-plan documentado, pero no se omite.
 
 ---
 
@@ -16,9 +17,9 @@ La categoría 07 es la primera categoría de ejecución iterativa de la cadena d
 
 ### 1.1 Especialidad base
 
-Scrum Master / Gestión Ágil de Proyectos senior, equivalente al AG-07 del catálogo SDD. El perfil combina facilitación de ceremonias (planning, review, retrospectiva, daily), tracking de métricas ágiles (velocity, burndown, ratio de completitud) y gestión de impedimentos. Se alinea con la Scrum Guide 2020 para artefactos y eventos, con Evidence-Based Management para métricas de valor y con prácticas de Kanban para casos de demanda continua o equipos de mantenimiento. Traduce el backlog priorizado de 06 en planes de iteración ejecutables con commitment realista, mantiene la consistencia inter-sprint y asegura que cada ceremonia produzca artefactos accionables, no documentos teóricos.
+Scrum Master / Gestión Ágil de Proyectos de código senior, equivalente al AG-07 del catálogo SDD. El perfil combina facilitación de ceremonias (planning, review, retrospectiva, daily), tracking de métricas ágiles (velocity, burndown, ratio de completitud) y gestión de impedimentos. Se alinea con la Scrum Guide 2020 para artefactos y eventos, con Evidence-Based Management para métricas de valor y con prácticas de Kanban para casos de demanda continua o equipos de mantenimiento. Traduce el backlog priorizado de 06 en planes de iteración ejecutables con commitment realista, mantiene la consistencia inter-sprint y asegura que cada ceremonia produzca artefactos accionables, no documentos teóricos.
 
-### 1.2 Variantes según tipo de proyecto (8 valores D8)
+### 1.2 Variantes según tipo de proyecto de código (8 valores D8)
 
 | Tipo | Especialidad específica | Justificación |
 | --- | --- | --- |
@@ -31,13 +32,13 @@ Scrum Master / Gestión Ágil de Proyectos senior, equivalente al AG-07 del cat�
 | cli-tool | Scrum Master simplificado | Equipos pequeños y ceremonias condensadas; planning y retro fusionados o reducidos. |
 | worker-service | Scrum Master + Operations Lead | Sprints que combinan features con tareas de mantenimiento operativo (queues, reintentos, dead-letter); seguimiento de incidentes recurrentes. |
 
-El orquestador lee esta tabla y, según el `project_type` del proyecto en curso (leído del manifiesto de solución), selecciona la variante correspondiente y la combina con la especialidad base. La variante se aplica una vez por cada proyecto de la solución.
+El orquestador lee esta tabla y, según el `tipo_proyecto_codigo` del proyecto de código en curso (leído del manifiesto de producto), selecciona la variante correspondiente y la combina con la especialidad base. La variante se aplica una vez por cada proyecto de código del producto.
 
 ### 1.3 Multi-especialidad
 
 La categoría 07 admite revisiones acotadas por otras especialidades:
 
-- AG-06 Product Owner / Backlog, para validar que las US y BT comprometidas son las correctas según prioridad y para confirmar el sprint goal con el dueño del producto.
+- AG-06 Scrum Master / Backlog, para validar que las US y BT comprometidas son las correctas según la prioridad ya declarada por el Product Owner en el intake, y para confirmar el sprint goal. AG-06 no reprioriza: si la prioridad falta o es ambigua, se escala como ambigüedad legítima (`Master-Prompt.md` §9).
 - AG-08 QA, para acordar qué casos de prueba acompañan a cada US comprometida y cómo se verifica la DoD aplicada.
 - AG-09 DevOps, cuando el sprint introduce cambios en el pipeline, en el entorno de prueba o en la estrategia de release.
 - AG-05 Arquitecto, cuando una US del sprint requiere una ADR nueva o impacta una existente.
@@ -52,11 +53,11 @@ El AG-07 mantiene siempre la titularidad de los artefactos; las demás especiali
 
 | Archivo | Obligatorio para | Recomendado | Omitir para | Descripción |
 | --- | --- | --- | --- | --- |
-| `Plan-Iteracion-Sprint-XX.md` | Todos los tipos D8 con equipo mayor a 1 dev; mínimo Sprint 0 y Sprint 1 | — | Proyectos de 1 dev (se reemplaza por mini-plan) | Plan de iteración por sprint. Un archivo por sprint, numerado con dos dígitos. |
-| `Template-Sprint-Review.md` | Todos los tipos D8 con equipo mayor a 1 dev | — | Proyectos de 1 dev | Plantilla reusable para documentar el sprint review al cierre de cada iteración. |
-| `Template-Sprint-Retrospectiva.md` | Todos los tipos D8 con equipo mayor a 1 dev | — | Proyectos de 1 dev | Plantilla reusable para documentar la retrospectiva al cierre de cada iteración. |
-| `Velocidad-Equipo.md` | Todos los tipos D8 con equipo mayor a 1 dev | — | Proyectos de 1 dev | Tracking acumulado de velocity sprint a sprint, con promedio móvil y outliers explicados. |
-| `Mini-Plan.md` | Proyectos de 1 dev (sustituye a los cuatro anteriores) | — | Equipos con más de 1 dev | Plan único condensado que combina sprint goal, lista de items y bitácora de avance semanal. |
+| `Plan-Iteracion-Sprint-XX.md` | Todos los tipos D8 con equipo mayor a 1 dev; mínimo Sprint 0 y Sprint 1 | — | Proyectos de código de 1 dev (se reemplaza por mini-plan) | Plan de iteración por sprint. Un archivo por sprint, numerado con dos dígitos. |
+| `Template-Sprint-Review.md` | Todos los tipos D8 con equipo mayor a 1 dev | — | Proyectos de código de 1 dev | Plantilla reusable para documentar el sprint review al cierre de cada iteración. |
+| `Template-Sprint-Retrospectiva.md` | Todos los tipos D8 con equipo mayor a 1 dev | — | Proyectos de código de 1 dev | Plantilla reusable para documentar la retrospectiva al cierre de cada iteración. |
+| `Velocidad-Equipo.md` | Todos los tipos D8 con equipo mayor a 1 dev | — | Proyectos de código de 1 dev | Tracking acumulado de velocity sprint a sprint, con promedio móvil y outliers explicados. |
+| `Mini-Plan.md` | Proyectos de código de 1 dev (sustituye a los cuatro anteriores) | — | Equipos con más de 1 dev | Plan único condensado que combina sprint goal, lista de items y bitácora de avance semanal. |
 | `README.md` de la sección | Recomendado para todos | — | — | Índice navegable de planes de sprint vigentes, plantillas reusables y tabla de velocity. |
 
 ### 2.2 Reglas de inclusión y exclusión por tamaño de equipo
@@ -79,7 +80,7 @@ Sprint 0 corresponde al sprint de arranque dedicado a setup técnico, validació
 - `template-sprint-review.md` para la plantilla de review.
 - `template-sprint-retrospectiva.md` para la plantilla de retrospectiva.
 - `velocidad-equipo.md` para el tracking de velocidad.
-- `mini-plan.md` para proyectos de un solo dev.
+- `mini-plan.md` para proyectos de código de un solo dev.
 
 La auditoría de Fase 0 del bootstrap detectó que el fuente Motor DSL usa el patrón `Plan-Iteracion_sprint-01.md`, que mezcla dos separadores (`_sprint-01` y luego `-v1.0`) sin coherencia con el resto del repositorio. SDD corrige esta práctica: el único separador del nombre es el guion medio (`-`) en todo el archivo, incluida la versión; el guion bajo (`_`) queda prohibido. Queda prohibido el patrón `plan-iteracion_sprint-XX.md` con guion bajo; el patrón correcto y único es `Plan-Iteracion-Sprint-XX.md`.
 
@@ -124,7 +125,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos. Queda prohibi
 ```markdown
 # Plan de Iteración — Sprint XX
 
-**Proyecto:** {{nombre-proyecto}}
+**Proyecto de código:** {{Nombre-Proyecto-Codigo}}
 **Documento:** plan-iteracion-sprint-XX.md
 **Versión:** <X.Y>
 **Estado:** Propuesto | En curso | Cerrado
@@ -145,7 +146,7 @@ El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente
 2. Objetivo del sprint (sprint goal). Una sola frase orientada a valor. Prohibido bullets, listas o enumeraciones. Debe responder a la pregunta "¿qué se logra al final del sprint?".
 3. Historias y tareas comprometidas. Tabla con columnas: ID, tipo (US o BT), descripción corta, prioridad (Alta, Media, Baja), estimación, asignado, estado. Total de puntos comprometidos al pie.
 4. Alcance técnico. Qué componentes se construyen o modifican, en qué orden, qué dependencias existen entre BT (por ejemplo BT-04 depende de BT-02). Esta sección no redefine arquitectura; referencia la arquitectura de 05.
-5. Definition of Done aplicada. Referencia explícita a la DoD canónica del proyecto (vive en 08). Criterios específicos del sprint, si los hay, listados aparte. **La DoD del sprint incluye siempre la actualización de la categoría 11**: el corte no se declara cerrado con documentos del cuerpo documental de entrega afectados por los ítems del sprint y sin revisar. La condición se enuncia en §4.5.
+5. Definition of Done aplicada. Referencia explícita a la DoD canónica del proyecto de código (vive en 08). Criterios específicos del sprint, si los hay, listados aparte. **La DoD del sprint incluye siempre la actualización de la categoría 11**: el corte no se declara cerrado con documentos del cuerpo documental de entrega afectados por los ítems del sprint y sin revisar. La condición se enuncia en §4.5.
 6. Riesgos del sprint y mitigaciones. Tabla con cada riesgo, probabilidad (Alta, Media, Baja), impacto (Alto, Medio, Bajo) y plan de mitigación concreto. Mínimo dos riesgos por sprint.
 7. Criterios de hecho del sprint. Cuándo se considera el sprint completo (todas las US comprometidas en estado terminado, demo realizada, retrospectiva facilitada, documentos de 11 afectados revisados con su fecha al día).
 8. Trazabilidad. Tabla con qué NB y qué CU avanzan en este sprint, qué ADRs gobiernan las decisiones técnicas implicadas.
@@ -268,7 +269,7 @@ Tabla de velocity, en `Velocidad-Equipo.md`:
 
 ### 5.4 Calidad
 
-- ¿La DoD referenciada es la canónica del proyecto?
+- ¿La DoD referenciada es la canónica del proyecto de código?
 - ¿Qué documentos de la categoría 11 tocan los ítems comprometidos en este sprint? ¿Están enumerados en el plan?
 - ¿Hay mínimo dos riesgos identificados con mitigación concreta?
 - ¿La retrospectiva del sprint anterior produjo acciones, y esas acciones están reflejadas en el sprint vigente?
@@ -286,7 +287,7 @@ Tabla de velocity, en `Velocidad-Equipo.md`:
 
 - [ ] Existe `Plan-Iteracion-Sprint-XX.md` para cada sprint planificado, mínimo Sprint 0 y Sprint 1, con las nueve secciones del §4.2.
 - [ ] Cada plan declara sprint goal como una sola frase orientada a valor, sin bullets ni listas.
-- [ ] Existen `Template-Sprint-Review.md` y `Template-Sprint-Retrospectiva.md` como plantillas reusables aplicables a cualquier sprint del proyecto.
+- [ ] Existen `Template-Sprint-Review.md` y `Template-Sprint-Retrospectiva.md` como plantillas reusables aplicables a cualquier sprint del proyecto de código.
 - [ ] Existe `Velocidad-Equipo.md` con tabla por sprint y promedio móvil de 3 sprints, actualizada al cierre del último sprint cerrado.
 - [ ] Cada plan referencia la DoD canónica de 08 y solo agrega criterios específicos del sprint si los hay.
 - [ ] La DoD aplicada de cada sprint incluye la actualización de los documentos de la categoría 11 afectados por los ítems comprometidos.
@@ -296,8 +297,11 @@ Tabla de velocity, en `Velocidad-Equipo.md`:
 - [ ] Ningún archivo usa el patrón `plan-iteracion_sprint-XX.md` con doble separador; todos usan `plan-iteracion-sprint-XX.md`.
 - [ ] Ningún archivo abre con `--` ni con otro separador previo al H1.
 - [ ] No hay menciones a stacks concretos, productos comerciales ni protocolos del dominio fuente.
-- [ ] Para proyectos de un solo dev, existe `Mini-Plan.md` y no existen los cuatro artefactos completos.
+- [ ] Para proyectos de código de un solo dev, existe `Mini-Plan.md` y no existen los cuatro artefactos completos.
 - [ ] Todo documento con más de tres secciones de primer nivel incluye tabla de contenido inmediatamente después de la cabecera, con enlaces ancla a las secciones de primer y de segundo nivel. Los documentos breves quedan exceptuados.
+- [ ] Todo término que esta categoría acuña o precisa, y que aparece en más de uno de sus artefactos, está declarado en `Glosario-Funcional.md` de 02 y `Glosario-Tecnico.md` de 11, con sus referentes cuando tiene más de uno. El vocabulario de proceso de esta categoría —sprint, incremento, velocidad, Definition of Done— es del framework y vive en el glosario operativo de `Master-Prompt.md` §15, no en un glosario de producto.
+- [ ] Ninguna forma desnuda de un término polisémico queda sin resolver en un artefacto que se lee por secciones (`Vocabulario-Rules.md` §9.2).
+- [ ] Ninguna polisemia con contextos disjuntos se reporta como defecto ni se corrige calificando todas las ocurrencias (criterio negativo de `Vocabulario-Rules.md` §9.1).
 
 ---
 
@@ -310,7 +314,7 @@ Fragmento ilustrativo, no documento completo:
 ```markdown
 # Plan de Iteración — Sprint 01
 
-**Proyecto:** Turnos Médicos
+**Proyecto de código:** Turnos-Medicos-API
 **Documento:** Plan-Iteracion-Sprint-01.md
 **Versión:** 1.0
 **Estado:** Propuesto
@@ -355,7 +359,7 @@ Fragmento ilustrativo, con 5 sprints de tracking:
 ```markdown
 # Velocidad del equipo
 
-**Proyecto:** Librería CSV
+**Proyecto de código:** Parser-CSV
 **Documento:** Velocidad-Equipo.md
 **Versión:** 1.0
 **Estado:** En curso
@@ -383,17 +387,17 @@ Promedio móvil 3 sprints (S03–S05): 16,7 puntos. Tope sugerido para S06: 18 p
 | S04 | 14 | 15,7 | -11 % | Vacaciones planificadas de un integrante |
 ```
 
-Los dos fragmentos son ilustrativos. Cada proyecto adapta el dominio respetando la estructura.
+Los dos fragmentos son ilustrativos. Cada proyecto de código adapta el dominio respetando la estructura.
 
 ---
 
 ## 8. Prompt-snippet sugerido
 
 ```text
-Sos un {{ESPECIALIDAD-VARIANTE}} responsable de redactar el plan de sprint del proyecto {{NOMBRE_PROYECTO}}.
+Sos un {{ESPECIALIDAD-VARIANTE}} responsable de redactar el plan de sprint del proyecto de código {{NOMBRE_PROYECTO_CODIGO}}.
 
 Insumos:
-- SOLUTION-INTAKE: {{path}}
+- PRODUCT-INTAKE: {{path}}
 - Upstream: 06 (backlog técnico priorizado con US y BT), 02 (CU y NB), 05 (arquitectura y ADRs).
 - Histórico: Velocidad-Equipo.md si existe.
 
@@ -401,7 +405,7 @@ A generar (según tamaño de equipo):
 - Plan-Iteracion-Sprint-XX.md para el sprint vigente, con las nueve secciones del §4.2.
 - Template-Sprint-Review.md y Template-Sprint-Retrospectiva.md si todavía no existen.
 - Velocidad-Equipo.md actualizado al cierre del sprint anterior.
-- Mini-Plan.md si el proyecto es de un solo dev (sustituye a los anteriores).
+- Mini-Plan.md si el proyecto de código es de un solo dev (sustituye a los anteriores).
 - README.md de la sección (recomendado).
 
 Reglas de redacción: §4 de Rules-Plan-Sprint.md.
@@ -414,7 +418,7 @@ Estimación: en story points; declarar la unidad en §1.
 
 Restricciones: no introducir stacks concretos, productos comerciales ni protocolos del dominio fuente. Idioma rioplatense técnico, tildes correctas, sin emojis.
 
-Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/07-Plan-Sprint/<estructura>.
+Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO_CODIGO}}/07-Plan-Sprint/<estructura>.
 ```
 
 ---
@@ -429,3 +433,6 @@ Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/07-Plan-Sprint/<estructura>.
 | 1.3 | 2026-07-26 | La actualización de la categoría 11 se incorpora a la Definition of Done del sprint. Nuevo §4.5 con la condición de cierre y lo que exige en la práctica, con renumeración de §4.5 a §4.7 previas a §4.6 a §4.8; §4.2 puntos 5 y 7 la enuncian dentro de la estructura del plan; §4.8 suma el anti-patrón de cerrar un sprint con documentos de 11 sin revisar; §5 suma una pregunta guía y §6 un criterio de aceptación. Es la única modificación que esta intervención introduce en la regla: no se agregan artefactos ni carga narrativa. |
 | 1.4 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |
 | 2.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |
+| 2.1 | 2026-07-29 | Corrección de nombre de rol en §1.3: AG-06 se declaraba como «Product Owner / Backlog» mientras su propio archivo de reglas y el catálogo del marco teórico lo definen como Scrum Master. Pasa a «Scrum Master / Backlog» y se explicita que no reprioriza: la prioridad la declara el Product Owner en el intake y su ausencia se escala como ambigüedad legítima. |
+| 3.0 | 2026-07-29 | Renombre de vocabulario normativo (framework 5.0). El nivel superior pasa de «solución» a **producto**, la unidad de compilación de «proyecto» a **proyecto de código**, y los cuatro planos de identidad del producto se separan en campos propios (`Nombre-Producto`, `Slug-Producto`, `Raiz-Codigo`, `Artefacto-Agrupacion`). Se declara el nivel de aplicación de la regla en su cabecera, según `Vocabulario-Rules.md` §4 R3. Sube major porque los identificadores y los nombres de artefacto cambian, y la documentación generada con la nomenclatura anterior deja de cumplir. |
+| 3.1 | 2026-07-29 | Criterio de gobierno del glosario en §6. Sube minor: agrega criterios de aceptación verificables sin cambiar el conjunto de artefactos de la categoría ni ninguna invariante, y ninguna documentación ya emitida deja de cumplir por sí sola. Los tres criterios exigen que todo término que la categoría acuña o precisa y usa en más de uno de sus artefactos esté declarado en el glosario que le corresponde, que ninguna forma desnuda de un término polisémico quede sin resolver en un artefacto que se lee por secciones, y —criterio negativo— que ninguna polisemia con contextos disjuntos se reporte como defecto. Materializan `Vocabulario-Rules.md` §9 en la categoría. **Origen**: el audit verificaba «glosario sin contradicciones», que un glosario incompleto cumple trivialmente, y esta regla no mencionaba la palabra «glosario» ni una vez. |

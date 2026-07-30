@@ -1,8 +1,12 @@
 # SOLUTION-MANIFEST-template
 
+**Versión de la plantilla:** 2.1
+
+Este campo versiona la **referencia de formato**. El campo `| Versión |` del bloque de solución de §1 pertenece al manifiesto que el orquestador deriva, y arranca en 1.0 en cada solución nueva.
+
 Referencia de formato del artefacto `SOLUTION-MANIFEST-<Nombre-Solucion>.md`. El manifiesto declara la jerarquía de proyectos de una solución: enumera los proyectos, su tipo D8, su rol, sus dependencias y sus nombres de código. Es la fuente única de verdad de la enumeración de proyectos para el resto del orquestador.
 
-A partir de SDD con intake unificado, el manifiesto NO lo completa el usuario a mano: es un artefacto derivado. El usuario completa un único documento, `SOLUTION-INTAKE-<Nombre-Solucion>.md`, y de su §13 (Proyectos de la solución) el orquestador construye este manifiesto durante la Fase de validación de intake, siguiendo las reglas de derivación de `rules/Intake-Rules.md` §4, y lo presenta para confirmación humana. Este archivo describe el formato del artefacto generado; no es una plantilla a llenar.
+A partir de SDD con intake unificado, el manifiesto NO lo completa el usuario a mano: es un artefacto derivado. El usuario completa un único documento, `SOLUTION-INTAKE-<Nombre-Solucion>.md`, y de su §13 (Proyectos de la solución) el orquestador construye este manifiesto durante la Fase de validación de intake, siguiendo las reglas de derivación de `Intake-Rules.md` §4, y lo presenta para confirmación humana. Este archivo describe el formato del artefacto generado; no es una plantilla a llenar.
 
 ## Guía de uso de esta referencia
 
@@ -145,9 +149,9 @@ Bloque de solución:
 | Campo | Valor |
 |---|---|
 | Nombre de solución | Gestión de Turnos |
-| `Nombre-Solucion` | `gestion-de-turnos` |
+| `Nombre-Solucion` | `Gestion-De-Turnos` |
 | `NombreSolucionCodigo` | `GestionDeTurnos` |
-| Proyecto principal | `gestion-de-turnos-api` |
+| Proyecto principal | `Gestion-De-Turnos-API` |
 | Intake (origen) | `SOLUTION-INTAKE-Gestion-De-Turnos.md` |
 
 Perfil de convención: PascalCase; separador `.`; prefijo de redistribuibles `Aplicada`.
@@ -156,25 +160,25 @@ Tabla de proyectos:
 
 | `Nombre-Proyecto` | `nombre-proyecto-codigo` | `project_type` | Rol | `redistribuible` | Dependencias | Path `/src` |
 |---|---|---|---|---|---|---|
-| `gestion-de-turnos-api` | `GestionDeTurnos.WebApi` | `rest-api` | API pública de turnos (principal) | false | `gestion-de-turnos-domain`, `aplicada-validaciones` | `src/GestionDeTurnos.WebApi/` |
-| `gestion-de-turnos-domain` | `GestionDeTurnos.Domain` | `library` | Dominio y reglas de negocio compartidas | false | `aplicada-validaciones` | `src/GestionDeTurnos.Domain/` |
-| `gestion-de-turnos-notificaciones` | `GestionDeTurnos.Worker` | `worker-service` | Envío asincrónico de recordatorios | false | `gestion-de-turnos-domain` | `src/GestionDeTurnos.Worker/` |
-| `aplicada-validaciones` | `Aplicada.Validaciones` | `library` | Paquete reusable de validaciones | true | — | `src/Aplicada.Validaciones/` |
+| `Gestion-De-Turnos-API` | `GestionDeTurnos.WebApi` | `rest-api` | API pública de turnos (principal) | false | `Gestion-De-Turnos-Domain`, `Aplicada-Validaciones` | `src/GestionDeTurnos.WebApi/` |
+| `Gestion-De-Turnos-Domain` | `GestionDeTurnos.Domain` | `library` | Dominio y reglas de negocio compartidas | false | `Aplicada-Validaciones` | `src/GestionDeTurnos.Domain/` |
+| `Gestion-De-Turnos-Notificaciones` | `GestionDeTurnos.Worker` | `worker-service` | Envío asincrónico de recordatorios | false | `Gestion-De-Turnos-Domain` | `src/GestionDeTurnos.Worker/` |
+| `Aplicada-Validaciones` | `Aplicada.Validaciones` | `library` | Paquete reusable de validaciones | true | — | `src/Aplicada.Validaciones/` |
 
 Grafo de dependencias:
 
 ```text
-aplicada-validaciones  ->  gestion-de-turnos-domain  ->  gestion-de-turnos-api
-                       \                              \-> gestion-de-turnos-notificaciones
-                        \-> gestion-de-turnos-api
+Aplicada-Validaciones  ->  Gestion-De-Turnos-Domain  ->  Gestion-De-Turnos-API
+                       \                              \-> Gestion-De-Turnos-Notificaciones
+                        \-> Gestion-De-Turnos-API
 ```
 
 Orden topológico:
 
 ```text
-nivel 0: aplicada-validaciones
-nivel 1: gestion-de-turnos-domain
-nivel 2: gestion-de-turnos-api, gestion-de-turnos-notificaciones   (paralelizables)
+nivel 0: Aplicada-Validaciones
+nivel 1: Gestion-De-Turnos-Domain
+nivel 2: Gestion-De-Turnos-API, Gestion-De-Turnos-Notificaciones   (paralelizables)
 ```
 
 ---
@@ -188,16 +192,16 @@ Bloque de solución:
 | Campo | Valor |
 |---|---|
 | Nombre de solución | Parser CSV |
-| `Nombre-Solucion` | `parser-csv` |
+| `Nombre-Solucion` | `Parser-Csv` |
 | `NombreSolucionCodigo` | `ParserCsv` |
-| Proyecto principal | `parser-csv` |
-| Intake (origen) | `SOLUTION-INTAKE-Parser-CSV.md` |
+| Proyecto principal | `Parser-Csv` |
+| Intake (origen) | `SOLUTION-INTAKE-Parser-Csv.md` |
 
 Tabla de proyectos:
 
 | `Nombre-Proyecto` | `nombre-proyecto-codigo` | `project_type` | Rol | `redistribuible` | Dependencias | Path `/src` |
 |---|---|---|---|---|---|---|
-| `parser-csv` | `ParserCsv.Core` | `library` | Librería de parseo (única y principal) | false | — | `src/ParserCsv.Core/` |
+| `Parser-Csv` | `ParserCsv.Core` | `library` | Librería de parseo (única y principal) | false | — | `src/ParserCsv.Core/` |
 
 El orquestador recorre un solo proyecto; el resultado equivale a la ejecución actual del template contra un único `project_type`.
 
@@ -225,4 +229,5 @@ El orquestador verifica estos ítems al derivar el manifiesto desde `SOLUTION-IN
 | Versión | Fecha | Cambios | Autor |
 |---|---|---|---|
 | 1.0 | [YYYY-MM-DD] | Manifiesto inicial de la solución | [Autor] |
-| 2.0 | 2026-06-10 | Reconversión a referencia de formato del artefacto derivado (unificación de intake). El manifiesto deja de completarse a mano: el orquestador lo deriva de `SOLUTION-INTAKE` §13 según `rules/Intake-Rules.md` §4 y lo presenta para confirmación. Se actualizan el intro, la guía de uso y el checklist; el esquema (bloque de solución, tabla de proyectos, validaciones) se conserva como formato de referencia. | Reformulación SDD |
+| 2.0 | 2026-06-10 | Reconversión a referencia de formato del artefacto derivado (unificación de intake). El manifiesto deja de completarse a mano: el orquestador lo deriva de `SOLUTION-INTAKE` §13 según `Intake-Rules.md` §4 y lo presenta para confirmación. Se actualizan el intro, la guía de uso y el checklist; el esquema (bloque de solución, tabla de proyectos, validaciones) se conserva como formato de referencia. | Reformulación SDD |
+| 2.1 | 2026-07-29 | La referencia de formato declara su propia versión en cabecera, que no tenía: era el único artefacto de `Intake/` sin campo `Versión` legible, aplicación incompleta de D4 y D6 equivalente a la que la plantilla de intake corrigió en su 1.3. Se normalizan los ejemplos de `Nombre-Solucion` y `Nombre-Proyecto` a Título-Con-Guiones, con lo que el valor declarado y el nombre de archivo del intake citado dejan de contradecirse. Se corrigen dos rutas `rules/Intake-Rules.md` por su nombre lógico. | Revisión SDD |

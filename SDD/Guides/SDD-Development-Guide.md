@@ -3,9 +3,9 @@ doc_id: GUIDE-SDD-DEVELOPMENT
 doc_type: development-guide
 title: Guía de desarrollo y extensibilidad del framework SDD
 status: vigente
-version: 1.2
+version: 1.4
 owner: Framework SDD
-last_review: 2026-07-26
+last_review: 2026-07-29
 audience: [mantenedor-del-framework, agente-ia]
 language: es-rioplatense-neutro-tecnico
 traces:
@@ -17,14 +17,14 @@ traces:
 # Guía de desarrollo y extensibilidad del framework SDD
 
 **Documento:** SDD-Development-Guide.md
-**Versión:** 1.2
+**Versión:** 1.4
 **Estado:** Vigente
-**Fecha:** 2026-07-26
+**Fecha:** 2026-07-29
 **Rol de intervención:** Mantenedor del framework
 
 ## Resumen ejecutivo
 
-Esta guía explica cómo está construido el framework SDD por dentro y cómo modificarlo sin romperlo. Sirve a quien desarrolla y extiende el framework mismo, no a quien lo usa sobre una solución. Documenta la anatomía del repositorio, los contratos implícitos entre sus piezas, un procedimiento por cada eje de extensión, los criterios para decidir antes de tocar nada, los errores conocidos al extender y el procedimiento de cambio con su versionado.
+Esta guía explica cómo está construido el framework SDD por dentro y cómo modificarlo sin romperlo. Sirve a quien desarrolla y extiende el framework mismo, no a quien lo usa sobre un producto. Documenta la anatomía del repositorio, los contratos implícitos entre sus piezas, un procedimiento por cada eje de extensión, los criterios para decidir antes de tocar nada, los errores conocidos al extender y el procedimiento de cambio con su versionado.
 
 No repite el marco teórico. Los fundamentos, la metodología, el catálogo de especialidades y los estilos arquitectónicos viven en [`../Devs/Guides/Marco-Teorico-SDD.md`](../Devs/Guides/Marco-Teorico-SDD.md), con catorce secciones que esta guía referencia y no duplica.
 
@@ -69,11 +69,11 @@ El framework tiene cuatro documentos de cara al lector y cada uno responde una p
 | Guía | Lector | Responde |
 | --- | --- | --- |
 | [`SDD-Getting-Started-Guide.md`](SDD-Getting-Started-Guide.md) | Quien arranca por primera vez | «¿Cómo pongo esto a andar hoy?» |
-| [`SDD-User-Guide.md`](SDD-User-Guide.md) | Quien **usa** el framework en una solución real | «¿Cómo lo aplico paso a paso?» |
+| [`SDD-User-Guide.md`](SDD-User-Guide.md) | Quien **usa** el framework en un producto real | «¿Cómo lo aplico paso a paso?» |
 | [`../Devs/Guides/Marco-Teorico-SDD.md`](../Devs/Guides/Marco-Teorico-SDD.md) | Quien quiere entender los fundamentos | «¿Por qué está diseñado así?» |
 | **Esta guía** | Quien **desarrolla y extiende el framework mismo** | «¿Cómo está construido por dentro y cómo lo modifico sin romperlo?» |
 
-Es una audiencia que hasta esta versión no tenía documento: el mantenedor del framework, no el de una solución. La diferencia práctica es de dirección de escritura. Quien usa el framework escribe en el repositorio destino y nunca toca este repositorio; quien lo desarrolla escribe acá y no toca ninguna solución.
+Es una audiencia que hasta esta versión no tenía documento: el mantenedor del framework, no el de un producto. La diferencia práctica es de dirección de escritura. Quien usa el framework escribe en el repositorio destino y nunca toca este repositorio; quien lo desarrolla escribe acá y no toca ningún producto.
 
 **Prerrequisito de lectura.** Esta guía asume que ya conocés el flujo de fases y el modelo de tres repositorios. Si no, empezá por la guía de usuario: acá esos temas no se repiten.
 
@@ -87,9 +87,10 @@ El framework no es una colección de archivos sueltos: es un grafo con direcció
 
 ```mermaid
 graph TD
-    INTAKE[SOLUTION-INTAKE-template<br/>plantilla que completa el usuario]
+    INTAKE[PRODUCT-INTAKE-template<br/>plantilla que completa el usuario]
     IR[Intake-Rules<br/>validacion del intake]
-    MANIF[SOLUTION-MANIFEST<br/>derivado por el orquestador]
+    VOC[Vocabulario-Rules<br/>vocabulario normativo]
+    MANIF[PRODUCT-MANIFEST<br/>derivado por el orquestador]
     MP[Master-Prompt<br/>orquestador]
     RULES[Rules-XX<br/>doce archivos de categoria]
     ROOT[Root-Rules<br/>layout canonico]
@@ -107,6 +108,8 @@ graph TD
     MP --> ROOT
     MP --> MAQ
     MP --> DER
+    MP --> VOC
+    VOC --> RULES
     RULES --> REF
     MAQ --> MOD
     MOD --> TPL
@@ -120,9 +123,9 @@ Las líneas punteadas señalan una relación distinta de las demás. El marco te
 
 | Ruta | Responsabilidad | Cuándo se toca |
 | --- | --- | --- |
-| `SDD/Devs/Rules/` | Los dieciséis archivos normativos: doce de categoría más `Root-Rules`, `Intake-Rules`, `Maqueta-Rules` y `Deriva-Rules`. Cada uno define qué produce su categoría, con qué estructura y bajo qué criterios | En casi toda extensión |
+| `SDD/Devs/Rules/` | Los diecisiete archivos normativos: doce de categoría más cinco transversales, `Root-Rules`, `Intake-Rules`, `Maqueta-Rules`, `Deriva-Rules` y `Vocabulario-Rules`. Cada uno define qué produce su categoría, con qué estructura y bajo qué criterios | En casi toda extensión |
 | `SDD/Devs/Orchestrator/` | El master-prompt. Despacha subagentes por fase, aplica el gating, ordena topológicamente y corta para confirmación humana | Al agregar fases, categorías o flags |
-| `SDD/Devs/Intake/` | `SOLUTION-INTAKE-template.md`, que completa el usuario, y `SOLUTION-MANIFEST-template.md`, que deriva el orquestador | Al agregar una sección de intake o un flag derivable |
+| `SDD/Devs/Intake/` | `PRODUCT-INTAKE-template.md`, que completa el usuario, y `PRODUCT-MANIFEST-template.md`, que deriva el orquestador | Al agregar una sección de intake o un flag derivable |
 | `SDD/Devs/Guides/` | Marco teórico y notas de coherencia de auditoría | Al cambiar fundamentos, o al cerrar una intervención |
 | `SDD/Devs/References/Design/` | Catálogo de reglas de diseño, por stack y por capacidad transversal, con su índice | Al agregar una capacidad de diseño reutilizable |
 | `SDD/Devs/Modelos-UX-UI/` | Modelos UX-UI capturados de maquetas aprobadas, con su índice y su plantilla de registro | Al capturar un modelo nuevo desde una Fase B2 |
@@ -146,8 +149,9 @@ Las líneas punteadas señalan una relación distinta de las demás. El marco te
 | Catálogo de diseño | El mantenedor del framework | El subagente de UX-UI-DX |
 | Modelos UX-UI | El orquestador, con aceptación humana explícita (única excepción de escritura sobre este repositorio) | El humano, al elegir modelo en la Fase B2 |
 | Marco teórico | El mantenedor del framework | Quien quiere entender por qué |
+| `Vocabulario-Rules.md` | El mantenedor del framework | **Todos**: el orquestador, todo subagente y todo auditor. Es la única regla transversal que `Master-Prompt.md` §8 inyecta en cada despacho, porque su archivo target es todo artefacto que el framework genera |
 
-Un dato que conviene tener presente al extender: **el subagente de una categoría recibe un solo archivo de reglas**. No lee los demás. Todo lo que necesite saber sobre una categoría vecina tiene que estar declarado en su propio archivo, típicamente como frontera. Es la causa más frecuente de solapamiento entre categorías, y la que menos se anticipa.
+Un dato que conviene tener presente al extender: **el subagente de una categoría recibe un solo archivo de reglas de categoría, más `Vocabulario-Rules.md`**. No lee los demás. Todo lo que necesite saber sobre una categoría vecina tiene que estar declarado en su propio archivo, típicamente como frontera. Es la causa más frecuente de solapamiento entre categorías, y la que menos se anticipa.
 
 ---
 
@@ -176,7 +180,7 @@ Todo archivo de reglas de categoría comparte la misma estructura, de §0 a §9.
 
 **Dónde la rigidez es real y dónde no.** Los números de §0 a §9 son estables en los doce archivos de categoría. La numeración de las **subsecciones** de §4 no lo es: la sección de anti-patrones va de §4.4 a §4.9 según el archivo. Por eso el master-prompt la ubica por título y no por número, y toda extensión debe hacer lo mismo.
 
-Las cuatro reglas transversales no siguen exactamente esta estructura, porque no gobiernan una categoría. `Deriva-Rules.md` y `Maqueta-Rules.md` tienen su propia organización de §0 a §9 con contenido distinto, y eso es correcto: la estructura canónica aplica a lo que produce documentación de una carpeta numerada.
+Las cinco reglas transversales no siguen exactamente esta estructura, porque no gobiernan una categoría. `Deriva-Rules.md` y `Maqueta-Rules.md` tienen su propia organización de §0 a §9 con contenido distinto, y `Vocabulario-Rules.md` la suya de §1 a §11; eso es correcto: la estructura canónica aplica a lo que produce documentación de una carpeta numerada.
 
 ### II.2 Cómo el orquestador decide qué generar
 
@@ -184,17 +188,17 @@ La decisión encadena tres entradas y no admite atajos.
 
 ```mermaid
 graph LR
-    A[SOLUTION-INTAKE 13<br/>tabla de proyectos] --> B[SOLUTION-MANIFEST<br/>derivado y confirmado]
-    B --> C{project_type<br/>de cada proyecto}
+    A[PRODUCT-INTAKE 13<br/>tabla de proyectos de código] --> B[PRODUCT-MANIFEST<br/>derivado y confirmado]
+    B --> C{tipo_proyecto_codigo<br/>de cada proyecto de código}
     C --> D[Seccion 0 y 2.2 del archivo<br/>de reglas: existe la categoria?]
     D --> E[Seccion 2.1: que artefactos<br/>se materializan?]
     E --> F[Seccion 1.2: que variante<br/>de especialidad?]
     F --> G[Seccion 8: prompt-snippet<br/>y ruta de salida]
 ```
 
-El `project_type` es el discriminador central. Sale de §13 del intake, se deriva al manifiesto, el humano lo confirma, y a partir de ahí gobierna tres decisiones distintas en cada categoría: si la categoría existe, qué subconjunto de artefactos produce, y con qué perfil profesional se la genera.
+El `tipo_proyecto_codigo` es el discriminador central. Sale de §13 del intake, se deriva al manifiesto, el humano lo confirma, y a partir de ahí gobierna tres decisiones distintas en cada categoría: si la categoría existe, qué subconjunto de artefactos produce, y con qué perfil profesional se la genera.
 
-**Consecuencia para quien extiende.** Si agregás un artefacto sin declarar su comportamiento para los ocho tipos, el orquestador no sabe si generarlo. En el mejor caso lo genera siempre, que suele ser incorrecto; en el peor, el subagente decide por su cuenta y el resultado varía entre corridas del mismo proyecto.
+**Consecuencia para quien extiende.** Si agregás un artefacto sin declarar su comportamiento para los ocho tipos, el orquestador no sabe si generarlo. En el mejor caso lo genera siempre, que suele ser incorrecto; en el peor, el subagente decide por su cuenta y el resultado varía entre corridas del mismo proyecto de código.
 
 ### II.3 El gating de doble granularidad
 
@@ -207,9 +211,9 @@ El framework filtra en dos niveles, y confundirlos produce categorías vacías o
 
 Hay un tercer discriminador que se suma a los dos anteriores: los **flags** de §4 del master-prompt. `usa_llm` habilita la categoría 04 entera; `requiere_maqueta` habilita la Fase B2; `tiene_portal_developers` refuerza artefactos de 03 y de 11. Un flag no reemplaza al gating por tipo: se combina con él.
 
-La categoría 11 introdujo una variante que conviene conocer porque puede repetirse: su gating es **por cuerpo**, un nivel intermedio entre categoría y artefacto. La categoría existe siempre, y lo que varía es cuál de sus tres cuerpos —integrador, mantenedor, operador— se materializa. Cuando una categoría agrupa artefactos por rol de lector, ese nivel intermedio resulta más expresivo que la tabla plana de artefactos, porque permite decir «este proyecto no tiene integradores externos» sin tener que repetir la exclusión en siete filas.
+La categoría 11 introdujo una variante que conviene conocer porque puede repetirse: su gating es **por cuerpo**, un nivel intermedio entre categoría y artefacto. La categoría existe siempre, y lo que varía es cuál de sus tres cuerpos —integrador, mantenedor, operador— se materializa. Cuando una categoría agrupa artefactos por rol de lector, ese nivel intermedio resulta más expresivo que la tabla plana de artefactos, porque permite decir «este proyecto de código no tiene integradores externos» sin tener que repetir la exclusión en siete filas.
 
-**Regla de cierre.** Toda omisión por gating se registra en `Decisiones-Proyecto.md` del proyecto. Cuando el equipo omite algo que el gating declara obligatorio, se requiere ADR.
+**Regla de cierre.** Toda omisión por gating se registra en `Decisiones-Proyecto.md` del proyecto de código. Cuando el equipo omite algo que el gating declara obligatorio, se requiere ADR.
 
 ### II.4 Cómo se encadena la trazabilidad
 
@@ -234,7 +238,7 @@ Cada eslabón declara su upstream en la cabecera del documento y su downstream c
 El auditor se invoca desde cero, sin contexto previo, y lee solo los entregables de la fase, sus insumos upstream y los archivos de reglas correspondientes. Verifica cinco cosas:
 
 1. Conformidad D1 a D9 de cada documento.
-2. Cumplimiento de §6 del archivo de reglas, para el `project_type` del proyecto.
+2. Cumplimiento de §6 del archivo de reglas, para el `tipo_proyecto_codigo` del proyecto de código.
 3. Coherencia cross-doc dentro de la fase: referencias que resuelven, identificadores no duplicados, glosario sin contradicciones.
 4. Trazabilidad declarada y consistente con §3.3 del archivo de reglas.
 5. Filename y estructura de carpetas correctos.
@@ -249,9 +253,9 @@ Los flags de §4 del master-prompt no los inventa el orquestador ni los pregunta
 
 | Flag | Se deriva de | Habilita |
 | --- | --- | --- |
-| `usa_llm` | Declaración explícita del proyecto en el intake | La categoría 04 completa |
+| `usa_llm` | Declaración explícita del proyecto de código en el intake | La categoría 04 completa |
 | `tiene_ui_final` | Tipo D8 y declaración del intake | Variante UX/UI de la categoría 03 |
-| `requiere_maqueta` | `tiene_ui_final`, `project_type` y `tiene_portal_developers`; propuesto por el orquestador y confirmado o invertido por el humano | La Fase B2 y la línea de base del sensado de deriva |
+| `requiere_maqueta` | `tiene_ui_final`, `tipo_proyecto_codigo` y `tiene_portal_developers`; propuesto por el orquestador y confirmado o invertido por el humano | La Fase B2 y la línea de base del sensado de deriva |
 | `tiene_portal_developers` | Declaración del intake sobre SDK público o documentación pública | Documentos DX adicionales en 03; refuerza 10 y 11 |
 | `tiene_extensibilidad` | Puntos de extensión declarados en el intake | Artefactos de extensión en 05 y guía de extensión en 11 |
 
@@ -331,7 +335,7 @@ Cada eje sigue la misma estructura: qué estás agregando, qué archivos tocar y
 
 **Invariantes.** La letra de las fases es secuencial y no se recicla. Toda fase cierra con audit y con detención antes de la siguiente. Si la fase requiere confirmación humana, se declara explícitamente como gate.
 
-**Tres preguntas que hay que responder antes de agregarla:** ¿corre una vez, una vez por proyecto, o una vez por incremento? ¿Qué precondición tiene que cumplirse para que pueda ejecutarse? ¿Qué se regenera y qué se preserva si vuelve a correr?
+**Tres preguntas que hay que responder antes de agregarla:** ¿corre una vez, una vez por proyecto de código, o una vez por incremento? ¿Qué precondición tiene que cumplirse para que pueda ejecutarse? ¿Qué se regenera y qué se preserva si vuelve a correr?
 
 **Ejemplo trabajado.** Las Fases I y J son el caso más completo, porque son las primeras que operan sobre un repositorio con código. La Fase I obligó a declarar tres cosas que ninguna fase anterior necesitaba: una precondición dura —sin código, sin sample implementado y sin tests que corran, la fase no se ejecuta—, un criterio de re-ejecución que declara qué se preserva entre corridas, incluidas las correcciones manuales del usuario, y un path de informe de audit que distinga cada incremento.
 
@@ -343,21 +347,21 @@ Cada eje sigue la misma estructura: qué estás agregando, qué archivos tocar y
 
 **Invariantes.** D8: los ocho tipos siguen teniendo una decisión declarada. Un tipo sin fila no es «opcional»: es un hueco.
 
-**Qué se rompe si el gating es incorrecto.** Dos fallas simétricas y de distinto costo. Si el gating es **demasiado laxo**, se generan artefactos que nadie va a leer, y el volumen ahoga a lo que sí importa. Si es **demasiado estricto**, un proyecto queda sin un documento que necesita, y eso se descubre meses después, cuando alguien lo busca y no está. La segunda falla es más cara y menos visible.
+**Qué se rompe si el gating es incorrecto.** Dos fallas simétricas y de distinto costo. Si el gating es **demasiado laxo**, se generan artefactos que nadie va a leer, y el volumen ahoga a lo que sí importa. Si es **demasiado estricto**, un proyecto de código queda sin un documento que necesita, y eso se descubre meses después, cuando alguien lo busca y no está. La segunda falla es más cara y menos visible.
 
 **Bump de versión.** Es **major**. La documentación generada con el gating anterior deja de cumplir la regla nueva.
 
-**Ejemplo trabajado.** El cuerpo mantenedor de la categoría 11 pasó de opcional a obligatorio para los ocho tipos. El fundamento: todo proyecto va a ser retomado por alguien, incluso los que no tienen integrador externo, y ese alguien puede no haber participado de ninguna fase de la especificación. Es el caso típico de gating demasiado estricto que se descubre tarde.
+**Ejemplo trabajado.** El cuerpo mantenedor de la categoría 11 pasó de opcional a obligatorio para los ocho tipos. El fundamento: todo proyecto de código va a ser retomado por alguien, incluso los que no tienen integrador externo, y ese alguien puede no haber participado de ninguna fase de la especificación. Es el caso típico de gating demasiado estricto que se descubre tarde.
 
 ### III.6 Agregar un modelo UX-UI al catálogo
 
-**Qué estás agregando.** Un diseño capturado de una maqueta aprobada, disponible como punto de partida para proyectos futuros.
+**Qué estás agregando.** Un diseño capturado de una maqueta aprobada, disponible como punto de partida para proyectos de código futuros.
 
 **Archivos a tocar:** un archivo nuevo bajo `SDD/Devs/Modelos-UX-UI/` siguiendo `Rules-Design-Modelo-Template.md`, su fila en `Index-Modelos-UX-UI.md`, y el template ejecutable ofuscado bajo `Templates/`.
 
-**Invariantes.** **D7 es crítica acá y es bloqueante.** El modelo se captura de la maqueta de un cliente real, así que la ofuscación no es una recomendación: es condición de aceptación. Ningún literal del dominio del proyecto origen puede sobrevivir en el modelo ni en el template.
+**Invariantes.** **D7 es crítica acá y es bloqueante.** El modelo se captura de la maqueta de un cliente real, así que la ofuscación no es una recomendación: es condición de aceptación. Ningún literal del dominio del proyecto de código origen puede sobrevivir en el modelo ni en el template.
 
-**Cómo verificar.** Buscá en el modelo y en el template los términos del dominio del proyecto origen. El resultado esperado es cero, sin matices.
+**Cómo verificar.** Buscá en el modelo y en el template los términos del dominio del proyecto de código origen. El resultado esperado es cero, sin matices.
 
 **La vía normal no es manual.** El paso 7 de la Fase B2 ofrece capturar el modelo automáticamente, con aceptación explícita del humano y verificación de ofuscación bloqueante. Agregarlo a mano es la excepción, y pierde esa verificación.
 
@@ -365,7 +369,7 @@ Cada eje sigue la misma estructura: qué estás agregando, qué archivos tocar y
 
 **Qué estás cambiando.** Una de las reglas D1 a D9 que gobiernan todo el framework.
 
-**Es el cambio de mayor impacto que existe**, y conviene entender por qué antes de intentarlo. Una invariante no vive en un archivo: vive en los dieciséis archivos de reglas que la citan, en el master-prompt que la inyecta a cada subagente, en los criterios de todos los auditores, y en **toda la documentación ya emitida en todos los repositorios destino**. Cambiar D3, por ejemplo, invalida el nombre de cada archivo que el framework generó alguna vez.
+**Es el cambio de mayor impacto que existe**, y conviene entender por qué antes de intentarlo. Una invariante no vive en un archivo: vive en los diecisiete archivos de reglas que la citan, en el master-prompt que la inyecta a cada subagente, en los criterios de todos los auditores, y en **toda la documentación ya emitida en todos los repositorios destino**. Cambiar D3, por ejemplo, invalida el nombre de cada archivo que el framework generó alguna vez.
 
 **Archivos a tocar:** todos los que la citen, sin excepción, más el marco teórico donde la fundamenta.
 
@@ -396,6 +400,8 @@ Es el eje que menos se recorre y el que más fácil se confunde con agregar una 
 
 **Cómo verificar.** Confirmá que el mecanismo aparece declarado en cada categoría que atraviesa, no solo en su propio archivo. Es el mismo error que el anti-patrón de la frontera de un solo lado.
 
+**Segundo ejemplo trabajado, y el que muestra el paso que falta.** `Vocabulario-Rules.md` se incorporó en la 5.0 declarando como lector «todo subagente AG-XX», y las diecisiete reglas la citaron desde su cabecera. El paso 2 quedó incompleto: no se sumó a los insumos del despacho de `Master-Prompt.md` §8, así que ningún subagente la recibía y la cita de su cabecera no resolvía. Se corrigió en la 5.1. La lección: para una regla transversal, declarar el lector no es cablearlo; el cableado es la línea del esqueleto de despacho.
+
 **Ejemplo trabajado.** `Deriva-Rules.md` atraviesa 03 (emite la línea de base), 08 (es dueña operativa de la matriz) y 10 (aporta las sondas de contrato). Cuando el sensado se extendió a contratos y comportamiento, el archivo transversal se actualizó y la categoría 08 quedó contradiciéndolo, porque su regla seguía condicionando la matriz a la Fase B2. El defecto no estaba en el mecanismo: estaba en no haber propagado el cambio a la categoría que lo opera.
 
 ### III.9 Agregar un flag de gating
@@ -404,8 +410,8 @@ Es el eje que menos se recorre y el que más fácil se confunde con agregar una 
 
 **Archivos a tocar, en orden:**
 
-1. `SOLUTION-INTAKE-template.md` — la sección o pregunta de la cual el flag se deriva. Si el flag no tiene de dónde derivarse, no es un flag: es una pregunta más que le hacés al usuario en cada corrida.
-2. `Master-Prompt.md` §4 — la fila del flag con su ámbito (solución o proyecto), su fuente, su **regla de derivación** y qué habilita.
+1. `PRODUCT-INTAKE-template.md` — la sección o pregunta de la cual el flag se deriva. Si el flag no tiene de dónde derivarse, no es un flag: es una pregunta más que le hacés al usuario en cada corrida.
+2. `Master-Prompt.md` §4 — la fila del flag con su ámbito (producto o proyecto de código), su fuente, su **regla de derivación** y qué habilita.
 3. `Master-Prompt.md` §6 — la columna de gating de las filas que el flag afecta.
 4. Los archivos de reglas de las categorías afectadas — §0 y §2.2, para que el subagente sepa qué cambia cuando el flag está activo.
 5. `Master-Prompt.md` §15 y `SDD-User-Guide.md` — glosario y explicación al usuario.
@@ -414,17 +420,17 @@ Es el eje que menos se recorre y el que más fácil se confunde con agregar una 
 
 **Cómo verificar.** Respondé tres preguntas: ¿de qué dato del intake se deriva? ¿qué pasa si el humano lo invierte? ¿qué se registra si queda en `false` y el gating declaraba algo obligatorio? Si la tercera no tiene respuesta, falta la ADR de omisión.
 
-**Ejemplo trabajado.** `requiere_maqueta` es el caso más completo, porque combina tres entradas —`tiene_ui_final`, `project_type` y `tiene_portal_developers`— para proponer un valor, admite que el humano lo invierta, y su `false` en un proyecto con interfaz visual exige ADR de omisión registrada en 05. Además dispara una fase entera, no solo artefactos.
+**Ejemplo trabajado.** `requiere_maqueta` es el caso más completo, porque combina tres entradas —`tiene_ui_final`, `tipo_proyecto_codigo` y `tiene_portal_developers`— para proponer un valor, admite que el humano lo invierta, y su `false` en un proyecto de código con interfaz visual exige ADR de omisión registrada en 05. Además dispara una fase entera, no solo artefactos.
 
 ### III.10 Por qué el conjunto D8 es cerrado
 
-El conjunto de ocho tipos de proyecto es cerrado por diseño, y esta guía no habilita ampliarlo. Conviene entender el fundamento, porque la tentación de agregar un noveno tipo aparece seguido.
+El conjunto de ocho tipos de proyecto de código es cerrado por diseño, y esta guía no habilita ampliarlo. Conviene entender el fundamento, porque la tentación de agregar un noveno tipo aparece seguido.
 
-**El fundamento.** El `project_type` no es una etiqueta descriptiva: es el discriminador del que cuelga todo el comportamiento variable del framework. Cada uno de los doce archivos de reglas tiene al menos dos tablas indexadas por tipo —la de variantes de especialidad en §1.2 y la de gating en §2.2— y varios tienen más. El master-prompt tiene su propia tabla de adaptabilidad. Un tipo nuevo no agrega una fila: agrega **una fila en cada una de esas tablas**, y cada una exige una decisión de diseño real, no un valor por defecto copiado del vecino.
+**El fundamento.** El `tipo_proyecto_codigo` no es una etiqueta descriptiva: es el discriminador del que cuelga todo el comportamiento variable del framework. Cada uno de los doce archivos de reglas tiene al menos dos tablas indexadas por tipo —la de variantes de especialidad en §1.2 y la de gating en §2.2— y varios tienen más. El master-prompt tiene su propia tabla de adaptabilidad. Un tipo nuevo no agrega una fila: agrega **una fila en cada una de esas tablas**, y cada una exige una decisión de diseño real, no un valor por defecto copiado del vecino.
 
 **Qué habría que rehacer si alguna vez se ampliara.** Las doce tablas de §1.2, las doce de §2.2, las tablas de §2.1 con gating por artefacto, la tabla de adaptabilidad del master-prompt, la matriz de estructura de `/samples` de la categoría 10, el gating por cuerpo de la categoría 11, y las reglas de derivación de los flags que dependen del tipo. Son más de treinta tablas, y una fila mal puesta en cualquiera produce documentación incorrecta en silencio.
 
-**Por qué ocho y no otro número.** Los ocho tipos cubren el espacio de formas de entrega de software: biblioteca redistribuible, aplicación web monolítica, aplicación web distribuida, aplicación de escritorio, aplicación móvil, servicio HTTP, herramienta de línea de comandos y servicio de procesamiento en segundo plano. Un caso que no encaja en ninguno suele ser una **combinación** de dos, y el modelo de solución con N proyectos existe precisamente para eso: se modela como dos proyectos tipados con una dependencia entre ellos, no como un tipo nuevo.
+**Por qué ocho y no otro número.** Los ocho tipos cubren el espacio de formas de entrega de software: biblioteca redistribuible, aplicación web monolítica, aplicación web distribuida, aplicación de escritorio, aplicación móvil, servicio HTTP, herramienta de línea de comandos y servicio de procesamiento en segundo plano. Un caso que no encaja en ninguno suele ser una **combinación** de dos, y el modelo de producto con N proyectos de código existe precisamente para eso: se modela como dos proyectos de código tipados con una dependencia entre ellos, no como un tipo nuevo.
 
 ---
 
@@ -435,7 +441,7 @@ El objetivo de esta parte es que formes criterio, no que sigas una receta. Antes
 **Antes de agregar cualquier cosa:**
 
 - ¿Esto es una categoría nueva o un artefacto dentro de una existente? Si el material tiene un lector distinto, una cadencia distinta y un subagente distinto, es categoría. Si comparte los tres, es artefacto.
-- ¿Corresponde al framework o al proyecto que lo usa? Si solo aplica a un dominio, un stack o un cliente, no va acá. El framework es agnóstico por D7.
+- ¿Corresponde al framework o al proyecto de código que lo usa? Si solo aplica a un dominio, un stack o un cliente, no va acá. El framework es agnóstico por D7.
 - ¿Qué rol de intervención lo lee? Si la respuesta es «cualquiera», probablemente todavía no lo pensaste.
 - ¿Qué categoría vecina se solapa, y dónde está exactamente la frontera? Si no podés enunciar la frontera en una oración, no está clara.
 - ¿De qué recibe upstream y a qué alimenta downstream? Un artefacto sin ninguno de los dos es invisible para el auditor.
@@ -456,7 +462,7 @@ El objetivo de esta parte es que formes criterio, no que sigas una receta. Antes
 
 - ¿Cuántos archivos toca este cambio? Si son más de tres o cuatro, conviene segmentar en etapas con nota de coherencia entre cada una.
 - ¿Invalida documentación ya emitida en repositorios destino? Si la respuesta es sí, es bump major y hay que declarar el impacto.
-- ¿Qué le pasa a una solución de un solo proyecto? El caso degenerado con layout aplanado se rompe con facilidad y es el que menos se prueba.
+- ¿Qué le pasa a un producto de un solo proyecto de código? El caso degenerado con layout aplanado se rompe con facilidad y es el que menos se prueba.
 
 ---
 
@@ -466,7 +472,7 @@ El objetivo de esta parte es que formes criterio, no que sigas una receta. Antes
 | --- | --- | --- | --- |
 | **Duplicar contenido entre categorías en lugar de declarar la frontera** | El mismo tema aparece en dos archivos de reglas con redacción parecida | Divergen en el segundo cambio; el subagente no sabe cuál rige | Declarar la frontera en §0 de ambos archivos: qué documenta cada uno y qué no |
 | **Declarar la frontera de un solo lado** | Solo la categoría nueva sabe qué no le corresponde | El subagente de la categoría vieja lee un solo archivo de reglas y produce el material igual | Frontera recíproca: las dos categorías la declaran |
-| **Hardcodear un stack comercial en un nombre de archivo** | Aparece el nombre de un producto en un patrón de nomenclatura | El framework queda atado a ese stack; los proyectos con otro objetivo no pueden usar la regla | Parametrizar con slug genérico, como `guia-integracion-<sistema-objetivo>` |
+| **Hardcodear un stack comercial en un nombre de archivo** | Aparece el nombre de un producto en un patrón de nomenclatura | El framework queda atado a ese stack; los proyectos de código con otro objetivo no pueden usar la regla | Parametrizar con slug genérico, como `guia-integracion-<sistema-objetivo>` |
 | **Agregar un artefacto sin declarar su gating por D8** | La tabla de §2.1 tiene una fila con columnas de gating vacías | El orquestador no sabe si generarlo; el resultado varía entre corridas | Ocho decisiones explícitas, una por tipo |
 | **Agregar un artefacto sin criterio en §6** | El artefacto se genera pero ningún audit lo menciona | Sale vacío o mal formado y nadie lo nota. Es el error más silencioso | Criterio de aceptación evaluable por cada artefacto nuevo |
 | **Romper la estructura canónica de nueve secciones** | Un archivo de reglas tiene §0 a §7, o mete contenido en una sección que no le corresponde | Quien busca los criterios donde siempre están no los encuentra | Respetar §0 a §9; si el contenido no encaja, va como subsección |
@@ -528,15 +534,15 @@ Es la parte más incómoda del procedimiento y la que más se posterga. Un bump 
 
 Opciones, en orden de preferencia:
 
-1. **Regeneración parcial.** El orquestador vuelve a correr solo la categoría afectada del proyecto afectado, y el sensado de deriva devuelve a `Sin verificar` las filas que dependen de lo regenerado. Es la vía normal.
+1. **Regeneración parcial.** El orquestador vuelve a correr solo la categoría afectada del proyecto de código afectado, y el sensado de deriva devuelve a `Sin verificar` las filas que dependen de lo regenerado. Es la vía normal.
 2. **Regeneración con preservación de correcciones manuales.** Si el usuario editó a mano los documentos, se aplica el patrón de re-ejecución: el orquestador relee, enumera las diferencias, informa cómo las interpretó y espera confirmación antes de propagar.
-3. **Congelar la versión anterior.** Si regenerar no es viable, la documentación existente se marca con la versión de reglas contra la cual se generó, y el cambio se aplica solo a soluciones nuevas.
+3. **Congelar la versión anterior.** Si regenerar no es viable, la documentación existente se marca con la versión de reglas contra la cual se generó, y el cambio se aplica solo a productos nuevos.
 
 Lo que **no** es una opción es dejar documentación emitida contra una versión de reglas que ya no existe, sin declararlo. Un lector que sigue una regla derogada no tiene forma de saber que la está siguiendo.
 
 **Registro obligatorio.** Todo bump major se anota en el `CHANGELOG.md` de la raíz declarando explícitamente el impacto sobre la documentación ya emitida, aunque la decisión sea no regenerar nada.
 
-La opción 3 depende de dos cosas que el framework provee desde la versión 4.0: que el destino declare contra qué versión se generó, en el bloque de procedencia de su `SOLUTION-MANIFEST`, y que esa versión siga siendo reconstruible, en `_legacy/`. Sin las dos, «congelar la versión anterior» es una intención sin instrumento.
+La opción 3 depende de dos cosas que el framework provee desde la versión 4.0: que el destino declare contra qué versión se generó, en el bloque de procedencia de su `PRODUCT-MANIFEST`, y que esa versión siga siendo reconstruible, en `_legacy/`. Sin las dos, «congelar la versión anterior» es una intención sin instrumento.
 
 ### VI.5 Cómo se versiona el framework como conjunto
 
@@ -567,3 +573,5 @@ Quedan fuera del snapshot el propio `CHANGELOG.md`, que es acumulativo y cuya hi
 | 1.0 | 2026-07-26 | Versión inicial de la guía de desarrollo del framework. Parte I anatomía, con mapa de dependencias en Mermaid, despiece por carpeta y matriz de quién lee y escribe cada pieza. Parte II con los seis contratos internos: estructura canónica de nueve secciones, decisión de generación, gating de doble granularidad, encadenamiento de la trazabilidad, expectativas del auditor y derivación de flags. Parte III con siete ejes de extensión, cada uno con archivos a tocar, invariantes, verificación y ejemplo trabajado, más el fundamento del conjunto cerrado D8. Parte IV con las preguntas guía agrupadas por decisión. Parte V con once anti-patrones de extensión. Parte VI con versionado, control de cambios, verificación de coherencia, segmentación de intervenciones grandes y tratamiento de la documentación ya emitida. | Reformulación SDD |
 | 1.1 | 2026-07-26 | Dos ejes de extensión nuevos en la Parte III: §III.8 agregar una regla transversal, con la distinción respecto de agregar una categoría y el ejemplo del sensado de deriva atravesando tres categorías; y §III.9 agregar un flag de gating, con el patrón obligatorio de derivar, presentar y confirmar, y el ejemplo de `requiere_maqueta`. El fundamento del conjunto cerrado D8 se renumera a §III.10. | Reformulación SDD |
 | 1.2 | 2026-07-28 | Normalización del versionado (framework 4.0). §I.2 suma la carpeta `_legacy/` a la anatomía. §VI.4 declara que la opción de congelar la versión anterior depende del bloque de procedencia del destino y de que la versión siga siendo reconstruible. **§VI.5 es nueva**: versionado del framework como conjunto, con el `CHANGELOG.md` como registro único, la derivación de la severidad a partir de sus partes, la obligación de copiar el conjunto normativo superado a `_legacy/<version>/` y la regla de intocabilidad de lo archivado. | Revisión SDD |
+| 1.3 | 2026-07-29 | Vocabulario normativo (framework 5.0). La guía adopta «producto» y «proyecto de código» en las seis partes. Fila registrada retroactivamente en la 5.1: la migración subió la versión de cabecera a 1.3 sin dejar su fila, y §I.2, §II.1 y §III.7 quedaron declarando dieciséis archivos de reglas y cuatro transversales cuando la propia intervención agregó el decimoséptimo. | Reformulación SDD |
+| 1.4 | 2026-07-29 | Puesta al día contra el conjunto 5.1 y el decimoséptimo archivo de reglas. **Corregidos tres conteos** que contradecían al `README.md` raíz: §I.2 decía «los dieciséis archivos normativos … más `Root-Rules`, `Intake-Rules`, `Maqueta-Rules` y `Deriva-Rules`», §II.1 «las cuatro reglas transversales» y §III.7 que una invariante «vive en los dieciséis archivos de reglas»; pasan a diecisiete y cinco. **§I.1** suma el nodo `Vocabulario-Rules` al mapa de dependencias, con sus dos aristas: la del master-prompt, que la inyecta, y la de las reglas de categoría, que la citan. **§I.3** la incorpora a la tabla de quién lee cada pieza, declarándola como la única regla transversal que llega a todo subagente, y corrige la nota que decía que el subagente «recibe un solo archivo de reglas». **§III.8** suma un segundo ejemplo trabajado, el de `Vocabulario-Rules` en la 5.0, cuyo paso 2 quedó incompleto —lector declarado sin cablear en el esqueleto de despacho— con la lección explícita de que declarar el lector no es cablearlo. Se restituye el salto de línea final del archivo, que faltaba, y se unifica la versión, que el front-matter declaraba como 1.2 mientras la cabecera declaraba 1.3: el mismo defecto de doble declaración que traía `SDD-Getting-Started-Guide.md`. | Revisión SDD |

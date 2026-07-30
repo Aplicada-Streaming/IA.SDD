@@ -1,8 +1,8 @@
 # Framework SDD — Diseño y desarrollo asistido por IA con Specification-Driven Development
 
-SDD resuelve un problema concreto del desarrollo asistido por IA: los agentes derivan. Escriben código plausible que se aleja poco a poco de lo que se pidió, y la desviación se descubre tarde, cuando volver es caro. La respuesta del framework es generar la documentación viva de una solución **antes** de escribir código, y usarla como referente externo contra el cual contrastar todo lo que se construye después.
+SDD resuelve un problema concreto del desarrollo asistido por IA: los agentes derivan. Escriben código plausible que se aleja poco a poco de lo que se pidió, y la desviación se descubre tarde, cuando volver es caro. La respuesta del framework es generar la documentación viva de un producto **antes** de escribir código, y usarla como referente externo contra el cual contrastar todo lo que se construye después.
 
-Su unidad de trabajo es la **solución**, que agrupa N proyectos (N ≥ 1). Cada proyecto declara exactamente uno de ocho tipos cerrados. A partir de un único documento de entrada, un orquestador deriva la composición de la solución, la valida con el usuario y genera doce categorías documentales numeradas, proyecto por proyecto y en orden topológico, con auditoría independiente entre fases y confirmación humana en cada corte. Con el sistema ya en construcción, el ciclo continúa: la documentación se actualiza incremento a incremento y se verifica ejecutando lo que documenta.
+Su unidad de trabajo es el **producto**, que agrupa N proyectos de código (N ≥ 1). Cada proyecto de código declara exactamente uno de ocho tipos cerrados. A partir de un único documento de entrada, un orquestador deriva la composición del producto, la valida con el usuario y genera doce categorías documentales numeradas, proyecto de código por proyecto de código y en orden topológico, con auditoría independiente entre fases y confirmación humana en cada corte. Con el sistema ya en construcción, el ciclo continúa: la documentación se actualiza incremento a incremento y se verifica ejecutando lo que documenta.
 
 Este archivo es la superficie de entrada del repositorio. Si llegaste acá sin contexto, la [matriz de ruteo](#matriz-de-ruteo-por-intención) te dice a qué archivo ir según lo que vengas a hacer.
 
@@ -26,9 +26,9 @@ Hay **una sola excepción** a la regla de que el orquestador no escribe en este 
 
 | Ruta | Qué contiene |
 | --- | --- |
-| [`SDD/Devs/Rules/`](SDD/Devs/Rules/) | Los dieciséis archivos de reglas constructivas: uno por categoría documental más cuatro transversales. Es el corazón normativo del framework |
+| [`SDD/Devs/Rules/`](SDD/Devs/Rules/) | Los diecisiete archivos de reglas constructivas: uno por categoría documental más cinco transversales. Es el corazón normativo del framework |
 | [`SDD/Devs/Orchestrator/`](SDD/Devs/Orchestrator/) | El master-prompt que despacha subagentes por fase, con auditoría entre fases y confirmación humana en cada corte |
-| [`SDD/Devs/Intake/`](SDD/Devs/Intake/) | Plantillas de carga inicial: `SOLUTION-INTAKE-template.md` que completa el usuario y `SOLUTION-MANIFEST-template.md` que deriva el orquestador |
+| [`SDD/Devs/Intake/`](SDD/Devs/Intake/) | Plantillas de carga inicial: `PRODUCT-INTAKE-template.md` que completa el usuario y `PRODUCT-MANIFEST-template.md` que deriva el orquestador |
 | [`SDD/Devs/Guides/`](SDD/Devs/Guides/) | Guías internas del framework: el marco teórico y las notas de coherencia de auditoría |
 | [`SDD/Devs/References/Design/`](SDD/Devs/References/Design/) | Catálogo de reglas de diseño por stack y por capacidad transversal, insumo del subagente de UX-UI-DX |
 | [`SDD/Devs/Modelos-UX-UI/`](SDD/Devs/Modelos-UX-UI/) | Modelos UX-UI capturados de maquetas aprobadas, con su índice |
@@ -49,8 +49,8 @@ Es el núcleo de este documento. Buscá la fila que describe lo que venís a hac
 | --- | --- |
 | Entender qué es SDD y por qué existe | Este archivo, y después [`SDD/Devs/Guides/Marco-Teorico-SDD.md`](SDD/Devs/Guides/Marco-Teorico-SDD.md) |
 | Poner SDD a andar hoy, por primera vez | [`SDD/Guides/SDD-Getting-Started-Guide.md`](SDD/Guides/SDD-Getting-Started-Guide.md) |
-| Arrancar una solución nueva | [`PROMPTS/PROMPT-Agente-Bootstrap-SDD.md`](PROMPTS/PROMPT-Agente-Bootstrap-SDD.md), y después [`SDD/Devs/Intake/SOLUTION-INTAKE-template.md`](SDD/Devs/Intake/SOLUTION-INTAKE-template.md) |
-| Aplicar el framework paso a paso en una solución real | [`SDD/Guides/SDD-User-Guide.md`](SDD/Guides/SDD-User-Guide.md) |
+| Arrancar un producto nuevo | [`PROMPTS/PROMPT-Agente-Bootstrap-SDD.md`](PROMPTS/PROMPT-Agente-Bootstrap-SDD.md), y después [`SDD/Devs/Intake/PRODUCT-INTAKE-template.md`](SDD/Devs/Intake/PRODUCT-INTAKE-template.md) |
+| Aplicar el framework paso a paso en un producto real | [`SDD/Guides/SDD-User-Guide.md`](SDD/Guides/SDD-User-Guide.md) |
 | Consultar qué genera una categoría y con qué criterios | El archivo de reglas de esa categoría en [`SDD/Devs/Rules/`](SDD/Devs/Rules/); ver el [mapa de categorías](#mapa-de-las-doce-categorías) |
 | Modificar el comportamiento de una categoría | Su archivo de reglas, y antes [`SDD/Guides/SDD-Development-Guide.md`](SDD/Guides/SDD-Development-Guide.md) Parte III |
 | Extender el framework con algo nuevo | [`SDD/Guides/SDD-Development-Guide.md`](SDD/Guides/SDD-Development-Guide.md) Partes II a V |
@@ -59,6 +59,9 @@ Es el núcleo de este documento. Buscá la fila que describe lo que venís a hac
 | Encontrar el orquestador | [`SDD/Devs/Orchestrator/Master-Prompt.md`](SDD/Devs/Orchestrator/Master-Prompt.md) |
 | Encontrar las plantillas de intake | [`SDD/Devs/Intake/`](SDD/Devs/Intake/) |
 | Entender el orden de fases y qué produce cada una | [`SDD/Devs/Orchestrator/Master-Prompt.md`](SDD/Devs/Orchestrator/Master-Prompt.md) §6 y §7 |
+| Saber qué designa un término del framework, o cómo se nombra un producto en cada plano | [`SDD/Devs/Rules/Vocabulario-Rules.md`](SDD/Devs/Rules/Vocabulario-Rules.md) |
+| Decidir si una palabra con más de un sentido hay que desambiguar, o renombrar un término en documentación ya escrita | [`SDD/Devs/Rules/Vocabulario-Rules.md`](SDD/Devs/Rules/Vocabulario-Rules.md) §9 |
+| Saber dónde se declara el vocabulario de una categoría | El glosario de esa categoría: `Glosario-Funcional.md` en 02, `Glosario-UX.md` en 03, `Glosario-Tecnico.md` en 11. La regla de inclusión y la de no duplicación están en §3.3 del archivo de reglas de cada una |
 | Saber qué invariantes no puedo romper | La [sección de invariantes](#invariantes-globales) de este archivo, y [`SDD/Devs/Rules/Root-Rules.md`](SDD/Devs/Rules/Root-Rules.md) |
 | Entender el sensado de deriva y la regla de evidencia | [`SDD/Devs/Rules/Deriva-Rules.md`](SDD/Devs/Rules/Deriva-Rules.md) |
 | Entender la validación visual de maqueta | [`SDD/Devs/Rules/Maqueta-Rules.md`](SDD/Devs/Rules/Maqueta-Rules.md) |
@@ -73,20 +76,20 @@ Cada categoría tiene su carpeta de salida en el repositorio destino, su archivo
 
 | Cat. | Carpeta de salida | Archivo de reglas | Nivel |
 | --- | --- | --- | --- |
-| 00 | `00-Contexto/` | [`Rules-Contexto.md`](SDD/Devs/Rules/Rules-Contexto.md) | Solución |
-| 01 | `01-Necesidades-Negocio/` | [`Rules-Necesidades-Negocio.md`](SDD/Devs/Rules/Rules-Necesidades-Negocio.md) | Solución |
-| 02 | `02-Especificacion-Funcional/` | [`Rules-Especificacion-Funcional.md`](SDD/Devs/Rules/Rules-Especificacion-Funcional.md) | Proyecto |
-| 03 | `03-UX-UI-DX/` | [`Rules-UX-UI-DX.md`](SDD/Devs/Rules/Rules-UX-UI-DX.md) | Proyecto |
-| 04 | `04-Prompts-AI/` | [`Rules-Prompts-AI.md`](SDD/Devs/Rules/Rules-Prompts-AI.md) | Proyecto |
-| 05 | `05-Arquitectura-Tecnica/` | [`Rules-Arquitectura-Tecnica.md`](SDD/Devs/Rules/Rules-Arquitectura-Tecnica.md) | Proyecto + Solución |
-| 06 | `06-Backlog-Tecnico/` | [`Rules-Backlog-Tecnico.md`](SDD/Devs/Rules/Rules-Backlog-Tecnico.md) | Proyecto |
-| 07 | `07-Plan-Sprint/` | [`Rules-Plan-Sprint.md`](SDD/Devs/Rules/Rules-Plan-Sprint.md) | Proyecto |
-| 08 | `08-Calidad-Y-Pruebas/` | [`Rules-Calidad-Y-Pruebas.md`](SDD/Devs/Rules/Rules-Calidad-Y-Pruebas.md) | Proyecto |
-| 09 | `09-Devops/` | [`Rules-Devops.md`](SDD/Devs/Rules/Rules-Devops.md) | Proyecto + Solución |
-| 10 | `10-Examples/` | [`Rules-Examples.md`](SDD/Devs/Rules/Rules-Examples.md) | Proyecto |
-| 11 | `11-Documentacion/` | [`Rules-Documentacion.md`](SDD/Devs/Rules/Rules-Documentacion.md) | Proyecto + Solución |
+| 00 | `00-Contexto/` | [`Rules-Contexto.md`](SDD/Devs/Rules/Rules-Contexto.md) | Producto |
+| 01 | `01-Necesidades-Negocio/` | [`Rules-Necesidades-Negocio.md`](SDD/Devs/Rules/Rules-Necesidades-Negocio.md) | Producto |
+| 02 | `02-Especificacion-Funcional/` | [`Rules-Especificacion-Funcional.md`](SDD/Devs/Rules/Rules-Especificacion-Funcional.md) | Proyecto de código |
+| 03 | `03-UX-UI-DX/` | [`Rules-UX-UI-DX.md`](SDD/Devs/Rules/Rules-UX-UI-DX.md) | Proyecto de código |
+| 04 | `04-Prompts-AI/` | [`Rules-Prompts-AI.md`](SDD/Devs/Rules/Rules-Prompts-AI.md) | Proyecto de código |
+| 05 | `05-Arquitectura-Tecnica/` | [`Rules-Arquitectura-Tecnica.md`](SDD/Devs/Rules/Rules-Arquitectura-Tecnica.md) | Proyecto de código + Producto |
+| 06 | `06-Backlog-Tecnico/` | [`Rules-Backlog-Tecnico.md`](SDD/Devs/Rules/Rules-Backlog-Tecnico.md) | Proyecto de código |
+| 07 | `07-Plan-Sprint/` | [`Rules-Plan-Sprint.md`](SDD/Devs/Rules/Rules-Plan-Sprint.md) | Proyecto de código |
+| 08 | `08-Calidad-Y-Pruebas/` | [`Rules-Calidad-Y-Pruebas.md`](SDD/Devs/Rules/Rules-Calidad-Y-Pruebas.md) | Proyecto de código |
+| 09 | `09-Devops/` | [`Rules-Devops.md`](SDD/Devs/Rules/Rules-Devops.md) | Proyecto de código + Producto |
+| 10 | `10-Examples/` | [`Rules-Examples.md`](SDD/Devs/Rules/Rules-Examples.md) | Proyecto de código |
+| 11 | `11-Documentacion/` | [`Rules-Documentacion.md`](SDD/Devs/Rules/Rules-Documentacion.md) | Proyecto de código + Producto |
 
-Reglas transversales, que no gobiernan una categoría sino una capacidad del framework: [`Root-Rules.md`](SDD/Devs/Rules/Root-Rules.md) (layout canónico y README raíz de la salida), [`Intake-Rules.md`](SDD/Devs/Rules/Intake-Rules.md) (validación del documento de entrada), [`Maqueta-Rules.md`](SDD/Devs/Rules/Maqueta-Rules.md) (validación visual) y [`Deriva-Rules.md`](SDD/Devs/Rules/Deriva-Rules.md) (sensado de deriva y evidencia verificable).
+Reglas transversales, que no gobiernan una categoría sino una capacidad del framework: [`Root-Rules.md`](SDD/Devs/Rules/Root-Rules.md) (layout canónico y README raíz de la salida), [`Intake-Rules.md`](SDD/Devs/Rules/Intake-Rules.md) (validación del documento de entrada), [`Maqueta-Rules.md`](SDD/Devs/Rules/Maqueta-Rules.md) (validación visual), [`Deriva-Rules.md`](SDD/Devs/Rules/Deriva-Rules.md) (sensado de deriva y evidencia verificable) y [`Vocabulario-Rules.md`](SDD/Devs/Rules/Vocabulario-Rules.md) (vocabulario normativo: los seis términos del framework, los cuatro planos de identidad de un producto y el criterio de desambiguación léxica que gobierna los glosarios de la documentación generada).
 
 **La dependencia entre 10 y 11 es la que más se confunde**: la categoría 10 demuestra con código ejecutable y verificable; la 11 explica, referencia y enlaza esos ejemplos sin duplicar su código. Los ejemplos existen antes, porque son insumo de la documentación final.
 
@@ -105,7 +108,7 @@ Son las reglas que ningún agente puede romper sin autorización explícita. Est
 | **D5** | Una sola versión vigente | Un nombre lógico tiene un único archivo en la carpeta de trabajo, y ese archivo es la versión vigente. Las superadas se copian completas a `_legacy/` antes de sobrescribir. Mayor para cambios incompatibles, menor para incorporaciones. Todo documento lleva su sección de control de cambios |
 | **D6** | Trazabilidad | Cada documento declara su upstream y su downstream en la cabecera, y las referencias entre documentos resuelven. Los enlaces internos son relativos |
 | **D7** | Neutralidad de dominio | Prohibido filtrar vocabulario, ejemplos, productos comerciales o protocolos del dominio de un cliente concreto a los artefactos normativos del framework |
-| **D8** | Conjunto cerrado de tipos de proyecto | Exactamente ocho valores, ni uno más: `library`, `web-monolith`, `web-microservices`, `desktop-app`, `mobile-app-maui`, `rest-api`, `cli-tool`, `worker-service` |
+| **D8** | Conjunto cerrado de tipos de proyecto de código | Exactamente ocho valores, ni uno más: `library`, `web-monolith`, `web-microservices`, `desktop-app`, `mobile-app-maui`, `rest-api`, `cli-tool`, `worker-service` |
 | **D9** | Evidencia verificable | Toda afirmación sobre el estado del sistema cita evidencia localizable, reproducible, contemporánea e independiente de quien afirma. Su alcance acotado y su formato de cita viven en [`Deriva-Rules.md`](SDD/Devs/Rules/Deriva-Rules.md) §1 |
 
 D1 a D8 vienen del bootstrap del framework. D9 se incorporó después, con el sensado de deriva, y rige hacia adelante y no retroactivamente: reauditar la documentación previa contra una regla nueva produciría un volumen de hallazgos que ahoga a los reales. Las notas de coherencia emitidas antes de su incorporación siguen diciendo «D1-D8», y es correcto que lo hagan: verificaron contra el conjunto vigente en su momento.
@@ -132,7 +135,7 @@ La formulación actual elimina la duplicidad en lugar de parchearla. Un solo arc
 | Agregar un artefacto a una categoría, un anti-patrón o un criterio de aceptación | Subir **minor** del archivo de reglas, con fila nueva en su §9 control de cambios |
 | Cambiar el gating de una categoría por tipo D8, o el conjunto de artefactos que produce | Subir **major** del archivo de reglas. La documentación ya generada con la versión anterior deja de cumplir |
 | Agregar una categoría documental o una fase al orquestador | Subir **major** del archivo afectado, y actualizar el master-prompt, `Root-Rules.md` y la guía de usuario en la misma intervención |
-| Modificar una invariante D1 a D9 | Es el cambio de mayor impacto del framework: alcanza a los dieciséis archivos de reglas, al orquestador y a toda la documentación ya emitida. Requiere decisión explícita del responsable y nota de coherencia |
+| Modificar una invariante D1 a D9 | Es el cambio de mayor impacto del framework: alcanza a los diecisiete archivos de reglas, al orquestador y a toda la documentación ya emitida. Requiere decisión explícita del responsable y nota de coherencia |
 | Cualquier intervención sobre varios archivos | Emitir una nota de coherencia siguiendo el patrón de [`Coherencia-Auditoria-Marco.md`](SDD/Devs/Guides/Coherencia-Auditoria-Marco.md): alcance, inventario, verificación de invariantes, trazabilidad, observaciones y veredicto |
 | Publicar una versión nueva del framework | Entrada en el [`CHANGELOG.md`](CHANGELOG.md) y copia del conjunto normativo superado en [`_legacy/<version>/`](_legacy/), en la misma intervención. La versión del conjunto se deriva de la mayor severidad de sus partes: major si alguna regla sube major o se toca una invariante, minor si alguna sube minor, patch si no cambia ninguna regla |
 

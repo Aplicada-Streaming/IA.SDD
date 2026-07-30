@@ -1,8 +1,8 @@
 # Reglas de diseño — Primer arranque y aprovisionamiento inicial
 
-**Proyecto:** {{nombre-solucion}}
+**Producto:** {{Nombre-Producto}}
 **Documento:** Design-Rules-Primer-Arranque.md
-**Versión:** 1.0
+**Versión:** 1.1
 **Estado:** Vigente
 **Fecha:** 2026-07-18
 **Autor:** {{equipo-o-rol}} (AG-03 UX/UI)
@@ -14,9 +14,9 @@
 
 ## 0. Propósito y alcance
 
-Este documento codifica el lenguaje de diseño del primer arranque: qué ve y qué hace el usuario la primera vez que abre un sistema recién desplegado, cuando todavía no existe la configuración mínima que lo hace utilizable. Es una extensión por capacidad del catálogo, transversal a cualquier stack, y aplica a todo proyecto que se despliegue en una instancia propia y arranque vacío.
+Este documento codifica el lenguaje de diseño del primer arranque: qué ve y qué hace el usuario la primera vez que abre un sistema recién desplegado, cuando todavía no existe la configuración mínima que lo hace utilizable. Es una extensión por capacidad del catálogo, transversal a cualquier stack, y aplica a todo proyecto de código que se despliegue en una instancia propia y arranque vacío.
 
-Carga condicional: el subagente AG-03 lo suma al base solo cuando el proyecto se despliega por instancia y arranca sin datos de configuración (Parte C del intake o casos de uso de 02 que describan alta inicial, instalación o puesta en marcha). No aplica a productos multi-inquilino donde el aprovisionamiento lo hace el proveedor antes de que el usuario entre.
+Carga condicional: el subagente AG-03 lo suma al base solo cuando el proyecto de código se despliega por instancia y arranca sin datos de configuración (Parte C del intake o casos de uso de 02 que describan alta inicial, instalación o puesta en marcha). No aplica a productos multi-inquilino donde el aprovisionamiento lo hace el proveedor antes de que el usuario entre.
 
 El primer arranque es el único momento del ciclo de vida en el que el sistema no puede asumir nada de sí mismo. Diseñarlo como un caso especial improvisado produce pantallas huérfanas, bucles de redirección y sistemas que quedan a medio configurar sin que nadie lo note. Este documento lo trata como una capacidad de primera clase, con un predicado explícito, un guard en capas y una superficie propia.
 
@@ -129,7 +129,7 @@ Cross-ref. La transaccionalidad del alta, la idempotencia frente a intentos conc
 
 ## 7. Esqueletos de referencia
 
-Esquemas de referencia de las superficies que introduce esta extensión. Fijan la composición, no los valores; los wireframes del proyecto los detallan y referencian los patrones por nombre.
+Esquemas de referencia de las superficies que introduce esta extensión. Fijan la composición, no los valores; los wireframes del proyecto de código los detallan y referencian los patrones por nombre.
 
 Superficie de aprovisionamiento (patrones §4.1, §4.2, §4.4, §4.5):
 
@@ -209,12 +209,12 @@ Una superficie de primer arranque cumple esta extensión cuando: existe un únic
 | Hereda de | `Design-Rules-Web-Generico.md` |
 | Mapeado por | especializaciones por stack (por ejemplo `Design-Rules-Blazor-Mudblazor.md`) |
 | Extensión hermana | `Design-Rules-Acceso-Monousuario.md` (comparte el shell partido y el catálogo de códigos de resultado) |
-| Regla que lo invoca | `devs/Rules/Rules-UX-UI-DX.md` (cuando el proyecto se despliega por instancia y arranca vacío) |
+| Regla que lo invoca | `devs/Rules/Rules-UX-UI-DX.md` (cuando el proyecto de código se despliega por instancia y arranca vacío) |
 | Cross-ref técnico | categoría 05 (predicado, guard de ruteo, transaccionalidad e idempotencia del alta) |
 | Cross-ref funcional | categoría 02 (qué funcional del artefacto mínimo y del acto de aprovisionar) |
 | Cross-ref de despliegue | categoría 09 (instalación, empaquetado, parámetros de entorno previos a la primera pantalla) |
 | Marco teórico | `Guides/Marco-Teorico-SDD.md`, cap. UX/UI/DX |
-| Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>` de las superficies de arranque y orientación del proyecto |
+| Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>` de las superficies de arranque y orientación del proyecto de código |
 
 ---
 
@@ -223,3 +223,4 @@ Una superficie de primer arranque cumple esta extensión cuando: existe un únic
 | Versión | Fecha | Cambios | Autor |
 | --- | --- | --- | --- |
 | 1.0 | 2026-07-18 | Versión inicial. Extensión por capacidad: primer arranque y aprovisionamiento inicial. Predicado único de aprovisionamiento y su contrato, guard en tres capas, patrones de componente (shell partido, tarjeta de aprovisionamiento, redirección con estado de resolución, banda de mensaje, requisito declarado, orientación posterior), estados, frontera del acto de aprovisionamiento, esqueletos de referencia, accesibilidad AA y anti-patrones. Agnóstico de framework, sin literales de dominio. | AG-03 UX/UI |
+| 1.1 | 2026-07-29 | Vocabulario normativo (framework 5.0), registrado en la 5.1. El cuerpo adopta «proyecto de código» donde el referente es la unidad de compilación y «producto» donde es el nivel superior, según `Vocabulario-Rules.md` §2. El campo de cabecera pasa de `**Proyecto:**` a `**Producto:** {{Nombre-Producto}}`: la migración lo había dejado como `**Proyecto de código:**` sobre un valor de nivel producto, que `Vocabulario-Rules.md` §4 R3 prohíbe. La fila se registra en la 5.1 porque la migración modificó el archivo sin dejar registro, contra `SDD-Development-Guide.md` §VI.1. | AG-03 UX/UI |

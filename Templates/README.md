@@ -1,7 +1,7 @@
 # Templates — Ejemplos ejecutables de los modelos UX-UI
 
 **Documento:** Templates/README.md
-**Versión:** 1.0
+**Versión:** 1.1
 **Estado:** Vigente
 **Fecha:** 2026-07-19
 **Autor:** AG-ROOT (Arquitecto de Soluciones)
@@ -63,15 +63,15 @@ Las mismas que rigen a la maqueta de la que sale el template (`SDD/Devs/Rules/Ma
 
 ## 5. Ofuscación, condición bloqueante
 
-`IA.SDD` es un repositorio público. Un template se deriva de una maqueta de un proyecto real, así que la ofuscación es previa y bloqueante:
+`IA.SDD` es un repositorio público. Un template se deriva de una maqueta de un proyecto de código real, así que la ofuscación es previa y bloqueante:
 
 1. El dominio se reemplaza íntegro por un dominio sintético neutro. No se renombra: se reemplaza.
 2. Se preserva la forma (estructura del HTML, nombres de clase, organización del CSS, estrategia de render, cantidad y tipo de campos) y se descarta el significado del dominio original.
 3. Los textos de interfaz se reescriben en términos genéricos, conservando el tono y la longitud aproximada.
-4. Se eliminan todos los assets que provengan del proyecto y se reemplazan por SVG neutros.
+4. Se eliminan todos los assets que provengan del proyecto de código y se reemplazan por SVG neutros.
 5. La verificación contra la lista de prohibiciones de `Maqueta-Rules.md` §5 se declara explícitamente antes de escribir. Si no puede completarse con certeza, el template no se genera.
 
-Prohibido en cualquier template: nombres de clientes, personas, dominios, sistemas internos o proyectos destino; datos reales aunque sean de ejemplo; capturas o assets del proyecto de origen.
+Prohibido en cualquier template: nombres de clientes, personas, dominios, sistemas internos o proyectos de código destino; datos reales aunque sean de ejemplo; capturas o assets del proyecto de código de origen.
 
 ---
 
@@ -97,3 +97,4 @@ Para una mirada rápida también alcanza con abrir `index.html` directo en el na
 | Versión | Fecha | Cambios | Autor |
 | --- | --- | --- | --- |
 | 1.0 | 2026-07-19 | Índice inicial de la carpeta de templates, creada junto con la Fase B2 de validación visual de maqueta. Define el propósito de los templates y su relación con el catálogo `Modelos-UX-UI/`, la estructura obligatoria de un template, sus reglas constructivas, la ofuscación bloqueante por tratarse de un repositorio público y el método de apertura. Registra `Modelo-Generico/` como ejemplo de referencia de la estructura. | AG-ROOT |
+| 1.1 | 2026-07-29 | Vocabulario normativo (framework 5.0), registrado en la 5.1. El índice adopta «proyecto de código» y «producto» según `Vocabulario-Rules.md` §2, y su cabecera pasa de `**Proyecto:** Template SDD` a `**Framework:** SDD`. La fila se registra en la 5.1 porque la migración modificó el archivo sin dejar registro, contra `SDD-Development-Guide.md` §VI.1. | AG-ROOT |

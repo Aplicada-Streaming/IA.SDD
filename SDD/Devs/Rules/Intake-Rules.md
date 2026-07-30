@@ -1,14 +1,15 @@
 # Reglas de validación del intake unificado
 
-**Archivo target:** `SDD/Intake/SOLUTION-INTAKE-<Nombre-Solucion>.md`
+**Archivo target:** `SDD/Intake/PRODUCT-INTAKE-<Slug-Producto>.md`
+**Nivel de aplicación (`Vocabulario-Rules.md` §4 R3):** Producto
 **Lector:** la Fase de validación de intake del `Master-Prompt.md` (previa a la Fase A).
-**Versión de las reglas:** 2.1
+**Versión de las reglas:** 3.1
 
 ---
 
 ## §1 Propósito y posición
 
-Esta es una regla meta, no una de las doce categorías numeradas: por eso lleva el prefijo `_`, como `Root-Rules.md`. Codifica cómo el orquestador valida la completitud del intake unificado antes de despachar cualquier subagente, y cómo deriva de él el `SOLUTION-MANIFEST` canónico.
+Esta es una regla meta, no una de las doce categorías numeradas: por eso lleva el prefijo `_`, como `Root-Rules.md`. Codifica cómo el orquestador valida la completitud del intake unificado antes de despachar cualquier subagente, y cómo deriva de él el `PRODUCT-MANIFEST` canónico.
 
 La validación que define este archivo se distingue de los dos mecanismos preexistentes del orquestador y no los pisa:
 
@@ -24,9 +25,9 @@ El orden es: el orquestador lee el intake, corre §2 (placeholders), corre esta 
 
 Son bloqueantes todos los campos del intake marcados con `(*)` en sus preguntas guía, más los siguientes, sin los cuales el orquestador no puede operar:
 
-- Cabecera: nombre de la solución, estado.
-- §13 Proyectos: la tabla con al menos una fila; por cada proyecto su `Nombre-Proyecto`, su `project_type` D8, su rol y sus dependencias; el proyecto principal señalado; el perfil de convención de nombres.
-- §17 por proyecto: para cada proyecto de §13, el bloque técnico con su identidad y, como mínimo, P.6 (cobertura numérica), P.7 (SemVer/Conventional Commits), P.8 (quality gates), P.9 (plataformas) y P.10 (NFR numéricos).
+- Cabecera: nombre del producto, estado.
+- §13 Proyectos de código: la tabla con al menos una fila; por cada proyecto de código su `Nombre-Proyecto-Codigo`, su `tipo_proyecto_codigo` D8, su rol y sus dependencias; el proyecto de código principal señalado; el perfil de convención de nombres.
+- §17 por proyecto de código: para cada proyecto de código de §13, el bloque técnico con su identidad y, como mínimo, P.6 (cobertura numérica), P.7 (SemVer/Conventional Commits), P.8 (quality gates), P.9 (plataformas) y P.10 (NFR numéricos).
 
 Un campo bloqueante vacío, con placeholder o con valor `desconocido` detiene la cadena y genera una entrada en la batería de preguntas de §6.
 
@@ -36,42 +37,44 @@ Un campo bloqueante vacío, con placeholder o con valor `desconocido` detiene la
 
 Disparan pregunta, además de los de §2 del master-prompt:
 
-- Marcadores literales sin completar: `[…]`, `Pendiente`, `TBD`, `[Reemplazar]`, `[Nombre]`, `[YYYY-MM-DD]`, `[Nombre-Proyecto]`, `[uno de los 8 D8]`, y cualquier corchete de la plantilla original.
-- Tablas con filas de ejemplo no sustituidas (por ejemplo la fila `| [Nombre-Proyecto] (principal) | … |` de §13 sin reemplazar).
+- Marcadores literales sin completar: `[…]`, `Pendiente`, `TBD`, `[Reemplazar]`, `[Nombre]`, `[YYYY-MM-DD]`, `[Nombre-Proyecto-Codigo]`, `[uno de los 8 D8]`, y cualquier corchete de la plantilla original.
+- Tablas con filas de ejemplo no sustituidas (por ejemplo la fila `| [Nombre-Proyecto-Codigo] (principal) | … |` de §13 sin reemplazar).
 - NFR o cobertura expresados de forma no numérica ("rápido", "alta", "razonable") donde la regla exige número.
-- `project_type` fuera del conjunto cerrado D8.
+- `tipo_proyecto_codigo` fuera del conjunto cerrado D8.
 
 ---
 
-## §4 Reglas de derivación del `SOLUTION-MANIFEST`
+## §4 Reglas de derivación del `PRODUCT-MANIFEST`
 
-A partir de §13 del intake (y del perfil de convención declarado), el orquestador construye el `SOLUTION-MANIFEST-<Nombre-Solucion>.md` en el formato de referencia de `SOLUTION-MANIFEST-template.md`. Pasos:
+A partir de §13 del intake (y del perfil de convención declarado), el orquestador construye el `PRODUCT-MANIFEST-<Slug-Producto>.md` en el formato de referencia de `PRODUCT-MANIFEST-template.md`. Pasos:
 
-1. Derivar `Nombre-Solucion` y `NombreSolucionCodigo` (PascalCase) del nombre de la solución, con el algoritmo de normalización de `Master-Prompt.md` §3.2.
-2. Por cada fila de §13, derivar `nombre-proyecto-codigo` como `<NombreSolucionCodigo>.<Sufijo>`, salvo `redistribuible: true`, que arranca con el prefijo de organización del perfil (`Aplicada` por defecto). Derivar el path `src/<nombre-proyecto-codigo>/`.
-3. Componer el bloque de solución (nombre, Nombre-Solucion, NombreSolucionCodigo, proyecto principal, perfil de convención, referencia al `SOLUTION-INTAKE` como origen) y la tabla de proyectos.
+1. Derivar `Slug-Producto` de `Nombre-Producto` con el algoritmo de normalización de `Master-Prompt.md` §3.2. **`Raiz-Codigo` y `Artefacto-Agrupacion` no se derivan: se leen de la cabecera y del perfil de convención del intake.** Solo si el intake no los declara, el orquestador los deriva según §3.2 y lo informa como valor asumido.
+2. Por cada fila de §13, derivar `Identidad-Codigo` como `<Raiz-Codigo>.<Sufijo>`, salvo `redistribuible: true`, que arranca con el prefijo de organización del perfil (`Aplicada` por defecto). Derivar el path `src/<Identidad-Codigo>/`.
+3. Componer el bloque de producto (nombre, Slug-Producto, Raiz-Codigo, proyecto de código principal, perfil de convención, referencia al `PRODUCT-INTAKE` como origen) y la tabla de proyectos de código.
 
 Mapeo de campos de §13 del intake al manifiesto:
 
-| Campo en `SOLUTION-INTAKE` §13 | Campo en el manifiesto |
+| Campo en `PRODUCT-INTAKE` §13 | Campo en el manifiesto |
 |---|---|
-| `Nombre-Proyecto` | `Nombre-Proyecto` (directo) |
-| `project_type` (D8) | `project_type` (directo) |
-| Rol en la solución | Rol (directo) |
+| `Nombre-Proyecto-Codigo` | `Nombre-Proyecto-Codigo` (directo) |
+| `tipo_proyecto_codigo` (D8) | `tipo_proyecto_codigo` (directo) |
+| Rol en el producto | Rol (directo) |
 | Dependencias | Dependencias (directo, validadas) |
 | `redistribuible` | `redistribuible` (directo) |
-| (derivado) | `nombre-proyecto-codigo` = `<NombreSolucionCodigo>.<Sufijo>` o `Aplicada.<X>` |
-| (derivado) | Path `src/<nombre-proyecto-codigo>/` |
-| Perfil de convención (cabecera/§13) | Perfil de convención del bloque de solución |
-| Nombre de la solución (cabecera) | `Nombre-Solucion`, `NombreSolucionCodigo`, proyecto principal |
+| (derivado) | `Identidad-Codigo` = `<Raiz-Codigo>.<Sufijo>` o `Aplicada.<X>` |
+| (derivado) | Path `src/<Identidad-Codigo>/` |
+| Perfil de convención (cabecera/§13) | Perfil de convención del bloque de producto |
+| Nombre del producto (cabecera) | `Slug-Producto`, `Raiz-Codigo`, proyecto de código principal |
 
 Validaciones bloqueantes de la derivación (si alguna falla, no se deriva el manifiesto y se reporta en la batería de §6):
 
-- Cada `project_type` pertenece al conjunto cerrado D8 (exactamente 8 valores: `library`, `web-monolith`, `web-microservices`, `desktop-app`, `mobile-app-maui`, `rest-api`, `cli-tool`, `worker-service`).
-- Hay exactamente un proyecto principal.
-- No hay colisión de `Nombre-Proyecto` ni de `nombre-proyecto-codigo`.
-- Cada dependencia referencia un proyecto existente en §13.
+- Cada `tipo_proyecto_codigo` pertenece al conjunto cerrado D8 (exactamente 8 valores: `library`, `web-monolith`, `web-microservices`, `desktop-app`, `mobile-app-maui`, `rest-api`, `cli-tool`, `worker-service`).
+- Hay exactamente un proyecto de código principal.
+- No hay colisión de `Nombre-Proyecto-Codigo` ni de `Identidad-Codigo`.
+- Cada dependencia referencia un proyecto de código existente en §13.
 - El grafo de dependencias es acíclico (DAG).
+- **`Nombre-Producto` está expresado en prosa de negocio.** Si coincide con `Raiz-Codigo` salvo por la puntuación, o si contiene el separador de segmentos del perfil, el campo de negocio fue completado con un nombre de artefacto de código y la derivación no procede (`Master-Prompt.md` §3.2, validación de independencia).
+- `Raiz-Codigo` está declarado en la cabecera o en el perfil de convención, o su ausencia está informada como valor asumido.
 
 Confirmación humana: el orquestador presenta el manifiesto derivado y espera confirmación explícita antes de tratarlo como artefacto canónico. El manifiesto no se completa a mano; se genera y se confirma. Toda regeneración posterior sigue el flujo de no-modificación de §13 del master-prompt.
 
@@ -82,15 +85,17 @@ Confirmación humana: el orquestador presenta el manifiesto derivado y espera co
 Por parte del intake, el orquestador verifica presencia y coherencia mínima:
 
 - Negocio (Parte A): problema y consecuencia (§1); al menos un stakeholder por categoría (§2); MoSCoW con Must mínimo (§4); 3 historias y 2 roles si aplica (§5); 5 casos límite (§7); 3 métricas SMART de negocio (§8); 3 exclusiones (§9); presupuesto y fecha o "sin fecha" justificado (§10); 3 riesgos (§11); 5 términos de glosario (§12).
-- Composición (Parte B): §13 completa y derivable (ver §4); §14 declara los contratos entre proyectos coherentes con las dependencias de §13; §15 garantiza valor end-to-end en el primer sprint; §16 deriva el árbol de la jerarquía y la convención de nombres.
-- Técnica (Parte C): §17 completo por cada proyecto de §13, con los P bloqueantes de §2.
+- Composición (Parte B): §13 completa y derivable (ver §4); §14 declara los contratos entre proyectos de código coherentes con las dependencias de §13; §15 garantiza valor end-to-end en el primer sprint; §16 deriva el árbol de la jerarquía y la convención de nombres.
+- Técnica (Parte C): §17 completo por cada proyecto de código de §13, con los P bloqueantes de §2.
 
 - Anexos de datos (Parte D): es opcional, pero **si existe se valida**. Cada escenario declara procedencia, un `Estado` del enum cerrado (`medido`, `declarado`, `derivado`, `reconstruido`) y sus cuatro bloques: contexto, qué ejercita, JSON completo y **qué verificar**. Un escenario sin bloque de verificación no es utilizable por `08-Calidad-Y-Pruebas` ni por `10-Examples`, que son sus consumidores declarados.
 - Navegabilidad: el intake declara su **tabla de contenido** después de la cabecera, con las secciones de primer y segundo nivel y con cada escenario de la Parte D listado por identificador.
 
-Coherencia cross-parte que se chequea: la cantidad de bloques §17 coincide con la cantidad de proyectos de §13; los contratos de §14 corresponden a aristas de dependencia de §13; las métricas de negocio (§8) no se confunden con NFR técnicos (§17 P.10).
+Coherencia cross-parte que se chequea: la cantidad de bloques §17 coincide con la cantidad de proyectos de código de §13; los contratos de §14 corresponden a aristas de dependencia de §13; las métricas de negocio (§8) no se confunden con NFR técnicos (§17 P.10).
 
 **Regla de resolución de la Parte D.** Todo identificador de escenario citado desde el cuerpo (`E-1`, `E-2`, …) existe como subsección de §20, y todo escenario de §20 está citado desde el cuerpo. Una cita sin anexo es una referencia colgada que el orquestador no puede resolver aguas abajo; un anexo sin cita es ruido. La plantilla declara esta regla desde su versión 1.3 y hasta ahora ninguna validación la verificaba: se verifica acá.
+
+**Regla de choque de vocabulario.** Si el glosario del dominio del cliente (§12) usa alguno de los seis términos normativos de `Vocabulario-Rules.md` §2 —producto, unidad de entrega, módulo, solución de código, proyecto de código, proyecto— con un sentido propio del negocio, el intake debe **declarar el choque y definir los dos usos**, cada uno con un término distinguible, según el procedimiento de `Vocabulario-Rules.md` §6. Es bloqueante: un término del framework que en el dominio del cliente significa otra cosa y no está declarado se propaga a las doce categorías y contamina cada documento que lo use. La declaración se verifica leyendo §12 contra la lista de §2, no infiriéndola del resto del intake.
 
 **Regla de autocontención.** Ninguna sección del intake puede dejar como único respaldo de un dato una referencia a un archivo o repositorio externo. El orquestador no la resuelve, y los subagentes que reciben el intake como insumo tampoco. Si la fuente aporta el dato, se transcribe completo en la Parte D; si no lo aporta, se resuelve como ambigüedad antes de emitir el intake.
 
@@ -101,14 +106,14 @@ Coherencia cross-parte que se chequea: la cantidad de bloques §17 coincide con 
 Cuando hay pendientes, el orquestador emite una única batería consolidada (no una pregunta por vez), agrupada por parte y sección, en este formato:
 
 ```text
-BATERÍA DE VALIDACIÓN DE INTAKE — <Nombre-Solucion>
+BATERÍA DE VALIDACIÓN DE INTAKE — <Slug-Producto>
 Total de pendientes: <N> (bloqueantes: <B>)
 
 [<ID>] <Parte> / <Sección> — <bloqueante|recomendado>
 - Qué falta: <descripción concreta>
 - Por qué bloquea: <consecuencia de no resolverlo antes de generar>
 - Qué se necesita: <tipo de dato esperado>
-- Dónde completarlo: SOLUTION-INTAKE §<sección> [/ proyecto <Nombre> si es P.x]
+- Dónde completarlo: PRODUCT-INTAKE §<sección> [/ proyecto de código <Nombre> si es P.x]
 ```
 
 Reglas de la batería:
@@ -116,7 +121,7 @@ Reglas de la batería:
 - Se ordena por parte (A, B, C) y dentro de cada una por sección.
 - Los bloqueantes se listan primero y se cuentan aparte.
 - El orquestador se detiene hasta que el humano actualiza el intake y confirma; entonces re-valida. No avanza a la Fase A con bloqueantes abiertos.
-- La actualización del intake la hace el humano sobre el `SOLUTION-INTAKE`; el orquestador no lo edita por su cuenta (coherente con §13 del master-prompt).
+- La actualización del intake la hace el humano sobre el `PRODUCT-INTAKE`; el orquestador no lo edita por su cuenta (coherente con §13 del master-prompt).
 
 ---
 
@@ -144,3 +149,5 @@ Reglas de la batería:
 | 1.1 | 2026-07-26 | Normalización del vocabulario de actores: el campo de cabecera «Consumidor» pasa a «Lector», porque designa quién lee estas reglas y no un rol de intervención sobre el producto. |
 | 2.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |
 | 2.1 | 2026-07-28 | §5 incorpora la validación de la Parte D, hasta ahora sin verificar: presencia de los cuatro bloques por escenario, `Estado` dentro del enum cerrado, tabla de contenido con los escenarios listados por identificador, regla de resolución de identificadores en las dos direcciones y regla de autocontención. La plantilla declaraba estas reglas desde su 1.3 y ninguna validación las comprobaba. |
+| 3.0 | 2026-07-29 | Renombre de vocabulario normativo (framework 5.0). El nivel superior pasa de «solución» a **producto**, la unidad de compilación de «proyecto» a **proyecto de código**, y los cuatro planos de identidad del producto se separan en campos propios (`Nombre-Producto`, `Slug-Producto`, `Raiz-Codigo`, `Artefacto-Agrupacion`). Se declara el nivel de aplicación de la regla en su cabecera, según `Vocabulario-Rules.md` §4 R3. Sube major porque los identificadores y los nombres de artefacto cambian, y la documentación generada con la nomenclatura anterior deja de cumplir. | Reformulación SDD |
+| 3.1 | 2026-07-29 | Corrección de la sustitución global de cadena de la 5.0. §5 decía «Regla de **reproducto** de la Parte D», palabra inexistente producida al sustituir `soluci*` por `producto` sobre «re**soluci**ón». La clase de defecto y su prohibición quedan documentadas en `Vocabulario-Rules.md` §9.5. La restitución de las filas históricas de este control de cambios, que la migración había reescrito contra `SDD-Development-Guide.md` §VI.2, se registra una sola vez en `CHANGELOG.md` [5.1] por alcanzar a veintitrés archivos. | Revisión SDD |

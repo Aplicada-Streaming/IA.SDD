@@ -1,8 +1,8 @@
 # Plantilla — Reglas de diseño de un modelo UX-UI
 
-**Proyecto:** Template SDD
+**Framework:** SDD
 **Documento:** Rules-Design-Modelo-Template.md
-**Versión:** 1.0
+**Versión:** 1.1
 **Estado:** Vigente
 **Fecha:** 2026-07-19
 **Autor:** AG-ROOT (Arquitecto de Soluciones)
@@ -16,7 +16,7 @@ La completa el subagente AG-03M en el paso 7 de la Fase B2 (`Rules/Maqueta-Rules
 Tres reglas de redacción que gobiernan todo el documento:
 
 1. Se escriben reglas, no descripciones. El criterio de inclusión de una regla es que su ausencia haría que un diseño posterior salga distinto de forma perceptible. Si una observación no cambia lo que otro agente produciría, no se incluye.
-2. Se escribe en modo imperativo y agnóstico del dominio. Nada de nombres de clientes, entidades, campos, sistemas ni assets del proyecto de origen. Si una regla no se puede formular sin el dominio, no se captura.
+2. Se escribe en modo imperativo y agnóstico del dominio. Nada de nombres de clientes, entidades, campos, sistemas ni assets del proyecto de código de origen. Si una regla no se puede formular sin el dominio, no se captura.
 3. Cada sección declara explícitamente `No aplica` cuando el modelo no tiene nada que decir sobre ese eje. Una sección vacía sin marcar se lee como omisión.
 
 Los bloques `<...>` son placeholders a reemplazar. Los bloques rotulados como orientación se borran del documento final.
@@ -25,7 +25,7 @@ Los bloques `<...>` son placeholders a reemplazar. Los bloques rotulados como or
 
 # Reglas de diseño — Modelo `<Nombre-Modelo>`
 
-**Proyecto:** {{nombre-solucion}}
+**Producto:** {{Nombre-Producto}}
 **Documento:** Rules-Design-`<Nombre-Modelo>`.md
 **Versión:** 1.0
 **Estado:** Vigente
@@ -42,10 +42,10 @@ Los bloques `<...>` son placeholders a reemplazar. Los bloques rotulados como or
 | Campo | Valor |
 | --- | --- |
 | Qué resuelve, en una línea | `<el problema de experiencia que este modelo resuelve bien>` |
-| `project_type` de origen | `<uno de los ocho valores D8>` |
+| `tipo_proyecto_codigo` de origen | `<uno de los ocho valores D8>` |
 | Variante de 03 | UX/UI o DX |
 | Extensiones por capacidad que asumía el original | `<lista de References/Design/ o ninguna>` |
-| Cuándo conviene elegirlo | `<condiciones del proyecto en que este modelo aplica bien>` |
+| Cuándo conviene elegirlo | `<condiciones del proyecto de código en que este modelo aplica bien>` |
 | Cuándo NO conviene | `<condiciones en que este modelo estorba>` |
 | Template ejecutable | `Templates/<Nombre-Modelo>/` |
 
@@ -198,7 +198,7 @@ Lista verificable de qué tiene que cumplir un diseño para poder decir que apli
 | Catálogo base del que hereda | `Design-Rules-Web-Generico.md` |
 | Extensiones por capacidad asumidas | `<lista o N/A>` |
 | Template ejecutable | `Templates/<Nombre-Modelo>/` |
-| Fase que lo capturó | Fase B2 del proyecto de origen |
+| Fase que lo capturó | Fase B2 del proyecto de código de origen |
 | Verificación de ofuscación | `<fecha y resultado, según Maqueta-Rules.md §6 punto 5>` |
 
 ---
@@ -208,3 +208,13 @@ Lista verificable de qué tiene que cumplir un diseño para poder decir que apli
 | Versión | Fecha | Cambios |
 | --- | --- | --- |
 | 1.0 | `<YYYY-MM-DD>` | Captura inicial del modelo a partir de una maqueta aprobada en Fase B2. |
+---
+
+## 16. Control de cambios de esta plantilla
+
+No confundir con §15, que es el control de cambios del **documento que esta plantilla produce**. Esta tabla versiona la plantilla.
+
+| Versión | Fecha | Cambios | Autor |
+| --- | --- | --- | --- |
+| 1.0 | 2026-07-19 | Plantilla inicial de captura de un modelo UX-UI, creada junto con el catálogo `Modelos-UX-UI/` y la Fase B2 de validación visual de maqueta (`CHANGELOG.md` [2.2]). | AG-ROOT |
+| 1.1 | 2026-07-29 | Vocabulario normativo (framework 5.0), registrado en la 5.1. El cuerpo adopta «proyecto de código» y «producto» según `Vocabulario-Rules.md` §2; la cabecera pasa de `**Proyecto:** Template SDD` a `**Framework:** SDD` y la del documento producido de `**Proyecto de código:** {{Nombre-Producto}}` a `**Producto:** {{Nombre-Producto}}`, porque nombraba al producto con la etiqueta del otro plano, contra `Vocabulario-Rules.md` §4 R3. Se agrega esta sección: la plantilla declaraba versión en cabecera sin tener control de cambios propio, aplicación incompleta de D5 que §15 hacía difícil de ver. | AG-ROOT |

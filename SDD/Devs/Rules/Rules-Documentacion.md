@@ -1,10 +1,13 @@
 # Reglas constructivas — 11 Documentacion
 
-**Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/11-Documentacion/`
-**Carpeta target (nivel solución):** `SDD/Docs/Solucion/11-Documentacion/`
-**Carpeta target (caso degenerado, solución de un proyecto):** `SDD/Docs/11-Documentacion/`
+**Carpeta target (por proyecto de código):** `SDD/Docs/Proyectos/<Nombre-Proyecto-Codigo>/11-Documentacion/`
+**Nivel de aplicación (`Vocabulario-Rules.md` §4 R3):** Proyecto de código + Producto
+**Carpeta target (nivel producto):** `SDD/Docs/Producto/11-Documentacion/`
+**Nivel de aplicación (`Vocabulario-Rules.md` §4 R3):** Proyecto de código + Producto
+**Carpeta target (caso degenerado, producto de un proyecto de código):** `SDD/Docs/11-Documentacion/`
+**Nivel de aplicación (`Vocabulario-Rules.md` §4 R3):** Proyecto de código + Producto
 **Subagente target del orquestador:** Technical Writer / Documentation Lead (AG-11)
-**Versión de las reglas:** 3.0
+**Versión de las reglas:** 4.1
 
 ---
 
@@ -19,15 +22,15 @@
   - [0.6 Bitácora de eventualidades](#06-bitácora-de-eventualidades)
 - [1. Especialidad asignada](#1-especialidad-asignada)
   - [1.1 Especialidad base](#11-especialidad-base)
-  - [1.2 Variantes según tipo de proyecto (8 valores D8)](#12-variantes-según-tipo-de-proyecto-8-valores-d8)
+  - [1.2 Variantes según tipo de proyecto de código (8 valores D8)](#12-variantes-según-tipo-de-proyecto-8-valores-d8)
   - [1.3 Multi-especialidad](#13-multi-especialidad)
   - [1.4 Estilo narrativo formativo](#14-estilo-narrativo-formativo)
   - [1.5 Doble audiencia](#15-doble-audiencia)
 - [2. Documentos que produce esta categoría](#2-documentos-que-produce-esta-categoría)
-  - [2.1 Artefactos de nivel solución](#21-artefactos-de-nivel-solución)
-  - [2.2 Cuerpo integrador (nivel proyecto)](#22-cuerpo-integrador-nivel-proyecto)
-  - [2.3 Cuerpo mantenedor (nivel proyecto)](#23-cuerpo-mantenedor-nivel-proyecto)
-  - [2.4 Cuerpo operador (nivel proyecto)](#24-cuerpo-operador-nivel-proyecto)
+  - [2.1 Artefactos de nivel producto](#21-artefactos-de-nivel-producto)
+  - [2.2 Cuerpo integrador (nivel proyecto de código)](#22-cuerpo-integrador-nivel-proyecto)
+  - [2.3 Cuerpo mantenedor (nivel proyecto de código)](#23-cuerpo-mantenedor-nivel-proyecto)
+  - [2.4 Cuerpo operador (nivel proyecto de código)](#24-cuerpo-operador-nivel-proyecto)
   - [2.5 Reglas de inclusión y exclusión por tipo D8](#25-reglas-de-inclusión-y-exclusión-por-tipo-d8)
 - [3. Nomenclatura y vinculación](#3-nomenclatura-y-vinculación)
   - [3.1 Patrón de nombres](#31-patrón-de-nombres)
@@ -37,7 +40,7 @@
   - [3.5 README de la sección y matriz de ruteo](#35-readme-de-la-sección-y-matriz-de-ruteo)
 - [4. Estructura de redacción](#4-estructura-de-redacción)
   - [4.1 Cabecera obligatoria y frontmatter](#41-cabecera-obligatoria-y-frontmatter)
-  - [4.2 Artefactos de nivel solución](#42-artefactos-de-nivel-solución)
+  - [4.2 Artefactos de nivel producto](#42-artefactos-de-nivel-producto)
   - [4.3 Cuerpo integrador](#43-cuerpo-integrador)
   - [4.4 Cuerpo mantenedor](#44-cuerpo-mantenedor)
   - [4.5 Cuerpo operador](#45-cuerpo-operador)
@@ -69,7 +72,7 @@ Esta categoría abandona el modelo de audiencia única, pero **no lo reemplaza p
 
 | Cuerpo | Rol | Pregunta que responde |
 | --- | --- | --- |
-| **Integrador** | Consume el proyecto desde otra aplicación o sistema, sin conocer su interior | «¿Cómo lo uso?» |
+| **Integrador** | Consume el proyecto de código desde otra aplicación o sistema, sin conocer su interior | «¿Cómo lo uso?» |
 | **Mantenedor** | Retoma el desarrollo para conocerlo, intervenir el código y extenderlo | «¿Dónde está cada cosa y cómo agrego funcionalidad sin romper el diseño?» |
 | **Operador** | Monta, despliega, verifica y sostiene el servicio en ejecución | «¿Cómo lo levanto, cómo sé que anda y qué hago cuando falla?» |
 
@@ -106,11 +109,11 @@ Esta categoría no se genera en una sola pasada al cierre. Se estructura en tres
 
 | Momento | Cuándo | Entregable |
 | --- | --- | --- |
-| **1 — Plan documental** | Pre-código, una vez derivado y confirmado el `SOLUTION-MANIFEST` | El índice del cuerpo documental: qué artefactos va a tener cada proyecto, su rol de intervención y su estado inicial `Planificado`. Sin contenido redactado |
+| **1 — Plan documental** | Pre-código, una vez derivado y confirmado el `PRODUCT-MANIFEST` | El índice del cuerpo documental: qué artefactos va a tener cada proyecto de código, su rol de intervención y su estado inicial `Planificado`. Sin contenido redactado |
 | **2 — Actualización incremental** | Durante la codificación, en cada corte de la cadencia de §0.4 | Los documentos afectados por el incremento, actualizados al estado real del sistema, con fecha de revisión y estado nuevo |
 | **3 — Consolidación de cierre** | Una vez, al final | Verificación del cuerpo completo: se ejecuta todo comando documentado, se confirma que las aserciones se cumplen, se revisan huecos y contradicciones, y se emite la versión definitiva del `AGENTS.md` |
 
-Con el manifiesto confirmado ya se conoce la composición de la solución —qué proyectos hay, de qué tipo es cada uno y qué rol cumple—, y eso alcanza para determinar qué documentos va a tener cada proyecto sin redactar una línea. El Momento 1 se genera junto con el plan de generación que el orquestador presenta para aprobación, de modo que el usuario vea desde el principio qué documentación va a existir al final.
+Con el manifiesto confirmado ya se conoce la composición del producto —qué proyectos de código hay, de qué tipo es cada uno y qué rol cumple—, y eso alcanza para determinar qué documentos va a tener cada proyecto de código sin redactar una línea. El Momento 1 se genera junto con el plan de generación que el orquestador presenta para aprobación, de modo que el usuario vea desde el principio qué documentación va a existir al final.
 
 **El Momento 2 es el que tiene mayor valor de los tres**, y conviene entender por qué. Convierte la documentación en instrumento de control en lugar de obligación de cierre: obliga a revisar el producto desde los tres ángulos —¿se entiende qué hace?, ¿se puede intervenir el código?, ¿el despliegue resulta razonable o quedó enredado?— cuando todavía hay margen para corregir el diseño. Un procedimiento de despliegue que al documentarse resulta enredado es una señal de arquitectura, no un problema de redacción.
 
@@ -153,7 +156,7 @@ Hay al menos un guion de ensayo por rol de intervención.
 | Mantenedor | Ubicar una porción de código concreta e introducir una mejora acotada, siguiendo únicamente `Recorrido-Codigo` y `Guia-Contribucion` | Puentes rotos entre arquitectura y árbol de archivos, convenciones tácitas, tests que no se sabe cómo correr |
 | Integrador | Consumir una capacidad del sistema desde un cliente nuevo, siguiendo únicamente el cuerpo integrador | Referencia incompleta, ejemplos que no compilan, autenticación no explicada |
 
-**Regla de oro del ensayo**: durante la corrida solo se puede leer la documentación. No se le pregunta al equipo, no se lee código fuera de lo que la documentación indica leer, no se usa conocimiento previo del proyecto. **El momento en que hay que salirse de la documentación es, exactamente, el hallazgo.**
+**Regla de oro del ensayo**: durante la corrida solo se puede leer la documentación. No se le pregunta al equipo, no se lee código fuera de lo que la documentación indica leer, no se usa conocimiento previo del proyecto de código. **El momento en que hay que salirse de la documentación es, exactamente, el hallazgo.**
 
 Cada ensayo registra si la tarea se completó, cuánto tardó, en qué paso se trabó y qué hubo que averiguar por fuera. Cada trabada se convierte en un hallazgo con destino asignado —qué documento y qué sección lo tiene que absorber— y se resuelve antes de cerrar el corte. Un ensayo que no se completa es un hallazgo P0. El resultado se registra en el informe de audit de la fase, en `SDD/Docs/Audit/`, reutilizando la maquinaria de auditoría que el framework ya tiene.
 
@@ -165,7 +168,7 @@ Durante la construcción, el despliegue y las primeras corridas aparecen situaci
 
 El caso testigo es un servicio que se comunica con un dispositivo físico conectado por USB. Al containerizarlo aparece que necesita *passthrough* del dispositivo del host, con su regla de permisos y su ruta. Ninguna vista de arquitectura lo predijo, ninguna decisión de diseño lo registra, y es la primera cosa con la que se choca quien lo despliega. Es exactamente el conocimiento que hay que capitalizar.
 
-`Bitacora-Eventualidades.md` es el artefacto de captura, de nivel solución, con una entrada por eventualidad identificada `EVE-XX`. Su estructura de campos vive en §4.2.
+`Bitacora-Eventualidades.md` es el artefacto de captura, de nivel producto, con una entrada por eventualidad identificada `EVE-XX`. Su estructura de campos vive en §4.2.
 
 **Triaje obligatorio.** Cada eventualidad se clasifica y se propaga a un documento permanente. La bitácora es un buffer de captura, no el destino final.
 
@@ -173,7 +176,7 @@ El caso testigo es un servicio que se comunica con un dispositivo físico conect
 | --- | --- |
 | Requisito del host o del entorno no declarado (acceso a un dispositivo, permiso, módulo del kernel, límite de recursos, variable no documentada) | `Guia-Contenedor` → prerrequisitos y dispositivos requeridos |
 | Falla reproducible con síntoma observable en ejecución | `Runbook-Operacion` → nueva entrada `OPS-XX` |
-| Falla que golpea a quien integra el proyecto desde afuera | `Troubleshooting` → nueva entrada `ISSUE-XX` |
+| Falla que golpea a quien integra el proyecto de código desde afuera | `Troubleshooting` → nueva entrada `ISSUE-XX` |
 | Paso del despliegue que resultó no evidente | `Guia-Despliegue` o `Guia-Inicio-Rapido` |
 | Reveló un problema de diseño, no de documentación | ADR en la categoría 05, más escalamiento al usuario |
 | No reproducible o caso único sin valor para terceros | Queda solo en la bitácora, marcada `No absorbida`, con el motivo |
@@ -194,9 +197,9 @@ Technical Writer / Documentation Lead, equivalente al AG-11 del catálogo SDD. P
 
 Combina tres facetas. La cara **Technical Writer** redacta conceptos, referencias y troubleshooting con precisión, sin jerga interna del equipo y con vocabulario consistente. La cara **Developer Advocate** prioriza el tiempo a primer éxito, publica snippets copiables y mantiene un onboarding corto. La cara **Documentation Lead**, que es la incorporación de esta versión, sostiene el cuerpo completo a lo largo de la construcción: decide qué documento absorbe cada hallazgo, corre el triaje de la bitácora, ejecuta el ensayo automatizado y mantiene coherente un conjunto que crece incremento a incremento.
 
-Cuando el proyecto expone una API pública o un CLI, el rol incluye además la generación o curación de referencia autogenerada desde código (XML docs, OpenAPI, help embebido), garantizando paridad estricta entre la API publicada y la documentada.
+Cuando el proyecto de código expone una API pública o un CLI, el rol incluye además la generación o curación de referencia autogenerada desde código (XML docs, OpenAPI, help embebido), garantizando paridad estricta entre la API publicada y la documentada.
 
-### 1.2 Variantes según tipo de proyecto (8 valores D8)
+### 1.2 Variantes según tipo de proyecto de código (8 valores D8)
 
 | Tipo | Especialidad específica | Foco del rol de intervención dominante |
 | --- | --- | --- |
@@ -209,7 +212,7 @@ Cuando el proyecto expone una API pública o un CLI, el rol incluye además la g
 | mobile-app-maui | Technical Writer + Mobile Documentation Lead | Mantenedor, e integrador solo si hay SDK público. Énfasis en recorrido de código, convenciones multiplataforma y ciclo de publicación, que vive en 09 y acá solo se cita |
 | worker-service | Technical Writer + Operability Documentation Lead | Operador y mantenedor. Énfasis en runbook, contrato de contenedor, patrones de log y semántica de los mensajes consumidos y emitidos |
 
-El orquestador lee esta tabla y, según el `project_type` del proyecto en curso (leído del manifiesto), decide qué variante de especialidad se activa. **La categoría siempre se genera**: lo que varía es qué cuerpos se materializan dentro de ella, según §2.5.
+El orquestador lee esta tabla y, según el `tipo_proyecto_codigo` del proyecto de código en curso (leído del manifiesto), decide qué variante de especialidad se activa. **La categoría siempre se genera**: lo que varía es qué cuerpos se materializan dentro de ella, según §2.5.
 
 ### 1.3 Multi-especialidad
 
@@ -239,7 +242,7 @@ El cuerpo documental de esta categoría no es una colección de fichas sueltas: 
 - **Interconectado**: cada documento enlaza con los que lo preceden y lo continúan. Ningún documento queda huérfano del mapa.
 - **Única fuente de verdad**: un dato vive en un solo documento; el resto lo referencia. Documentos pequeños y especializados, con una única responsabilidad cada uno.
 - **Adecuar la profundidad al tema**: ni superficial ni innecesariamente extensa.
-- **No asumir** que el lector conoce el proyecto ni la documentación previa.
+- **No asumir** que el lector conoce el proyecto de código ni la documentación previa.
 
 ### 1.5 Doble audiencia
 
@@ -270,19 +273,19 @@ El lector primario de esta categoría es el agente humano en primer contacto: al
 
 ## 2. Documentos que produce esta categoría
 
-### 2.1 Artefactos de nivel solución
+### 2.1 Artefactos de nivel producto
 
-Se generan una sola vez para toda la solución, bajo `SDD/Docs/Solucion/11-Documentacion/`. En el caso degenerado de una solución de un solo proyecto, van directamente bajo `SDD/Docs/11-Documentacion/`, sin subnivel.
+Se generan una sola vez para todo el producto, bajo `SDD/Docs/Producto/11-Documentacion/`. En el caso degenerado de un producto de un solo proyecto de código, van directamente bajo `SDD/Docs/11-Documentacion/`, sin subnivel.
 
 | Archivo | Rol de intervención | Contenido |
 | --- | --- | --- |
 | `README.md` de la categoría | Todos | Landing de la documentación. Su núcleo obligatorio es la **matriz de ruteo**: tabla `actor × intención → documento`, de modo que el lector no necesite conocer la estructura de carpetas para encontrar su camino. Es el único nombre de archivo que hace falta recordar |
-| `Vision-General-Sistema.md` | Todos | Mapa del sistema legible en diez minutos: qué hace la solución, qué proyectos la componen y qué hace cada uno en una línea, cómo se comunican entre sí, dónde vive el código de cada uno. Incluye diagrama de contexto y diagrama de contenedores en Mermaid. Es el plano que permite formarse una idea del producto sin leer arquitectura |
-| `Guia-Inicio-Rapido.md` | Mantenedor, Operador | Levantar la **solución completa** en una máquina limpia, con el orden de arranque derivado del grafo de dependencias del manifiesto. Objetivo duro: un solo comando, o la menor cantidad posible, con verificación al final que confirme que el sistema quedó operativo |
-| `Guia-Despliegue.md` | Operador | Procedimiento de despliegue por topología: prerrequisitos, orden de arranque entre proyectos, cómo se resuelven entre sí, configuración por ambiente, verificación paso a paso y rollback |
+| `Vision-General-Sistema.md` | Todos | Mapa del sistema legible en diez minutos: qué hace el producto, qué proyectos de código la componen y qué hace cada uno en una línea, cómo se comunican entre sí, dónde vive el código de cada uno. Incluye diagrama de contexto y diagrama de contenedores en Mermaid. Es el plano que permite formarse una idea del producto sin leer arquitectura |
+| `Guia-Inicio-Rapido.md` | Mantenedor, Operador | Levantar el **producto completo** en una máquina limpia, con el orden de arranque derivado del grafo de dependencias del manifiesto. Objetivo duro: un solo comando, o la menor cantidad posible, con verificación al final que confirme que el sistema quedó operativo |
+| `Guia-Despliegue.md` | Operador | Procedimiento de despliegue por topología: prerrequisitos, orden de arranque entre proyectos de código, cómo se resuelven entre sí, configuración por ambiente, verificación paso a paso y rollback |
 | `Bitacora-Eventualidades.md` | Operador, Mantenedor | Registro de las situaciones no previstas que aparecieron durante la construcción, el despliegue y la operación, con síntoma, causa, resolución e intentos descartados. Cada entrada se identifica `EVE-XX` y se triaja hacia un documento permanente, según §0.6 |
 | `Contrato-Agentes.md` | Todos | Artefacto versionado del cual se deriva el `AGENTS.md` de la raíz. Es el que sigue la convención de nomenclatura del framework y el que se audita |
-| `AGENTS.md` (emitido en la **raíz del repositorio destino**) | Agentes de IA | Contrato de contexto para agentes: cómo se construye el proyecto, cómo se corren los tests, convenciones de código, comandos de validación, límites de intervención, y punteros a los documentos de 11 por intención |
+| `AGENTS.md` (emitido en la **raíz del repositorio destino**) | Agentes de IA | Contrato de contexto para agentes: cómo se construye el proyecto de código, cómo se corren los tests, convenciones de código, comandos de validación, límites de intervención, y punteros a los documentos de 11 por intención |
 
 **Sobre `AGENTS.md`.** Es un formato abierto y establecido para instruir agentes de codificación, gobernado bajo la Agentic AI Foundation de la Linux Foundation, que los agentes cargan automáticamente al iniciar sesión en un repositorio. Se lo adopta tal cual, sin renombrarlo ni versionarlo con el sufijo del framework, porque su valor depende de que las herramientas lo encuentren en la ruta convencional. El artefacto versionado que lo gobierna, y del cual se deriva, sí sigue la convención: `Contrato-Agentes.md`, dentro de la carpeta de la categoría.
 
@@ -290,7 +293,7 @@ Es la única excepción admitida a la regla de nomenclatura D3 y D4 dentro de es
 
 **Sobre el momento de emisión del `AGENTS.md`.** Se emite en la primera corrida del Momento 2 y se refresca en cada una, no solo al cierre. La razón es operativa: el Momento 2 es exactamente el tramo donde los agentes de IA codifican, despliegan y verifican, así que es cuando más necesitan ese contrato de contexto. Reservarlo para el Momento 3 lo dejaría disponible recién cuando ya no hace falta.
 
-### 2.2 Cuerpo integrador (nivel proyecto)
+### 2.2 Cuerpo integrador (nivel proyecto de código)
 
 Migra desde la categoría 10 anterior, conservando su estructura Diátaxis y su parametrización de nombres.
 
@@ -306,17 +309,17 @@ Migra desde la categoría 10 anterior, conservando su estructura Diátaxis y su 
 
 Se conservan las dos correcciones que la regla anterior ya imponía y que siguen siendo válidas: nomenclatura uniforme y obligatoria en todos los artefactos, y prohibición de hardcodear un sistema comercial concreto en el nombre de la guía de integración, que se parametriza con un slug genérico.
 
-### 2.3 Cuerpo mantenedor (nivel proyecto)
+### 2.3 Cuerpo mantenedor (nivel proyecto de código)
 
 | Archivo | Contenido |
 | --- | --- |
-| `Recorrido-Codigo.md` | El puente entre la arquitectura y el repositorio real. Mapea cada componente declarado en 05 contra su ubicación exacta en el árbol de archivos: «la capa Application del ADR-002 vive en `src/<Proyecto>/Application/`». Recorre el flujo principal del sistema nombrando los archivos que se atraviesan en orden. Sin este documento, retomar un proyecto obliga a reconstruir el mapa leyendo código |
+| `Recorrido-Codigo.md` | El puente entre la arquitectura y el repositorio real. Mapea cada componente declarado en 05 contra su ubicación exacta en el árbol de archivos: «la capa Application del ADR-002 vive en `src/<Proyecto de código>/Application/`». Recorre el flujo principal del sistema nombrando los archivos que se atraviesan en orden. Sin este documento, retomar un proyecto de código obliga a reconstruir el mapa leyendo código |
 | `Guia-Contribucion.md` | Setup del entorno de desarrollo desde cero, cómo correr los tests y qué debería devolver, convenciones de código y de commits, y —el núcleo del documento— cómo agregar una funcionalidad de punta a punta: qué archivos se tocan, en qué orden, qué se actualiza en la documentación y qué verifica que quedó bien |
-| `Guia-Extension.md` | Puntos de extensión publicados con identificador `EXT-XX`, contrato de cada uno y ejemplo de registro. Solo cuando el proyecto declara extensibilidad en 05 |
+| `Guia-Extension.md` | Puntos de extensión publicados con identificador `EXT-XX`, contrato de cada uno y ejemplo de registro. Solo cuando el proyecto de código declara extensibilidad en 05 |
 
 `Recorrido-Codigo` es el artefacto más específico de esta versión de las reglas y el que cierra el déficit central: la categoría 05 registra qué se decidió —vistas, ADRs, contratos— pero no existía puente entre esa arquitectura conceptual y el árbol de archivos real del repositorio.
 
-### 2.4 Cuerpo operador (nivel proyecto)
+### 2.4 Cuerpo operador (nivel proyecto de código)
 
 | Archivo | Contenido |
 | --- | --- |
@@ -338,7 +341,7 @@ El gating es de granularidad por cuerpo, no por categoría.
 | `desktop-app` | Opcional (solo si publica SDK de plugins) | **Obligatorio** | No aplica; se reemplaza por guía de instalación y actualización |
 | `mobile-app-maui` | Opcional (solo si publica SDK) | **Obligatorio** | No aplica; la distribución por store ya vive en 09 |
 
-El cambio de fondo respecto del gating anterior: **el cuerpo mantenedor es obligatorio para los ocho tipos, sin excepción**. Todo proyecto va a ser retomado por alguien, incluso aquellos sin integrador externo, y ese alguien puede no haber participado de ninguna fase de su especificación. La categoría 11 deja de ser opcional para cuatro de los ocho tipos y pasa a existir siempre; lo que varía es qué cuerpos se materializan dentro de ella.
+El cambio de fondo respecto del gating anterior: **el cuerpo mantenedor es obligatorio para los ocho tipos, sin excepción**. Todo proyecto de código va a ser retomado por alguien, incluso aquellos sin integrador externo, y ese alguien puede no haber participado de ninguna fase de su especificación. La categoría 11 deja de ser opcional para cuatro de los ocho tipos y pasa a existir siempre; lo que varía es qué cuerpos se materializan dentro de ella.
 
 Dentro del cuerpo integrador, el gating fino por artefacto es el siguiente:
 
@@ -363,7 +366,7 @@ Cuando un cuerpo o un artefacto se omite por gating, la decisión se registra en
 
 Todos los artefactos llevan Título-Con-Guiones y sin sufijo de versión en el nombre; la versión vive en el campo `Versión` de la cabecera (D4) (D3, D4). Queda prohibido hardcodear un nombre comercial concreto en el nombre de archivo.
 
-- Nivel solución: `Vision-General-Sistema.md`, `Guia-Inicio-Rapido.md`, `Guia-Despliegue.md`, `Bitacora-Eventualidades.md`, `Contrato-Agentes.md`.
+- Nivel producto: `Vision-General-Sistema.md`, `Guia-Inicio-Rapido.md`, `Guia-Despliegue.md`, `Bitacora-Eventualidades.md`, `Contrato-Agentes.md`.
 - Cuerpo integrador: `Conceptos-Fundamentales.md`, `Guia-Onboarding-Developer.md`, `guia-integracion-<sistema-objetivo>.md`, `Referencia-Api.md`, `Referencia-Cli.md`, `Troubleshooting.md`, `Glosario-Tecnico.md`.
 - Cuerpo mantenedor: `Recorrido-Codigo.md`, `Guia-Contribucion.md`, `Guia-Extension.md`.
 - Cuerpo operador: `Guia-Contenedor.md`, `Runbook-Operacion.md`.
@@ -393,7 +396,7 @@ Además, cada concepto fundamental se nombra con un identificador Título-Con-Gu
 ### 3.3 Vinculación cross-doc
 
 - **Upstream**: la referencia API y CLI cita los contratos públicos de 05; los conceptos fundamentales citan el modelo de datos lógico de 02 y las decisiones de 05; el recorrido de código mapea los componentes de 05 contra rutas reales; la guía de contribución cita la estrategia de testing de 08; la guía de despliegue y el contrato de contenedor citan la política de 09; el troubleshooting cita los códigos de error declarados en 05 y los casos de prueba de 08; cada documento que ilustra un flujo enlaza el sample de 10 que lo materializa.
-- **Downstream**: dentro de la cadena SDD esta categoría no tiene downstream. El README maestro del proyecto la referencia como punto de entrada.
+- **Downstream**: dentro de la cadena SDD esta categoría no tiene downstream. El README maestro del proyecto de código la referencia como punto de entrada.
 - Cada documento incluye al pie una sección «Referencias cruzadas» con tres a cinco enlaces a documentos de 02, 05, 08, 09 o 10 según corresponda. La regla mínima es al menos un enlace a 05 por cada documento del cuerpo integrador y del cuerpo mantenedor.
 - **Prohibición de duplicación**: cuando un dato ya vive en otra categoría, esta lo referencia y no lo copia. Un umbral de alerta que aparece en el runbook y en 09 con valores distintos es peor que un umbral que aparece una sola vez.
 
@@ -450,7 +453,7 @@ traces:
 ```markdown
 # <Título del documento>
 
-**Proyecto:** {{nombre-proyecto}}
+**Proyecto de código:** {{Nombre-Proyecto-Codigo}}
 **Rol de intervención:** Integrador | Mantenedor | Operador
 **Tipo Diátaxis:** Tutorial | How-to | Reference | Explanation (solo cuerpo integrador)
 **Nivel:** Básico | Medio | Avanzado
@@ -465,16 +468,16 @@ El campo `rol_intervencion` es obligatorio y admite más de un valor: un documen
 
 El resumen ejecutivo es obligatorio en todos los artefactos. Es lo primero que lee el agente humano en primer contacto y lo que le permite decidir si este es el documento que buscaba.
 
-### 4.2 Artefactos de nivel solución
+### 4.2 Artefactos de nivel producto
 
 **`Vision-General-Sistema.md`**
 
-1. Qué hace la solución. Dos a cuatro párrafos, en el vocabulario del negocio, sin jerga de implementación.
-2. Diagrama de contexto en Mermaid: la solución como caja negra, los actores y los sistemas externos con los que habla.
-3. Diagrama de contenedores en Mermaid: los proyectos que la componen y cómo se comunican entre sí.
-4. Tabla de proyectos: nombre, tipo D8, qué hace en una línea, dónde vive el código, de qué depende.
+1. Qué hace el producto. Dos a cuatro párrafos, en el vocabulario del negocio, sin jerga de implementación.
+2. Diagrama de contexto en Mermaid: el producto como caja negra, los actores y los sistemas externos con los que habla.
+3. Diagrama de contenedores en Mermaid: los proyectos de código que la componen y cómo se comunican entre sí.
+4. Tabla de proyectos de código: nombre, tipo D8, qué hace en una línea, dónde vive el código, de qué depende.
 5. Recorrido narrado del flujo principal, de punta a punta, con un caso concreto y datos sintéticos.
-6. Qué NO hace la solución, para delimitar expectativas.
+6. Qué NO hace el producto, para delimitar expectativas.
 
 Se apoya en los dos primeros niveles del modelo C4, contexto y contenedores. No baja a componentes: ese nivel vive en 05.
 
@@ -483,9 +486,9 @@ Se apoya en los dos primeros niveles del modelo C4, contexto y contenedores. No 
 1. Objetivo y resultado esperado, declarado como aserción verificable.
 2. Prerrequisitos con versión mínima y comando de verificación de cada uno.
 3. Comando de arranque, uno solo si es posible.
-4. Orden de arranque entre proyectos cuando el comando único no alcanza, derivado del grafo de dependencias del manifiesto.
+4. Orden de arranque entre proyectos de código cuando el comando único no alcanza, derivado del grafo de dependencias del manifiesto.
 5. Verificación final: qué comando corro y qué tiene que responder para saber que el sistema quedó operativo.
-6. Qué hacer si falla: los tres errores más frecuentes con su solución, enlazando al runbook para el resto.
+6. Qué hacer si falla: los tres errores más frecuentes con su producto, enlazando al runbook para el resto.
 
 **`Guia-Despliegue.md`**
 
@@ -503,7 +506,7 @@ Una entrada por eventualidad, con estos campos:
 | Campo | Contenido |
 | --- | --- |
 | `id` | `EVE-XX` |
-| `ambito` | `solución` o el `Nombre-Proyecto` afectado |
+| `ambito` | `producto` o el `Nombre-Proyecto-Codigo` afectado |
 | `fecha` | Cuándo se detectó |
 | `momento` | Construcción, despliegue, operación o ensayo de entrega |
 | `sintoma` | Qué se observó, en términos verificables |
@@ -512,7 +515,7 @@ Una entrada por eventualidad, con estos campos:
 | `intentos_descartados` | Qué se probó y no funcionó. Es lo que el documento permanente nunca va a conservar y lo que más tiempo ahorra al siguiente |
 | `destino` | Documento y sección que absorbe la eventualidad de forma permanente, o `No absorbida` con su motivo |
 
-El campo `intentos_descartados` es el que distingue a una bitácora útil de un registro ceremonial. Un documento permanente registra la solución que funcionó; solo la bitácora conserva las tres que no, que es lo que evita que el siguiente las repita.
+El campo `intentos_descartados` es el que distingue a una bitácora útil de un registro ceremonial. Un documento permanente registral producto que funcionó; solo la bitácora conserva las tres que no, que es lo que evita que el siguiente las repita.
 
 **`Contrato-Agentes.md` y `AGENTS.md`**
 
@@ -628,7 +631,7 @@ Aplica solo a las zonas de prosa —resúmenes, explicaciones, racional, narraci
 | --- | --- | --- |
 | Entender qué es esto y qué hace | Todos | `Vision-General-Sistema.md` |
 | Levantar todo en mi máquina | Mantenedor, Operador | `Guia-Inicio-Rapido.md` |
-| Usar el proyecto desde mi aplicación | Integrador | `Guia-Onboarding-Developer.md` |
+| Usar el proyecto de código desde mi aplicación | Integrador | `Guia-Onboarding-Developer.md` |
 | Buscar la firma exacta de un método o flag | Integrador | `Referencia-Api.md`, `Referencia-Cli.md` |
 | Encontrar dónde está una parte del código | Mantenedor | `Recorrido-Codigo.md` |
 | Agregar una funcionalidad | Mantenedor | `Guia-Contribucion.md` |
@@ -649,8 +652,8 @@ Aplica solo a las zonas de prosa —resúmenes, explicaciones, racional, narraci
 
 | Componente (05) | ADR | Ruta en el repositorio | Responsabilidad |
 | --- | --- | --- | --- |
-| Capa de aplicación | ADR-002 | `src/<Proyecto>/Application/` | Orquesta casos de uso; sin lógica de dominio |
-| Adaptador de persistencia | ADR-004 | `src/<Proyecto>/Infrastructure/Persistence/` | Implementa los repositorios del dominio |
+| Capa de aplicación | ADR-002 | `src/<Proyecto de código>/Application/` | Orquesta casos de uso; sin lógica de dominio |
+| Adaptador de persistencia | ADR-004 | `src/<Proyecto de código>/Infrastructure/Persistence/` | Implementa los repositorios del dominio |
 
 **Bloque para agentes**, obligatorio en todo documento que define un proceso ejecutable:
 
@@ -698,7 +701,7 @@ validaciones:
 
 ### 5.1 Cobertura por rol de intervención
 
-- ¿Los tres roles tienen su cuerpo, o alguno quedó implícito porque el proyecto «no lo necesita»?
+- ¿Los tres roles tienen su cuerpo, o alguno quedó implícito porque el proyecto de código «no lo necesita»?
 - ¿El cuerpo mantenedor existe? Es obligatorio para los ocho tipos D8, sin excepción.
 - Cuando un cuerpo se omitió, ¿la omisión está registrada en `Decisiones-Proyecto.md`, y con ADR si el gating lo declaraba obligatorio?
 - ¿Algún documento sirve a dos roles sin declararlo en `rol_intervencion`?
@@ -724,7 +727,7 @@ validaciones:
 - ¿Todas las rutas citadas en `Recorrido-Codigo` existen en el repositorio?
 - ¿Cada componente declarado en 05 tiene su fila en el mapa arquitectura a repositorio?
 - ¿El recorrido del flujo principal nombra archivos concretos en orden, o describe capas en abstracto?
-- ¿Alguien que nunca vio el proyecto podría ubicar dónde se valida una entrada leyendo solo este documento?
+- ¿Alguien que nunca vio el proyecto de código podría ubicar dónde se valida una entrada leyendo solo este documento?
 
 ### 5.5 Documentación viva
 
@@ -761,10 +764,10 @@ validaciones:
 
 **Estructura y gating**
 
-- [ ] La categoría existe para el proyecto. Es obligatoria para los ocho tipos D8.
+- [ ] La categoría existe para el proyecto de código. Es obligatoria para los ocho tipos D8.
 - [ ] El cuerpo mantenedor está materializado, con `Recorrido-Codigo` y `Guia-Contribucion` como mínimo.
 - [ ] Los cuerpos integrador y operador se materializaron o se omitieron según la tabla de §2.5, y toda omisión está registrada en `Decisiones-Proyecto.md`, con ADR cuando el gating los declaraba obligatorios.
-- [ ] Existen los artefactos de nivel solución bajo `Solucion/11-Documentacion/`, o bajo `SDD/Docs/11-Documentacion/` en el caso degenerado.
+- [ ] Existen los artefactos de nivel producto bajo `Producto/11-Documentacion/`, o bajo `SDD/Docs/11-Documentacion/` en el caso degenerado.
 - [ ] Existe `README.md` de la sección con su matriz de ruteo y su tabla de estado del cuerpo documental.
 - [ ] Ningún artefacto lleva sufijo de versión en el nombre; cada uno declara su versión en la cabecera, salvo `AGENTS.md`, que se deriva del contrato versionado.
 - [ ] Ningún nombre de archivo hardcodea un sistema comercial concreto.
@@ -811,7 +814,7 @@ validaciones:
 
 **Bitácora**
 
-- [ ] Existe `Bitacora-Eventualidades.md` de nivel solución.
+- [ ] Existe `Bitacora-Eventualidades.md` de nivel producto.
 - [ ] Cada `EVE-XX` tiene sus nueve campos completos, incluido `intentos_descartados`.
 - [ ] Ninguna eventualidad quedó cerrada sin destino asignado; las `No absorbida` tienen su motivo.
 - [ ] Ninguna eventualidad quedó abierta más de un corte sin triaje.
@@ -822,6 +825,9 @@ validaciones:
 - [ ] No hay muletillas de relleno del listado de §4.6.
 - [ ] Los diagramas son Mermaid y son sintácticamente correctos.
 - [ ] Los enlaces internos resuelven.
+- [ ] Todo término que esta categoría acuña o precisa, y que aparece en más de uno de sus artefactos, está declarado en `Glosario-Tecnico.md` del cuerpo integrador, que esta categoría emite, con sus referentes cuando tiene más de uno. Es la fuente canónica del vocabulario técnico del producto: el resto de los documentos enlaza acá en lugar de redefinir (§0 y el detalle del cuerpo integrador).
+- [ ] Ninguna forma desnuda de un término polisémico queda sin resolver en un artefacto que se lee por secciones (`Vocabulario-Rules.md` §9.2).
+- [ ] Ninguna polisemia con contextos disjuntos se reporta como defecto ni se corrige calificando todas las ocurrencias (criterio negativo de `Vocabulario-Rules.md` §9.1).
 
 ---
 
@@ -845,7 +851,7 @@ traces: [ADR-002, ADR-004, CU-01]
 
 # Recorrido de código del servicio de pagos
 
-**Proyecto:** servicio-pagos
+**Proyecto de código:** Servicio-Pagos
 **Rol de intervención:** Mantenedor
 **Nivel:** Medio
 **Tiempo estimado de lectura:** 15 min
@@ -946,24 +952,24 @@ destino: >
   Runbook-Operacion.md, entrada OPS-07 «El servicio no registra lecturas».
 ```
 
-Los tres fragmentos son ilustrativos. Cada proyecto adapta el dominio respetando la estructura, la nomenclatura y el contrato de doble audiencia.
+Los tres fragmentos son ilustrativos. Cada proyecto de código adapta el dominio respetando la estructura, la nomenclatura y el contrato de doble audiencia.
 
 ---
 
 ## 8. Prompt-snippet sugerido
 
 ```text
-Sos un {{ESPECIALIDAD-VARIANTE-11}} responsable del cuerpo documental de entrega del proyecto {{NOMBRE_PROYECTO}}.
+Sos un {{ESPECIALIDAD-VARIANTE-11}} responsable del cuerpo documental de entrega del proyecto de código {{NOMBRE_PROYECTO_CODIGO}}.
 
 Momento en curso: {{MOMENTO}} (1 plan documental | 2 actualización incremental | 3 consolidación de cierre).
 
 Insumos:
-- SOLUTION-INTAKE: {{path}} (§13 tipo D8, §16 estructura de repo, §17 técnica por proyecto)
+- PRODUCT-INTAKE: {{path}} (§13 tipo D8, §16 estructura de repo, §17 técnica por proyecto de código)
 - Upstream: 02 (CU y modelo de datos), 05 (arquitectura, contratos, ADR, puntos de extensión), 08 (estrategia de testing, que citás y no redefinís), 09 (política de despliegue, que convertís en procedimiento verificado), 10 (samples y contratos de verificación VER-XX, que enlazás y no duplicás).
 - Estado del repositorio construido, cuando el momento es 2 o 3.
 
 A generar, según el gating por cuerpo de Rules-Documentacion.md §2.5:
-- Nivel solución: README.md con matriz de ruteo, Vision-General-Sistema, Guia-Inicio-Rapido, Guia-Despliegue, Bitacora-Eventualidades, Contrato-Agentes, y AGENTS.md en la raíz del repositorio destino.
+- Nivel producto: README.md con matriz de ruteo, Vision-General-Sistema, Guia-Inicio-Rapido, Guia-Despliegue, Bitacora-Eventualidades, Contrato-Agentes, y AGENTS.md en la raíz del repositorio destino.
 - Cuerpo integrador (según tipo D8): conceptos, onboarding, integración por stack, referencia API, referencia CLI, troubleshooting, glosario.
 - Cuerpo mantenedor (OBLIGATORIO para los ocho tipos): Recorrido-Codigo, Guia-Contribucion, Guia-Extension si hay extensibilidad declarada en 05.
 - Cuerpo operador (según tipo D8): Guia-Contenedor, Runbook-Operacion.
@@ -985,7 +991,7 @@ Criterios de calidad: §6 de Rules-Documentacion.md.
 
 Restricciones: no generar documentación para el usuario final no técnico (fuera de alcance del framework). No incorporar reglas de indexado de conocimiento. No introducir productos comerciales ni protocolos del dominio fuente en los nombres de archivo. Idioma rioplatense técnico, tildes correctas, sin emojis ni negritas decorativas.
 
-Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/11-Documentacion/<estructura> y SDD/Docs/Solucion/11-Documentacion/<estructura> en el repo de la solución, más AGENTS.md en su raíz.
+Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO_CODIGO}}/11-Documentacion/<estructura> y SDD/Docs/Producto/11-Documentacion/<estructura> en el repo del producto, más AGENTS.md en su raíz.
 ```
 
 ---
@@ -1001,3 +1007,5 @@ Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/11-Documentacion/<estructura> y S
 | 2.0 | 2026-07-26 | Redefinición completa de la categoría como cuerpo documental de entrega organizado por rol de intervención. §0 incorpora los dos ejes (rol de intervención y naturaleza del lector) con la prohibición de bifurcar documentos por tipo de lector, las cinco fronteras con las categorías vecinas, el modelo de documentación viva en tres momentos, la cadencia anclada al cierre de sprint, el ensayo de entrega con sus dos niveles y su gate humano, y la bitácora de eventualidades con su triaje obligatorio. §1 suma la faceta Documentation Lead y embebe el estilo narrativo formativo y el contrato de doble audiencia. §2 reorganiza los artefactos en nivel solución más tres cuerpos de proyecto, incorporando `Vision-General-Sistema`, `Guia-Inicio-Rapido`, `Guia-Despliegue`, `Bitacora-Eventualidades`, `Contrato-Agentes` y `AGENTS.md` a nivel solución, y `Recorrido-Codigo`, `Guia-Contribucion`, `Guia-Extension`, `Guia-Contenedor` y `Runbook-Operacion` a nivel proyecto. §2.5 sustituye el gating por categoría por gating de granularidad por cuerpo: **el cuerpo mantenedor pasa a ser obligatorio para los ocho tipos D8**, y la categoría deja de ser opcional. §3 fija los identificadores `OPS-XX`, `EXT-XX` y `EVE-XX`, conserva `ISSUE-XX` y cita `VER-XX` sin redefinirlo. §4 suma frontmatter YAML obligatorio, resumen ejecutivo obligatorio, la estructura de los diez artefactos nuevos, la voz narrativa y el formato markdown. §5 reorganiza las preguntas guía en ocho bloques. §6 reescribe los criterios de aceptación en siete grupos. §7 reemplaza los ejemplos por tres fragmentos que ilustran el recorrido de código, la absorción de una eventualidad de entorno y una entrada de bitácora. Se descarta expresamente toda regla de indexado de conocimiento. Sube major porque cambia el alcance, el gating y el conjunto de artefactos de la categoría. | Reformulación SDD |
 | 2.1 | 2026-07-28 | Reparación de la política de archivado (Revisión SDD): §3.1 declara que los índices `README.md` reciben el sufijo de versión al archivarse y que `AGENTS.md` queda exento del archivado, porque se regenera completo desde `Contrato-Agentes.md` en cada corrida y es ese contrato el artefacto versionado y archivable. La regla general y su tabla de exenciones viven en `Master-Prompt.md` §5.1. |
 | 3.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |
+| 4.0 | 2026-07-29 | Renombre de vocabulario normativo (framework 5.0). El nivel superior pasa de «solución» a **producto**, la unidad de compilación de «proyecto» a **proyecto de código**, y los cuatro planos de identidad del producto se separan en campos propios (`Nombre-Producto`, `Slug-Producto`, `Raiz-Codigo`, `Artefacto-Agrupacion`). Se declara el nivel de aplicación de la regla en su cabecera, según `Vocabulario-Rules.md` §4 R3. Sube major porque los identificadores y los nombres de artefacto cambian, y la documentación generada con la nomenclatura anterior deja de cumplir. | Reformulación SDD |
+| 4.1 | 2026-07-29 | Criterio de gobierno del glosario en §6. Sube minor: agrega criterios de aceptación verificables sin cambiar el conjunto de artefactos de la categoría ni ninguna invariante, y ninguna documentación ya emitida deja de cumplir por sí sola. Los tres criterios exigen que todo término que la categoría acuña o precisa y usa en más de uno de sus artefactos esté declarado en el glosario que le corresponde, que ninguna forma desnuda de un término polisémico quede sin resolver en un artefacto que se lee por secciones, y —criterio negativo— que ninguna polisemia con contextos disjuntos se reporte como defecto. Materializan `Vocabulario-Rules.md` §9 en la categoría. **Origen**: el audit verificaba «glosario sin contradicciones», que un glosario incompleto cumple trivialmente, y esta regla mencionaba el glosario sin verificarlo en §6. | Revisión SDD |

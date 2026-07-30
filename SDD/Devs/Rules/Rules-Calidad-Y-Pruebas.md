@@ -1,8 +1,9 @@
 # Reglas constructivas — 08 Calidad y pruebas
 
-**Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/08-Calidad-Y-Pruebas/`
+**Carpeta target (por proyecto de código):** `SDD/Docs/Proyectos/<Nombre-Proyecto-Codigo>/08-Calidad-Y-Pruebas/`
+**Nivel de aplicación (`Vocabulario-Rules.md` §4 R3):** Proyecto de código
 **Subagente target del orquestador:** Ingeniero QA / SDET Senior (AG-08)
-**Versión de las reglas:** 2.0
+**Versión de las reglas:** 3.1
 
 ---
 
@@ -10,11 +11,11 @@
 
 La categoría 08 ancla la disciplina de validación del sistema. Recibe upstream de 02 (casos de uso con criterios de aceptación Given-When-Then y reglas de negocio), de 05 (arquitectura, componentes, contratos y NFR con métricas numéricas), de 06 (Definition of Ready de las US y backlog técnico) y de 07 (sprint goals y compromisos por iteración). Alimenta a 09 (quality gates ejecutados en el pipeline CI/CD), a 10 (developer guide de testing y convenciones de tests del repositorio) y a 11 (examples ejecutables que se validan mediante los mismos casos de prueba).
 
-Esta categoría es **obligatoria para los ocho tipos D8**. Ningún proyecto está exento de declarar su estrategia de calidad, su pirámide de testing, su matriz de cobertura y su Definition of Done. El nivel de exhaustividad y la mezcla de artefactos cambia por tipo, pero la categoría siempre existe.
+Esta categoría es **obligatoria para los ocho tipos D8**. Ningún proyecto de código está exento de declarar su estrategia de calidad, su pirámide de testing, su matriz de cobertura y su Definition of Done. El nivel de exhaustividad y la mezcla de artefactos cambia por tipo, pero la categoría siempre existe.
 
 La auditoría de Fase 0 (`Bootstrap/Audit-SDD1.md`) detectó dos déficits del fuente SDD 1.0 que SDD corrige aquí. Primero, los artefactos del fuente usan un sufijo de dominio (por ejemplo `estrategia-testing-<dominio>.md`, `criterios-validacion-<dominio>.md`, `estrategia-calidad-<dominio>.md`) que ata el nombre al producto particular. SDD unifica todos los nombres con el sufijo `.md` sin marcador de dominio. Segundo, el material teórico de calidad estaba ausente en `/References/` y debía deducirse de los `docs/`; estas reglas formalizan el marco.
 
-**Dos clases de sonda en la matriz de sensado.** Esta categoría es dueña operativa de `Matriz-Sensado-Deriva.md`, cuya mecánica define `Deriva-Rules.md`. La matriz se puebla con dos clases de sonda de origen distinto: las **visuales**, que emite AG-03M al cerrar la Fase B2 y miden si lo construido se parece a lo que el humano aprobó mirando; y las de **contrato y comportamiento** (`VER-XX`), que aporta la categoría 10 desde sus contratos de verificación y miden si el sistema sigue haciendo lo que la especificación dice. Las segundas no dependen de la maqueta, así que un proyecto sin interfaz visual también tiene matriz.
+**Dos clases de sonda en la matriz de sensado.** Esta categoría es dueña operativa de `Matriz-Sensado-Deriva.md`, cuya mecánica define `Deriva-Rules.md`. La matriz se puebla con dos clases de sonda de origen distinto: las **visuales**, que emite AG-03M al cerrar la Fase B2 y miden si lo construido se parece a lo que el humano aprobó mirando; y las de **contrato y comportamiento** (`VER-XX`), que aporta la categoría 10 desde sus contratos de verificación y miden si el sistema sigue haciendo lo que la especificación dice. Las segundas no dependen de la maqueta, así que un proyecto de código sin interfaz visual también tiene matriz.
 
 **Frontera con la categoría 11.** Esta categoría es dueña de la estrategia de testing, de los casos de prueba y de la matriz de sensado de deriva. La categoría 11 **cita** esa estrategia para explicarle al mantenedor cómo correr los tests y qué deberían devolver, en su `Guia-Contribucion`. **No la redefine.** Un procedimiento de testing que aparece descripto en 08 y en 11 con criterios distintos es un hallazgo: el de 08 es el que rige.
 ---
@@ -27,7 +28,7 @@ Ingeniero QA / SDET Senior, equivalente al AG-08 del catálogo SDD. Perfil profe
 
 Combina dos facetas que históricamente estaban separadas. La cara QA define qué probar, el enfoque por niveles, los quality gates y los criterios de aceptación. La cara SDET implementa frameworks de automatización, fixtures reutilizables, snapshot baselines, integración en CI y reportes de cobertura. Cuando el sistema tiene SLAs estrictos o exposición pública, el rol se extiende a testing de performance (load, stress, soak) y de seguridad (OWASP ZAP, threat modeling, fuzz), siempre con métricas numéricas verificables.
 
-### 1.2 Variantes según tipo de proyecto (8 valores D8)
+### 1.2 Variantes según tipo de proyecto de código (8 valores D8)
 
 | Tipo | Especialidad específica | Justificación |
 | --- | --- | --- |
@@ -40,7 +41,7 @@ Combina dos facetas que históricamente estaban separadas. La cara QA define qu�
 | cli-tool | QA + CLI Testing | bats o framework equivalente, snapshot del output de stdout y stderr, validación de exit codes, tests por subcomando y por combinación de flags. |
 | worker-service | QA + Event Testing | Consumer tests por tipo de mensaje, validación de idempotencia, simulación de replay y de mensajes envenenados, tests de dead-letter y de orden cuando aplica. |
 
-El orquestador lee esta tabla y, según el `project_type` del proyecto en curso (leído del manifiesto de solución), selecciona la variante correspondiente y la combina con la especialidad base. La variante se aplica una vez por cada proyecto de la solución.
+El orquestador lee esta tabla y, según el `tipo_proyecto_codigo` del proyecto de código en curso (leído del manifiesto de producto), selecciona la variante correspondiente y la combina con la especialidad base. La variante se aplica una vez por cada proyecto de código del producto.
 
 ### 1.3 Multi-especialidad
 
@@ -62,7 +63,7 @@ El AG-08 mantiene titularidad de los artefactos. Las demás especialidades aport
 
 | Archivo | Obligatorio para | Recomendado | Omitir para | Descripción |
 | --- | --- | --- | --- | --- |
-| `estrategia-calidad.md` | Todos los tipos D8 | — | — | Definición de calidad para el proyecto, atributos priorizados (ISO 25010), quality gates, roles y cadencia. |
+| `estrategia-calidad.md` | Todos los tipos D8 | — | — | Definición de calidad para el proyecto de código, atributos priorizados (ISO 25010), quality gates, roles y cadencia. |
 | `estrategia-testing.md` | Todos los tipos D8 | — | — | Pirámide de testing, cobertura mínima por capa, tooling, datos de prueba, ambiente. |
 | `plan-pruebas.md` | Todos los tipos D8 | — | — | Alcance del plan, criterios de entrada y salida, riesgos de calidad, plan por sprint, recursos. |
 | `matriz-cobertura-pruebas.md` | Todos los tipos D8 | — | — | Trazabilidad CU↔tests, NFR↔tests, RN↔tests. |
@@ -70,7 +71,7 @@ El AG-08 mantiene titularidad de los artefactos. Las demás especialidades aport
 | `criterios-validacion.md` | Todos los tipos D8 | — | — | Criterios numéricos que permiten declarar al sistema validado para release. |
 | `definition-of-done.md` | Todos los tipos D8 | — | — | DoD por capa (US, BT, sprint, release) con criterios verificables y excepciones admitidas. |
 | `guia-testing-extensibilidad.md` | library con plugins, web-microservices con plugins | cli-tool con plugins, rest-api con handlers externos | Tipos sin puntos de extensión | Cómo testear plugins, extensiones y handlers externos sin modificar el núcleo. |
-| `Matriz-Sensado-Deriva.md` | Proyectos con `requiere_maqueta` == true, y proyectos con categoría 10 | — | Proyectos sin Fase B2 y sin categoría 10 | Lista de comprobaciones que contrasta lo construido contra sus líneas de base. Con Fase B2 se puebla con las sondas visuales (`SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX`, `DM-XX`); con categoría 10 se puebla además con las sondas de contrato y comportamiento (`VER-XX`) tomadas de los contratos de verificación de los samples. Cada fila lleva método de verificación, evidencia esperada y umbral de deriva. La mecánica vive en `Deriva-Rules.md`; esta categoría es su dueña operativa. |
+| `Matriz-Sensado-Deriva.md` | Proyectos de código con `requiere_maqueta` == true, y proyectos de código con categoría 10 | — | Proyectos de código sin Fase B2 y sin categoría 10 | Lista de comprobaciones que contrasta lo construido contra sus líneas de base. Con Fase B2 se puebla con las sondas visuales (`SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX`, `DM-XX`); con categoría 10 se puebla además con las sondas de contrato y comportamiento (`VER-XX`) tomadas de los contratos de verificación de los samples. Cada fila lleva método de verificación, evidencia esperada y umbral de deriva. La mecánica vive en `Deriva-Rules.md`; esta categoría es su dueña operativa. |
 | `README.md` de la sección | Recomendado para todos | — | — | Índice navegable de los artefactos de calidad. |
 
 ### 2.2 Reglas de inclusión y exclusión por tipo
@@ -100,11 +101,11 @@ Los porcentajes son piso, no techo. El equipo puede subir cobertura cuando el do
 - `matriz-cobertura-pruebas.md` para la trazabilidad.
 - `casos-prueba-referenciales.md` para el catálogo de TC-XX.
 - `criterios-validacion.md` para los criterios de release.
-- `definition-of-done.md` para la DoD canónica del proyecto.
+- `definition-of-done.md` para la DoD canónica del proyecto de código.
 - `guia-testing-extensibilidad.md` cuando aplica.
 - `README.md` para el índice de la sección.
 
-El archivo vivo lleva su nombre lógico estable, sin sufijo de versión, y declara su versión en el campo `Versión` de la cabecera (D4). El sufijo `-v<X.Y>.md`, con guion medio, identifica únicamente a las copias archivadas en `_legacy/`. Queda prohibido el sufijo de dominio `-motor` u otros marcadores temáticos en el nombre de archivo (por ejemplo `Estrategia-Testing-Motor.md`, `Estrategia-Calidad-Motor.md` o `Criterios-Validacion-Motor.md` están explícitamente vedados). El nombre del artefacto describe el rol del documento, no el dominio del proyecto.
+El archivo vivo lleva su nombre lógico estable, sin sufijo de versión, y declara su versión en el campo `Versión` de la cabecera (D4). El sufijo `-v<X.Y>.md`, con guion medio, identifica únicamente a las copias archivadas en `_legacy/`. Queda prohibido el sufijo de dominio `-motor` u otros marcadores temáticos en el nombre de archivo (por ejemplo `Estrategia-Testing-Motor.md`, `Estrategia-Calidad-Motor.md` o `Criterios-Validacion-Motor.md` están explícitamente vedados). El nombre del artefacto describe el rol del documento, no el dominio del proyecto de código.
 
 ### 3.2 Convenciones de identificadores internos
 
@@ -124,7 +125,7 @@ Una sola versión vigente por nombre lógico. Cuando se pasa de `v1.0` a `v2.0` 
 
 ### 3.5 README de la sección
 
-Recomendado para todos los tipos. Lista los artefactos vigentes, el estado de cada uno, los quality gates configurados en CI y el enlace a la DoD canónica del proyecto.
+Recomendado para todos los tipos. Lista los artefactos vigentes, el estado de cada uno, los quality gates configurados en CI y el enlace a la DoD canónica del proyecto de código.
 
 ---
 
@@ -137,7 +138,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos uniforme:
 ```markdown
 # <Título del documento>
 
-**Proyecto:** {{nombre-proyecto}}
+**Proyecto de código:** {{Nombre-Proyecto-Codigo}}
 **Documento:** <nombre-archivo>.md
 **Versión:** <X.Y>
 **Estado:** Borrador | Propuesto | Aprobado | Vigente | Superado | Archivado
@@ -151,7 +152,7 @@ El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente
 
 ### 4.2 Estructura de `Estrategia-Calidad.md`
 
-1. Definición de calidad para el proyecto. Qué significa "el sistema tiene calidad" en este contexto, en una a tres oraciones que respondan al alcance funcional y al perfil de riesgo.
+1. Definición de calidad para el proyecto de código. Qué significa "el sistema tiene calidad" en este contexto, en una a tres oraciones que respondan al alcance funcional y al perfil de riesgo.
 2. Atributos de calidad priorizados según ISO/IEC 25010. Funcionalidad, eficiencia de desempeño, compatibilidad, usabilidad, fiabilidad, seguridad, mantenibilidad, portabilidad. Cada atributo tiene prioridad declarada y, cuando corresponde, métrica numérica con su NFR de origen.
 3. Quality gates. Conjunto de criterios mecánicos que el pipeline aplica antes de declarar un build, una rama o un release como aceptable. Cada gate especifica condición, herramienta y consecuencia.
 4. Roles QA dentro del equipo. Quién diseña tests, quién los ejecuta, quién aprueba el release. RACI explícito si el equipo lo amerita.
@@ -273,7 +274,7 @@ Cobertura por capa:
 
 ### 5.2 Scope
 
-- ¿La pirámide objetivo es adecuada al tipo D8 del proyecto y a la variante de especialidad activa?
+- ¿La pirámide objetivo es adecuada al tipo D8 del proyecto de código y a la variante de especialidad activa?
 - ¿Hay capas en la arquitectura que no tienen umbral de cobertura definido?
 - ¿La guía de testing de extensibilidad existe si y sólo si el tipo D8 admite plugins o handlers externos?
 
@@ -306,13 +307,16 @@ Cobertura por capa:
 - [ ] Si el tipo D8 admite plugins, existe `Guia-Testing-Extensibilidad.md`.
 - [ ] Ningún archivo lleva sufijo de dominio (`-motor` u otros marcadores temáticos) ni sufijo de versión en el nombre; cada uno declara su versión en la cabecera.
 - [ ] Cada NFR con objetivo numérico tiene un test asociado en la matriz.
-- [ ] Si el proyecto ejecutó la Fase B2, la matriz tiene una fila por elemento de la línea de base visual y del contrato de datos, cada una con método de verificación resuelto (test automatizado o inspección), evidencia esperada y umbral de deriva menor y mayor declarados.
-- [ ] Si el proyecto tiene categoría 10, la matriz tiene una fila `VER-XX` por cada contrato de verificación declarado en `10-Examples`, con el comando del contrato como método de verificación. **Un proyecto con categoría 10 emite matriz aunque no haya ejecutado la Fase B2**: un proyecto sin interfaz visual también tiene contratos que pueden derivar.
-- [ ] No existe `Matriz-Sensado-Deriva.md` sin filas. Una matriz vacía es un proyecto sin instrumento de sensado, no un proyecto conforme.
+- [ ] Si el proyecto de código ejecutó la Fase B2, la matriz tiene una fila por elemento de la línea de base visual y del contrato de datos, cada una con método de verificación resuelto (test automatizado o inspección), evidencia esperada y umbral de deriva menor y mayor declarados.
+- [ ] Si el proyecto de código tiene categoría 10, la matriz tiene una fila `VER-XX` por cada contrato de verificación declarado en `10-Examples`, con el comando del contrato como método de verificación. **Un proyecto de código con categoría 10 emite matriz aunque no haya ejecutado la Fase B2**: un proyecto de código sin interfaz visual también tiene contratos que pueden derivar.
+- [ ] No existe `Matriz-Sensado-Deriva.md` sin filas. Una matriz vacía es un proyecto de código sin instrumento de sensado, no un proyecto de código conforme.
 - [ ] Cada caso de prueba referencia explícitamente al menos un CU, RN o NFR.
 - [ ] La DoD no se redefine en sprint plans; los sprint plans referencian este documento.
 - [ ] La cobertura se reporta por capa, no como número global único.
 - [ ] Todo documento con más de tres secciones de primer nivel incluye tabla de contenido inmediatamente después de la cabecera, con enlaces ancla a las secciones de primer y de segundo nivel. Los documentos breves quedan exceptuados.
+- [ ] Todo término que esta categoría acuña o precisa, y que aparece en más de uno de sus artefactos, está declarado en `Glosario-Funcional.md` de 02 y `Glosario-Tecnico.md` de 11, con sus referentes cuando tiene más de uno. Los términos de prueba propios de la categoría —nivel, sonda, umbral, fixture— se definen en el plan de pruebas la primera vez que aparecen.
+- [ ] Ninguna forma desnuda de un término polisémico queda sin resolver en un artefacto que se lee por secciones (`Vocabulario-Rules.md` §9.2).
+- [ ] Ninguna polisemia con contextos disjuntos se reporta como defecto ni se corrige calificando todas las ocurrencias (criterio negativo de `Vocabulario-Rules.md` §9.1).
 
 ---
 
@@ -325,7 +329,7 @@ Fragmento ilustrativo, no documento completo:
 ```markdown
 # Estrategia de testing — Librería de parsing CSV
 
-**Proyecto:** {{nombre-proyecto}}
+**Proyecto de código:** {{Nombre-Proyecto-Codigo}}
 **Documento:** Estrategia-Testing.md
 **Versión:** 1.0
 **Estado:** Aprobado
@@ -372,7 +376,7 @@ Fragmento ilustrativo, no documento completo:
 ```markdown
 # Matriz de cobertura de pruebas — REST API de pagos
 
-**Proyecto:** {{nombre-proyecto}}
+**Proyecto de código:** {{Nombre-Proyecto-Codigo}}
 **Documento:** Matriz-Cobertura-Pruebas.md
 **Versión:** 1.0
 **Estado:** Vigente
@@ -418,17 +422,17 @@ Fragmento ilustrativo, no documento completo:
 - Mutation testing aún no corre en CI: planificado en BT-12.
 ```
 
-Los dos fragmentos son ilustrativos. Cada proyecto adapta el dominio respetando la estructura.
+Los dos fragmentos son ilustrativos. Cada proyecto de código adapta el dominio respetando la estructura.
 
 ---
 
 ## 8. Prompt-snippet sugerido
 
 ```text
-Sos un {{ESPECIALIDAD-VARIANTE-08}} responsable de redactar los artefactos de calidad y pruebas del proyecto {{NOMBRE_PROYECTO}}.
+Sos un {{ESPECIALIDAD-VARIANTE-08}} responsable de redactar los artefactos de calidad y pruebas del proyecto de código {{NOMBRE_PROYECTO_CODIGO}}.
 
 Insumos:
-- SOLUTION-INTAKE: {{path}}
+- PRODUCT-INTAKE: {{path}}
 - Upstream: 02 (CU con criterios Given-When-Then, RN), 05 (arquitectura y NFR con métricas numéricas), 06 (DoR, US), 07 (sprint goals).
 
 A generar (obligatorio para todos los tipos D8):
@@ -445,13 +449,13 @@ A generar (obligatorio para todos los tipos D8):
 Reglas de redacción: §4 de Rules-Calidad-Y-Pruebas.md.
 Nomenclatura: sufijo uniforme `.md`. Prohibido el sufijo `-motor` o cualquier marcador de dominio en el nombre del archivo (corrección obligatoria del antecedente del fuente).
 Trazabilidad: cada TC referencia al menos un CU, RN o NFR. La matriz tiene las tres tablas obligatorias (CU↔Tests, NFR↔Tests, RN↔Tests) más la tabla de cobertura por capa.
-Pirámide objetivo: la declarada en §2.2 para el tipo D8 del proyecto, con justificación cuando se aparta de ella.
+Pirámide objetivo: la declarada en §2.2 para el tipo D8 del proyecto de código, con justificación cuando se aparta de ella.
 DoD canónica: Definition-Of-Done.md es la única fuente. Los sprint plans referencian, no redefinen.
 Criterios de calidad: §6 de Rules-Calidad-Y-Pruebas.md.
 
 Restricciones: no introducir productos comerciales ni protocolos del dominio fuente. Idioma rioplatense técnico, tildes correctas, sin emojis ni negritas decorativas.
 
-Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/08-Calidad-Y-Pruebas/<estructura>.
+Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO_CODIGO}}/08-Calidad-Y-Pruebas/<estructura>.
 ```
 
 ---
@@ -469,3 +473,5 @@ Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/08-Calidad-Y-Pruebas/<estructura>
 | 1.6 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |
 | 1.7 | 2026-07-26 | Corrección de coherencia con `Deriva-Rules.md` 1.1: la matriz de sensado dejaba de emitirse en proyectos sin Fase B2, contradiciendo la extensión del sensado a contratos y comportamiento. §0 declara las dos clases de sonda y su origen; §2.1 hace que la matriz también sea obligatoria para proyectos con categoría 10; §6 separa el criterio en dos, uno por clase de sonda, y agrega la prohibición de matriz vacía. |
 | 2.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |
+| 3.0 | 2026-07-29 | Renombre de vocabulario normativo (framework 5.0). El nivel superior pasa de «solución» a **producto**, la unidad de compilación de «proyecto» a **proyecto de código**, y los cuatro planos de identidad del producto se separan en campos propios (`Nombre-Producto`, `Slug-Producto`, `Raiz-Codigo`, `Artefacto-Agrupacion`). Se declara el nivel de aplicación de la regla en su cabecera, según `Vocabulario-Rules.md` §4 R3. Sube major porque los identificadores y los nombres de artefacto cambian, y la documentación generada con la nomenclatura anterior deja de cumplir. |
+| 3.1 | 2026-07-29 | Criterio de gobierno del glosario en §6. Sube minor: agrega criterios de aceptación verificables sin cambiar el conjunto de artefactos de la categoría ni ninguna invariante, y ninguna documentación ya emitida deja de cumplir por sí sola. Los tres criterios exigen que todo término que la categoría acuña o precisa y usa en más de uno de sus artefactos esté declarado en el glosario que le corresponde, que ninguna forma desnuda de un término polisémico quede sin resolver en un artefacto que se lee por secciones, y —criterio negativo— que ninguna polisemia con contextos disjuntos se reporte como defecto. Materializan `Vocabulario-Rules.md` §9 en la categoría. **Origen**: el audit verificaba «glosario sin contradicciones», que un glosario incompleto cumple trivialmente, y esta regla no mencionaba la palabra «glosario» ni una vez. |

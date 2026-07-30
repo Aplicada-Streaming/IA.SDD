@@ -1,8 +1,9 @@
 # Reglas constructivas — 03 UX / UI / DX
 
-**Carpeta target (por proyecto):** `SDD/Docs/Proyectos/<Nombre-Proyecto>/03-UX-UI-DX/`
+**Carpeta target (por proyecto de código):** `SDD/Docs/Proyectos/<Nombre-Proyecto-Codigo>/03-UX-UI-DX/`
+**Nivel de aplicación (`Vocabulario-Rules.md` §4 R3):** Proyecto de código
 **Subagente target del orquestador:** Especialista UX/UI o Especialista DX (AG-03), según variante.
-**Versión de las reglas:** 2.0
+**Versión de las reglas:** 4.0
 
 ---
 
@@ -15,7 +16,7 @@ La categoría 03 tiene dos variantes principales:
 - Variante UX/UI, para tipos D8 con interfaz visible al usuario final.
 - Variante DX, para tipos D8 cuya superficie pública es código, contratos, mensajes de error y documentación.
 
-El orquestador elige la variante según el `project_type` del proyecto en curso (leído del manifiesto) y, en algunos casos, las combina (ver §1.3). La variante se aplica una vez por cada proyecto de la solución.
+El orquestador elige la variante según el `tipo_proyecto_codigo` del proyecto de código en curso (leído del manifiesto) y, en algunos casos, las combina (ver §1.3). La variante se aplica una vez por cada proyecto de código del producto.
 
 ---
 
@@ -27,7 +28,7 @@ Especialista en experiencia, equivalente AG-03 del catálogo SDD. Su perfil prof
 
 La variante UX/UI se enfoca en personas no técnicas que recorren pantallas. La variante DX se enfoca en developers que integran una librería, consumen una API, operan un CLI o supervisan un servicio en segundo plano. Las dos variantes comparten el mismo cuerpo conceptual y los mismos principios; cambian los artefactos producidos y las métricas de éxito.
 
-### 1.2 Variantes según tipo de proyecto (8 valores D8)
+### 1.2 Variantes según tipo de proyecto de código (8 valores D8)
 
 | Tipo | Variante | Especialidad específica | Justificación |
 | --- | --- | --- | --- |
@@ -49,7 +50,7 @@ La categoría 03 se combina con otras especialidades cuando el alcance lo requie
 - AG-04 Ingeniero de Prompts, cuando una pantalla o un comando dispara un flujo asistido por LLM, para definir los affordances y los estados de espera, error y revisión humana.
 - AG-05 Arquitecto, para alinear el wireframe con la arquitectura de la capa de presentación, o el portal de developers con el contrato OpenAPI.
 - AG-08 QA, para que los estados visuales y los mensajes DX sean automatizables como snapshot tests o tests de contrato.
-- AG-10 Technical Writer, para alinear el tono de los mensajes y la documentación con la guía de estilo del proyecto.
+- AG-10 Technical Writer, para alinear el tono de los mensajes y la documentación con la guía de estilo del proyecto de código.
 
 Hay dos casos de combinación explícita de variantes:
 
@@ -64,23 +65,23 @@ Antes de redactar `experiencia-de-uso` y `wireframes`, el AG-03 carga el catálo
 
 Aplica siempre el documento base `Design-Rules-Web-Generico.md` y, si existe, la especialización del stack declarado en la Parte C del intake (por ejemplo `Design-Rules-Blazor-Mudblazor.md` para Blazor Interactive Server + MudBlazor). Si no hay especialización para el stack, rige únicamente el documento base.
 
-Los tokens, patrones, estados y la iconografía SVG del catálogo son normativos: el subagente referencia sus patrones por nombre y hereda sus tokens; tiene prohibido definir tokens visuales ad hoc por proyecto. Un token nuevo solo se admite si es transversal y se promueve al catálogo.
+Los tokens, patrones, estados y la iconografía SVG del catálogo son normativos: el subagente referencia sus patrones por nombre y hereda sus tokens; tiene prohibido definir tokens visuales ad hoc por proyecto de código. Un token nuevo solo se admite si es transversal y se promueve al catálogo.
 
 Trazabilidad: cada artefacto 03 con UI declara, en su tabla de trazabilidad, el o los documentos del catálogo de diseño aplicados.
 
-Cuando el proyecto tiene superficies de configuración (parámetros que el usuario fija), el AG-03 carga además, vía el índice, la extensión por capacidad `Design-Rules-Config-Esquema`. En esas superficies, los artefactos `experiencia-de-uso` y `wireframes` deben: describir cada parámetro configurable por su descriptor (etiqueta, leyenda, default, límites, ejemplos); colgar la ayuda contextual de cada campo del descriptor; incluir presets cuando apliquen; incluir la explicación en lenguaje natural ("en palabras"); declarar el modo simulación; y reservar la ranura del asistente de IA (forward-compat) sin construirla. La frontera `PropuestaDeConfiguracion` se previsualiza y se confirma antes de aplicar: la UI propone, el humano confirma, el sistema valida. Además, el AG-03 declara la frontera entre configuración de aplicación (la que el usuario gobierna desde el sistema) y configuración de entorno (la que se fija al desplegar la instancia), y no dibuja en la superficie ningún parámetro que esta no gobierne, ni siquiera deshabilitado.
+Cuando el proyecto de código tiene superficies de configuración (parámetros que el usuario fija), el AG-03 carga además, vía el índice, la extensión por capacidad `Design-Rules-Config-Esquema`. En esas superficies, los artefactos `experiencia-de-uso` y `wireframes` deben: describir cada parámetro configurable por su descriptor (etiqueta, leyenda, default, límites, ejemplos); colgar la ayuda contextual de cada campo del descriptor; incluir presets cuando apliquen; incluir la explicación en lenguaje natural ("en palabras"); declarar el modo simulación; y reservar la ranura del asistente de IA (forward-compat) sin construirla. La frontera `PropuestaDeConfiguracion` se previsualiza y se confirma antes de aplicar: la UI propone, el humano confirma, el sistema valida. Además, el AG-03 declara la frontera entre configuración de aplicación (la que el usuario gobierna desde el sistema) y configuración de entorno (la que se fija al desplegar la instancia), y no dibuja en la superficie ningún parámetro que esta no gobierne, ni siquiera deshabilitado.
 
-Cuando el proyecto se despliega por instancia y arranca sin la configuración mínima que lo hace utilizable, el AG-03 carga además la extensión `Design-Rules-Primer-Arranque`. En ese caso, `experiencia-de-uso` y `wireframes` deben: declarar el predicado único de aprovisionamiento y el artefacto mínimo que lo satisface; describir el corte en las tres capas (ruteo, superficie y acción) contra ese mismo predicado; dibujar la superficie de aprovisionamiento sin chrome de navegación y sin acción de cancelar; declarar explícitamente el destino al completar; y describir la orientación posterior que sugiere los pasos siguientes sin bloquear.
+Cuando el proyecto de código se despliega por instancia y arranca sin la configuración mínima que lo hace utilizable, el AG-03 carga además la extensión `Design-Rules-Primer-Arranque`. En ese caso, `experiencia-de-uso` y `wireframes` deben: declarar el predicado único de aprovisionamiento y el artefacto mínimo que lo satisface; describir el corte en las tres capas (ruteo, superficie y acción) contra ese mismo predicado; dibujar la superficie de aprovisionamiento sin chrome de navegación y sin acción de cancelar; declarar explícitamente el destino al completar; y describir la orientación posterior que sugiere los pasos siguientes sin bloquear.
 
-Cuando el proyecto declara una sola identidad de operación, el AG-03 carga además la extensión `Design-Rules-Acceso-Monousuario`. En ese caso, `experiencia-de-uso` y `wireframes` deben: declarar de forma explícita las omisiones del perfil (registro, selector de cuenta, recuperación, persistencia opcional de sesión, roles visibles), que no se dibujan ni siquiera deshabilitadas; describir el shell partido de acceso y de trabajo; resolver los mensajes desde un catálogo de códigos de resultado con rechazo de credenciales indiferenciado y sin exponer parámetros de la política; y declarar la duración de la sesión, su vencimiento y el efecto de cada acto de identidad sobre la sesión en curso.
+Cuando el proyecto de código declara una sola identidad de operación, el AG-03 carga además la extensión `Design-Rules-Acceso-Monousuario`. En ese caso, `experiencia-de-uso` y `wireframes` deben: declarar de forma explícita las omisiones del perfil (registro, selector de cuenta, recuperación, persistencia opcional de sesión, roles visibles), que no se dibujan ni siquiera deshabilitadas; describir el shell partido de acceso y de trabajo; resolver los mensajes desde un catálogo de códigos de resultado con rechazo de credenciales indiferenciado y sin exponer parámetros de la política; y declarar la duración de la sesión, su vencimiento y el efecto de cada acto de identidad sobre la sesión en curso.
 
-Cuando el proyecto produce artefactos desplegables identificables, el AG-03 carga además la extensión `Design-Rules-Identidad-De-Version`. En ese caso, `experiencia-de-uso` y `wireframes` deben: declarar el contrato de identidad de versión que la superficie consume; ubicar el sello en las dos ubicaciones obligatorias (superficie de acceso y superficie del sistema en funcionamiento); y describir el distintivo de artefacto preliminar, el marcador de origen indeterminado y el detalle de diagnóstico con copiado en un solo gesto. La versión se deriva del proceso de construcción; la vista no la compone ni la transcribe.
+Cuando el proyecto de código produce artefactos desplegables identificables, el AG-03 carga además la extensión `Design-Rules-Identidad-De-Version`. En ese caso, `experiencia-de-uso` y `wireframes` deben: declarar el contrato de identidad de versión que la superficie consume; ubicar el sello en las dos ubicaciones obligatorias (superficie de acceso y superficie del sistema en funcionamiento); y describir el distintivo de artefacto preliminar, el marcador de origen indeterminado y el detalle de diagnóstico con copiado en un solo gesto. La versión se deriva del proceso de construcción; la vista no la compone ni la transcribe.
 
 El arquetipo de panel de control monolítico de un servicio específico carga las cuatro extensiones a la vez.
 
 ### 1.5 Relación con la Fase B2 de validación visual de maqueta
 
-Cuando el proyecto tiene `requiere_maqueta` == true, lo que AG-03 redacta no cierra en su propio audit: se materializa después en una maqueta navegable que el humano valida, y esa validación vuelve. La regla completa de esa fase es `Maqueta-Rules.md`; acá se declara lo que le toca a AG-03.
+Cuando el proyecto de código tiene `requiere_maqueta` == true, lo que AG-03 redacta no cierra en su propio audit: se materializa después en una maqueta navegable que el humano valida, y esa validación vuelve. La regla completa de esa fase es `Maqueta-Rules.md`; acá se declara lo que le toca a AG-03.
 
 Antes de la Fase B2. AG-03 escribe sabiendo que sus artefactos van a ser el insumo de una maqueta. En consecuencia:
 
@@ -110,15 +111,15 @@ Si `requiere_maqueta` == false, esta sección no aplica y la categoría 03 cierr
 | `Experiencia-De-Uso.md` | UX/UI | web-monolith, web-microservices (con frontend), desktop-app, mobile-app-maui | — | library, cli-tool, worker-service, rest-api sin portal | Marco de experiencia: audiencia, principios de diseño, flujos clave, accesibilidad, internacionalización, performance percibida. |
 | `wireframes-<superficie>.md` | UX/UI | Tipos con UI final, uno por pantalla o flujo principal | — | Tipos sin UI final | Esquema textual o ASCII de cada pantalla con componentes, estados, interacciones, versión móvil cuando aplica. |
 | `representacion-<concepto>.md` | UX/UI o DX | Cuando hay una representación visual o estructural reutilizada (un componente, una notificación, un documento exportado) | — | Si no aplica | Documento focalizado sobre una representación específica del sistema. |
-| `Glosario-UX.md` | UX/UI | Recomendado para todos los tipos con UI final | Tipos DX si hay vocabulario propio | — | Terminología canónica de la sección (pantalla, vista, modal, toast, estado vacío, etcétera). |
+| `Glosario-UX.md` | UX/UI o DX | **Todos los tipos D8**: los tipos con UI final y los tipos DX, que acuñan su propio vocabulario de superficie pública | — | — | Terminología canónica de la sección (pantalla, vista, modal, toast, estado vacío, etcétera; en variante DX, los términos de la superficie pública y del recorrido de integración). Regla de inclusión y de no duplicación en §3.3. |
 | `DX-Developer-Experience.md` | DX | library, cli-tool, worker-service, rest-api, web-microservices sin frontend | — | Tipos con UI final únicamente | Marco DX: rol de intervención developer, onboarding por tramos, quick-start, Diátaxis, mensajes de error, métricas DX. |
 | `Guia-Onboarding-Developer.md` | DX | library, rest-api, web-microservices sin frontend | cli-tool, worker-service | — | Recorrido de primera hora del developer integrador. |
 | `DX-Error-Messages.md` | DX | cli-tool, library | rest-api, worker-service | — | Catálogo de mensajes de error y su diagnóstico accionable. |
 | `DX-Portal-Developers.md` | DX | rest-api con portal visible, web-microservices con SDK público | library con portal hospedado | Tipos sin portal | Especificación del portal de documentación de developers. |
 | `DX-Operability.md` | DX | worker-service | rest-api con SLO estricto | Tipos con UI final | Experiencia del operador: logs estructurados, dashboards, alertas, runbooks. |
-| `Linea-Base-Visual.md` | UX/UI | Proyectos con `requiere_maqueta` == true, al aprobarse la maqueta | — | Proyectos sin Fase B2 | Inventario identificado (`SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX`) de lo que el humano aprobó al mirar la maqueta. Lo emite AG-03M; ver `Deriva-Rules.md` §2.1. |
-| `Contrato-Datos-Maqueta.md` | UX/UI | Proyectos con `requiere_maqueta` == true, al aprobarse la maqueta | — | Proyectos sin Fase B2 | Campos del modelo de datos que la maqueta exhibe (`DM-XX`), con tipo, ejemplo, superficies y correspondencia al modelo conceptual de 02. Ver `Deriva-Rules.md` §2.2. |
-| `Bitacora-Validacion-Maqueta.md` | UX/UI | Proyectos con `requiere_maqueta` == true | — | Proyectos sin Fase B2 | Registro de las iteraciones de validación de la maqueta: vía, observación del humano, cambio aplicado y documento retroalimentado. |
+| `Linea-Base-Visual.md` | UX/UI | Proyectos de código con `requiere_maqueta` == true, al aprobarse la maqueta | — | Proyectos de código sin Fase B2 | Inventario identificado (`SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX`) de lo que el humano aprobó al mirar la maqueta. Lo emite AG-03M; ver `Deriva-Rules.md` §2.1. |
+| `Contrato-Datos-Maqueta.md` | UX/UI | Proyectos de código con `requiere_maqueta` == true, al aprobarse la maqueta | — | Proyectos de código sin Fase B2 | Campos del modelo de datos que la maqueta exhibe (`DM-XX`), con tipo, ejemplo, superficies y correspondencia al modelo conceptual de 02. Ver `Deriva-Rules.md` §2.2. |
+| `Bitacora-Validacion-Maqueta.md` | UX/UI | Proyectos de código con `requiere_maqueta` == true | — | Proyectos de código sin Fase B2 | Registro de las iteraciones de validación de la maqueta: vía, observación del humano, cambio aplicado y documento retroalimentado. |
 | `README.md` de la sección | Ambas | Recomendado para todos | — | — | Índice navegable de la sección con estado actual de cada artefacto. |
 
 ### 2.2 Reglas de inclusión y exclusión por tipo
@@ -146,7 +147,7 @@ El mínimo es piso, no techo. La cota superior queda definida por la cobertura d
 - `experiencia-de-uso.md` para el marco UX.
 - `wireframes-<Superficie>.md` para cada superficie. Ejemplo: `Wireframes-Pantalla-Login.md`.
 - `representacion-<Concepto>.md`. Ejemplo: `Representacion-Notificacion-Toast.md`.
-- `glosario-ux.md` para el vocabulario de la sección.
+- `Glosario-UX.md` para el vocabulario de la sección.
 - `dx-developer-experience.md` para el marco DX.
 - `guia-onboarding-developer.md` para el recorrido de primera hora.
 - `dx-error-messages.md` para el catálogo de errores accionables.
@@ -160,13 +161,14 @@ El archivo vivo no lleva sufijo de versión en el nombre: la declara en el campo
 - `wireframes-`: una superficie por archivo. Una superficie es una pantalla, un modal con flujo propio, una ventana o una pestaña con estados independientes.
 - `representacion-`: una representación reutilizable por archivo. Sirve para conceptos que aparecen en varios wireframes y conviene centralizar.
 - `dx-`: artefactos DX. Cada uno cubre un aspecto distinto: marco general, onboarding, mensajes de error, portal, operabilidad.
-- `glosario-ux`: nombre fijo. Sin variante de dominio.
+- `Glosario-UX`: nombre fijo. Sin variante de dominio.
 
 ### 3.3 Vinculación cross-doc
 
 - Upstream: cada `experiencia-de-uso` declara la persona objetivo definida en 00 y los CU de 02 que tienen interacción humana. Cada wireframe declara el CU que lo origina. Cada DX doc declara la superficie pública (módulos de la librería, endpoints de la API, comandos del CLI, mensajes del worker) a la que sirve.
 - Downstream: la sección 03 alimenta 05 con requisitos no funcionales de la capa de presentación o del portal, alimenta 06 con criterios de aceptación visuales o de ergonomía, y alimenta 08 con escenarios de snapshot test y de test de accesibilidad.
-- Glosario: todo término que aparezca en más de un artefacto de 03 debe estar en `glosario-ux`. Si un término ya está en el glosario de 02 con la misma semántica, se referencia y no se duplica.
+- Glosario: todo término que aparezca en más de un artefacto de 03 debe estar en `Glosario-UX.md`. Si un término ya está en `Glosario-Funcional.md` de 02 con la misma semántica, se referencia y no se duplica; si el sentido difiere, se declara la diferencia.
+- Glosario, polisemia: todo término con más de un referente lleva entrada que enumera los referentes. El criterio de cuándo hace falta es `Vocabulario-Rules.md` §9: se desambigua cuando los sentidos comparten contexto de lectura, y el contexto de lectura de un subagente es la sección. Una polisemia con contextos disjuntos no se corrige.
 
 ### 3.4 README de la sección
 
@@ -194,7 +196,7 @@ Cada artefacto inicia con un H1 y un bloque markdown de metadatos:
 ```markdown
 # <Título del artefacto>
 
-**Proyecto:** {{nombre-proyecto}}
+**Proyecto de código:** {{Nombre-Proyecto-Codigo}}
 **Documento:** <nombre-de-archivo>.md
 **Versión:** <X.Y>
 **Estado:** Borrador | Propuesto | Aprobado | Vigente | Superado | Archivado
@@ -269,7 +271,7 @@ El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente
 1. Principios de redacción de errores. Lenguaje plano, acción sugerida, sin culpar al usuario.
 2. Taxonomía. Categorías de error (entrada inválida, recurso ausente, conflicto de estado, error transitorio, error interno).
 3. Catálogo. Tabla con código, categoría, mensaje, causa probable, acción sugerida.
-4. Tono y voz. Coherencia con la guía de estilo del proyecto.
+4. Tono y voz. Coherencia con la guía de estilo del proyecto de código.
 5. Localización. Política de traducción de los mensajes técnicos.
 6. Control de cambios.
 
@@ -354,7 +356,7 @@ Tabla de trazabilidad de un artefacto 03:
 | Wireframe sin estados | El developer de 05 no sabe qué dibujar cuando algo falla | Enumerar estados mínimos: vacío, cargando, con datos, error |
 | DX docs que no aplican Diátaxis | Documentación mezclada entre tutorial y reference, ilegible | Separar los cuatro modos y enlazarlos explícitamente |
 | Sufijo de versión en el nombre del archivo vivo | Reintroduce la segunda lógica de versionado que D4 eliminó, y con ella la colisión al archivar | El archivo vivo no lleva sufijo; la versión va en la cabecera |
-| Definir paleta, tipografía, espaciado o íconos ad hoc por proyecto en vez de heredar del catálogo de diseño | Rompe consistencia cross-proyecto y duplica decisiones ya tomadas; los íconos raster fallan accesibilidad | Heredar tokens y patrones de `References/Design/`; iconografía SVG con `currentColor`; agregar token nuevo solo si es transversal y se promueve al catálogo |
+| Definir paleta, tipografía, espaciado o íconos ad hoc por proyecto de código en vez de heredar del catálogo de diseño | Rompe consistencia cross-proyecto y duplica decisiones ya tomadas; los íconos raster fallan accesibilidad | Heredar tokens y patrones de `References/Design/`; iconografía SVG con `currentColor`; agregar token nuevo solo si es transversal y se promueve al catálogo |
 | Default de un parámetro o ayuda de un campo hardcodeados en la pantalla de configuración | Se desincronizan del descriptor; dos fuentes de verdad | Tomar default, límites y ayuda del descriptor (ver `Design-Rules-Config-Esquema`) |
 | Explicación "en palabras" de una configuración escrita a mano | Se desfasa de los valores reales | Generarla por plantilla a partir de descriptores + valores |
 | Aplicar cambios de configuración sin previsualización ni modo simulación | El usuario no ve el efecto antes de comprometerlo | Previsualizar (en palabras + alcance) y simular antes de confirmar |
@@ -419,10 +421,13 @@ Tabla de trazabilidad de un artefacto 03:
 - [ ] Cada artefacto declara trazabilidad upstream (persona objetivo, CU origen, RN si aplica) y downstream (US, tests).
 - [ ] Ningún archivo de la carpeta de trabajo lleva sufijo de versión en el nombre; cada uno declara su versión en el campo `Versión` de su cabecera (D4), y el slug respeta Título-Con-Guiones estricto.
 - [ ] Existe un solo archivo por nombre lógico en la carpeta principal; las versiones superadas viven en `_legacy/` con su sufijo de versión.
-- [ ] El glosario de la sección no duplica términos del glosario de 02 con semántica distinta.
+- [ ] Existe `Glosario-UX.md` y su tabla de términos no está vacía.
+- [ ] Todo término que aparece en más de un artefacto de 03 está declarado en `Glosario-UX.md`, con sus referentes cuando tiene más de uno.
+- [ ] El glosario de la sección no duplica términos de `Glosario-Funcional.md` de 02 con semántica distinta; los reusados se referencian.
+- [ ] Ninguna polisemia con contextos disjuntos se reporta como defecto ni se corrige calificando todas las ocurrencias (`Vocabulario-Rules.md` §9.1).
 - [ ] No hay menciones a stacks concretos, productos comerciales ni protocolos específicos del dominio fuente.
-- [ ] En proyectos con `requiere_maqueta` == true: cada wireframe declara un nombre canónico de superficie estable, y su tabla de estados enumera todos los estados que la maqueta va a tener que demostrar.
-- [ ] En proyectos con `requiere_maqueta` == true y maqueta ya aprobada: los artefactos afectados por la validación subieron versión con su entrada de control de cambios, y existen `Linea-Base-Visual.md`, `Contrato-Datos-Maqueta.md` y `Bitacora-Validacion-Maqueta.md` en la carpeta de la categoría.
+- [ ] En proyectos de código con `requiere_maqueta` == true: cada wireframe declara un nombre canónico de superficie estable, y su tabla de estados enumera todos los estados que la maqueta va a tener que demostrar.
+- [ ] En proyectos de código con `requiere_maqueta` == true y maqueta ya aprobada: los artefactos afectados por la validación subieron versión con su entrada de control de cambios, y existen `Linea-Base-Visual.md`, `Contrato-Datos-Maqueta.md` y `Bitacora-Validacion-Maqueta.md` en la carpeta de la categoría.
 - [ ] Todo documento con más de tres secciones de primer nivel incluye tabla de contenido inmediatamente después de la cabecera, con enlaces ancla a las secciones de primer y de segundo nivel. Los documentos breves quedan exceptuados.
 
 ---
@@ -436,7 +441,7 @@ Fragmento ilustrativo, no documento completo:
 ```markdown
 # Experiencia de uso — Sistema de turnos médicos
 
-**Proyecto:** {{nombre-proyecto}}
+**Proyecto de código:** {{Nombre-Proyecto-Codigo}}
 **Documento:** Experiencia-De-Uso.md
 **Versión:** 1.0
 **Estado:** Propuesto
@@ -480,7 +485,7 @@ Compromiso WCAG 2.2 nivel AA. Criterios prioritarios: contraste 4.5:1 en texto, 
 ```markdown
 # DX — Librería de parsing CSV
 
-**Proyecto:** {{nombre-proyecto}}
+**Proyecto de código:** {{Nombre-Proyecto-Codigo}}
 **Documento:** DX-Developer-Experience.md
 **Versión:** 1.0
 **Estado:** Propuesto
@@ -529,27 +534,27 @@ Issues etiquetados como `dx`, sección de discusiones del repositorio, encuesta 
 | US a generar | US-01, US-02, US-08 |
 ```
 
-Los dos fragmentos son ilustrativos. Cada proyecto adapta el dominio respetando la estructura.
+Los dos fragmentos son ilustrativos. Cada proyecto de código adapta el dominio respetando la estructura.
 
 ---
 
 ## 8. Prompt-snippet sugerido
 
 ```text
-Sos un {{ESPECIALIDAD-VARIANTE}} responsable de redactar la categoría 03 del proyecto {{NOMBRE_PROYECTO}}.
+Sos un {{ESPECIALIDAD-VARIANTE}} responsable de redactar la categoría 03 del proyecto de código {{NOMBRE_PROYECTO_CODIGO}}.
 
-Tipo de proyecto: {{TIPO}} (uno de los ocho valores D8).
+Tipo de proyecto de código: {{TIPO}} (uno de los ocho valores D8).
 Variante por defecto según tipo:
 - library, cli-tool, worker-service, rest-api sin portal, web-microservices sin frontend: variante DX.
 - web-monolith, web-microservices con frontend, desktop-app, mobile-app-maui: variante UX/UI.
 - rest-api con portal visible o web-microservices con SDK público: combinación DX + UX/UI.
 
 Insumos:
-- SOLUTION-INTAKE: {{path}}
+- PRODUCT-INTAKE: {{path}}
 - Upstream: 00 (visión, persona objetivo), 02 (CU con interacción humana o superficie pública, RN que afectan presentación).
 
 A generar (según variante):
-- Variante UX/UI: Experiencia-De-Uso.md, wireframes-<superficie>.md (uno por superficie clave), representacion-<concepto>.md cuando aplique, Glosario-UX.md.
+- Variante UX/UI: Experiencia-De-Uso.md, wireframes-<superficie>.md (uno por superficie clave), representacion-<concepto>.md cuando aplique, Glosario-UX.md (obligatorio).
 - Variante DX: DX-Developer-Experience.md, Guia-Onboarding-Developer.md, DX-Error-Messages.md (cli-tool, library), DX-Portal-Developers.md (rest-api con portal), DX-Operability.md (worker-service).
 - README.md de la sección (recomendado).
 
@@ -562,7 +567,7 @@ Política de versionado: §3.5; una sola versión vigente; anteriores a `_legacy
 
 Restricciones: no introducir stacks concretos, productos comerciales ni protocolos del dominio fuente. Idioma rioplatense técnico, tildes correctas, sin emojis.
 
-Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/03-UX-UI-DX/<estructura>.
+Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO_CODIGO}}/03-UX-UI-DX/<estructura>.
 ```
 
 ---
@@ -581,3 +586,5 @@ Salida: SDD/Docs/Proyectos/{{NOMBRE_PROYECTO}}/03-UX-UI-DX/<estructura>.
 | 1.7 | 2026-07-26 | Normalización del vocabulario de actores: «consumidor» pasa a «integrador» u «operador» según el caso, y «audiencia» pasa a «rol de intervención» en las secciones DX, que designan a quien interviene sobre el producto. Se conserva «audiencia» en las secciones UX, que designan al público del producto. El tipo de developer se enumera como integrador, mantenedor u operador. |
 | 1.8 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |
 | 2.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |
+| 3.0 | 2026-07-29 | Renombre de vocabulario normativo (framework 5.0). El nivel superior pasa de «solución» a **producto**, la unidad de compilación de «proyecto» a **proyecto de código**, y los cuatro planos de identidad del producto se separan en campos propios (`Nombre-Producto`, `Slug-Producto`, `Raiz-Codigo`, `Artefacto-Agrupacion`). Se declara el nivel de aplicación de la regla en su cabecera, según `Vocabulario-Rules.md` §4 R3. Sube major porque los identificadores y los nombres de artefacto cambian, y la documentación generada con la nomenclatura anterior deja de cumplir. |
+| 4.0 | 2026-07-29 | **El glosario de la categoría pasa a ser obligatorio.** Sube major porque `Glosario-UX.md` deja de ser «Recomendado para todos los tipos con UI final» y pasa a obligatorio para los ocho tipos D8, incluidos los tipos DX, que acuñan el vocabulario de su superficie pública; la documentación de 03 emitida sin él deja de cumplir. §3.3 suma la regla de polisemia y remite al criterio de `Vocabulario-Rules.md` §9. §6 pasa de verificar solo la no duplicación a verificar además existencia y completitud, y suma el criterio negativo del falso positivo. La regla de no duplicación pasa a nombrar `Glosario-Funcional.md` de 02, que la 4.0 de `Rules-Especificacion-Funcional.md` acaba de crear: hasta ahora obligaba a referenciar «el glosario de 02», que era una sección de un documento condicional y podía no existir. **Corregido**: §3.1 y §3.2 nombraban el artefacto `glosario-ux` en todo-minúsculas, contra §2.1 y contra D3. |

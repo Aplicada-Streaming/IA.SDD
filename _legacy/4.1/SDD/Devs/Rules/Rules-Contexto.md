@@ -1,0 +1,431 @@
+# Reglas constructivas — 00 Contexto del producto
+
+**Carpeta target:** `SDD/Docs/00-Contexto/`
+**Subagente target del orquestador:** Product Manager Senior (AG-00) en conjunción con Analista de Negocio Senior (AG-01) si el proyecto tiene stakeholders múltiples.
+**Versión de las reglas:** 2.1
+
+---
+
+## 1. Especialidad asignada
+
+### 1.1 Especialidad base
+
+Product Manager Senior, equivalente a AG-00 del catálogo de especialidades. Define el porqué del proyecto, la visión a mediano plazo, el alcance, el roadmap de fases y las plataformas target. Trabaja desde el SOLUTION-INTAKE como insumo de negocio (Parte A) y de tipo de proyecto (§13).
+
+Su responsabilidad principal es **formalizar lo que el cliente dijo de manera implícita**: traducir aspiraciones en objetivos SMART, estructurar el alcance, explicitar lo que se dio por sabido y dejar el contexto listo para que las categorías 01 (NB), 02 (CU), 03 (UX), 05 (arquitectura), 07 (sprint plan) y 10 (ejemplos) puedan trabajar sin volver a preguntarle al cliente.
+
+**Lo que AG-00 no hace: arbitrar.** La priorización MoSCoW y las exclusiones son **decisiones de producto**, y su dueño es el Product Owner, que las declara en el `SOLUTION-INTAKE` §4 y §9 aguas arriba de esta categoría. AG-00 las **deriva y traza**; no las origina, no las fuerza y no las completa. Si faltan o son ambiguas, aplica el patrón de ambigüedad legítima de `Master-Prompt.md` §9: se detiene, pregunta y se reanuda. El catálogo de §6.1 enumera qué cuenta como ambigüedad en esta categoría.
+
+La razón es de trazabilidad, no de prolijidad. AG-00 corre **aguas abajo del punto en que el humano ya confirmó el intake y el manifiesto**, es decir donde ya declaró qué es el producto. Una prioridad decidida acá entraría a la cadena D6 (Visión → NB → CU → RN → ADR → US → BT → Sprint → Test → Pipeline) habiendo pasado solo el audit y nunca una aprobación; sería indistinguible de una decidida por el Product Owner, y cada documento aguas abajo la citaría correctamente como upstream. El audit no la detectaría, porque verifica completitud, forma y coherencia interna, no fidelidad a una intención que nunca se expresó. D9 tampoco alcanza: la evidencia verificable no aplica a afirmaciones de contexto, que es exactamente lo que esta categoría produce.
+
+Esta acotación no es un cambio de alcance de la categoría: la validación de intake de `Intake-Rules.md` §5 ya verifica, **antes de que se despache cualquier subagente**, que §4 tenga MoSCoW con un Must mínimo razonable y que §9 tenga al menos tres exclusiones. Si el intake pasa esa validación, no queda nada que forzar; si no la pasa, el orquestador se detiene con la batería de preguntas y el humano completa.
+
+### 1.2 Variantes según tipo de proyecto
+
+| Tipo (D8) | Especialidad específica | Justificación |
+| --- | --- | --- |
+| library | Product Manager + Curador de Librería | El foco está en la API surface, los casos de uso del integrador y la estabilidad de contratos. El roadmap se piensa por versiones de API, no por features de usuario final. |
+| web-monolith | Product Manager Senior | Es el caso canónico. Stakeholders mixtos negocio/técnicos, roadmap por épicas, visión orientada a producto SaaS o aplicación interna. |
+| web-microservices | Product Manager + Domain Modeler (DDD) | Requiere recortar el dominio en bounded contexts desde la visión para que cada microservicio tenga propietario funcional claro. |
+| desktop-app | Product Manager + UX Lead | Las decisiones de visión se cruzan fuerte con la experiencia: instalación, actualización, modo offline, integraciones con el SO. |
+| mobile-app-maui | Product Manager + Mobile UX Lead | La compatibilidad de plataformas y el ciclo de release en stores condicionan el roadmap. El UX móvil define qué es viable. |
+| rest-api | Product Manager + API Product Owner | Los integradores son desarrolladores. La visión se expresa por capabilities de la API, contratos versionados y métricas de adopción. |
+| cli-tool | Product Manager + Developer Advocate | La audiencia es técnica. La visión enfatiza ergonomía de uso, scripting y documentación ejecutable; el roadmap suele ser ligero. |
+| worker-service | Product Manager + Operations Lead | La visión se mide por SLA operativos, throughput y resiliencia. El alcance se define por colas y eventos procesados, no por pantallas. |
+
+Esta categoría se genera a nivel solución, una vez por solución, a partir del SOLUTION-INTAKE único. El orquestador selecciona la variante según el `project_type` del proyecto principal declarado en el manifiesto; la compatibilidad de plataformas agrega las plataformas de todos los proyectos de la solución.
+
+**Alcance de los nombres de rol en esta tabla.** Cada variante nombra el **perfil profesional** que el subagente emula, no una autoridad que se le confiere. En particular, la variante de `rest-api` nombra al API Product Owner por su expertise en contratos versionados y métricas de adopción; no habilita a AG-00 a decidir en lugar del Product Owner de la solución, que es un rol humano aguas arriba del intake. La frontera de autoridad la fija §1.1 y rige para todas las variantes sin excepción.
+
+### 1.3 Multi-especialidad
+
+Se combina con AG-01 Analista de Negocio Senior cuando se cumple al menos una de estas condiciones:
+
+- Hay más de tres categorías de stakeholders con intereses divergentes.
+- El dominio está regulado (salud, financiero, público) y la visión debe declarar restricciones normativas.
+- El proyecto es B2B con múltiples organizaciones cliente que aportan requisitos.
+- El SOLUTION-INTAKE §11 declara riesgos de negocio que requieren mitigación con dueño funcional.
+
+En proyectos pequeños (1 a 2 stakeholders, sin regulación), AG-00 trabaja solo. En proyectos de 1 dev sin cliente externo, AG-00 actúa también como AG-01 y el `acuerdo-equipo` queda omitido.
+
+---
+
+## 2. Documentos que produce esta categoría
+
+### 2.1 Tabla maestra de documentos
+
+| Archivo | Obligatorio para | Recomendado para | Omitir para | Descripción |
+| --- | --- | --- | --- | --- |
+| `Vision-Producto.md` | Todos los tipos D8 | — | — | Por qué existe el sistema, audiencia, propuesta de valor, objetivos SMART, métricas de éxito. |
+| `Alcance-Proyecto.md` | Todos los tipos D8 | — | — | Qué entra y qué no entra en el sistema, supuestos, restricciones, criterios de aceptación del proyecto. |
+| `Roadmap-Producto.md` | web-monolith, web-microservices, desktop-app, mobile-app-maui, rest-api, worker-service | cli-tool, library | — | Hitos, fases y criterios de transición entre fases. |
+| `Compatibilidad-Plataformas.md` | desktop-app, mobile-app-maui, cli-tool | web-monolith, rest-api, worker-service | library de puro lenguaje sin runtime particular | Versiones de SO, runtimes, navegadores y dispositivos soportados. |
+| `Acuerdo-Equipo.md` | Todos los tipos con equipo de más de 2 personas | Equipos de 2 personas que coordinan con stakeholders externos | Proyectos de 1 desarrollador solo, sin equipo | Convenciones de trabajo, ceremonias, herramientas, branching strategy. |
+
+### 2.2 Reglas de inclusión/exclusión por tipo de proyecto
+
+| Tipo (D8) | Genera | Omite |
+| --- | --- | --- |
+| library | vision-producto, alcance-proyecto, acuerdo-equipo | roadmap-producto (opcional), compatibilidad-plataformas (salvo binding nativo) |
+| web-monolith | vision-producto, alcance-proyecto, roadmap-producto, acuerdo-equipo | compatibilidad-plataformas (salvo soporte a navegadores legacy) |
+| web-microservices | vision-producto, alcance-proyecto, roadmap-producto, acuerdo-equipo | compatibilidad-plataformas |
+| desktop-app | Los 5 documentos | — |
+| mobile-app-maui | Los 5 documentos | — |
+| rest-api | vision-producto, alcance-proyecto, roadmap-producto, acuerdo-equipo | compatibilidad-plataformas (salvo SDKs cliente) |
+| cli-tool | vision-producto, alcance-proyecto, compatibilidad-plataformas | roadmap-producto (opcional si el alcance es bajo), acuerdo-equipo (omitir si es 1 dev) |
+| worker-service | vision-producto, alcance-proyecto, roadmap-producto, acuerdo-equipo | compatibilidad-plataformas |
+
+Regla general: si el documento se omite, dejar nota explícita en el README de la sección 00 indicando el motivo y la categoría D8 que justifica la omisión.
+
+---
+
+## 3. Nomenclatura y vinculación
+
+### 3.1 Patrón de nombres
+
+Patrón único: `<Nombre-Documento>.md`, sin sufijo de versión en el nombre. El archivo vivo lleva su nombre lógico estable, sin sufijo de versión, y declara su versión en el campo `Versión` de la cabecera (D4). El sufijo `-v<X.Y>.md`, con guion medio, identifica únicamente a las copias archivadas en `_legacy/`. Ejemplos válidos: `Vision-Producto.md`, `Alcance-Proyecto.md`, `Roadmap-Producto.md`. Ejemplos inválidos: `Vision-Producto-v1.0.md` (el archivo vivo no lleva versión) y `vision_producto.md` (rompe Título-Con-Guiones).
+
+### 3.2 Convenciones de prefijos / sufijos
+
+No se aplica en esta categoría. Los documentos de contexto no usan prefijos del tipo `NB-XX`, `CU-XX`, `RN-XX`. Solo nombre Título-Con-Guiones más sufijo de versión.
+
+### 3.3 Vinculación cross-doc (trazabilidad upstream/downstream)
+
+- Upstream: SOLUTION-INTAKE (§1 idea y problema, §3 propuesta de valor, §5 historias de usuario, §9 exclusiones, §10 restricciones del cliente, §11 riesgos, §13 tipo de proyecto, §17 P.9 plataformas target).
+- Downstream: alimenta 01 (necesidades de negocio), 02 (casos de uso y reglas), 03 (UX/UI/DX), 05 (arquitectura y ADR), 07 (sprint plan), 11 (examples). La categoría 00 es upstream de toda la cadena de trazabilidad D6.
+- Cada documento de esta categoría declara en su cabecera la trazabilidad upstream (qué secciones del SOLUTION-INTAKE originaron su contenido) y downstream (qué categorías consumen sus decisiones).
+
+### 3.4 README de la sección
+
+Recomendado. La carpeta `SDD/Docs/00-Contexto/` lleva un `README.md` (sin versión) que enumera los 5 documentos con su propósito, su estado y el orden de lectura sugerido. Si algún documento fue omitido por aplicación de §2.2, el README declara el motivo. El README también lista los stakeholders del proyecto con nombre o rol.
+
+**Al archivarse sí recibe el sufijo de versión**: `_legacy/<YYYY-MM-DD>/README-v<X.Y>.md`, con la versión tomada del campo `Versión` de su cabecera. El nombre sin sufijo rige para el archivo vivo, porque es el punto de entrada de la carpeta y su nombre debe ser estable; en el snapshot, la versión es lo que lo identifica, y sin ella dos archivados del mismo día colisionan y el segundo sobrescribe al primero sin que ningún actor reciba error. La regla general y su tabla de exenciones viven en `Master-Prompt.md` §5.1.
+
+---
+
+## 4. Estructura de redacción de cada documento
+
+### 4.1 Cabecera obligatoria
+
+Todos los documentos de la categoría 00 arrancan con un bloque markdown estándar:
+
+```markdown
+# <Título del documento>
+
+**Proyecto:** <nombre-del-proyecto>
+**Documento:** <nombre-archivo>.md
+**Versión:** <X.Y>
+**Estado:** Borrador | Propuesto | Aprobado | Vigente | Superado
+**Fecha:** <YYYY-MM-DD>
+**Autor:** <rol o nombre>
+**Trazabilidad upstream:** SOLUTION-INTAKE §<n>
+**Trazabilidad downstream:** 01-Necesidades-Negocio, 02-Especificacion-Funcional, 05-Arquitectura-Tecnica, ...
+```
+
+**Tabla de contenido.** Todo documento generado que supere las tres secciones de primer nivel incluye una tabla de contenido inmediatamente después de la cabecera de metadatos, con enlaces ancla a cada sección de primer y de segundo nivel. La tabla de contenido no cuenta como sección de contenido ni altera la estructura obligatoria del documento: se ubica entre la cabecera y la primera sección, y las secciones obligatorias siguen siendo las que declara §4.2. Los documentos breves —fichas de una sola sección, entradas de índice— quedan exceptuados.
+
+El ajuste es de navegabilidad. Estos documentos los lee principalmente un agente de IA que recorre la cadena de especificación acumulando contexto, y para ese lector la tabla de contenido es indiferente. Existe para el agente humano que entra a consultar un punto concreto sin haber leído el documento entero.
+
+### 4.2 Secciones obligatorias
+
+#### Vision-Producto.md
+
+- §1 Problema de negocio.
+- §2 Audiencia y stakeholders.
+- §3 Propuesta de valor.
+- §4 Visión a 3 años.
+- §5 Objetivos SMART.
+- §6 Métricas de éxito.
+- §7 Restricciones.
+- §8 Riesgos.
+- §9 Glosario del dominio.
+- §10 Trazabilidad.
+
+#### Alcance-Proyecto.md
+
+- §1 Propósito.
+- §2 Descripción general.
+- §3 Objetivos del proyecto.
+- §4 Alcance incluido (capacidades, entregables, ambientes).
+- §5 Alcance excluido (con justificación por exclusión).
+- §6 Supuestos.
+- §7 Restricciones.
+- §8 Criterios de aceptación del proyecto.
+- §9 Gestión de cambios de alcance.
+- §10 Trazabilidad.
+
+#### Roadmap-Producto.md
+
+- §1 Propósito.
+- §2 Fases del producto (objetivo, épicas asociadas, entregable, release target).
+- §3 Matriz fase → épica → sprint → release.
+- §4 Dependencias entre fases.
+- §5 Criterios de transición entre fases.
+- §6 Trazabilidad downstream a 06 backlog y 07 sprint plan.
+
+#### Compatibilidad-Plataformas.md
+
+- §1 Resumen ejecutivo.
+- §2 Matriz de compatibilidad (componente x plataforma).
+- §3 Restricciones de plataforma justificadas.
+- §4 Alternativas para plataformas no soportadas.
+- §5 Estado de implementación por plataforma.
+- §6 Trazabilidad downstream a 09 DevOps.
+
+#### Acuerdo-Equipo.md
+
+- §1 Propósito.
+- §2 Equipo y roles (Scrum o el modelo de gestión adoptado).
+- §3 Cadencia de ceremonias.
+- §4 Acuerdos de trabajo (branching, code review, comunicación, horario core, documentación, convenciones de commits).
+- §5 Definition of Done (referencia a 08).
+- §6 Definition of Ready (referencia a 06).
+- §7 Herramientas.
+
+### 4.3 Secciones opcionales según tipo de proyecto
+
+- Sección "NFR de compatibilidad" se agrega en `alcance-proyecto` solo si el tipo es `mobile-app-maui`, `desktop-app` o `cli-tool`.
+- Sección "Modelo de licenciamiento" se agrega en `vision-producto` solo si el tipo es `library` o si el proyecto es comercial.
+- Sección "Modelo operativo y SLA" se agrega en `vision-producto` solo si el tipo es `worker-service` o `rest-api` con integradores externos.
+- Sección "Estrategia de internacionalización" se agrega en `alcance-proyecto` solo si el SOLUTION-INTAKE §2 declara audiencia en más de una región lingüística.
+
+### 4.4 Tablas tipo y formatos recurrentes
+
+| Tabla | Documento | Columnas |
+| --- | --- | --- |
+| Stakeholders | vision-producto §2 | Rol, nombre o cargo, categoría (propietario/implementador/beneficiario), nivel de involucramiento, responsabilidad principal |
+| Objetivos SMART | vision-producto §5 | Objetivo, métrica, target numérico, plazo, responsable |
+| Métricas de éxito | vision-producto §6 | Criterio, métrica, target, plazo, fuente del dato |
+| Riesgos | vision-producto §8 | ID, riesgo, probabilidad, impacto, mitigación, responsable |
+| Hitos del roadmap | roadmap-producto §2 | Fase, objetivo, épicas, sprints estimados, entregable, release target |
+| Criterios de transición | roadmap-producto §5 | Fase origen, fase destino, criterios verificables `- [ ]` |
+| Matriz de compatibilidad | compatibilidad-plataformas §2 | Componente, plataforma 1, plataforma 2, ..., notas |
+| Exclusiones | alcance-proyecto §5 | Funcionalidad excluida, justificación, versión futura tentativa |
+| Glosario | vision-producto §9 | Término, definición, sinónimos o notas |
+| Ceremonias | acuerdo-equipo §3 | Ceremonia, cuándo, duración, participantes, notas |
+
+### 4.5 Anti-patrones a evitar
+
+| Anti-patrón | Problema | Solución |
+| --- | --- | --- |
+| Visión técnica en lugar de visión de negocio | La visión menciona stack, frameworks o patrones; queda inútil para alinear stakeholders no técnicos | Reescribir en lenguaje del cliente, mover el stack al SOLUTION-INTAKE (§17 P.1) |
+| Alcance sin exclusiones explícitas | Sin "fuera de alcance" declarado, el scope creep es inevitable | Forzar mínimo 3 exclusiones con justificación |
+| Roadmap sin criterios para reordenar | Fases listadas sin criterios de salida; nunca se sabe si una fase terminó | Cada fase tiene §5 con checklist verificable de transición |
+| Objetivos sin métrica numérica | "Que sea rápido", "que tenga buena UX" no se pueden validar | Cada objetivo en formato SMART con target numérico y plazo |
+| Stakeholders genéricos | "Los usuarios", "el equipo", "la empresa" no tienen dueño | Forzar nombre o rol concreto por stakeholder |
+| Compatibilidad enumerada sin justificación | "Soportamos Android e iOS" sin explicar versiones mínimas ni motivos | Tabla con componente, plataforma, versión mínima y motivo |
+| Acuerdo de equipo aspiracional | "Vamos a comunicarnos bien" no es verificable | Cada acuerdo se redacta como regla operativa (canal, horario, SLA) |
+| Glosario universal | Definir "API" o "framework" en el glosario no aporta | Solo términos del dominio del cliente |
+
+---
+
+## 5. Preguntas guía para el subagente
+
+### 5.1 Comprensión del input upstream
+
+- ¿Qué dice el SOLUTION-INTAKE §1 sobre el problema y cuál es la consecuencia si no se construye?
+- ¿Qué dice el SOLUTION-INTAKE §3 sobre propuesta de valor y diferenciación frente a alternativas existentes?
+- ¿Qué dice el SOLUTION-INTAKE §9 sobre exclusiones declaradas por el cliente?
+- ¿Qué dice el SOLUTION-INTAKE §10 sobre restricciones del cliente (presupuesto, fecha, normativa, integración obligatoria)?
+- ¿Qué dice el SOLUTION-INTAKE §11 sobre riesgos detectados desde el negocio?
+- ¿El SOLUTION-INTAKE §13 declara un tipo de proyecto que requiera `Compatibilidad-Plataformas.md`?
+- ¿El SOLUTION-INTAKE §17 P.9 enumera plataformas target que deban reflejarse en compatibilidad?
+
+### 5.2 Verificación de scope
+
+Estas preguntas se contestan **leyendo el intake**, no decidiendo. Si alguna no tiene respuesta ahí, es una ambigüedad del catálogo de §6.1 y se escala; no se resuelve en esta categoría.
+
+- ¿Qué declara el SOLUTION-INTAKE que entra en la visión y qué se posterga explícitamente?
+- ¿Hay capacidades del SOLUTION-INTAKE §4 que las exclusiones de §9 descartan, y con qué justificación declarada? (Si una capacidad no está ni incluida ni excluida, es la ambigüedad A2.)
+- ¿El alcance declarado es consistente con el plazo y el presupuesto del SOLUTION-INTAKE §10?
+- ¿La cantidad de Must Have del SOLUTION-INTAKE §4 cabe en el plazo objetivo declarado? Si no cabe, es la ambigüedad D1: recortar alcance o mover la fecha es una decisión del Product Owner y se escala, no se resuelve acá.
+
+### 5.3 Trazabilidad
+
+- Cada objetivo SMART de la visión, ¿se va a poder medir desde 08 Calidad?
+- Cada restricción de plataforma, ¿se refleja en 09 DevOps (matriz SO/runtime/CI)?
+- Cada fase del roadmap, ¿se mapea a épicas conocidas o pendientes de definir en 06 backlog?
+- Cada exclusión del alcance, ¿queda registrada para que 02 CU no la genere por error?
+
+### 5.4 Calidad
+
+- ¿Las exclusiones del alcance tienen justificación explícita (no solo "fuera de alcance")?
+- ¿Los hitos del roadmap tienen fecha objetivo o iteración objetivo? Sin uno de los dos, el hito no se puede cerrar.
+- ¿El glosario cubre los 10 términos más usados en NB y CU upstream esperados?
+- ¿Los stakeholders están con nombre o rol concreto, sin genéricos?
+- ¿El acuerdo de equipo declara herramientas, canales y SLA de respuesta?
+
+---
+
+## 6. Criterios de aceptación del entregable
+
+- [ ] La visión expresa el problema en lenguaje de negocio, sin mencionar stack, frameworks ni patrones de implementación.
+- [ ] El alcance enumera al menos 5 capacidades incluidas y 3 exclusiones explícitas con justificación.
+- [ ] El roadmap tiene al menos 3 hitos con criterios de avance verificables tipo `- [ ]`.
+- [ ] La sección de objetivos SMART tiene al menos 3 objetivos con métrica numérica, target y plazo.
+- [ ] La sección de stakeholders tiene mínimo 1 representante por categoría (propietario, implementador, beneficiario) con rol concreto.
+- [ ] El glosario del dominio tiene mínimo 10 términos en proyectos con equipo de más de 2 personas, o mínimo 5 términos en proyectos individuales.
+- [ ] La compatibilidad-plataformas declara todas las plataformas target listadas en el SOLUTION-INTAKE §17 P.9 cuando aplica por tipo D8.
+- [ ] El acuerdo-equipo declara herramientas, ceremonias, branching strategy y SLA de respuesta cuando aplica.
+- [ ] Cada documento de la carpeta declara su trazabilidad upstream (SOLUTION-INTAKE con secciones específicas) y downstream (categorías 01, 02, 05, 07, 10 con detalle).
+- [ ] Ningún archivo de la carpeta de trabajo lleva sufijo de versión en el nombre; cada uno declara su versión en el campo `Versión` de su cabecera (D4).
+- [ ] Ningún documento contiene emojis, negritas decorativas ni referencias hardcoded a stack, frameworks o ejemplos del dominio fuente del bootstrap.
+- [ ] Todo documento con más de tres secciones de primer nivel incluye tabla de contenido inmediatamente después de la cabecera, con enlaces ancla a las secciones de primer y de segundo nivel. Los documentos breves quedan exceptuados.
+- [ ] Ninguna prioridad MoSCoW, exclusión, fecha objetivo, target de métrica ni criterio de transición de fase se origina en esta categoría: todos derivan del SOLUTION-INTAKE y trazan a su sección de origen. Ningún ítem del catálogo de §6.1 quedó resuelto por cuenta propia en lugar de escalarse.
+
+### 6.1 Catálogo de ambigüedades de la categoría
+
+Verificación que AG-00 corre **antes de redactar**, no mientras redacta. Complementa el mecanismo reactivo de `Master-Prompt.md` §9 poniéndole un piso: enumera qué buscar en lugar de esperar a tropezarse con ello.
+
+**Criterio para distinguir.** Es **formalización**, y le corresponde a AG-00, si el dato está en el intake y solo falta darle forma. Es **ambigüedad**, y se escala, si resolverlo constituye una decisión de producto: alguien tendría que elegir entre alternativas todas legítimas y esa elección compromete al negocio. Test rápido: si la respuesta pudiera ser otra sin que nada del intake quede contradicho, es una decisión y no le pertenece a esta categoría.
+
+Cada ítem detectado dispara el patrón de `Master-Prompt.md` §9: detención, pregunta, reanudación. Ninguno se resuelve por cuenta del subagente.
+
+| Id | Ambigüedad | Artefacto afectado |
+|---|---|---|
+| A1 | MoSCoW degenerado: el intake §4 tiene todo en Must, o no tiene ningún Must | `Alcance-Proyecto.md` |
+| A2 | Capacidad del intake §4 que no entra al alcance ni figura en las exclusiones de §9 | `Alcance-Proyecto.md` |
+| A3 | Exclusión del intake §9 que contradice una capacidad Must de §4 | `Alcance-Proyecto.md` |
+| A4 | Supuesto del equipo sin confirmar, cuando el alcance depende de él | `Alcance-Proyecto.md` |
+| B1 | Métrica del intake §8 sin target numérico o sin plazo: el número es un compromiso de negocio, no una redacción | `Vision-Producto.md` |
+| B2 | Métrica sin fuente de dato obtenible, siendo que la tabla de trazabilidad de §4 exige declararla | `Vision-Producto.md` |
+| B3 | Dos objetivos que se contradicen entre sí | `Vision-Producto.md` |
+| C1 | Categoría de la tríada sin representante, contra el criterio de §6 que exige mínimo uno por categoría | `Vision-Producto.md` |
+| C2 | Dos stakeholders con intereses incompatibles y sin arbitraje declarado en el intake | `Vision-Producto.md` |
+| C3 | Stakeholder genérico del tipo "los usuarios", que el propio intake prohíbe | `Vision-Producto.md` |
+| D1 | Fecha objetivo del intake §10 incompatible con el alcance Must de §4 | `Roadmap-Producto.md` |
+| D2 | Criterio de transición entre fases ausente, siendo verificable y exigido por la estructura de `Roadmap-Producto.md` de §4 | `Roadmap-Producto.md` |
+| D3 | Orden de fases no derivable: dos Must sin precedencia declarada ni dependencia técnica que la imponga | `Roadmap-Producto.md` |
+| E1 | Plataformas target que se contradicen entre proyectos de la solución sin declarar cuál rige | `Compatibilidad-Plataformas.md` |
+| E2 | Versión mínima de runtime o de SO ausente donde el tipo D8 la exige | `Compatibilidad-Plataformas.md` |
+| F1 | `equipo_n` sin declarar en el intake §2: gatea la emisión de este documento y la forma de la categoría 07 | `Acuerdo-Equipo.md` |
+| G1 | Riesgo del intake §11 sin mitigación ni responsable: asignar responsable es decisión organizativa | `Vision-Producto.md` |
+| G2 | Término del glosario con dos definiciones incompatibles entre fuentes | `Vision-Producto.md` |
+
+**Agregación de plataformas (E1).** Agregar las plataformas declaradas por cada proyecto es mecánico y le corresponde a AG-00. Resolver un conflicto entre ellas no lo es.
+
+---
+
+## 7. Ejemplos genéricos
+
+### 7.1 Ejemplo 1 — Sistema de turnos médicos (web-monolith)
+
+Fragmento representativo de `Vision-Producto.md` para un sistema de turnos médicos:
+
+```markdown
+# Visión de Producto
+
+**Proyecto:** turnos-medicos-clinica
+**Documento:** Vision-Producto.md
+**Versión:** 1.0
+**Estado:** Propuesto
+**Fecha:** 2026-04-10
+**Autor:** Product Manager
+**Trazabilidad upstream:** SOLUTION-INTAKE §1, §3, §10
+**Trazabilidad downstream:** 01-Necesidades-Negocio, 02-Especificacion-Funcional, 05-Arquitectura-Tecnica
+
+## 1. Problema de negocio
+
+Los pacientes de la clínica solo pueden reservar turnos llamando por teléfono
+en horario de atención, lo que satura la centralita y produce esperas de 15
+a 30 minutos. Si no se resuelve, la clínica pierde pacientes contra
+competidores que ya ofrecen reserva online.
+
+## 5. Objetivos SMART
+
+| Objetivo | Métrica | Target | Plazo |
+| --- | --- | --- | --- |
+| Reservas digitales | % de turnos iniciados online sobre el total | ≥ 40% | 6 meses post-lanzamiento |
+| Reducción de llamadas | Llamadas/día a centralita | ≤ 80 (vs 200 hoy) | 9 meses post-lanzamiento |
+| Satisfacción del paciente | Promedio encuesta post-turno (1-5) | ≥ 4.0 | Continuo, revisión trimestral |
+```
+
+### 7.2 Ejemplo 2 — Librería de parsing CSV (library)
+
+Fragmento representativo de `Alcance-Proyecto.md` para una librería utilitaria:
+
+```markdown
+# Alcance del Proyecto
+
+**Proyecto:** csv-parser-lib
+**Documento:** Alcance-Proyecto.md
+**Versión:** 1.0
+**Estado:** Aprobado
+**Fecha:** 2026-04-12
+**Autor:** Product Manager + Curador de Librería
+**Trazabilidad upstream:** SOLUTION-INTAKE §4, §9
+**Trazabilidad downstream:** 02-Especificacion-Funcional, 10-Examples
+
+## 4. Alcance incluido
+
+### 4.1 API surface
+
+- Lectura de archivos CSV con delimitador configurable.
+- Mapeo a tipos del integrador mediante reflexión y atributos.
+- Reporte de filas con error sin abortar la lectura.
+- Escritura inversa desde colección a CSV.
+
+### 4.2 Casos de uso del integrador
+
+- Importación masiva en backoffice.
+- Procesamiento batch en pipelines de datos.
+- Validación previa a carga en base relacional.
+
+## 5. Alcance excluido
+
+| Funcionalidad excluida | Justificación | Versión futura |
+| --- | --- | --- |
+| Lectura desde URL remota | Acopla la librería a HTTP; se delega al integrador | Backlog v1.5 |
+| Detección automática de encoding | Costo alto vs valor; la mayoría de integradores conoce su encoding | v2.0 |
+| Streaming reactivo (IObservable) | Los integradores objetivo no lo pidieron; agrega dependencias | No planificado |
+```
+
+---
+
+## 8. Prompt-snippet sugerido para el subagente
+
+```text
+Sos un {{ESPECIALIDAD-VARIANTE}} responsable de redactar los documentos de contexto del proyecto {{NOMBRE_PROYECTO}}.
+
+Insumos:
+- SOLUTION-INTAKE: {{path-al-intake}}
+- Documentos upstream: ninguno (sos el inicio de la cadena de trazabilidad D6).
+
+Documentos a generar (según tipo de proyecto {{TIPO}} y reglas de §2.2):
+- Vision-Producto.md (obligatorio para todos los tipos)
+- Alcance-Proyecto.md (obligatorio para todos los tipos)
+- Roadmap-Producto.md (según matriz §2.2)
+- Compatibilidad-Plataformas.md (según matriz §2.2)
+- Acuerdo-Equipo.md (si equipo > 2 personas)
+- README.md de la sección 00 (recomendado, sin versión)
+
+Reglas de redacción: §4 de Rules-Contexto.md.
+Trazabilidad esperada: declarar upstream a SOLUTION-INTAKE y downstream a 01, 02, 03, 05, 07, 10.
+Criterios de calidad: §6 de Rules-Contexto.md (13 ítems verificables).
+Restricciones: idioma rioplatense técnico, UTF-8 LF, sin emojis, sin negritas decorativas, sin referencias a stack en visión y alcance.
+
+Alcance de tu autoridad: formalizás lo que el SOLUTION-INTAKE ya declara; no decidís por el Product Owner.
+La priorización MoSCoW, las exclusiones, las fechas objetivo, los targets de métrica y los criterios
+de transición de fase se derivan del intake y se trazan a su sección de origen. Antes de redactar,
+corré el catálogo de ambigüedades de §6.1 de Rules-Contexto.md. Ante cualquier ítem del catálogo,
+detenete y preguntá según el patrón de Master-Prompt.md §9; no lo completes por tu cuenta, aunque
+tengas una respuesta razonable y coherente con el resto del intake.
+
+Salida: SDD/Docs/00-Contexto/<archivos>.md.
+```
+
+---
+
+## 9. Control de cambios
+
+| Versión | Fecha | Cambios |
+| --- | --- | --- |
+| 1.0 | 2026-05-17 | Reglas iniciales generadas durante bootstrap SDD |
+| 1.1 | 2026-06-08 | Higiene D7 (hallazgo H-02 de la matriz de coherencia ST-01): el criterio de aceptación de §6 deja de nombrar el dominio fuente ("Motor DSL") y pasa a referirse a "ejemplos del dominio fuente del bootstrap". |
+| 1.2 | 2026-06-09 | Validación ST-06: aclaración de que la categoría 00 se genera a nivel solución desde el PROJECT-BRIEF único y usa la variante §1.2 del proyecto principal del manifiesto. |
+| 1.3 | 2026-06-10 | Migración de referencias de intake al documento unificado SOLUTION-INTAKE (unificación de intake). |
+| 1.4 | 2026-07-26 | Normalización del vocabulario de actores: «consumidor» pasa a «integrador» donde designa un rol de intervención. La trazabilidad downstream de §7 apunta a `10-Examples` tras el intercambio de categorías 10 ↔ 11. Se conserva «implementador» donde designa la categoría de stakeholder del intake (propietario / implementador / beneficiario) y «audiencia» donde designa el público del producto. |
+| 1.5 | 2026-07-26 | Navegabilidad para lectores humanos: §4.1 y §6 exigen tabla de contenido en todo documento generado que supere las tres secciones de primer nivel, con enlaces ancla de primer y segundo nivel y excepción para documentos breves. Es el único cambio: no se altera la estructura obligatoria de los documentos, no se agregan artefactos ni carga narrativa. |
+| 1.6 | 2026-07-28 | Reparación de la política de archivado (Revisión SDD): §3.4 declara que el `README.md` de la sección 00 recibe el sufijo de versión al archivarse. Es uno de los dos artefactos cuyo estado v1.0 se perdió en una corrida real por sobrescritura silenciosa del segundo archivado del mismo día. La regla general y su tabla de exenciones viven en `Master-Prompt.md` §5.1. |
+| 2.0 | 2026-07-28 | Normalización del versionado (framework 4.0). El archivo vivo pierde el sufijo de versión del nombre y pasa a declarar su versión en el campo `Versión` de su cabecera; el sufijo `-v<X.Y>.md` queda reservado a las copias archivadas en `_legacy/`. Se actualizan los patrones de nombre, los ejemplos, las cabeceras modelo, los anti-patrones y los criterios de aceptación de la categoría. Sube major porque la documentación generada con la nomenclatura anterior deja de cumplir. Deriva de la reformulación de D4 y D5 en el `README.md` del framework. |
+| 2.1 | 2026-07-29 | Acotación de la autoridad de AG-00 y catálogo de ambigüedades. §1.1 parte la responsabilidad de la especialidad: **formaliza lo implícito y no arbitra**. La priorización MoSCoW y las exclusiones son decisiones de producto del Product Owner, declaradas en el `SOLUTION-INTAKE` §4 y §9 aguas arriba; AG-00 las deriva y traza, y ante su ausencia escala por `Master-Prompt.md` §9 en lugar de completarlas. **§6.1 nueva**: catálogo de 18 ambigüedades de la categoría, con el criterio que distingue formalización de decisión, para correr antes de redactar y no mientras se redacta. §5.2 pasa de «decisiones de scope» a «verificación de scope» y sus preguntas dejan de pedir renegociación. §8 propaga la acotación al prompt-snippet. Correcciones de coherencia: cuatro referencias al `BRIEF` deprecado pasan a `SOLUTION-INTAKE`; la trazabilidad downstream de §6 y §8 y la enumeración de §1.1 apuntan a 10-Examples tras el intercambio 10 ↔ 11; el conteo de ítems de §6 en el prompt-snippet pasa de 11 a 13. |

@@ -1,7 +1,7 @@
 # Marco Teórico SDD
 
 **Documento:** Marco-Teorico-SDD.md
-**Versión:** 1.8
+**Versión:** 2.1
 **Estado:** Aprobado
 **Fecha:** 2026-07-19
 **Autor:** Equipo Template SDD — UTN
@@ -17,7 +17,7 @@
 - [§1 Introducción y encuadre](#1-introducción-y-encuadre)
 - [§2 Fundamentos del enfoque SDD](#2-fundamentos-del-enfoque-sdd)
 - [§3 Metodología del template SDD](#3-metodología-del-template-sdd-21)
-  - [§3.10 El modelo de solución más jerarquía de proyectos](#310-el-modelo-de-solución-más-jerarquía-de-proyectos)
+  - [§3.10 El modelo de producto más jerarquía de proyectos de código](#310-el-modelo-de-producto-más-jerarquía-de-proyectos)
 - [§4 Especialidades del template](#4-especialidades-del-template)
 - [§5 Metodología ágil aplicada](#5-metodología-ágil-aplicada)
 - [§6 Técnicas de descomposición y planificación](#6-técnicas-de-descomposición-y-planificación)
@@ -70,7 +70,7 @@ Tres rutas sugeridas según el perfil del lector:
 
 | Perfil | Ruta sugerida | Objetivo |
 |---|---|---|
-| Estudiante que recién arranca | §1 → §2 → §3 → §5 → §13 → §6 → §9 → §11 | Entender qué es SDD y cómo se aplica en un proyecto académico. |
+| Estudiante que recién arranca | §1 → §2 → §3 → §5 → §13 → §6 → §9 → §11 | Entender qué es SDD y cómo se aplica en un proyecto de código académico. |
 | Docente que evalúa adopción | §1 → §2 → §4 → §11 → §12 → §14 | Verificar coherencia metodológica y trazabilidad bibliográfica. |
 | Profesional industrial | §2 → §3 → §7 → §9 → §10 → §11 → §12 | Validar que el template se integra a su práctica industrial existente. |
 
@@ -84,14 +84,14 @@ Es importante no confundir este marco teórico con la guía de usuario del templ
 | Pregunta que responde | ¿Por qué? ¿En qué se basa? | ¿Cómo? ¿Qué hago ahora? |
 | Audiencia | Estudia, audita, adapta | Ejecuta, aplica |
 | Longitud | Extenso, denso, completo | Concisa, accionable |
-| Frecuencia de consulta | Una vez en profundidad, luego como referencia | Cada vez que se inicia un proyecto |
+| Frecuencia de consulta | Una vez en profundidad, luego como referencia | Cada vez que se inicia un proyecto de código |
 | Cita fuentes | Sí, con APA 7 | No, asume que el marco las cubre |
 
-Las dos piezas son complementarias y se referencian mutuamente, pero no se solapan. Si un lector necesita saber cómo completar el documento `SOLUTION-INTAKE`, debe acudir a la guía de usuario. Si necesita saber por qué el intake pregunta lo que pregunta, debe acudir a este marco teórico.
+Las dos piezas son complementarias y se referencian mutuamente, pero no se solapan. Si un lector necesita saber cómo completar el documento `PRODUCT-INTAKE`, debe acudir a la guía de usuario. Si necesita saber por qué el intake pregunta lo que pregunta, debe acudir a este marco teórico.
 
 ## 1.5 Mapa visual del template SDD
 
-El template se organiza en dos planos paralelos, repartidos en dos repositorios hermanos de un workspace común: el plano metodológico vive en el repositorio fuente `IA.SDD`, y el plano operativo se genera en el repositorio destino de cada solución.
+El template se organiza en dos planos paralelos, repartidos en dos repositorios hermanos de un workspace común: el plano metodológico vive en el repositorio fuente `IA.SDD`, y el plano operativo se genera en el repositorio destino de cada producto.
 
 ```text
 workspace/
@@ -100,25 +100,25 @@ workspace/
 │   └── SDD/
 │       ├── Devs/                    Plano metodológico (marco teórico, plantillas, reglas)
 │       │   ├── Guides/              Marco teórico (este documento)
-│       │   ├── Intake/              Plantillas de carga inicial (SOLUTION-INTAKE/MANIFEST-template)
+│       │   ├── Intake/              Plantillas de carga inicial (PRODUCT-INTAKE/MANIFEST-template)
 │       │   ├── Orchestrator/        Prompts orquestadores y subagentes (Master-Prompt)
 │       │   ├── Rules/               Reglas de nomenclatura, decisiones D1..D8
 │       │   ├── References/          Catálogo de reglas de diseño por stack y por capacidad (insumo de AG-03)
 │       │   └── Bootstrap/           Auditoría del fuente SDD 1.0, ADR de origen
 │       └── Guides/                  Guía de usuario
 │
-└── <Repositorio-Destino>/          Repositorio destino de la solución
+└── <Repositorio-Destino>/          Repositorio destino del producto
     └── SDD/
-        ├── Intake/                  SOLUTION-INTAKE-<Nombre-Solucion>.md (humano)
-        │                            SOLUTION-MANIFEST-<Nombre-Solucion>.md (derivado)
-        ├── Docs/                    Plano operativo de la solución generada
-        │   ├── 00-Contexto/         AG-00  Product Manager        (nivel solución)
-        │   ├── 01-Necesidades-Negocio/     AG-01  Analista de Negocio  (nivel solución)
-        │   ├── Solucion/            Consolidación de solución: vista de solución
-        │   │                        (mapa de proyectos, contratos inter-proyecto,
-        │   │                        grafo de dependencias) y pipeline de solución
-        │   ├── Proyectos/           Una carpeta por proyecto (Título-Con-Guiones)
-        │   │   └── <Nombre-Proyecto>/
+        ├── Intake/                  PRODUCT-INTAKE-<Slug-Producto>.md (humano)
+        │                            PRODUCT-MANIFEST-<Slug-Producto>.md (derivado)
+        ├── Docs/                    Plano operativo del producto generado
+        │   ├── 00-Contexto/         AG-00  Product Manager        (nivel producto)
+        │   ├── 01-Necesidades-Negocio/     AG-01  Analista de Negocio  (nivel producto)
+        │   ├── Producto/            Consolidación de producto: vista de producto
+        │   │                        (mapa de proyectos de código, contratos inter-proyecto,
+        │   │                        grafo de dependencias) y pipeline de producto
+        │   ├── Proyectos/           Una carpeta por proyecto de código (Título-Con-Guiones)
+        │   │   └── <Nombre-Proyecto-Codigo>/
         │   │       ├── 02-Especificacion-Funcional/   AG-02  Analista Funcional
         │   │       ├── 03-UX-UI-DX/            AG-03  Especialista DX/UX
         │   │       ├── 04-Prompts-AI/          AG-04  Ingeniero de Prompts
@@ -133,15 +133,15 @@ workspace/
         └── README.md
 ```
 
-Las categorías 00 y 01 viven a nivel solución (el negocio es uno por solución); las categorías 02 a 11 viven por proyecto (la técnica se especializa según el tipo D8 de cada proyecto); `Solucion/` consolida la mirada de conjunto. En el caso degenerado de una solución con un único proyecto, el layout se aplana y `Docs/` reproduce exactamente la estructura plana clásica (00 a 11 directamente bajo `Docs/`, sin nivel `Proyectos/`), garantizando la no ruptura con el modelo de tipo único. La fundamentación de este modelo solución más jerarquía de proyectos se desarrolla en §3.10.
+Las categorías 00 y 01 viven a nivel producto (el negocio es uno por producto); las categorías 02 a 11 viven por proyecto de código (la técnica se especializa según el tipo D8 de cada proyecto de código); `Producto/` consolida la mirada de conjunto. En el caso degenerado de un producto con un único proyecto de código, el layout se aplana y `Docs/` reproduce exactamente la estructura plana clásica (00 a 11 directamente bajo `Docs/`, sin nivel `Proyectos/`), garantizando la no ruptura con el modelo de tipo único. La fundamentación de este modelo producto más jerarquía de proyectos de código se desarrolla en §3.10.
 
-La separación entre el plano `Devs/` de la fuente y el plano `Docs/` del destino proviene del aprendizaje del fuente SDD 1.0: mezclar material metodológico con documentación operativa del producto contamina ambos. El marco teórico es estable y cambia rara vez; la documentación de la solución cambia cada sprint. Mantenerlos en repositorios separados permite versionarlos de manera independiente y propagar mejoras del template a nuevas soluciones sin re-copiarlo.
+La separación entre el plano `Devs/` de la fuente y el plano `Docs/` del destino proviene del aprendizaje del fuente SDD 1.0: mezclar material metodológico con documentación operativa del producto contamina ambos. El marco teórico es estable y cambia rara vez; la documentación del producto cambia cada sprint. Mantenerlos en repositorios separados permite versionarlos de manera independiente y propagar mejoras del template a productos nuevos sin re-copiarlo.
 
 ## 1.6 Origen del template
 
 Este template se construyó a partir de la auditoría del fuente SDD 1.0 aplicado al caso de estudio histórico Motor DSL en la cátedra de Aplicada del cuatrimestre 2026. El audit Fase 0 (ver `../IA.SDD/SDD/Devs/Bootstrap/Audit-SDD1.md`) inventarió 161 archivos markdown, identificó 14 patrones repetibles, 14 inconsistencias y un mapa de cobertura por capítulo. Sobre ese análisis se generalizó el material domain-specific para producir el template stack-agnóstico que SDD propone.
 
-Las menciones al caso original se conservan exclusivamente como referencia formal del origen, no como contenido canónico del template. El template SDD cubre ocho tipos de proyecto distintos (decisión D8): library, web-monolith, web-microservices, desktop-app, mobile-app-maui, rest-api, cli-tool, worker-service. Estos ocho valores son un conjunto cerrado que no cambia; lo que el modelo reformulado introdujo (ver §3.10) es que el tipo D8 se asigna por proyecto y una solución agrupa una jerarquía de N proyectos tipados, en lugar de asumir un único tipo por repositorio.
+Las menciones al caso original se conservan exclusivamente como referencia formal del origen, no como contenido canónico del template. El template SDD cubre ocho tipos de proyecto de código distintos (decisión D8): library, web-monolith, web-microservices, desktop-app, mobile-app-maui, rest-api, cli-tool, worker-service. Estos ocho valores son un conjunto cerrado que no cambia; lo que el modelo reformulado introdujo (ver §3.10) es que el tipo D8 se asigna por proyecto de código y un producto agrupa una jerarquía de N proyectos de código tipados, en lugar de asumir un único tipo por repositorio.
 
 ---
 
@@ -171,7 +171,7 @@ Las consecuencias prácticas son tres:
 
 ## 2.3 Los tres niveles de SDD
 
-Panaversity (2024) distingue tres niveles de adopción de SDD según el grado de centralidad que la especificación tenga en el ciclo de vida del proyecto.
+Panaversity (2024) distingue tres niveles de adopción de SDD según el grado de centralidad que la especificación tenga en el ciclo de vida del proyecto de código.
 
 ### Nivel 1 — Spec-First
 
@@ -179,7 +179,7 @@ Panaversity (2024) distingue tres niveles de adopción de SDD según el grado de
 
 El flujo es lineal: el equipo escribe la spec, la IA o el desarrollador la implementan, el documento se archiva o se elimina. La spec cumplió su función como contrato puntual.
 
-**Cuándo aplica.** Tareas de una sola sesión, proyectos personales sin coordinación de equipo, prototipos, correcciones puntuales de bugs.
+**Cuándo aplica.** Tareas de una sola sesión, proyectos de código personales sin coordinación de equipo, prototipos, correcciones puntuales de bugs.
 
 **Ventaja.** Sin carga de mantenimiento documental.
 
@@ -187,9 +187,9 @@ El flujo es lineal: el equipo escribe la spec, la IA o el desarrollador la imple
 
 ### Nivel 2 — Spec-Anchored
 
-Tanto la especificación como el código se mantienen como artefactos vivos. Los cambios a la spec preceden a los cambios de código. Este es el nivel estándar que SDD propone para proyectos con equipo o con horizonte de mantenimiento mayor a seis meses.
+Tanto la especificación como el código se mantienen como artefactos vivos. Los cambios a la spec preceden a los cambios de código. Este es el nivel estándar que SDD propone para proyectos de código con equipo o con horizonte de mantenimiento mayor a seis meses.
 
-**Cuándo aplica.** Proyectos con múltiples contribuyentes, sistemas que requieren documentación de compliance, productos con horizonte de mantenimiento de seis meses o más, features que sufrirán múltiples iteraciones.
+**Cuándo aplica.** Proyectos de código con múltiples contribuyentes, sistemas que requieren documentación de compliance, productos con horizonte de mantenimiento de seis meses o más, features que sufrirán múltiples iteraciones.
 
 **Requisito crítico.** Disciplina para actualizar la spec antes de tocar el código. Sin esa disciplina, spec y código divergen y el artefacto pierde su valor como contrato.
 
@@ -211,7 +211,7 @@ La especificación es el artefacto principal y el código se regenera bajo deman
 | Código repetitivo o desechable con buena cobertura de tests | Spec-as-Source (3) |
 | Experimento personal con buena cobertura | Spec-as-Source (3) |
 
-**Recomendación general.** Empezar con Spec-First y migrar a Spec-Anchored cuando el proyecto involucre equipo o tenga horizonte de mantenimiento largo. Reservar Spec-as-Source para contextos controlados con tests que garanticen el comportamiento esperado. El template SDD está diseñado por defecto para operar en nivel Spec-Anchored.
+**Recomendación general.** Empezar con Spec-First y migrar a Spec-Anchored cuando el proyecto de código involucre equipo o tenga horizonte de mantenimiento largo. Reservar Spec-as-Source para contextos controlados con tests que garanticen el comportamiento esperado. El template SDD está diseñado por defecto para operar en nivel Spec-Anchored.
 
 ## 2.4 Comparación con TDD y BDD
 
@@ -246,7 +246,7 @@ Una instancia concreta de este encaje, ya presente en el template, es la configu
 
 SDD no es bala de plata. Tiene costos y riesgos que conviene reconocer:
 
-- **Costo de escritura.** Una buena spec requiere tiempo. En proyectos de muy corto plazo (menos de una semana) el costo puede no justificarse.
+- **Costo de escritura.** Una buena spec requiere tiempo. En proyectos de código de muy corto plazo (menos de una semana) el costo puede no justificarse.
 - **Riesgo de spec desactualizada.** Si la disciplina de actualizar la spec antes que el código falla, la spec se vuelve engañosa (peor que no tenerla).
 - **Riesgo de over-engineering documental.** Hay equipos que producen specs barrocas que nadie lee. La spec debe ser tan extensa como sea necesario y tan breve como sea posible.
 - **Curva de aprendizaje.** Equipos acostumbrados a "shipear primero, documentar después" tardan en internalizar la inversión.
@@ -264,16 +264,16 @@ El template SDD propone un flujo de seis pasos que va desde la idea informal has
 1. **El humano decide; la IA ejecuta.** El equipo humano aporta visión, restricciones y criterio profesional. La IA materializa esas decisiones en artefactos coherentes con la estructura del template.
 2. **El plan precede a la acción.** En cada paso se pide a la IA que explique qué va a hacer antes de hacerlo, para que el humano confirme antes de comprometer cambios.
 
-El flujo está calibrado para proyectos académicos e industriales pequeños a medianos (uno a diez integrantes). Equipos más grandes pueden ramificar el paso 5 en múltiples ciclos paralelos.
+El flujo está calibrado para proyectos de código académicos e industriales pequeños a medianos (uno a diez integrantes). Equipos más grandes pueden ramificar el paso 5 en múltiples ciclos paralelos.
 
 ## 3.2 Paso 1 — Chat informal con la web de Claude para armar contexto
 
-El proceso arranca fuera del repositorio, en una conversación informal en `claude.ai` o equivalente. El humano describe la idea del proyecto, las restricciones que conoce, el público objetivo, el stack probable y cualquier dato relevante (capturas, documentos existentes, links a sistemas legacy).
+El proceso arranca fuera del repositorio, en una conversación informal en `claude.ai` o equivalente. El humano describe la idea del proyecto de código, las restricciones que conoce, el público objetivo, el stack probable y cualquier dato relevante (capturas, documentos existentes, links a sistemas legacy).
 
 El objetivo es producir dos insumos:
 
-- **BRIEF**: un texto corto (una a dos páginas) que captura la esencia del proyecto: problema, usuarios, alcance, restricciones, criterios de éxito.
-- **README inicial**: una versión preliminar del archivo `README.md` del repositorio, escrita en el tono del proyecto.
+- **BRIEF**: un texto corto (una a dos páginas) que captura la esencia del proyecto de código: problema, usuarios, alcance, restricciones, criterios de éxito.
+- **README inicial**: una versión preliminar del archivo `README.md` del repositorio, escrita en el tono del proyecto de código.
 
 Estos dos artefactos no son la especificación final. Son el material crudo que alimenta los pasos siguientes. Conviene iterarlos hasta que el humano sienta que reflejan fielmente la idea.
 
@@ -283,41 +283,41 @@ Estos dos artefactos no son la especificación final. Son el material crudo que 
 
 Cuando el BRIEF y el README inicial están maduros, se consolidan en un documento único que servirá de entrada al paso 3. Este documento debe contener, como mínimo:
 
-- Nombre tentativo del proyecto en Título-Con-Guiones.
+- Nombre tentativo del proyecto de código en Título-Con-Guiones.
 - Problema que el sistema resuelve, en una frase.
 - Usuarios objetivo (primario, secundario, terciario si aplica).
-- Composición de la solución: lista de proyectos que la integran y, por cada proyecto, su tipo según la decisión D8 (library, web-monolith, web-microservices, desktop-app, mobile-app-maui, rest-api, cli-tool, worker-service). En una solución de un único proyecto, esta lista tiene un solo elemento y equivale a declarar un único tipo D8.
-- Restricciones técnicas conocidas (stack, integraciones, plataformas) por proyecto.
-- Criterios de éxito tempranos (qué tiene que pasar para que el proyecto se considere exitoso en tres meses).
+- Composición del producto: lista de proyectos de código que la integran y, por cada proyecto de código, su tipo según la decisión D8 (library, web-monolith, web-microservices, desktop-app, mobile-app-maui, rest-api, cli-tool, worker-service). En un producto de un único proyecto de código, esta lista tiene un solo elemento y equivale a declarar un único tipo D8.
+- Restricciones técnicas conocidas (stack, integraciones, plataformas) por proyecto de código.
+- Criterios de éxito tempranos (qué tiene que pasar para que el proyecto de código se considere exitoso en tres meses).
 - Lista de cosas que están explícitamente fuera de alcance (es tan importante saber qué no se hace como saber qué se hace).
 
 El consolidado se guarda como `intake-source.md` o se mantiene en el chat como mensaje fijado. Su rol es funcionar como fuente de verdad para los pasos siguientes.
 
 ## 3.4 Paso 3 — Volcado al documento único de intake
 
-El template provee un único documento de intake que el humano completa manualmente a partir del consolidado: `SOLUTION-INTAKE-<Nombre-Solucion>.md`. Este documento reemplaza y deja deprecados a los dos artefactos previos (`PROJECT-BRIEF`, que capturaba el negocio, y `PROJECT-README`, que capturaba la técnica): ambos quedan subsumidos como partes de un solo documento de entrada.
+El template provee un único documento de intake que el humano completa manualmente a partir del consolidado: `PRODUCT-INTAKE-<Slug-Producto>.md`. Este documento reemplaza y deja deprecados a los dos artefactos previos (`PROJECT-BRIEF`, que capturaba el negocio, y `PROJECT-README`, que capturaba la técnica): ambos quedan subsumidos como partes de un solo documento de entrada.
 
 El intake se organiza en tres partes:
 
-- Parte A — Negocio (§1 a §12): visión del producto, problema, usuarios, alcance, stakeholders, criterios de éxito y exclusiones. Es el insumo de negocio de AG-00 (Product Manager) y AG-01 (Analista de Negocio). Se carga una vez, porque el negocio es uno por solución (intake a nivel solución, ver §3.10.5).
-- Parte B — Composición (§13 a §16): la tabla de proyectos tipados (§13), el estilo de solución (§14), la descomposición (§15) y la estructura (§16). La tabla de proyectos tipados del §13 declara, para cada proyecto, su tipo D8, su rol y sus dependencias; es la fuente desde la que se deriva el SOLUTION-MANIFEST (ver §3.10.3). En una solución de un único proyecto, la tabla tiene una sola fila y la composición se comporta igual que en el modelo de tipo único.
-- Parte C — Técnica por proyecto (§17): un bloque repetible P.1 a P.12 por cada proyecto, con el stack tentativo, las decisiones D1–D9 que ese proyecto adopta y las secciones del SDD que aplican y las que no.
+- Parte A — Negocio (§1 a §12): visión del producto, problema, usuarios, alcance, stakeholders, criterios de éxito y exclusiones. Es el insumo de negocio de AG-00 (Product Manager) y AG-01 (Analista de Negocio). Se carga una vez, porque el negocio es uno por producto (intake a nivel producto, ver §3.10.5).
+- Parte B — Composición (§13 a §16): la tabla de proyectos de código tipados (§13), el estilo de producto (§14), la descomposición (§15) y la estructura (§16). La tabla de proyectos de código tipados del §13 declara, para cada proyecto de código, su tipo D8, su rol y sus dependencias; es la fuente desde la que se deriva el PRODUCT-MANIFEST (ver §3.10.3). En un producto de un único proyecto de código, la tabla tiene una sola fila y la composición se comporta igual que en el modelo de tipo único.
+- Parte C — Técnica por proyecto de código (§17): un bloque repetible P.1 a P.12 por cada proyecto de código, con el stack tentativo, las decisiones D1–D9 que ese proyecto de código adopta y las secciones del SDD que aplican y las que no.
 
 El documento se cierra con §18 (samples) y §19 (checklist de completitud).
 
-Por qué un único documento de intake y no dos o tres artefactos separados: mantener visión, composición y técnica en un solo archivo da una entrada única y autocontenida que el humano completa de corrido y que el orquestador lee de una sola fuente, sin tener que conciliar versiones de varios documentos. La asimetría negocio/técnica no se pierde: se preserva como secciones del documento (Parte A única por solución, Parte C repetible por proyecto), no como archivos distintos. La composición declarada en la Parte B es la que alimenta el SOLUTION-MANIFEST como fuente única de verdad de la jerarquía (ver §3.10.3); el manifiesto ya no se completa a mano sino que se deriva del §13 (ver §3.6).
+Por qué un único documento de intake y no dos o tres artefactos separados: mantener visión, composición y técnica en un solo archivo da una entrada única y autocontenida que el humano completa de corrido y que el orquestador lee de una sola fuente, sin tener que conciliar versiones de varios documentos. La asimetría negocio/técnica no se pierde: se preserva como secciones del documento (Parte A única por producto, Parte C repetible por proyecto de código), no como archivos distintos. La composición declarada en la Parte B es la que alimenta el PRODUCT-MANIFEST como fuente única de verdad de la jerarquía (ver §3.10.3); el manifiesto ya no se completa a mano sino que se deriva del §13 (ver §3.6).
 
 ## 3.5 Paso 4 — Preparación del workspace de dos repositorios
 
-En el modelo reformulado, el humano no copia el árbol del template dentro del repositorio de su proyecto. Trabaja con dos repositorios hermanos en un workspace común: el repositorio fuente `IA.SDD` (este template, de solo lectura) y el repositorio destino de la solución. Clona ambos al mismo nivel, coloca el intake completado en `SDD/Intake/` del repositorio destino y abre ese repositorio destino en Claude Code (o el agente CLI equivalente). En este momento:
+En el modelo reformulado, el humano no copia el árbol del template dentro del repositorio de su proyecto de código. Trabaja con dos repositorios hermanos en un workspace común: el repositorio fuente `IA.SDD` (este template, de solo lectura) y el repositorio destino del producto. Clona ambos al mismo nivel, coloca el intake completado en `SDD/Intake/` del repositorio destino y abre ese repositorio destino en Claude Code (o el agente CLI equivalente). En este momento:
 
-- El documento único de intake completado (`SOLUTION-INTAKE`) vive en `SDD/Intake/` del repositorio destino.
+- El documento único de intake completado (`PRODUCT-INTAKE`) vive en `SDD/Intake/` del repositorio destino.
 - Las reglas de nomenclatura (`../IA.SDD/SDD/Devs/Rules/`), incluida la regla meta `Intake-Rules.md` que dirige la validación de intake, viven en la fuente.
 - Las plantillas de artefactos (`../IA.SDD/SDD/Devs/Intake/`) viven en la fuente.
 - Los prompts del orquestador y de los subagentes (`../IA.SDD/SDD/Devs/Orchestrator/`) y el prompt de entrada (`../IA.SDD/PROMPTS/`) viven en la fuente.
 - Este marco teórico (`../IA.SDD/SDD/Devs/Guides/Marco-Teorico-SDD.md`) vive en la fuente.
 
-La separación es deliberada: las reglas, plantillas y prompts maestros quedan fuera del repositorio destino, de modo que las mejoras al template se propaguen a nuevas soluciones sin re-copiarlo; los artefactos generados del SDD quedan del lado del repositorio destino. El humano verifica que el intake está bien cargado (no hay placeholders sin completar) y que las decisiones D1–D9 están explícitas. El SOLUTION-MANIFEST no se completa en este paso: es un artefacto derivado que el orquestador construye en la Fase de validación de intake (ver §3.6) a partir del §13 del intake y escribe en `SDD/Intake/` del destino.
+La separación es deliberada: las reglas, plantillas y prompts maestros quedan fuera del repositorio destino, de modo que las mejoras al template se propaguen a productos nuevos sin re-copiarlo; los artefactos generados del SDD quedan del lado del repositorio destino. El humano verifica que el intake está bien cargado (no hay placeholders sin completar) y que las decisiones D1–D9 están explícitas. El PRODUCT-MANIFEST no se completa en este paso: es un artefacto derivado que el orquestador construye en la Fase de validación de intake (ver §3.6) a partir del §13 del intake y escribe en `SDD/Intake/` del destino.
 
 ## 3.6 Paso 5 — Ejecución del master-prompt
 
@@ -325,15 +325,15 @@ El humano ejecuta en Claude Code el prompt orquestador maestro, en su versión v
 
 ### 3.6.1 Fase de validación de intake (previa a la Fase A)
 
-La Fase de validación de intake está dirigida por la regla meta `rules/Intake-Rules.md`, que describe cómo leer el intake, qué verificar y cómo derivar el manifiesto. La fase hace tres cosas distintas:
+La Fase de validación de intake está dirigida por la regla meta `Intake-Rules.md`, que describe cómo leer el intake, qué verificar y cómo derivar el manifiesto. La fase hace tres cosas distintas:
 
 1. Valida la completitud semántica del intake. No se limita al scan sintáctico de placeholders que el humano ya hizo en el Paso 4: revisa que cada parte del intake esté no solo presente sino también suficientemente especificada para generar sin ambigüedad. Es una validación proactiva, previa al despacho de subagentes.
 2. Emite una batería consolidada de preguntas. Cuando detecta subespecificación, el orquestador agrupa todas las preguntas pendientes en una sola batería y la presenta al humano de una vez, en lugar de descubrir los huecos de a uno durante la generación. Responder esa batería antes de generar evita que la IA derive por subespecificación, es decir, que rellene huecos inventando supuestos que después contaminan toda la cadena de artefactos.
-3. Deriva y confirma el manifiesto. El orquestador construye el SOLUTION-MANIFEST desde la tabla de proyectos tipados del §13 del intake y lo presenta para confirmación humana explícita. El manifiesto deja de ser un documento que el usuario completa a mano y pasa a ser un artefacto derivado.
+3. Deriva y confirma el manifiesto. El orquestador construye el PRODUCT-MANIFEST desde la tabla de proyectos de código tipados del §13 del intake y lo presenta para confirmación humana explícita. El manifiesto deja de ser un documento que el usuario completa a mano y pasa a ser un artefacto derivado.
 
 Por qué validar la completitud antes de generar. La generación asistida por IA es vulnerable a la subespecificación: ante un hueco en la entrada, el modelo no se detiene, sino que improvisa un supuesto plausible y sigue. Ese supuesto se propaga por la cadena de trazabilidad y resulta caro de revertir una vez materializado en decenas de artefactos. Concentrar la verificación de completitud al inicio, en una sola batería de preguntas, convierte un problema distribuido y reactivo en un punto de control único y barato: el humano resuelve las ambigüedades antes de que cuesten.
 
-Por qué derivar el manifiesto en lugar de pedirlo. El modelo reformulado tiene dos exigencias que en apariencia tiran en sentidos opuestos: que el humano cargue un único documento de entrada (Paso 3) y que exista una fuente única de verdad de la jerarquía de proyectos (el SOLUTION-MANIFEST, ver §3.10.3). Derivar el manifiesto del §13 del intake concilia ambas: la entrada sigue siendo única (el humano no mantiene dos artefactos en sincronía) y la fuente única de verdad de la jerarquía se preserva, porque el manifiesto se computa de manera determinística desde la tabla declarada y se confirma antes de usarse. Si el humano cargara el manifiesto por separado, podría divergir del §13; al derivarlo, esa divergencia es imposible por construcción.
+Por qué derivar el manifiesto en lugar de pedirlo. El modelo reformulado tiene dos exigencias que en apariencia tiran en sentidos opuestos: que el humano cargue un único documento de entrada (Paso 3) y que exista una fuente única de verdad de la jerarquía de proyectos de código (el PRODUCT-MANIFEST, ver §3.10.3). Derivar el manifiesto del §13 del intake concilia ambas: la entrada sigue siendo única (el humano no mantiene dos artefactos en sincronía) y la fuente única de verdad de la jerarquía se preserva, porque el manifiesto se computa de manera determinística desde la tabla declarada y se confirma antes de usarse. Si el humano cargara el manifiesto por separado, podría divergir del §13; al derivarlo, esa divergencia es imposible por construcción.
 
 Esta fase es complementaria, no sustituta, de los mecanismos previos: no reemplaza el scan de placeholders del Paso 4 ni la resolución reactiva de ambigüedad por subagente en runtime; se suma como un control semántico anticipado que esos dos mecanismos no cubrían.
 
@@ -341,15 +341,15 @@ Esta fase es complementaria, no sustituta, de los mecanismos previos: no reempla
 
 Confirmado el manifiesto, el orquestador ejecuta la generación. Esta etapa:
 
-1. Lee el intake y el SOLUTION-MANIFEST derivado y confirmado en la Fase de validación de intake, junto con las reglas.
-2. Genera las categorías de nivel solución (00 y 01) una vez, y determina el orden topológico de los proyectos a partir del grafo de dependencias del manifiesto.
-3. Para cada proyecto, en orden topológico (primero las dependencias, después los dependientes), identifica las secciones 02 a 11 que aplican según su tipo D8 y aplica la variante §1.2 de cada regla correspondiente a ese D8.
+1. Lee el intake y el PRODUCT-MANIFEST derivado y confirmado en la Fase de validación de intake, junto con las reglas.
+2. Genera las categorías de nivel producto (00 y 01) una vez, y determina el orden topológico de los proyectos de código a partir del grafo de dependencias del manifiesto.
+3. Para cada proyecto de código, en orden topológico (primero las dependencias, después los dependientes), identifica las secciones 02 a 11 que aplican según su tipo D8 y aplica la variante §1.2 de cada regla correspondiente a ese D8.
 4. Despacha subagentes especializados (uno por sección) en paralelo o en serie según la dependencia, y cada subagente genera la documentación de su sección respetando las plantillas y la nomenclatura.
-5. El orquestador consolida los resultados en `Solucion/` (vista de solución y pipeline de solución), valida coherencia cruzada intra e inter-proyecto y reporta inconsistencias.
+5. El orquestador consolida los resultados en `Producto/` (vista de producto y pipeline de producto), valida coherencia cruzada intra e inter-proyecto y reporta inconsistencias.
 
-El producto del paso 5 es el árbol `SDD/Docs/` poblado con las categorías de solución, las carpetas `Proyectos/<Nombre>/` de cada proyecto y la consolidación `Solucion/`, listo para revisión humana. En el caso degenerado de un único proyecto, el árbol se aplana y el resultado es indistinguible del modelo de tipo único.
+El producto del paso 5 es el árbol `SDD/Docs/` poblado con las categorías de producto, las carpetas `Proyectos/<Nombre>/` de cada proyecto de código y la consolidación `Producto/`, listo para revisión humana. En el caso degenerado de un único proyecto de código, el árbol se aplana y el resultado es indistinguible del modelo de tipo único.
 
-**Paralelización vs serialización.** Las secciones que dependen del resultado de otras se ejecutan en serie. Dentro de cada proyecto, el orden canónico de especialidades es: AG-02 → AG-03 → AG-04 → AG-05 → AG-06 → AG-07 → AG-08 → AG-09 → AG-10 → AG-11, precedido por AG-00 y AG-01 a nivel solución; las secciones que no dependen entre sí (por ejemplo AG-08 y AG-10) pueden ejecutarse en paralelo si el agente lo soporta. Entre proyectos, el orden lo dicta el grafo de dependencias: un proyecto se genera después de aquellos de los que depende, de modo que sus contratos ya estén disponibles.
+**Paralelización vs serialización.** Las secciones que dependen del resultado de otras se ejecutan en serie. Dentro de cada proyecto de código, el orden canónico de especialidades es: AG-02 → AG-03 → AG-04 → AG-05 → AG-06 → AG-07 → AG-08 → AG-09 → AG-10 → AG-11, precedido por AG-00 y AG-01 a nivel producto; las secciones que no dependen entre sí (por ejemplo AG-08 y AG-10) pueden ejecutarse en paralelo si el agente lo soporta. Entre proyectos de código, el orden lo dicta el grafo de dependencias: un proyecto de código se genera después de aquellos de los que depende, de modo que sus contratos ya estén disponibles.
 
 ## 3.7 Paso 6 — Confirmación y handoff a codificación
 
@@ -378,7 +378,7 @@ A partir de este punto, el equipo opera en nivel Spec-Anchored: cualquier cambio
 |             v                                                      |
 |    PASO 3: Volcado al documento unico de intake                    |
 |    +-----------------------------------------+                     |
-|    | SOLUTION-INTAKE  (A negocio / B comp. /  |                     |
+|    | PRODUCT-INTAKE  (A negocio / B comp. /  |                     |
 |    | C tecnica)  reemplaza BRIEF + README     |                     |
 |    +-----------------------------------------+                     |
 |             |                                                      |
@@ -394,10 +394,10 @@ A partir de este punto, el equipo opera en nivel Spec-Anchored: cualquier cambio
 |             |                                                      |
 |             v                                                      |
 |    FASE VALIDACION DE INTAKE (previa a Fase A)                     |
-|    dirigida por rules/Intake-Rules.md                            |
+|    dirigida por Intake-Rules.md                            |
 |    - valida completitud semantica del intake                      |
 |    - emite bateria consolidada de preguntas                       |
-|    - deriva SOLUTION-MANIFEST desde §13 y lo confirma             |
+|    - deriva PRODUCT-MANIFEST desde §13 y lo confirma             |
 |             |                                                      |
 |             v                                                      |
 |    FASE A: Generacion                                              |
@@ -408,8 +408,8 @@ A partir de este punto, el equipo opera en nivel Spec-Anchored: cualquier cambio
 |    +----+----+----+----+----+----+----+----+----+----+----+----+   |
 |             |                                                      |
 |             v                                                      |
-|    FASE B2 (opcional, por proyecto visual)                         |
-|    dirigida por rules/Maqueta-Rules.md                             |
+|    FASE B2 (opcional, por proyecto de código visual)                         |
+|    dirigida por Maqueta-Rules.md                             |
 |    - materializa la especificacion de 03 en maqueta navegable     |
 |    - el humano valida en el navegador y corrige                   |
 |    - retroalimenta la documentacion y emite linea de base         |
@@ -443,79 +443,79 @@ SDD hereda el patrón general del fuente SDD 1.0 (la cadena AG-00 → AG-11, la 
 |---|---|---|
 | Stack | Específico .NET / MAUI / NuGet | Stack-agnóstico con perfil por tipo D8 |
 | Separación devs/docs | Implícita | Explícita: `/Devs/` versus `/Docs/` |
-| Tipos de proyecto | Uno (caso de estudio histórico) | Ocho (decisión D8) |
+| Tipos de proyecto de código | Uno (caso de estudio histórico) | Ocho (decisión D8) |
 | Versionado de artefactos | Mixto (`.v1.0` y `-v1.0`) | Unificado (`-v1.0`) |
 | Casing en nombres | Mixto | Estricto Título-Con-Guiones |
 | ADR | Consolidado en un archivo | Un archivo por decisión (`ADR-XX-...`) |
 | Auditoría inicial | Inexistente | Obligatoria (Fase 0) |
 | Marco teórico | Disperso en `/References/` | Consolidado en `/Devs/Guides/` |
 
-Aclaración sobre el alcance de D3 (casing Título-Con-Guiones). La regla de casing estricto Título-Con-Guiones gobierna los nombres de los artefactos generados: documentos versionados y carpetas de categoría y de proyecto bajo `/Docs/` y `/src/`. No alcanza a los identificadores de variante de la metodología, que son tokens de marca, no artefactos generados: las carpetas raíz `SDD1.0`, `SDD`, `SDD2.1M` y `SDD2.1R` usan ese esquema de identificación a propósito, y su mayúscula no es una violación de D3. Lo mismo aplica a los prefijos de organización como `Aplicada` en los nombres de código. La validación automatizada de nomenclatura se aplica al plano de artefactos, no a estos identificadores de marca.
+Aclaración sobre el alcance de D3 (casing Título-Con-Guiones). La regla de casing estricto Título-Con-Guiones gobierna los nombres de los artefactos generados: documentos versionados y carpetas de categoría y de proyecto de código bajo `/Docs/` y `/src/`. No alcanza a los identificadores de variante de la metodología, que son tokens de marca, no artefactos generados: las carpetas raíz `SDD1.0`, `SDD`, `SDD2.1M` y `SDD2.1R` usan ese esquema de identificación a propósito, y su mayúscula no es una violación de D3. Lo mismo aplica a los prefijos de organización como `Aplicada` en los nombres de código. La validación automatizada de nomenclatura se aplica al plano de artefactos, no a estos identificadores de marca.
 
-## 3.10 El modelo de solución más jerarquía de proyectos
+## 3.10 El modelo de producto más jerarquía de proyectos de código
 
-El modelo original del template asumía un proyecto único por repositorio: un solo tipo D8, un árbol de documentación plano, una sola cadena de generación. Ese modelo es correcto pero limitado: la mayoría de los sistemas reales no son una pieza monolítica de un solo tipo, sino un conjunto coordinado de piezas de tipos distintos (por ejemplo, una librería compartida, un servicio REST que la consume y una herramienta de línea de comandos que opera contra ese servicio). El modelo reformulado de SDD generaliza el template a este caso sin romper el caso simple.
+El modelo original del template asumía un proyecto de código único por repositorio: un solo tipo D8, un árbol de documentación plano, una sola cadena de generación. Ese modelo es correcto pero limitado: la mayoría de los sistemas reales no son una pieza monolítica de un solo tipo, sino un conjunto coordinado de piezas de tipos distintos (por ejemplo, una librería compartida, un servicio REST que la consume y una herramienta de línea de comandos que opera contra ese servicio). El modelo reformulado de SDD generaliza el template a este caso sin romper el caso simple.
 
-### 3.10.1 Qué es una solución y qué es un proyecto
+### 3.10.1 Qué es un producto y qué es un proyecto de código
 
-Una solución agrupa una jerarquía de N proyectos, con N mayor o igual a uno. Cada proyecto lleva exactamente uno de los ocho valores cerrados de la decisión D8 (library, web-monolith, web-microservices, desktop-app, mobile-app-maui, rest-api, cli-tool, worker-service). La solución no tiene un D8 propio: su tipo es compuesto, derivado de la combinación de los tipos de sus proyectos.
+Un producto agrupa una jerarquía de N proyectos de código, con N mayor o igual a uno. Cada proyecto de código lleva exactamente uno de los ocho valores cerrados de la decisión D8 (library, web-monolith, web-microservices, desktop-app, mobile-app-maui, rest-api, cli-tool, worker-service). El producto no tiene un D8 propio: su tipo es compuesto, derivado de la combinación de los tipos de sus proyectos de código.
 
 La distinción es deliberada y responde a una asimetría real:
 
-- El negocio es uno por solución. Hay una visión de producto, un conjunto de necesidades de negocio, un público objetivo. Por eso las categorías 00 (contexto) y 01 (necesidades de negocio) se especifican a nivel solución.
-- La técnica es por proyecto. Cada proyecto resuelve una parte del sistema con un estilo, un contrato y un ciclo de vida propios. Por eso las categorías 02 a 11 (especificación funcional, UX/UI, prompts, arquitectura, backlog, sprints, calidad, devops, guía de desarrollador, ejemplos) se especifican por proyecto.
+- El negocio es uno por producto. Hay una visión de producto, un conjunto de necesidades de negocio, un público objetivo. Por eso las categorías 00 (contexto) y 01 (necesidades de negocio) se especifican a nivel producto.
+- La técnica es por proyecto de código. Cada proyecto de código resuelve una parte del sistema con un estilo, un contrato y un ciclo de vida propios. Por eso las categorías 02 a 11 (especificación funcional, UX/UI, prompts, arquitectura, backlog, sprints, calidad, devops, guía de desarrollador, ejemplos) se especifican por proyecto de código.
 
-### 3.10.2 El proyecto como unidad de especialización
+### 3.10.2 El proyecto de código como unidad de especialización
 
-En el modelo reformulado, el proyecto es la unidad de especialización del template. Las reglas del template tienen una variante por tipo D8 (la variante que cada capítulo de reglas documenta en su §1.2). El orquestador aplica esa variante por proyecto, según el D8 que el proyecto declara. Así, en una misma solución, el proyecto de tipo library recibe el tratamiento de librería (API pública mínima, SemVer estricto, distribución por feed de paquetes) y el proyecto de tipo rest-api recibe el suyo (OpenAPI primero, versionado de API, despliegue a runtime), sin que uno contamine al otro.
+En el modelo reformulado, el proyecto de código es la unidad de especialización del template. Las reglas del template tienen una variante por tipo D8 (la variante que cada capítulo de reglas documenta en su §1.2). El orquestador aplica esa variante por proyecto de código, según el D8 que el proyecto de código declara. Así, en una mismo producto, el proyecto de código de tipo library recibe el tratamiento de librería (API pública mínima, SemVer estricto, distribución por feed de paquetes) y el proyecto de código de tipo rest-api recibe el suyo (OpenAPI primero, versionado de API, despliegue a runtime), sin que uno contamine al otro.
 
-Esto preserva intacto el catálogo de las 13 especialidades (ver §4) y la cadena de trazabilidad (ver §4.4): lo único que cambia es el punto de aplicación. Las variantes D8 dejan de aplicarse al repositorio entero y pasan a aplicarse a cada proyecto.
+Esto preserva intacto el catálogo de las 13 especialidades (ver §4) y la cadena de trazabilidad (ver §4.4): lo único que cambia es el punto de aplicación. Las variantes D8 dejan de aplicarse al repositorio entero y pasan a aplicarse a cada proyecto de código.
 
 ### 3.10.3 El manifiesto como fuente única de verdad
 
-La composición de la solución se consolida en un único artefacto: el SOLUTION-MANIFEST. El manifiesto enumera los proyectos de la solución y, para cada uno, su tipo D8, su rol dentro de la solución, sus dependencias hacia otros proyectos y sus nombres de código. El manifiesto es la fuente única de verdad sobre qué proyectos existen y cómo se relacionan.
+La composición del producto se consolida en un único artefacto: el PRODUCT-MANIFEST. El manifiesto enumera los proyectos de código del producto y, para cada uno, su tipo D8, su rol dentro del producto, sus dependencias hacia otros proyectos de código y sus nombres de código. El manifiesto es la fuente única de verdad sobre qué proyectos de código existen y cómo se relacionan.
 
-El manifiesto no lo completa el humano: es un artefacto derivado. El orquestador lo construye desde la tabla de proyectos tipados del §13 del intake durante la Fase de validación de intake (ver §3.6) y lo presenta para confirmación humana antes de usarlo. De este modo, la composición se declara una sola vez (en el §13 del intake) y el manifiesto que el resto de la generación consume se computa de manera determinística desde esa declaración, sin riesgo de divergencia entre ambos.
+El manifiesto no lo completa el humano: es un artefacto derivado. El orquestador lo construye desde la tabla de proyectos de código tipados del §13 del intake durante la Fase de validación de intake (ver §3.6) y lo presenta para confirmación humana antes de usarlo. De este modo, la composición se declara una sola vez (en el §13 del intake) y el manifiesto que el resto de la generación consume se computa de manera determinística desde esa declaración, sin riesgo de divergencia entre ambos.
 
-Centralizar esta información en un manifiesto, en lugar de dispersarla por los árboles de cada proyecto, tiene tres consecuencias prácticas:
+Centralizar esta información en un manifiesto, en lugar de dispersarla por los árboles de cada proyecto de código, tiene tres consecuencias prácticas:
 
-1. La composición se puede leer, auditar y versionar en un solo lugar. Agregar un proyecto, cambiar su tipo o reescribir una dependencia es un cambio localizado y trazable.
+1. La composición se puede leer, auditar y versionar en un solo lugar. Agregar un proyecto de código, cambiar su tipo o reescribir una dependencia es un cambio localizado y trazable.
 2. El orquestador deriva del manifiesto el plan de generación completo sin tener que inferir relaciones leyendo cada carpeta.
 3. La coherencia inter-proyecto (contratos, dependencias) se valida contra una declaración explícita, no contra suposiciones.
 
 ### 3.10.4 El grafo de dependencias y el orden topológico
 
-Las dependencias declaradas entre proyectos forman un grafo. Ese grafo debe ser acíclico (un DAG): un proyecto no puede depender, directa o transitivamente, de sí mismo. La aciclicidad no es un capricho formal; es la condición que hace posible un orden de generación y de build bien definido.
+Las dependencias declaradas entre proyectos de código forman un grafo. Ese grafo debe ser acíclico (un DAG): un proyecto de código no puede depender, directa o transitivamente, de sí mismo. La aciclicidad no es un capricho formal; es la condición que hace posible un orden de generación y de build bien definido.
 
-A partir del DAG se obtiene un orden topológico: primero se generan y se construyen las dependencias, después los dependientes. Si el proyecto rest-api depende de la library, la library se especifica y se construye antes. Este orden garantiza que cuando un proyecto se genera, los contratos de los proyectos de los que depende ya están disponibles, y que el pipeline de solución produce los artefactos en una secuencia en la que cada paso encuentra resueltas sus entradas.
+A partir del DAG se obtiene un orden topológico: primero se generan y se construyen las dependencias, después los dependientes. Si el proyecto de código rest-api depende de la library, la library se especifica y se construye antes. Este orden garantiza que cuando un proyecto de código se genera, los contratos de los proyectos de código de los que depende ya están disponibles, y que el pipeline de producto produce los artefactos en una secuencia en la que cada paso encuentra resueltas sus entradas.
 
-### 3.10.5 Intake a nivel solución
+### 3.10.5 Intake a nivel producto
 
-El intake del modelo reformulado opera a nivel solución, coherente con la asimetría negocio/técnica, y se consolida en un único documento: `SOLUTION-INTAKE-<Nombre-Solucion>.md`. Este documento reemplaza y deja deprecados a los dos artefactos previos (`PROJECT-BRIEF` de negocio y `PROJECT-README` técnico), que dejan de usarse como archivos separados y pasan a ser partes del documento único. La asimetría negocio/técnica se preserva como secciones:
+El intake del modelo reformulado opera a nivel producto, coherente con la asimetría negocio/técnica, y se consolida en un único documento: `PRODUCT-INTAKE-<Slug-Producto>.md`. Este documento reemplaza y deja deprecados a los dos artefactos previos (`PROJECT-BRIEF` de negocio y `PROJECT-README` técnico), que dejan de usarse como archivos separados y pasan a ser partes del documento único. La asimetría negocio/técnica se preserva como secciones:
 
-- Una Parte A de negocio por solución, que captura la visión y el problema una sola vez (el negocio es uno).
-- Una Parte C técnica con un bloque repetible por proyecto (la técnica es por proyecto).
-- Una Parte B de composición, cuya tabla de proyectos tipados (§13) declara la jerarquía y es la fuente desde la que se deriva el SOLUTION-MANIFEST descrito arriba.
+- Una Parte A de negocio por producto, que captura la visión y el problema una sola vez (el negocio es uno).
+- Una Parte C técnica con un bloque repetible por proyecto de código (la técnica es por proyecto de código).
+- Una Parte B de composición, cuya tabla de proyectos de código tipados (§13) declara la jerarquía y es la fuente desde la que se deriva el PRODUCT-MANIFEST descrito arriba.
 
-De este modo, lo que es único (el negocio) se carga una vez y lo que se especializa (la técnica de cada proyecto) se carga por proyecto, evitando duplicación del negocio y mezcla de tecnologías heterogéneas en un único bloque.
+De este modo, lo que es único (el negocio) se carga una vez y lo que se especializa (la técnica de cada proyecto de código) se carga por proyecto de código, evitando duplicación del negocio y mezcla de tecnologías heterogéneas en un único bloque.
 
-### 3.10.6 Niveles de la generación y consolidación de solución
+### 3.10.6 Niveles de la generación y consolidación de producto
 
 La generación trabaja en dos niveles coherentes con la estructura de `docs/` descrita en §1.5:
 
-- Nivel solución: categorías 00 y 01 se generan una vez por solución.
-- Nivel proyecto: categorías 02 a 11 se generan por proyecto, en el orden topológico que dicta el grafo de dependencias.
-- Consolidación de solución: la carpeta `Solucion/` reúne una vista de solución (el mapa de proyectos, los contratos inter-proyecto y el grafo de dependencias) y un pipeline de solución (el orden de build topológico y los artefactos publicables por proyecto).
+- Nivel producto: categorías 00 y 01 se generan una vez por producto.
+- Nivel proyecto de código: categorías 02 a 11 se generan por proyecto de código, en el orden topológico que dicta el grafo de dependencias.
+- Consolidación de producto: la carpeta `Producto/` reúne una vista de producto (el mapa de proyectos de código, los contratos inter-proyecto y el grafo de dependencias) y un pipeline de producto (el orden de build topológico y los artefactos publicables por proyecto de código).
 
 ### 3.10.7 El caso degenerado como garantía de no ruptura
 
-Una solución de un solo proyecto reproduce exactamente el comportamiento del template de tipo único: el layout se aplana (las categorías 00 a 11 quedan directamente bajo `docs/`, sin nivel `Proyectos/`), no hay grafo no trivial que ordenar y no hay contratos inter-proyecto que consolidar. Este caso degenerado es la garantía de no ruptura: quien venía usando el template con un proyecto único no percibe cambio alguno, y quien necesita componer varios proyectos extiende el mismo modelo sin reaprenderlo.
+Un producto de un solo proyecto de código reproduce exactamente el comportamiento del template de tipo único: el layout se aplana (las categorías 00 a 11 quedan directamente bajo `docs/`, sin nivel `Proyectos/`), no hay grafo no trivial que ordenar y no hay contratos inter-proyecto que consolidar. Este caso degenerado es la garantía de no ruptura: quien venía usando el template con un proyecto de código único no percibe cambio alguno, y quien necesita componer varios proyectos de código extiende el mismo modelo sin reaprenderlo.
 
-Conviene subrayar qué no cambió. El conjunto D8 sigue teniendo exactamente ocho valores; no se agregó ni se quitó ningún tipo. Lo que cambió es la cardinalidad (de un tipo por repositorio a N proyectos tipados por solución) y la topología (la composición y la dependencia entre proyectos), no el conjunto de tipos.
+Conviene subrayar qué no cambió. El conjunto D8 sigue teniendo exactamente ocho valores; no se agregó ni se quitó ningún tipo. Lo que cambió es la cardinalidad (de un tipo por repositorio a N proyectos de código tipados por producto) y la topología (la composición y la dependencia entre proyectos de código), no el conjunto de tipos.
 
-### 3.10.8 La composición como decisión arquitectónica de nivel solución
+### 3.10.8 La composición como decisión arquitectónica de nivel producto
 
-Decidir qué proyectos integran la solución y qué dependencias hay entre ellos es, en sí misma, una decisión arquitectónica, pero de un nivel superior al estilo interno de cada proyecto. El estilo de cada proyecto (ver §7) resuelve cómo se organiza ese proyecto por dentro; la composición de la solución resuelve qué piezas hay y cómo se conectan. Ambas decisiones se documentan como ADR, pero pertenecen a planos distintos: la composición es un ADR de nivel solución, el estilo interno es un ADR de nivel proyecto.
+Decidir qué proyectos de código integran el producto y qué dependencias hay entre ellos es, en sí misma, una decisión arquitectónica, pero de un nivel superior al estilo interno de cada proyecto de código. El estilo de cada proyecto de código (ver §7) resuelve cómo se organiza ese proyecto de código por dentro; la composición del producto resuelve qué piezas hay y cómo se conectan. Ambas decisiones se documentan como ADR, pero pertenecen a planos distintos: la composición es un ADR de nivel producto, el estilo interno es un ADR de nivel proyecto de código.
 
 ---
 
@@ -532,7 +532,7 @@ Trece especialidades no implican trece personas. En equipos pequeños una person
 
 Las 13 especialidades son las que producen artefactos documentales: una por cada una de las 12 categorías de `Docs/` más AG-ROOT. La Fase B2 de validación visual (§8.8) incorpora un subagente adicional, AG-03M, que no altera ese número porque no es titular de ninguna categoría: materializa en una maqueta la especificación que AG-03 redactó, y los documentos que emite quedan bajo la titularidad documental de las categorías 03 y 08. Es un subagente de fase, no de categoría. La distinción importa porque es la que mantiene el criterio de un responsable por artefacto: si AG-03M fuera titular de la experiencia, habría dos especialidades decidiendo sobre el mismo documento.
 
-Las 13 especialidades siguen siendo válidas sin cambios en el modelo de solución más jerarquía de proyectos (§3.10). Lo que se precisa es el alcance de cada una: AG-00 (Product Manager) y AG-01 (Analista de Negocio) operan a nivel solución, porque el negocio es uno por solución; las especialidades AG-02 a AG-11 operan por proyecto, porque la técnica se especializa según el tipo D8 de cada proyecto. Las variantes por tipo D8 que cada especialidad documenta más abajo se aplican, por lo tanto, por proyecto: en una solución con varios proyectos de tipos distintos, una misma especialidad puede producir artefactos con foco distinto en cada proyecto.
+Las 13 especialidades siguen siendo válidas sin cambios en el modelo de producto más jerarquía de proyectos de código (§3.10). Lo que se precisa es el alcance de cada una: AG-00 (Product Manager) y AG-01 (Analista de Negocio) operan a nivel producto, porque el negocio es uno por producto; las especialidades AG-02 a AG-11 operan por proyecto de código, porque la técnica se especializa según el tipo D8 de cada proyecto de código. Las variantes por tipo D8 que cada especialidad documenta más abajo se aplican, por lo tanto, por proyecto de código: en un producto con varios proyectos de código de tipos distintos, una misma especialidad puede producir artefactos con foco distinto en cada proyecto de código.
 
 ## 4.2 Catálogo de las 13 especialidades
 
@@ -541,7 +541,7 @@ Las 13 especialidades siguen siendo válidas sin cambios en el modelo de soluci�
 **Alias.** Solutions Architect, Tech Lead documental.
 **Responsabilidad principal.** Coherencia integral del repositorio. Onboarding de personas nuevas en cinco minutos de lectura. Validación cruzada entre secciones.
 **Documentos que produce.** `docs/README.md` (índice maestro), referencias cruzadas, mapa de trazabilidad.
-**Variantes por tipo de proyecto.** Estable en todos los D8.
+**Variantes por tipo de proyecto de código.** Estable en todos los D8.
 **Interacciones cross-rol.** Consume artefactos de todos los AG-XX para componer la narrativa global. Valida que la documentación de cada AG-XX es consistente con el resto.
 
 ### AG-00 — Product Manager
@@ -549,7 +549,7 @@ Las 13 especialidades siguen siendo válidas sin cambios en el modelo de soluci�
 **Alias.** PM, Product Owner senior en contextos donde el rol no existe formalmente.
 **Responsabilidad principal.** Estrategia del producto, alineación con stakeholders, métricas de éxito.
 **Documentos que produce.** Visión del producto, alcance, roadmap, acuerdo de equipo, compatibilidad de plataformas.
-**Variantes por tipo de proyecto.** En proyectos D8 = library el roadmap es más técnico y menos comercial; en proyectos D8 = web-monolith o D8 = rest-api el roadmap suele integrar fases de adopción por terceros.
+**Variantes por tipo de proyecto de código.** En proyectos de código D8 = library el roadmap es más técnico y menos comercial; en proyectos de código D8 = web-monolith o D8 = rest-api el roadmap suele integrar fases de adopción por terceros.
 **Interacciones cross-rol.** Alimenta a AG-01 (necesidades) y AG-06 (priorización del backlog).
 
 ### AG-01 — Analista de Negocio Senior
@@ -557,7 +557,7 @@ Las 13 especialidades siguen siendo válidas sin cambios en el modelo de soluci�
 **Alias.** BA, CBAP certificado en contextos formales.
 **Responsabilidad principal.** Elicitación de requisitos de negocio, traducción a necesidades concretas, identificación de stakeholders.
 **Documentos que produce.** Necesidades de negocio (NB-XX), criterios de éxito por NB, métricas de valor.
-**Variantes por tipo de proyecto.** En library/cli-tool/worker-service los stakeholders son típicamente otros desarrolladores (DX); en web/mobile los stakeholders son usuarios finales (UX).
+**Variantes por tipo de proyecto de código.** En library/cli-tool/worker-service los stakeholders son típicamente otros desarrolladores (DX); en web/mobile los stakeholders son usuarios finales (UX).
 **Interacciones cross-rol.** Consume visión de AG-00, alimenta a AG-02 (casos de uso) y a AG-06 (épicas).
 
 ### AG-02 — Analista Funcional
@@ -565,15 +565,15 @@ Las 13 especialidades siguen siendo válidas sin cambios en el modelo de soluci�
 **Alias.** Ingeniero de Requisitos, IREB certificado en contextos formales.
 **Responsabilidad principal.** Especificación funcional formal, casos de uso, reglas de negocio, modelo conceptual de datos.
 **Documentos que produce.** Casos de uso (CU-XX), reglas de negocio (RN-XX), reglas conceptuales (RC-XX), modelo conceptual, criterios de aceptación Given/When/Then.
-**Variantes por tipo de proyecto.** En library/cli-tool puede no haber actores humanos directos; los actores son consumidores programáticos.
+**Variantes por tipo de proyecto de código.** En library/cli-tool puede no haber actores humanos directos; los actores son consumidores programáticos.
 **Interacciones cross-rol.** Consume necesidades de AG-01, alimenta a AG-03 (DX), AG-05 (arquitectura), AG-06 (US), AG-08 (test cases).
 
 ### AG-03 — Especialista en Developer Experience / UX
 
-**Alias.** DX Specialist, UX Designer cuando el proyecto tiene usuarios finales.
+**Alias.** DX Specialist, UX Designer cuando el proyecto de código tiene usuarios finales.
 **Responsabilidad principal.** Diseño de la experiencia de uso, sea de usuarios finales (UX) o de desarrolladores integradores (DX).
 **Documentos que produce.** Flujos de uso, wireframes, representaciones de salida, ergonomía del API, journey maps.
-**Variantes por tipo de proyecto.**
+**Variantes por tipo de proyecto de código.**
 
 | D8 | Foco principal |
 |---|---|
@@ -586,15 +586,15 @@ Las 13 especialidades siguen siendo válidas sin cambios en el modelo de soluci�
 | desktop-app | UX completo, ergonomía de teclado/mouse, accesibilidad |
 | mobile-app-maui | UX completo, gestos, touch targets, modos offline |
 
-**Configuración dirigida por esquema.** En proyectos con superficies de configuración, AG-03 carga la extensión por capacidad `Design-Rules-Config-Esquema` y produce superficies donde cada parámetro se describe por su descriptor (default, límites, leyenda y ejemplos), con ayuda contextual derivada del descriptor, presets, explicación en lenguaje natural, modo simulación y la ranura del asistente de IA reservada (forward-compat).
-**Interacciones cross-rol.** Consume casos de uso de AG-02, alimenta a AG-05 (contratos del API), AG-10 (developer guide), AG-11 (ejemplos).
+**Configuración dirigida por esquema.** En proyectos de código con superficies de configuración, AG-03 carga la extensión por capacidad `Design-Rules-Config-Esquema` y produce superficies donde cada parámetro se describe por su descriptor (default, límites, leyenda y ejemplos), con ayuda contextual derivada del descriptor, presets, explicación en lenguaje natural, modo simulación y la ranura del asistente de IA reservada (forward-compat).
+**Interacciones cross-rol.** Consume casos de uso de AG-02, alimenta a AG-05 (contratos del API), AG-10 (ejemplos ejecutables), AG-11 (cuerpo documental).
 
 ### AG-04 — Ingeniero de Prompts
 
-**Alias.** AI Specialist, ML Engineer cuando el proyecto incorpora modelos.
+**Alias.** AI Specialist, ML Engineer cuando el proyecto de código incorpora modelos.
 **Responsabilidad principal.** Diseño de prompts estructurados, guardrails, esquemas JSON de salida, evaluación de outputs.
 **Documentos que produce.** Prompts versionados, esquemas de salida, few-shot examples, métricas de evaluación.
-**Variantes por tipo de proyecto.** Esta sección puede marcarse "no aplica" si el proyecto no incorpora IA en su superficie funcional. La distinción es importante: usar IA como asistente de desarrollo (Copilot) no requiere AG-04; integrarle IA al producto (clasificador, RAG, chatbot) sí.
+**Variantes por tipo de proyecto de código.** Esta sección puede marcarse "no aplica" si el proyecto de código no incorpora IA en su superficie funcional. La distinción es importante: usar IA como asistente de desarrollo (Copilot) no requiere AG-04; integrarle IA al producto (clasificador, RAG, chatbot) sí.
 **Asistente de configuración por esquema.** Cuando se conecta el asistente de IA de las superficies de configuración (§8.7), AG-04 define los descriptores de parámetro como tool definitions y las salidas estructuradas con las que el modelo devuelve una `PropuestaDeConfiguracion` válida; el modelo propone contra esa frontera y nunca ejecuta directo.
 **Interacciones cross-rol.** Consume especificación de AG-02, alimenta a AG-05 (integración del modelo en la arquitectura) y AG-08 (evaluación de outputs).
 
@@ -602,9 +602,9 @@ Las 13 especialidades siguen siendo válidas sin cambios en el modelo de soluci�
 
 **Alias.** Software Architect, Solution Architect técnico.
 **Responsabilidad principal.** Diseño técnico del sistema, decisiones de arquitectura (ADR), contratos, modelo lógico de datos.
-**Documentos que produce.** Arquitectura de la solución, ADRs individuales (`ADR-XX-<Nombre>.md`), contratos, modelo lógico, extensibilidad, diagramas (C4 o equivalente).
-**Variantes por tipo de proyecto.** Ver §7 para la decisión arquitectónica por tipo D8.
-**Motor de configuración dirigida por esquema.** Cuando el proyecto tiene superficies de configuración, AG-05 diseña el motor detrás de la frontera `PropuestaDeConfiguracion`: el registro de descriptores como fuente única, la validación contra esos descriptores, las salidas estructuradas / tool calling del asistente de IA y la mecánica de plan-and-apply. El catálogo de diseño (AG-03) define el lado UX; la arquitectura define el motor.
+**Documentos que produce.** Arquitectura del producto, ADRs individuales (`ADR-XX-<Nombre>.md`), contratos, modelo lógico, extensibilidad, diagramas (C4 o equivalente).
+**Variantes por tipo de proyecto de código.** Ver §7 para la decisión arquitectónica por tipo D8.
+**Motor de configuración dirigida por esquema.** Cuando el proyecto de código tiene superficies de configuración, AG-05 diseña el motor detrás de la frontera `PropuestaDeConfiguracion`: el registro de descriptores como fuente única, la validación contra esos descriptores, las salidas estructuradas / tool calling del asistente de IA y la mecánica de plan-and-apply. El catálogo de diseño (AG-03) define el lado UX; la arquitectura define el motor.
 **Interacciones cross-rol.** Consume requisitos de AG-02 y AG-03, alimenta a AG-06 (BT técnico), AG-08 (testabilidad), AG-09 (deploy).
 
 ### AG-06 — Scrum Master / Agile Coach (Backlog)
@@ -612,7 +612,7 @@ Las 13 especialidades siguen siendo válidas sin cambios en el modelo de soluci�
 **Alias.** Backlog Owner, Agile BA.
 **Responsabilidad principal.** Construcción y mantenimiento del Product Backlog, definición de DoR, priorización MoSCoW.
 **Documentos que produce.** Product Backlog (US-XX), Backlog técnico (BT-XX), Definition of Ready, mapa US → CU → BT.
-**Variantes por tipo de proyecto.** Estable en todos los D8.
+**Variantes por tipo de proyecto de código.** Estable en todos los D8.
 **Interacciones cross-rol.** Consume casos de uso de AG-02, alimenta a AG-07 (sprint planning).
 
 ### AG-07 — Scrum Master / Gestión Ágil
@@ -620,7 +620,7 @@ Las 13 especialidades siguen siendo válidas sin cambios en el modelo de soluci�
 **Alias.** Scrum Master operativo, Project Manager ágil.
 **Responsabilidad principal.** Planificación de sprints, métricas (velocity, burndown), templates de Review y Retro.
 **Documentos que produce.** Plan de sprint por iteración, templates de Review, templates de Retro, tabla de velocidad.
-**Variantes por tipo de proyecto.** Estable en todos los D8.
+**Variantes por tipo de proyecto de código.** Estable en todos los D8.
 **Interacciones cross-rol.** Consume backlog priorizado de AG-06, coordina ejecución con AG-08 (quality gates) y AG-09 (deploy).
 
 ### AG-08 — Ingeniero QA / SDET Senior
@@ -628,7 +628,7 @@ Las 13 especialidades siguen siendo válidas sin cambios en el modelo de soluci�
 **Alias.** QA Engineer, SDET, Test Engineer.
 **Responsabilidad principal.** Estrategia de testing, Definition of Done, matriz de cobertura, quality gates.
 **Documentos que produce.** Estrategia de testing, DoD canónico, casos de prueba referenciales, matriz de cobertura, criterios de validación.
-**Variantes por tipo de proyecto.** La pirámide concreta varía: library puede tolerar 80% unit / 15% integración / 5% E2E; web-microservices necesita contract testing explícito.
+**Variantes por tipo de proyecto de código.** La pirámide concreta varía: library puede tolerar 80% unit / 15% integración / 5% E2E; web-microservices necesita contract testing explícito.
 **Interacciones cross-rol.** Consume criterios de aceptación de AG-02, alimenta a AG-09 (gates del CI/CD).
 
 ### AG-09 — Ingeniero DevOps Senior
@@ -636,24 +636,24 @@ Las 13 especialidades siguen siendo válidas sin cambios en el modelo de soluci�
 **Alias.** DevOps Engineer, Release Engineer, Platform Engineer.
 **Responsabilidad principal.** Pipeline CI/CD, versionado SemVer, entornos de deploy, supply chain.
 **Documentos que produce.** Pipeline CI/CD, estrategia de versionado, entornos de deploy, guía de publicación, SBOM.
-**Variantes por tipo de proyecto.** Ver §10 para detalle. library publica en un feed de paquetes; rest-api se despliega a runtime; cli-tool produce binarios firmados.
+**Variantes por tipo de proyecto de código.** Ver §10 para detalle. library publica en un feed de paquetes; rest-api se despliega a runtime; cli-tool produce binarios firmados.
 **Interacciones cross-rol.** Consume DoD de AG-08 y versionado de AG-00, opera transversalmente.
 
-### AG-10 — Technical Writer
+### AG-10 — Developer Advocate
 
-**Alias.** Documentation Engineer.
-**Responsabilidad principal.** Documentación orientada a quien interviene sobre el producto terminado (integrador, mantenedor u operador), tutorial, referencia, troubleshooting.
-**Documentos que produce.** Quick start, conceptos fundamentales, referencia de API, guías de integración, troubleshooting.
-**Variantes por tipo de proyecto.** En library el target es desarrollador integrador; en web/mobile incluye también usuario final.
-**Interacciones cross-rol.** Consume todo (necesita ver el panorama completo), alimenta a AG-11.
-
-### AG-11 — Developer Advocate
-
-**Alias.** DevRel, Application Engineer, Solutions Engineer.
+**Alias.** DevRel, Application Engineer, Solutions Engineer, Sample Engineer.
 **Responsabilidad principal.** Aplicaciones de referencia, ejemplos ejecutables, progresión didáctica.
-**Documentos que produce.** Ejemplos de complejidad creciente (básico, intermedio, avanzado), README de ejemplos, assets de soporte.
-**Variantes por tipo de proyecto.** Estable en todos los D8 pero el material concreto cambia: library produce snippets compilables; cli-tool produce scripts; rest-api produce colecciones Postman / Insomnia.
-**Interacciones cross-rol.** Consume developer guide de AG-10 y arquitectura de AG-05.
+**Documentos que produce.** Ejemplos de complejidad creciente (básico, intermedio, avanzado), README de ejemplos, assets de soporte, contratos de verificación `VER-XX`.
+**Variantes por tipo de proyecto de código.** Estable en todos los D8 pero el material concreto cambia: library produce snippets compilables; cli-tool produce scripts; rest-api produce colecciones Postman / Insomnia.
+**Interacciones cross-rol.** Consume arquitectura de AG-05 y especificación funcional de AG-02; alimenta a AG-11, porque los ejemplos son insumo de la documentación final.
+
+### AG-11 — Technical Writer
+
+**Alias.** Documentation Engineer, Documentation Lead.
+**Responsabilidad principal.** Documentación orientada a quien interviene sobre el producto terminado (integrador, mantenedor u operador), tutorial, referencia, troubleshooting.
+**Documentos que produce.** Quick start, conceptos fundamentales, referencia de API, guías de integración, troubleshooting, `Contrato-Agentes.md` y su `AGENTS.md` derivado.
+**Variantes por tipo de proyecto de código.** En library el target es desarrollador integrador; en web/mobile incluye también usuario final.
+**Interacciones cross-rol.** Consume todo (necesita ver el panorama completo) y en particular los ejemplos de AG-10, que referencia y enlaza sin duplicar su código.
 
 ## 4.3 Tabla resumen del catálogo
 
@@ -663,7 +663,7 @@ Las 13 especialidades siguen siendo válidas sin cambios en el modelo de soluci�
 | AG-00 | Product Manager | `00-Contexto/` | Visión, alcance | Siempre |
 | AG-01 | Analista de Negocio | `01-Necesidades-Negocio/` | NB-XX | Siempre |
 | AG-02 | Analista Funcional | `02-Especificacion-Funcional/` | CU-XX, RN-XX | Siempre |
-| AG-03 | DX/UX Specialist | `03-UX-UI/` | Flujos, wireframes | Siempre (varía foco) |
+| AG-03 | DX/UX Specialist | `03-UX-UI-DX/` | Flujos, wireframes | Siempre (varía foco) |
 | AG-04 | Ingeniero de Prompts | `04-Prompts-AI/` | Prompts versionados | Solo si producto integra IA |
 | AG-05 | Arquitecto de Software | `05-Arquitectura-Tecnica/` | ADR, contratos | Siempre |
 | AG-06 | SM Backlog | `06-Backlog-Tecnico/` | US, BT, DoR | Siempre |
@@ -687,14 +687,14 @@ AG-00 (Vision)
               -> AG-07 (Sprint planning)
                  -> AG-08 (Calidad y pruebas)
                  -> AG-09 (DevOps)
-                    -> AG-10 (Developer guide)
-                       -> AG-11 (Ejemplos)
+                    -> AG-10 (Ejemplos ejecutables)
+                       -> AG-11 (Cuerpo documental de entrega)
                           -> AG-ROOT (Integracion y coherencia global)
 ```
 
 Esta cadena es la materialización de la trazabilidad vertical que define el enfoque SDD. Cada artefacto downstream traza explícitamente a su upstream mediante referencias por ID (CU traza a NB, US traza a CU, BT traza a US, Test traza a CU, etc.). Sin esa trazabilidad la documentación se vuelve archipiélago de islas inconexas.
 
-En el modelo de solución más jerarquía de proyectos (§3.10), la cadena conserva su forma pero cierra en dos niveles complementarios. A nivel solución, la visión y las necesidades de negocio (AG-00 y AG-01) son únicas y trazan al valor de negocio de la solución completa. A nivel proyecto, la cadena de especificación funcional a ejemplos (AG-02 a AG-11) se materializa por proyecto, y los casos de uso de cada proyecto trazan hacia arriba a las necesidades de negocio compartidas a nivel solución. La consolidación en `Solucion/` cierra además la trazabilidad horizontal entre proyectos: los contratos inter-proyecto y el grafo de dependencias documentan cómo lo que un proyecto produce satisface lo que otro consume. En el caso degenerado de un único proyecto, ambos niveles colapsan en uno y la cadena se lee tal como en el modelo de tipo único.
+En el modelo de producto más jerarquía de proyectos de código (§3.10), la cadena conserva su forma pero cierra en dos niveles complementarios. A nivel producto, la visión y las necesidades de negocio (AG-00 y AG-01) son únicas y trazan al valor de negocio del producto completo. A nivel proyecto de código, la cadena de especificación funcional a ejemplos (AG-02 a AG-11) se materializa por proyecto de código, y los casos de uso de cada proyecto de código trazan hacia arriba a las necesidades de negocio compartidas a nivel producto. La consolidación en `Producto/` cierra además la trazabilidad horizontal entre proyectos de código: los contratos inter-proyecto y el grafo de dependencias documentan cómo lo que un proyecto de código produce satisface lo que otro consume. En el caso degenerado de un único proyecto de código, ambos niveles colapsan en uno y la cadena se lee tal como en el modelo de tipo único.
 
 ---
 
@@ -705,10 +705,10 @@ En el modelo de solución más jerarquía de proyectos (§3.10), la cadena conse
 El template SDD propone Scrum como metodología ágil por defecto. La elección no es dogmática: se justifica porque Scrum aporta tres cosas que SDD necesita:
 
 1. **Cadencia fija para sincronización spec-código.** El sprint funciona como ventana en la que la spec y el código se alinean. Al cierre de cada sprint, ambos artefactos están coherentes.
-2. **Roles explícitos.** Product Owner (que valida la spec contra el negocio) y Scrum Master (que protege el ritmo) tienen contrapartes naturales en AG-00 y AG-07.
+2. **Roles explícitos.** Product Owner (que decide qué vale y valida la spec contra el negocio) y Scrum Master (que protege el ritmo) tienen lugar declarado en SDD: el PO aguas arriba, como autor del intake, y el Scrum Master como contraparte de AG-06 y AG-07. Ver §5.5 para el mapeo completo.
 3. **Eventos como puntos de control.** Sprint Review valida que el incremento cumple la spec; Retro identifica problemas en el flujo spec-código.
 
-Cuando Scrum no encaja, el template admite Kanban o Scrumban. La elección depende del contexto del proyecto, no de una preferencia ideológica.
+Cuando Scrum no encaja, el template admite Kanban o Scrumban. La elección depende del contexto del proyecto de código, no de una preferencia ideológica.
 
 ## 5.2 Cuándo Scrum, cuándo Kanban, cuándo Scrumban
 
@@ -722,7 +722,7 @@ Cuando Scrum no encaja, el template admite Kanban o Scrumban. La elección depen
 | Métrica principal | Velocity | Lead time, cycle time | Velocity + WIP |
 | Cuándo elegir | Producto nuevo, equipo cohesionado, roadmap claro | Soporte, mantenimiento, equipos multi-proyecto | Transición desde Scrum cuando la demanda se vuelve menos predecible |
 
-**Recomendación operativa para SDD.** Empezar con Scrum en proyectos nuevos. Migrar a Scrumban si la demanda externa rompe el sprint goal con frecuencia (más de 30% de los sprints comprometidos se renegocian). Kanban puro queda reservado para equipos de soporte o mantenimiento de productos ya estabilizados.
+**Recomendación operativa para SDD.** Empezar con Scrum en proyectos de código nuevos. Migrar a Scrumban si la demanda externa rompe el sprint goal con frecuencia (más de 30% de los sprints comprometidos se renegocian). Kanban puro queda reservado para equipos de soporte o mantenimiento de productos ya estabilizados.
 
 ## 5.3 Sprint 0 y artefactos previos
 
@@ -734,7 +734,7 @@ El Sprint 0 es el sprint conceptual previo al primer sprint productivo. No es un
 | Alcance + exclusiones | AG-00 | Aprobado |
 | Necesidades de negocio (NB-01..NB-N) | AG-01 | Versionadas |
 | Casos de uso prioritarios (Must Have) | AG-02 | Versionados, con criterios Given/When/Then |
-| Arquitectura de la solución (alto nivel) | AG-05 | Diagrama C4 nivel 1 (contexto) y nivel 2 (contenedores) |
+| Arquitectura del producto (alto nivel) | AG-05 | Diagrama C4 nivel 1 (contexto) y nivel 2 (contenedores) |
 | ADRs iniciales (D1..D8 + decisiones técnicas fundacionales) | AG-05 | Aprobados |
 | Product Backlog inicial | AG-06 | US Must Have estimadas en story points |
 | DoR | AG-06 | Acordada por el equipo |
@@ -765,9 +765,11 @@ Solo cuando estos artefactos están en su lugar, el equipo arranca el Sprint 1.
 
 | Rol Scrum | Mapeo en SDD | Responsabilidad nuclear |
 |---|---|---|
-| **Product Owner** | AG-00 (Product Manager) | Maximizar el valor del producto; dueño del Product Backlog |
+| **Product Owner** | Humano, aguas arriba del intake. No es ninguna especialidad AG-XX | Maximizar el valor del producto; dueño del Product Backlog; arbitra prioridades y exclusiones y las declara en el `PRODUCT-INTAKE` |
 | **Scrum Master** | AG-06 + AG-07 | Facilitar el proceso; remover impedimentos; coachar al equipo |
 | **Development Team** | Implementadores (devs, QA embebido) | Construir el incremento que cumple el Sprint Goal y el DoD |
+
+**Por qué el Product Owner no mapea a AG-00.** AG-00 es Product Manager y opera **aguas abajo** del intake: consume decisiones ya tomadas y las formaliza en la visión, el alcance y el roadmap. El Product Owner opera aguas arriba: es quien toma esas decisiones y quien redacta el intake que las declara. Mapear el PO a AG-00 llevaba a que una especialidad de generación arbitrara decisiones de producto después del punto en que el humano ya confirmó qué era el producto. La ficha de AG-00 conserva a «Product Owner senior» como alias, pero **condicionado a contextos donde el rol no existe formalmente**; cuando el PO existe, el alias no aplica.
 
 En equipos pequeños es común que una persona cubra varios roles, pero Scrum prohíbe explícitamente que el PO sea el mismo que el SM (conflicto de intereses) y que el SM sea miembro de tiempo completo del Development Team (porque entonces no protege el proceso).
 
@@ -799,7 +801,7 @@ Una historia se considera terminada solo si cumple el DoD. El template SDD propo
 
 - El código fue revisado y aprobado en pull request por al menos una persona distinta del autor.
 - Tiene tests automatizados (unit + integración cuando aplica).
-- La cobertura de tests no degrada el umbral del proyecto (típicamente 70% o el valor pactado).
+- La cobertura de tests no degrada el umbral del proyecto de código (típicamente 70% o el valor pactado).
 - Pasa todos los tests en CI (build verde).
 - Fue probada manualmente contra sus criterios de aceptación.
 - La documentación correspondiente (CU, ADR, README) fue actualizada si la historia la afectaba.
@@ -818,7 +820,7 @@ Sin DoR explícita el equipo arranca trabajo inmaduro. Sin DoD explícita el equ
 
 ## 6.1 Por qué la descomposición importa
 
-Una de las falencias más frecuentes en equipos ágiles novatos es comprometer trabajo en sprints sin haber descompuesto suficientemente los items. Una historia de "construir el módulo de pagos" no es accionable: es un proyecto chico, no una historia. Las técnicas que se describen acá ayudan a llegar a items lo suficientemente pequeños como para terminarlos dentro de un sprint pero lo suficientemente significativos como para entregar valor.
+Una de las falencias más frecuentes en equipos ágiles novatos es comprometer trabajo en sprints sin haber descompuesto suficientemente los items. Una historia de "construir el módulo de pagos" no es accionable: es un proyecto de código chico, no una historia. Las técnicas que se describen acá ayudan a llegar a items lo suficientemente pequeños como para terminarlos dentro de un sprint pero lo suficientemente significativos como para entregar valor.
 
 ## 6.2 Vertical Slicing
 
@@ -832,9 +834,9 @@ Una técnica para cortar features verticalmente, atravesando todas las capas (UI
 
 Un esqueleto mínimo del sistema que atraviesa todas las capas y se despliega a producción (o un entorno equivalente) lo antes posible. Después se va engordando con funcionalidad real.
 
-**Ejemplo.** En un proyecto rest-api, el walking skeleton podría ser un endpoint `/health` que responde 200, desplegado en el ambiente de staging, con pipeline CI/CD funcional. Cero valor de negocio, pero el ciclo end-to-end queda probado.
+**Ejemplo.** En un proyecto de código rest-api, el walking skeleton podría ser un endpoint `/health` que responde 200, desplegado en el ambiente de staging, con pipeline CI/CD funcional. Cero valor de negocio, pero el ciclo end-to-end queda probado.
 
-**Cuándo usarla.** Al inicio de cualquier proyecto que necesite validar integración de stack tempranamente.
+**Cuándo usarla.** Al inicio de cualquier proyecto de código que necesite validar integración de stack tempranamente.
 
 ## 6.4 Story Mapping (Jeff Patton)
 
@@ -842,7 +844,7 @@ Técnica de visualización del backlog en dos ejes: horizontal por flujo del usu
 
 **Ejemplo.** En un sistema de turnos médicos: eje horizontal = "Buscar profesional → Elegir horario → Confirmar reserva → Recibir confirmación". Eje vertical = "MVP: las cuatro tareas funcionando; v2: agregar pago online; v3: agregar reprogramación".
 
-**Cuándo usarla.** Al inicio del proyecto, cuando se construye el Product Backlog y se busca consenso sobre el MVP.
+**Cuándo usarla.** Al inicio del proyecto de código, cuando se construye el Product Backlog y se busca consenso sobre el MVP.
 
 ## 6.5 Example Mapping
 
@@ -899,11 +901,11 @@ Todo el equipo trabaja simultáneamente en una sola estación, alternando quién
 
 # §7 Estilos arquitectónicos soportados
 
-## 7.1 La decisión D8 — Ocho tipos de proyecto
+## 7.1 La decisión D8 — Ocho tipos de proyecto de código
 
-El template SDD soporta ocho tipos de proyecto. La decisión D8 (definida en el intake) selecciona uno por proyecto, y el resto del template se calibra en consecuencia para ese proyecto. En el modelo de solución más jerarquía de proyectos (§3.10), una solución agrupa N proyectos y cada uno declara su propio valor D8; la solución no tiene un D8 propio, su tipo es compuesto. El conjunto de tipos sigue siendo cerrado y de exactamente ocho valores: lo que cambió es que la decisión se toma por proyecto, no por repositorio.
+El template SDD soporta ocho tipos de proyecto de código. La decisión D8 (definida en el intake) selecciona uno por proyecto de código, y el resto del template se calibra en consecuencia para ese proyecto de código. En el modelo de producto más jerarquía de proyectos de código (§3.10), un producto agrupa N proyectos de código y cada uno declara su propio valor D8; el producto no tiene un D8 propio, su tipo es compuesto. El conjunto de tipos sigue siendo cerrado y de exactamente ocho valores: lo que cambió es que la decisión se toma por proyecto de código, no por repositorio.
 
-| ID D8 | Tipo de proyecto | Descripción corta |
+| ID D8 | Tipo de proyecto de código | Descripción corta |
 |---|---|---|
 | **library** | Librería reutilizable | Distribuida como paquete (NuGet, npm, PyPI, Maven) |
 | **web-monolith** | Aplicación web monolítica | Un único deploy, todas las capas en un proceso |
@@ -1115,7 +1117,7 @@ src/
 
 ## 7.4 Tabla de cobertura D8 → estilo dominante
 
-La tabla mantiene los ocho tipos D8 del conjunto cerrado. En el modelo de solución más jerarquía de proyectos se lee por proyecto: cada proyecto de la solución toma la fila correspondiente a su propio tipo D8.
+La tabla mantiene los ocho tipos D8 del conjunto cerrado. En el modelo de producto más jerarquía de proyectos de código se lee por proyecto de código: cada proyecto de código del producto toma la fila correspondiente a su propio tipo D8.
 
 | D8 | Estilo dominante por defecto | Patrón alternativo |
 |---|---|---|
@@ -1135,12 +1137,12 @@ Independientemente del tipo D8, hay patrones que aplican universalmente:
 - **Clean Architecture** (Martin, 2017): separación de capas con dependencias apuntando al núcleo. Aplicable en library, monolitos, microservicios, desktop, mobile y rest-api.
 - **CQRS** (Young, 2010): separación de lecturas y escrituras. Aplicable en rest-api, microservicios y monolitos modulares con dominio rico.
 - **Event-driven**: comunicación por eventos en lugar de llamadas directas. Aplicable en microservicios y worker-service.
-- **Repository pattern**: abstracción del acceso a datos. Aplicable en cualquier proyecto con persistencia.
+- **Repository pattern**: abstracción del acceso a datos. Aplicable en cualquier proyecto de código con persistencia.
 - **Plan-and-apply con frontera validable** (`PropuestaDeConfiguracion`): en sistemas con configuración, todo cambio se modela como una propuesta que se valida contra los descriptores, se previsualiza y se confirma antes de aplicar, con modo simulación y human-in-the-loop. Es transversal: aplica a cualquier tipo D8 con superficies de configuración, independiente del estilo interno. El lado UX se detalla en §8.7; el motor es responsabilidad de AG-05.
 
-## 7.6 La composición de la solución como decisión arquitectónica
+## 7.6 La composición del producto como decisión arquitectónica
 
-Las tablas y los estilos de este capítulo describen el estilo interno de cada proyecto: cómo se organiza por dentro según su tipo D8. En el modelo de solución más jerarquía de proyectos (§3.10) hay una decisión arquitectónica adicional, de un nivel superior: qué proyectos integran la solución y qué dependencias hay entre ellos. Esa composición (qué piezas y cómo se conectan) es una decisión de nivel solución, por encima del estilo interno de cada proyecto, y se documenta como ADR de nivel solución. El grafo de dependencias resultante debe ser acíclico, lo que habilita un orden topológico de generación y de build (primero las dependencias, después los dependientes). Decidir, por ejemplo, extraer una library compartida que un rest-api y un cli-tool consumen, o introducir un worker-service para descargar procesamiento asíncrono, son decisiones de composición que anteceden y enmarcan al estilo interno de cada proyecto.
+Las tablas y los estilos de este capítulo describen el estilo interno de cada proyecto de código: cómo se organiza por dentro según su tipo D8. En el modelo de producto más jerarquía de proyectos de código (§3.10) hay una decisión arquitectónica adicional, de un nivel superior: qué proyectos de código integran el producto y qué dependencias hay entre ellos. Esa composición (qué piezas y cómo se conectan) es una decisión de nivel producto, por encima del estilo interno de cada proyecto de código, y se documenta como ADR de nivel producto. El grafo de dependencias resultante debe ser acíclico, lo que habilita un orden topológico de generación y de build (primero las dependencias, después los dependientes). Decidir, por ejemplo, extraer una library compartida que un rest-api y un cli-tool consumen, o introducir un worker-service para descargar procesamiento asíncrono, son decisiones de composición que anteceden y enmarcan al estilo interno de cada proyecto de código.
 
 ---
 
@@ -1244,11 +1246,11 @@ Cuando el "usuario" es un desarrollador integrador, las heurísticas se instanci
 
 ## 8.7 Catálogo de reglas de diseño
 
-El plano `devs/` incluye un catálogo de reglas de diseño en `devs/References/Design/`, insumo normativo de la categoría 03. Sigue un modelo base→especialización: un documento base de diseño web genérico (`Design-Rules-Web-Generico.md`), agnóstico de framework, y especializaciones por stack que heredan del base y mapean cada token y patrón a su tecnología concreta (la primera es `Design-Rules-Blazor-Mudblazor.md`; están previstas las de HTML puro, MAUI y Blazor en MAUI). El AG-03 carga el catálogo a través de su índice `Index-Design-Rules.md`, aplica siempre el documento base y, si existe, la especialización del stack declarado en el intake. Los tokens, patrones, estados e iconografía del catálogo son normativos: el subagente los hereda en lugar de definir decisiones visuales ad hoc por proyecto. Este subárbol es metodológico, vive en `devs/` y no en `docs/`.
+El plano `devs/` incluye un catálogo de reglas de diseño en `devs/References/Design/`, insumo normativo de la categoría 03. Sigue un modelo base→especialización: un documento base de diseño web genérico (`Design-Rules-Web-Generico.md`), agnóstico de framework, y especializaciones por stack que heredan del base y mapean cada token y patrón a su tecnología concreta (la primera es `Design-Rules-Blazor-Mudblazor.md`; están previstas las de HTML puro, MAUI y Blazor en MAUI). El AG-03 carga el catálogo a través de su índice `Index-Design-Rules.md`, aplica siempre el documento base y, si existe, la especialización del stack declarado en el intake. Los tokens, patrones, estados e iconografía del catálogo son normativos: el subagente los hereda en lugar de definir decisiones visuales ad hoc por proyecto de código. Este subárbol es metodológico, vive en `devs/` y no en `docs/`.
 
-Además de las especializaciones por stack, el catálogo admite extensiones por capacidad transversal. La primera es la configuración dirigida por esquema (`Design-Rules-Config-Esquema`): en superficies donde el usuario fija parámetros, cada parámetro se describe con un descriptor único, fuente de verdad de su default, límites, leyenda y ejemplos, que alimenta cuatro consumidores a la vez: el render del campo, la ayuda contextual, la validación y el contrato para una IA futura. Toda forma de cambiar la configuración (formulario, preset o, más adelante, una sugerencia de IA) llena una misma frontera `PropuestaDeConfiguracion`, que se previsualiza y se confirma antes de aplicar: plan-and-apply con human-in-the-loop, con el modo simulación como red de seguridad. El enganche de IA queda forward-compatible (registro de descriptores, frontera validable, simulación y una ranura de UI reservada), de modo que la IA se conecta después sin tocar el dominio. AG-03 carga esta extensión solo cuando el proyecto tiene superficies de configuración.
+Además de las especializaciones por stack, el catálogo admite extensiones por capacidad transversal. La primera es la configuración dirigida por esquema (`Design-Rules-Config-Esquema`): en superficies donde el usuario fija parámetros, cada parámetro se describe con un descriptor único, fuente de verdad de su default, límites, leyenda y ejemplos, que alimenta cuatro consumidores a la vez: el render del campo, la ayuda contextual, la validación y el contrato para una IA futura. Toda forma de cambiar la configuración (formulario, preset o, más adelante, una sugerencia de IA) llena una misma frontera `PropuestaDeConfiguracion`, que se previsualiza y se confirma antes de aplicar: plan-and-apply con human-in-the-loop, con el modo simulación como red de seguridad. El enganche de IA queda forward-compatible (registro de descriptores, frontera validable, simulación y una ranura de UI reservada), de modo que la IA se conecta después sin tocar el dominio. AG-03 carga esta extensión solo cuando el proyecto de código tiene superficies de configuración.
 
-Tres extensiones más completan el eje, y juntas describen el arquetipo del panel de control monolítico: una instancia propia que arranca vacía, la aprovisiona su único operador y se identifica por la versión que corre. El primer arranque (`Design-Rules-Primer-Arranque`) trata el despliegue sin configurar como una capacidad de primera clase: un predicado único de aprovisionamiento que todas las superficies consultan, un corte redundante en tres capas (ruteo, superficie y acción), una superficie sin chrome de navegación porque todavía no hay a dónde ir, y un acto explícito, indivisible e irreversible que cierra su lazo con un acuse en la pantalla siguiente. El acceso de operador único (`Design-Rules-Acceso-Monousuario`) define un perfil cuyo valor de diseño está en lo que omite: sin registro, sin selector de cuenta, sin recuperación, sin roles visibles, con un shell partido entre acceso y trabajo, mensajes resueltos desde un catálogo de códigos y un rechazo de credenciales deliberadamente indiferenciado. La identidad de versión (`Design-Rules-Identidad-De-Version`) fija que la versión que muestra una instancia se deriva del proceso que la construyó y nunca se transcribe a mano, y que sin ella la instancia no es diagnosticable. Las cuatro extensiones son ortogonales entre sí; un proyecto carga las que su intake habilita.
+Tres extensiones más completan el eje, y juntas describen el arquetipo del panel de control monolítico: una instancia propia que arranca vacía, la aprovisiona su único operador y se identifica por la versión que corre. El primer arranque (`Design-Rules-Primer-Arranque`) trata el despliegue sin configurar como una capacidad de primera clase: un predicado único de aprovisionamiento que todas las superficies consultan, un corte redundante en tres capas (ruteo, superficie y acción), una superficie sin chrome de navegación porque todavía no hay a dónde ir, y un acto explícito, indivisible e irreversible que cierra su lazo con un acuse en la pantalla siguiente. El acceso de operador único (`Design-Rules-Acceso-Monousuario`) define un perfil cuyo valor de diseño está en lo que omite: sin registro, sin selector de cuenta, sin recuperación, sin roles visibles, con un shell partido entre acceso y trabajo, mensajes resueltos desde un catálogo de códigos y un rechazo de credenciales deliberadamente indiferenciado. La identidad de versión (`Design-Rules-Identidad-De-Version`) fija que la versión que muestra una instancia se deriva del proceso que la construyó y nunca se transcribe a mano, y que sin ella la instancia no es diagnosticable. Las cuatro extensiones son ortogonales entre sí; un proyecto de código carga las que su intake habilita.
 
 ## 8.8 La maqueta como instrumento de validación
 
@@ -1260,7 +1262,7 @@ Eso le da a la maqueta un doble rol. Como instrumento de diseño, permite valida
 
 La maqueta valida además una segunda dimensión que el texto expone mal: el modelo de datos. Un modelo conceptual en prosa se aprueba con facilidad porque nada obliga a mirarlo campo por campo. La misma información puesta en una tabla poblada con ejemplos hace evidente lo que falta, lo que sobra y lo que está mal tipado. Por eso los datos de ejemplo de la maqueta salen de la documentación y viven en una fuente única: si estuvieran dispersos en el marcado, la maqueta dejaría de servir para esto.
 
-De la validación se derivan dos capitalizaciones. Hacia el proyecto, la retroalimentación obligatoria de la documentación, propagada hacia atrás y hacia adelante según el alcance de lo aprendido. Hacia el template, la captura opcional del diseño como modelo UX-UI reutilizable, que convierte una decisión de un proyecto en un activo del framework. Esa segunda capitalización es la que hace que el catálogo de diseño crezca por experiencia acumulada y no solo por diseño metodológico.
+De la validación se derivan dos capitalizaciones. Hacia el proyecto de código, la retroalimentación obligatoria de la documentación, propagada hacia atrás y hacia adelante según el alcance de lo aprendido. Hacia el template, la captura opcional del diseño como modelo UX-UI reutilizable, que convierte una decisión de un proyecto de código en un activo del framework. Esa segunda capitalización es la que hace que el catálogo de diseño crezca por experiencia acumulada y no solo por diseño metodológico.
 
 ---
 
@@ -1307,7 +1309,7 @@ La pirámide de testing (Cohn, 2009) es la heurística de distribución de tests
 
 ## 9.3 ISO/IEC 25010 — Atributos de calidad
 
-ISO/IEC 25010:2011 (actualizada en 2023) define ocho atributos de calidad de producto. SDD los usa como checklist en la definición de la estrategia de calidad por proyecto.
+ISO/IEC 25010:2011 (actualizada en 2023) define ocho atributos de calidad de producto. SDD los usa como checklist en la definición de la estrategia de calidad por proyecto de código.
 
 | Atributo | Definición operativa | Cómo se verifica |
 |---|---|---|
@@ -1333,7 +1335,7 @@ Los **quality gates** son checks automáticos que un cambio debe pasar para ser 
 | **Tests de integración** | Interacción entre módulos | Cualquier test rojo |
 | **SAST** | Análisis estático de seguridad | CVEs por encima de severidad acordada |
 | **SCA** | Dependencias vulnerables | CVEs en dependencias |
-| **Análisis de licencias** | Compatibilidad de licencias | Licencia incompatible (ej: GPL en proyecto MIT) |
+| **Análisis de licencias** | Compatibilidad de licencias | Licencia incompatible (ej: GPL en proyecto de código MIT) |
 
 ## 9.5 Definition of Done como artefacto de calidad
 
@@ -1546,7 +1548,7 @@ Todo prompt destinado a generar artefactos comienza con una lista explícita de 
 
 ```text
 Antes de escribir nada, leé en orden:
-1. SDD/Intake/SOLUTION-INTAKE-<Nombre-Solucion>.md (en el repositorio destino)
+1. SDD/Intake/PRODUCT-INTAKE-<Slug-Producto>.md (en el repositorio destino)
 2. SDD/Devs/Rules/Rules-<Categoria>.md (la regla de la categoría que vas a generar)
 3. SDD/Devs/Guides/Marco-Teorico-SDD.md (sección §4 si el rol que asumis es AG-XX)
 
@@ -1566,7 +1568,7 @@ Para generación de múltiples artefactos, se exige creación secuencial con con
 Crea estos archivos en orden, uno a la vez, esperando mi confirmación entre cada uno:
 
 ARCHIVO 1 — Docs/00-Contexto/Vision-Producto.md
-ARCHIVO 2 — Docs/00-Contexto/Alcance-Proyecto.md
+ARCHIVO 2 — Docs/00-Contexto/Alcance-Producto.md
 ARCHIVO 3 — Docs/00-Contexto/Roadmap-Producto.md
 
 Al terminar cada archivo, mostrá su contenido para verificación.
@@ -1606,7 +1608,7 @@ Todo prompt termina con comandos de verificación:
 
 ```text
 Al terminar, ejecutá:
-- Linter del proyecto
+- Linter del proyecto de código
 - Tests automatizados
 - Verificación de que no se modificaron archivos fuera del scope
 ```
@@ -1734,7 +1736,7 @@ En superficies de configuración (§8.7) se suman dos anti-patrones de UX, detal
 |---|---|---|
 | **Documentación monolítica** | Un solo archivo gigante que nadie lee entero | Diátaxis: tutorial, how-to, reference, explanation |
 | **Snippets que no compilan** | Lector copia, falla, pierde confianza | Snippets extraídos de tests reales, validados en CI |
-| **Sin troubleshooting** | Errores comunes sin solución documentada | Sección "errores frecuentes" en developer guide |
+| **Sin troubleshooting** | Errores comunes sin producto documentada | Sección "errores frecuentes" en developer guide |
 | **Cross-links rotos** | Lector hace clic, llega a 404 | Linter de markdown que valide links |
 | **Mezcla de fidelidades** | Spec funcional con detalles de implementación específicos | Separación clara: qué (funcional) versus cómo (técnico) |
 | **Sin glosario** | Términos canónicos usados sin definir | Glosario obligatorio en cada README de sección |
@@ -1752,7 +1754,7 @@ Términos canónicos del template SDD. Cada uno con definición operativa en una
 | **ATDD** | Acceptance Test-Driven Development. Los criterios de aceptación se escriben primero como tests ejecutables. |
 | **BDD** | Behavior-Driven Development. Escenarios Given/When/Then ejecutables que validan el comportamiento del sistema. |
 | **BFF (Backend for Frontend)** | Capa backend intermedia diseñada para las necesidades específicas de un tipo de frontend. |
-| **BRIEF** | Documento corto de 1 a 2 páginas que captura la esencia del proyecto antes de cargar las plantillas de intake. |
+| **BRIEF** | Documento corto de 1 a 2 páginas que captura la esencia del proyecto de código antes de cargar las plantillas de intake. |
 | **BT-XX** | Identificador de Backlog Técnico. Tarea técnica que descompone una US o que cubre trabajo de infraestructura. |
 | **Clean Architecture** | Estilo arquitectónico que organiza el sistema en capas concéntricas donde las dependencias apuntan hacia el dominio. |
 | **Configuración dirigida por esquema** | Patrón de UX donde cada parámetro configurable se describe con un descriptor único (fuente de verdad de default, límites, leyenda y ejemplos), del que se derivan el render del campo, la ayuda, la validación y el contrato para IA. |
@@ -1771,14 +1773,14 @@ Términos canónicos del template SDD. Cada uno con definición operativa en una
 | **GitOps** | Patrón donde el estado deseado de infraestructura y aplicaciones se declara en git y un agente reconcilia el estado real. |
 | **Given/When/Then** | Formato BDD para criterios de aceptación: contexto inicial, evento, resultado esperado. |
 | **Human-in-the-loop** | Esquema en el que un cambio propuesto (por un formulario o por IA) requiere confirmación humana explícita antes de aplicarse. |
-| **Intake** | Documento inicial único que el humano completa para alimentar al template: `SOLUTION-INTAKE`, con tres partes (A negocio, B composición, C técnica por proyecto). Reemplaza a `PROJECT-BRIEF` y `PROJECT-README`, ahora deprecados. |
-| **SOLUTION-INTAKE** | Documento único de entrada del template (`SOLUTION-INTAKE-<Nombre-Solucion>.md`). Parte A negocio (§1-§12), Parte B composición (§13 tabla de proyectos tipados, §14 estilo, §15 descomposición, §16 estructura), Parte C técnica por proyecto (§17, bloque P.1-P.12), más §18 samples y §19 checklist. Su §13 es la fuente desde la que se deriva el SOLUTION-MANIFEST. |
+| **Intake** | Documento inicial único que el humano completa para alimentar al template: `PRODUCT-INTAKE`, con tres partes (A negocio, B composición, C técnica por proyecto de código). Reemplaza a `PROJECT-BRIEF` y `PROJECT-README`, ahora deprecados. |
+| **PRODUCT-INTAKE** | Documento único de entrada del template (`PRODUCT-INTAKE-<Slug-Producto>.md`). Parte A negocio (§1-§12), Parte B composición (§13 tabla de proyectos de código tipados, §14 estilo, §15 descomposición, §16 estructura), Parte C técnica por proyecto de código (§17, bloque P.1-P.12), más §18 samples y §19 checklist. Su §13 es la fuente desde la que se deriva el PRODUCT-MANIFEST. |
 | **ISO 25010** | Norma ISO que define ocho atributos de calidad de producto de software. |
 | **ISO 29148** | Norma ISO de ingeniería de requisitos de software y sistemas. |
 | **Manifest-driven** | Patrón donde cada componente expone un manifest declarativo que un sistema consumidor lee para configurar UI o comportamiento. |
 | **Modo simulación** | Estado de una superficie de configuración en el que los cambios se prueban sin aplicarse; red de seguridad previa a la confirmación. |
 | **MoSCoW** | Técnica de priorización: Must Have, Should Have, Could Have, Won't Have v1. |
-| **Orden topológico** | Ordenamiento de los proyectos de una solución derivado del grafo acíclico de dependencias: primero las dependencias, después los dependientes. Define la secuencia de generación y de build. |
+| **Orden topológico** | Ordenamiento de los proyectos de código de un producto derivado del grafo acíclico de dependencias: primero las dependencias, después los dependientes. Define la secuencia de generación y de build. |
 | **MVP** | Minimum Viable Product. Versión mínima del producto con la que se valida una hipótesis de valor. |
 | **NB-XX** | Identificador de Necesidad de Negocio. Problema concreto que el producto resuelve, con criterios de éxito medibles. |
 | **OpenAPI** | Estándar de especificación de APIs REST en formato YAML o JSON, parseable por herramientas. |
@@ -1786,17 +1788,18 @@ Términos canónicos del template SDD. Cada uno con definición operativa en una
 | **Plan-and-apply** | Ciclo en el que un cambio se propone y previsualiza primero (plan) y solo se aplica tras la confirmación y la validación (apply). |
 | **Preset / receta** | Configuración completa y coherente, lista para aplicar, que el usuario elige, ajusta y aterriza en simulación. Una forma de llenar una `PropuestaDeConfiguracion`. |
 | **PropuestaDeConfiguracion** | Frontera que representa un conjunto de cambios de configuración; se valida contra los descriptores, se previsualiza y se confirma antes de aplicar. Un formulario, un preset o la IA son formas de llenarla. |
-| **Proyecto** | Unidad de especialización del template. Lleva exactamente uno de los ocho valores D8. Las variantes por tipo D8 y las categorías 02 a 11 se aplican por proyecto. |
+| **Proyecto de código** | Unidad de compilación dentro de una solución de código: lo que el ecosistema llama *project*, *module*, *subproject* o *package*. Lo delimita producir un artefacto de compilación propio y declarar sus propias dependencias. Lleva exactamente uno de los ocho valores D8. Definición normativa en `Vocabulario-Rules.md` §2. |
 | **Pull Request (PR)** | Solicitud de merge de una rama a otra; mecanismo de revisión de código y aplicación de quality gates. |
 | **RACI** | Matriz Responsible / Accountable / Consulted / Informed. Define quién hace qué para cada actividad. |
-| **RCL (Razor Class Library)** | Proyecto .NET que empaqueta componentes Blazor para reutilización entre aplicaciones. |
+| **RCL (Razor Class Library)** | Proyecto de código .NET que empaqueta componentes Blazor para reutilización entre aplicaciones. |
 | **Refactor** | Modificación de la estructura interna del código sin cambiar su comportamiento observable. |
 | **RN-XX** | Identificador de Regla de Negocio. Restricción del dominio que el sistema debe respetar. |
 | **SBOM** | Software Bill of Materials. Lista trazable de todos los componentes que conforman un artefacto de software. |
 | **SDD (Specification-Driven Development)** | Enfoque que pone a la especificación como artefacto central del ciclo de desarrollo. |
 | **SemVer** | Semantic Versioning 2.0.0. Estándar de versionado MAJOR.MINOR.PATCH para librerías y APIs. |
-| **SOLUTION-MANIFEST** | Fuente única de verdad de una solución. Enumera sus proyectos y, por cada uno, su tipo D8, rol, dependencias y nombres de código. Su grafo de dependencias es acíclico (DAG). Es un artefacto derivado: el orquestador lo construye desde el §13 del intake en la Fase de validación de intake y lo confirma con el humano; no se completa a mano. |
-| **Solución** | Agrupación de una jerarquía de N proyectos (N≥1). No tiene un D8 propio: su tipo es compuesto. El negocio (categorías 00 y 01) se especifica a nivel solución. |
+| **PRODUCT-MANIFEST** | Fuente única de verdad de un producto. Enumera sus proyectos de código y, por cada uno, su tipo D8, rol, dependencias y nombres de código. Su grafo de dependencias es acíclico (DAG). Es un artefacto derivado: el orquestador lo construye desde el §13 del intake en la Fase de validación de intake y lo confirma con el humano; no se completa a mano. |
+| **Producto** | Aquello que se entrega y que alguien usa para obtener valor. Lo delimitan una frontera clara, stakeholders conocidos, usuarios o clientes definidos, y un roadmap y un ciclo de vida propios. Es la unidad de trabajo del framework: un intake, un negocio, un repositorio destino. No tiene un D8 propio: su tipo es compuesto, derivado de los tipos de sus proyectos de código. Definición normativa en `Vocabulario-Rules.md` §2. |
+| **Solución de código** | El artefacto del ecosistema que agrupa la construcción: el archivo de solución en .NET, el POM agregador en Maven, el *workspace* en Cargo o npm. No es el producto: es cómo se agrupa su compilación. |
 | **Sprint** | Iteración de tiempo fijo (típicamente 1 a 4 semanas) donde el equipo entrega un incremento del producto. |
 | **Sprint 0** | Iteración previa al primer sprint productivo, dedicada a producir los artefactos sin los cuales el Sprint 1 no puede arrancar. |
 | **SLSA** | Supply-chain Levels for Software Artifacts. Marco de niveles L1..L4 de madurez de cadena de suministro. |
@@ -1817,7 +1820,7 @@ Términos canónicos del template SDD. Cada uno con definición operativa en una
 | **AG-03M** | Subagente maquetador de validación visual. Actúa en la Fase B2. No es titular de ninguna categoría: materializa la especificación de 03 y sus documentos quedan bajo la titularidad de 03 y 08. |
 | **D9** | Invariante de evidencia verificable: toda afirmación sobre el estado del sistema cita evidencia localizable, reproducible, contemporánea e independiente de quien afirma. No aplica a afirmaciones de diseño, de especificación ni de contexto. |
 | **Deriva (de agente)** | Separación progresiva entre lo que un agente produce y lo que se especificó, sin manifestación en el momento en que ocurre. Acumulativa y de descubrimiento tardío. |
-| **Fase B2** | Fase opcional de validación visual de maqueta, por proyecto, entre la Fase B y la Fase C. Su regla es `Maqueta-Rules.md`. |
+| **Fase B2** | Fase opcional de validación visual de maqueta, por proyecto de código, entre la Fase B y la Fase C. Su regla es `Maqueta-Rules.md`. |
 | **Línea de base visual** | Inventario identificado (`SUP-XX`, `CMP-XX`, `EST-XX`, `NAV-XX`, `DM-XX`) de lo que el humano aprobó al mirar la maqueta. Referente externo del sensado de deriva. |
 | **Maqueta** | Sitio estático navegable que materializa la especificación de 03 con datos de ejemplo de la documentación. Instrumento de validación, no producto ni documentación viva. |
 | **Modelo UX-UI** | Diseño capturado de una maqueta aprobada y registrado en `Modelos-UX-UI/` como reglas constructivas reutilizables, con su ejemplo ofuscado en `Templates/`. |
@@ -1956,6 +1959,9 @@ W3C. (2024). *ARIA — Accessible Rich Internet Applications*. https://www.w3.or
 | 1.6 | 2026-07-19 | Fundamentación de la Fase B2 de validación visual de maqueta y del sensado de deriva: §8.8 (la maqueta como instrumento de diseño y de control, su doble validación de experiencia y de modelo de datos, y sus dos capitalizaciones hacia el proyecto y hacia el template) y §9.7 (la deriva como separación acumulativa, la insuficiencia de la trazabilidad D6 y de la auditoría estructural por ser verificaciones internas, la línea de base como referente externo falsable, la invariante D9 de evidencia verificable con su alcance acotado y su vigencia hacia adelante, y los umbrales como condición de sostenibilidad del instrumento). | Framework SDD (validación visual y sensado de deriva) |
 | 1.7 | 2026-07-26 | Intercambio de categorías 10 ↔ 11: el mapa visual de §1.5, el catálogo de especialidades de §4.2 y la tabla Diátaxis de §8.5 pasan a declarar `10-Examples/` con titular AG-10 Developer Advocate y `11-Documentacion/` con titular AG-11 Technical Writer. §4.2 reformula la responsabilidad de la categoría de documentación en términos de los tres roles de intervención sobre el producto terminado. Normalización del vocabulario de actores. Se corrige el nombre de la carpeta de prompts de entrada en el árbol de §1.5.  Reformulación SDD |
 | 1.8 | 2026-07-26 | Normalización de la nomenclatura de invariantes a D1–D9 en §3 y §11. Se corrige el bloque de ejemplo de §11.2, que citaba `devs/Rules/decisiones-D1-D8.md`, un archivo inexistente en el layout vigente, y rutas en minúsculas del modelo previo al repositorio de tres niveles. | Reformulación SDD |
+| 1.9 | 2026-07-29 | Corrección del catálogo de especialidades y del mapeo de roles Scrum. Las **fichas de §4.2 de AG-10 y AG-11 seguían intercambiadas**: AG-10 figuraba como Technical Writer y AG-11 como Developer Advocate, al revés de lo que declaran sus archivos de reglas y la tabla resumen de §4.3. La entrada 1.7 de este control de cambios registraba esa corrección sobre §4.2 sin que se hubiera aplicado a las fichas. Se corrigen además el diagrama de trazabilidad de §4.4, que arrastraba la misma inversión, la fila de interacciones cross-rol de AG-03 y la ruta `03-UX-UI/` de §4.3, que debía ser `03-UX-UI-DX/`. §5.5 corrige el mapeo del rol Scrum **Product Owner**, que apuntaba a AG-00: AG-00 es Product Manager y opera aguas abajo del intake, formalizando decisiones ya tomadas, mientras el Product Owner opera aguas arriba y es quien las toma. §5.1 se alinea. Dos rutas `rules/` obsoletas corregidas. |
+| 2.0 | 2026-07-29 | Vocabulario normativo (framework 5.0). El nivel superior pasa de «solución» a **producto** y la unidad de compilación de «proyecto» a **proyecto de código** en todo el cuerpo. El glosario de §13 abandona las definiciones por papel en la herramienta —*Proyecto* como «unidad de especialización del template» y *Solución* como «agrupación de una jerarquía de N proyectos»— y adopta las definiciones **por frontera** de `Vocabulario-Rules.md` §2, que es lo que esta versión declara como causa del problema: un término definido por lo que la herramienta hace con él absorbe cualquier significado. Fila registrada retroactivamente en la 5.1: la migración subió la versión de cabecera sin dejar su fila. |
+| 2.1 | 2026-07-29 | Corrección de siete cabeceras de tabla de anti-patrones, cuya columna de remedio se llama «Solución» y la migración de la 5.0 había convertido en «Producto» por sustitución global de la cadena; de dos ocurrencias de «resolución» convertidas en la palabra inexistente «reproducto» por la misma causa (§3.5 y la fila 1.3 del control de cambios); y de «sugerencia de solución» en la lista de heurísticas de §7, convertida en «sugerencia de producto». La cabecera pasa de `**Proyecto:** Template SDD` a `**Framework:** SDD`, porque el referente es el framework y no una unidad de compilación. La clase de defecto y su prohibición quedan documentadas en `Vocabulario-Rules.md` §9.5. |
 
 ---
 

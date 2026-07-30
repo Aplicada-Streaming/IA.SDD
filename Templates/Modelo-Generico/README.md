@@ -79,12 +79,12 @@ Ese control existe para que quien valida pueda ver los cuatro estados sin recarg
 
 ---
 
-## Qué hay que reemplazar al derivar una maqueta de proyecto
+## Qué hay que reemplazar al derivar una maqueta de proyecto de código
 
 1. **`assets/js/Datos-Maqueta.js` entero.** Es el único archivo con datos. Reemplazar la identidad del modelo, el contrato de campos, los valores enumerados, los elementos de ejemplo y los descriptores de configuración por los del dominio real.
 2. **Los rótulos de entidad en los HTML.** "Elemento", "Elementos", los títulos de sección y los textos de encabezado de cada superficie.
-3. **El acento de marca**, si el proyecto tiene uno propio: `--color-brand-primary`, `--color-brand-primary-dark` y `--color-brand-primary-tint` en `assets/css/Estilos-Maqueta.css`. El resto de los tokens es del catálogo y no se toca sin justificación.
-4. **Los íconos** del objeto `TRAZOS` en `assets/js/Maqueta.js`, si el proyecto adopta otro set vectorial. Mantener una sola familia y `currentColor`.
+3. **El acento de marca**, si el proyecto de código tiene uno propio: `--color-brand-primary`, `--color-brand-primary-dark` y `--color-brand-primary-tint` en `assets/css/Estilos-Maqueta.css`. El resto de los tokens es del catálogo y no se toca sin justificación.
+4. **Los íconos** del objeto `TRAZOS` en `assets/js/Maqueta.js`, si el proyecto de código adopta otro set vectorial. Mantener una sola familia y `currentColor`.
 5. **El sello de versión**, que sale del campo `modelo.version` en `Datos-Maqueta.js`.
 6. **La barra de validación**, que se elimina cuando la maqueta se convierte en producto.
 
@@ -100,4 +100,6 @@ Si una maqueta derivada de este template va a vivir en un repositorio público, 
 
 ---
 
-Versión 1.0 — 2026-07-19
+Versión 1.1 — 2026-07-29
+
+Cambios: 1.0 (2026-07-19) índice inicial de la maqueta de referencia; 1.1 (2026-07-29) vocabulario normativo del framework 5.0, «proyecto» pasa a «proyecto de código» donde el referente es la unidad de compilación (`Vocabulario-Rules.md` §2). Registrado en la 5.1.

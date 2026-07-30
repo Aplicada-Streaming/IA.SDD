@@ -1,8 +1,8 @@
 # Nota de coherencia — Incorporación del arquetipo de panel de control monolítico
 
-**Proyecto:** Template SDD
+**Framework:** SDD
 **Documento:** Coherencia-Panel-Monolitico.md
-**Versión:** 1.0
+**Versión:** 1.1
 **Estado:** Vigente
 **Fecha:** 2026-07-18
 **Autor:** AG-ROOT (Arquitecto de Soluciones, pase de QA)
@@ -37,7 +37,7 @@ Pase de verificación en lectura sobre la incorporación de tres extensiones por
 | `Devs/Guides/Marco-Teorico-SDD.md` | Párrafo en §8.7 sobre las tres extensiones y el arquetipo que describen en conjunto. | sin marca de versión interna; solo edición |
 | `Guides/SDD-User-Guide.md` | Los tres documentos nuevos sumados al árbol del plano `devs/` en §10.2. | sin marca de versión interna; solo edición |
 
-No se modificó `docs/`. No se sobrescribió ninguna plantilla. No se modificó el proyecto fuente del que se extrajeron las características.
+No se modificó `docs/`. No se sobrescribió ninguna plantilla. No se modificó el proyecto de código fuente del que se extrajeron las características.
 
 ## 3. Verificación de invariantes (D1–D8)
 
@@ -50,7 +50,7 @@ No se modificó `docs/`. No se sobrescribió ninguna plantilla. No se modificó 
 | D5 — Una sola versión vigente | Cumple | Un único archivo por nombre lógico; sin copias paralelas ni entradas en `_legacy/`. |
 | D6 — Trazabilidad de cabecera | Cumple | Los tres documentos de capacidad declaran Proyecto/Documento/Versión/Estado/Fecha/Autor/Ámbito/Hereda de/Posición, y cierran con Trazabilidad (§11) y Control de cambios (§12) como últimas secciones. |
 | D7 — Neutralidad de dominio (crítica) | Cumple | El catálogo no contiene literales del dominio de la fuente ni de su stack: la búsqueda de términos del servicio original y de su tecnología no arroja ninguna ocurrencia en los tres documentos nuevos. Los únicos aciertos de la búsqueda son falsos positivos léxicos ("botón" contra el término de dominio, en contexto de UI). El vocabulario es neutro: instancia, predicado, aprovisionamiento, artefacto mínimo, identidad, operador, sesión, secreto, shell, sello, construcción. El mapeo a tecnología concreta vive donde corresponde: en la especialización por stack (§4.2 de `Design-Rules-Blazor-Mudblazor`). |
-| D8 — `project_type` | Cumple | No se inventan valores. Las tres extensiones aplican de forma transversal por condición declarada en el intake, no por tipo; los `project_type` citados de forma indirecta pertenecen al conjunto cerrado existente. |
+| D8 — `tipo_proyecto_codigo` | Cumple | No se inventan valores. Las tres extensiones aplican de forma transversal por condición declarada en el intake, no por tipo; los `tipo_proyecto_codigo` citados de forma indirecta pertenecen al conjunto cerrado existente. |
 
 ## 4. Verificación de trazabilidad
 
@@ -68,7 +68,7 @@ No se modificó `docs/`. No se sobrescribió ninguna plantilla. No se modificó 
 
 ## 5. Observaciones
 
-1. Esqueletos de referencia en ASCII (nueva, deliberada). Los documentos de primer arranque, acceso monousuario e identidad de versión incorporan una sección §7 con esqueletos de composición en bloques `text`. Es una desviación respecto de las References previas, que no usaban arte ASCII y dejaban el wireframe como artefacto exclusivo de salida de AG-03. Se adoptó porque las tres capacidades se definen tanto por la composición de sus superficies como por sus reglas, y describirlas solo en prosa obligaba a que cada proyecto reinventara el layout. Los esqueletos fijan composición y no valores, y se declaran explícitamente como referencia, no como wireframe del proyecto: el artefacto `wireframes-<superficie>` sigue siendo responsabilidad de AG-03 y referencia los patrones por nombre.
+1. Esqueletos de referencia en ASCII (nueva, deliberada). Los documentos de primer arranque, acceso monousuario e identidad de versión incorporan una sección §7 con esqueletos de composición en bloques `text`. Es una desviación respecto de las References previas, que no usaban arte ASCII y dejaban el wireframe como artefacto exclusivo de salida de AG-03. Se adoptó porque las tres capacidades se definen tanto por la composición de sus superficies como por sus reglas, y describirlas solo en prosa obligaba a que cada proyecto de código reinventara el layout. Los esqueletos fijan composición y no valores, y se declaran explícitamente como referencia, no como wireframe del proyecto de código: el artefacto `wireframes-<superficie>` sigue siendo responsabilidad de AG-03 y referencia los patrones por nombre.
 2. Ubicación de la identidad de versión en `Design/` (informativa). La mecánica de versionado es materia de la categoría 09, no de diseño. El documento incorporado acota deliberadamente su alcance al contrato que la superficie consume y a su presentación, y remite el resto a 09 por cross-ref. Si el catálogo incorpora en el futuro un subárbol de References para entrega, corresponde revisar si la parte no visual migra allí.
 3. Longitud de los documentos (informativa). Los tres nuevos quedan entre 198 y 234 líneas, dentro del rango del catálogo (190–270) y por debajo del techo de facto de 300.
 4. Fin de línea LF (correctiva). Se verificó el fin de línea real de los archivos del repositorio y es LF, coincidente con lo documentado en las invariantes del `Master-Prompt.md` §5. Los archivos nuevos se crearon en LF. Esto contradice la observación registrada en las dos notas de coherencia previas del subárbol (`Coherencia-Incorporacion.md` y `Coherencia-Config-Esquema.md`), que declaraban un CRLF de facto y una discrepancia con la invariante: esa observación es incorrecta y queda anulada. No hay discrepancia de EOL abierta en el subárbol.
@@ -84,3 +84,4 @@ Las invariantes D1–D8 se cumplen, con D7 verificada de forma explícita (ning�
 | Versión | Fecha | Cambios | Autor |
 | --- | --- | --- | --- |
 | 1.0 | 2026-07-18 | Nota de coherencia inicial de la incorporación de las extensiones por capacidad "primer arranque", "acceso de operador único" e "identidad de versión", de la actualización de "configuración dirigida por esquema" a 1.1, y de su cableado en el base, el índice, la especialización Blazor, la regla 03, el marco teórico, la guía de usuario y el master-prompt. | AG-ROOT |
+| 1.1 | 2026-07-29 | Vocabulario normativo (framework 5.0), registrado en la 5.1. El campo de cabecera `**Proyecto:** Template SDD` pasa a `**Framework:** SDD`, porque el referente es el framework y no una unidad de compilación; es el patrón que ya usa `Coherencia-Vocabulario-Producto-Y-Proyecto-De-Codigo.md`. El cuerpo adopta el vocabulario de `Vocabulario-Rules.md` §2. **El alcance verificado por esta nota no se modifica**, según el criterio de reexpresión del `README.md`: se reexpresa cómo se nombra el sujeto verificado, no la verificación. La fila se registra en la 5.1 porque la migración modificó el archivo sin dejar registro, contra `SDD-Development-Guide.md` §VI.1. | AG-ROOT |

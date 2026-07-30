@@ -1,8 +1,8 @@
 # Reglas de diseño — Web genérico
 
-**Proyecto:** {{nombre-solucion}}
+**Producto:** {{Nombre-Producto}}
 **Documento:** Design-Rules-Web-Generico.md
-**Versión:** 1.2
+**Versión:** 1.3
 **Estado:** Vigente
 **Fecha:** 2026-07-18
 **Autor:** {{equipo-o-rol}} (AG-03 UX/UI)
@@ -13,7 +13,7 @@
 
 ## 0. Propósito y alcance
 
-Este documento codifica el lenguaje de diseño que el subagente AG-03 aplica al producir los artefactos operativos de la categoría 03 (`experiencia-de-uso`, `wireframes-<superficie>`, `representacion-<concepto>`) de cualquier proyecto con interfaz web. Define tokens, patrones de componente, estados, iconografía vectorial, accesibilidad y criterios de calidad, de forma agnóstica del framework de presentación.
+Este documento codifica el lenguaje de diseño que el subagente AG-03 aplica al producir los artefactos operativos de la categoría 03 (`experiencia-de-uso`, `wireframes-<superficie>`, `representacion-<concepto>`) de cualquier proyecto de código con interfaz web. Define tokens, patrones de componente, estados, iconografía vectorial, accesibilidad y criterios de calidad, de forma agnóstica del framework de presentación.
 
 Es la pieza base del catálogo de diseño. Los documentos por stack (`Design-Rules-Blazor-Mudblazor`, y los futuros de HTML puro, MAUI y Blazor en MAUI) heredan estas reglas y solo mapean cada token y cada patrón a su tecnología concreta. Si una regla de este documento entra en conflicto con la especialización, manda la regla base salvo limitación técnica explícita y justificada en el documento hijo.
 
@@ -27,12 +27,12 @@ Marco de referencia: heurísticas de Nielsen, reglas de Shneiderman, leyes UX (H
 
 1. Claridad antes que densidad. Cada elemento hace exactamente un trabajo: una etiqueta etiqueta, un ejemplo demuestra, un control dice qué hace al usarse. Se prefiere el espacio en blanco a la compresión.
 2. Jerarquía visual explícita. El usuario debe distinguir en menos de un segundo qué es título, qué es contenido, qué es acción primaria y qué es secundaria, por tamaño, peso, color y posición, no por adorno.
-3. Consistencia interna (ley de Jakob). Un mismo concepto se ve y se comporta igual en toda la solución. Los tokens y los patrones de este catálogo son la fuente única; está prohibido definir tokens visuales ad hoc por pantalla.
+3. Consistencia interna (ley de Jakob). Un mismo concepto se ve y se comporta igual en todo el producto. Los tokens y los patrones de este catálogo son la fuente única; está prohibido definir tokens visuales ad hoc por pantalla.
 4. Estado siempre visible. Toda superficie declara y muestra sus estados (vacío, cargando, con datos, error, éxito, sin permiso). El flujo feliz no alcanza.
 5. Accesibilidad como piso, no como extra. WCAG 2.2 AA es requisito de aceptación, no una mejora opcional.
 6. Restricción del color y del movimiento. El color de marca señala acción y jerarquía, no decora. La animación sirve a la comprensión (transición de estado, orientación espacial), nunca al lucimiento.
 7. Vector primero. Iconos e ilustraciones son SVG por defecto (ver §6). El raster es la excepción justificada.
-8. Configuración dirigida por esquema. En superficies de configuración, cada parámetro se describe con un descriptor único, que es su fuente de verdad: el default, los límites, la leyenda y los ejemplos viven en el descriptor, no hardcodeados en la pantalla. El detalle de patrones, estados y la frontera de propuesta vive en la extensión por capacidad `Design-Rules-Config-Esquema`, que se carga solo cuando el proyecto tiene superficies de configuración.
+8. Configuración dirigida por esquema. En superficies de configuración, cada parámetro se describe con un descriptor único, que es su fuente de verdad: el default, los límites, la leyenda y los ejemplos viven en el descriptor, no hardcodeados en la pantalla. El detalle de patrones, estados y la frontera de propuesta vive en la extensión por capacidad `Design-Rules-Config-Esquema`, que se carga solo cuando el proyecto de código tiene superficies de configuración.
 
 ---
 
@@ -130,7 +130,7 @@ Separación entre secciones de 28px; entre tarjetas de 14px. El ritmo vertical e
 
 ## 4. Catálogo de patrones de componente
 
-Cada patrón declara su anatomía, sus estados y su comportamiento. Los wireframes de cada proyecto referencian estos patrones por nombre en lugar de redibujarlos.
+Cada patrón declara su anatomía, sus estados y su comportamiento. Los wireframes de cada proyecto de código referencian estos patrones por nombre en lugar de redibujarlos.
 
 ### 4.1 Navegación lateral
 Ítems con ícono + etiqueta, área táctil mínima 40px de alto. Activo: fondo de marca, texto `#FFF`. Inactivo: texto a 72% de opacidad. Sección destructiva (cerrar sesión) separada por hairline y en color de atención.
@@ -189,7 +189,7 @@ Performance percibida: skeletons por encima de ~400ms de espera; optimistic UI c
 Requisito normativo: iconos e ilustraciones son SVG por defecto en toda superficie web. El raster (`png`/`jpg`/`webp`) solo se admite para fotografía real, con justificación en el artefacto.
 
 ### 6.1 Iconos
-- Set vectorial único por solución (p. ej. Tabler Icons o Material Symbols), trazo coherente (1.5–2px), grilla de 24px. No mezclar familias de íconos en una misma superficie.
+- Set vectorial único por producto (p. ej. Tabler Icons o Material Symbols), trazo coherente (1.5–2px), grilla de 24px. No mezclar familias de íconos en una misma superficie.
 - Color por `currentColor`: el SVG hereda el color del texto contenedor, de modo que el token de color manda y se evita duplicar paletas.
 - Tamaños por rol: 24px en identidad y navegación, 20px en íconos de tarjeta, 16–17px inline y en botones, 15px en icon-buttons de fila.
 - Accesibilidad: ícono puramente decorativo lleva `aria-hidden="true"`; ícono que es la única etiqueta de un control lleva `aria-label` en el control (no en el `<svg>`). Un `<svg>` con significado propio lleva `role="img"` y `<title>`.
@@ -261,7 +261,7 @@ Una superficie cumple el catálogo cuando: usa solo tokens del sistema (cero lit
 | Extensión por capacidad | `Design-Rules-Primer-Arranque.md` (primer arranque y aprovisionamiento inicial) |
 | Extensión por capacidad | `Design-Rules-Acceso-Monousuario.md` (acceso de operador único en panel monolítico) |
 | Extensión por capacidad | `Design-Rules-Identidad-De-Version.md` (identidad de versión y su superficie) |
-| Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>`, `representacion-<concepto>` por proyecto |
+| Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>`, `representacion-<concepto>` por proyecto de código |
 | Marco teórico | `Guides/Marco-Teorico-SDD.md`, cap. UX/UI/DX |
 
 ---
@@ -273,3 +273,4 @@ Una superficie cumple el catálogo cuando: usa solo tokens del sistema (cero lit
 | 1.0 | 2026-06-19 | Versión inicial. Tokens, layout, catálogo de patrones, estados, iconografía SVG, accesibilidad AA, responsive y anti-patrones. Base del catálogo `References/Design/`. | AG-03 UX/UI |
 | 1.1 | 2026-06-20 | Configuración dirigida por esquema: principio rector 8, estado semántico `info` (`color.text/background/border.info`) en §2.1 con confirmación de que `warning` corresponde a Atención, anti-patrón de default/ayuda hardcodeados en §10 y registro de la extensión por capacidad `Design-Rules-Config-Esquema` en §11. | AG-03 UX/UI |
 | 1.2 | 2026-07-18 | Registro en §11 de tres extensiones por capacidad nuevas (`Design-Rules-Primer-Arranque`, `Design-Rules-Acceso-Monousuario`, `Design-Rules-Identidad-De-Version`) y dos anti-patrones en §10: chrome de navegación en superficies sin sesión ni sistema operable, e instancia desplegada sin versión visible. | AG-03 UX/UI |
+| 1.3 | 2026-07-29 | Vocabulario normativo (framework 5.0), registrado en la 5.1. El cuerpo adopta «proyecto de código» donde el referente es la unidad de compilación y «producto» donde es el nivel superior, según `Vocabulario-Rules.md` §2. El campo de cabecera pasa de `**Proyecto:**` a `**Producto:** {{Nombre-Producto}}`: la migración lo había dejado como `**Proyecto de código:**` sobre un valor de nivel producto, que `Vocabulario-Rules.md` §4 R3 prohíbe. La fila se registra en la 5.1 porque la migración modificó el archivo sin dejar registro, contra `SDD-Development-Guide.md` §VI.1. | AG-03 UX/UI |

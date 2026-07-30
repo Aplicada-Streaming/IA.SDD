@@ -1,8 +1,8 @@
 # Nota de coherencia — Incorporación de la configuración dirigida por esquema
 
-**Proyecto:** Template SDD
+**Framework:** SDD
 **Documento:** Coherencia-Config-Esquema.md
-**Versión:** 1.0
+**Versión:** 1.1
 **Estado:** Vigente
 **Fecha:** 2026-06-20
 **Autor:** AG-ROOT (Arquitecto de Soluciones, pase de QA)
@@ -47,7 +47,7 @@ No se modificó `docs/`. No se sobrescribió ninguna plantilla.
 | D5 — Una sola versión vigente | Cumple | Un único archivo por nombre lógico; los documentos editados suben versión in situ, sin copias paralelas. |
 | D6 — Trazabilidad de cabecera | Cumple | El documento de capacidad declara Proyecto/Documento/Versión/Estado/Fecha/Autor/Ámbito/Posición, más tablas de Trazabilidad (§11) y Control de cambios (§12); esta nota declara su cabecera y control de cambios. |
 | D7 — Neutralidad de dominio (crítica) | Cumple | El catálogo no contiene literales del dominio de moderación de la fuente: no aparecen baneo/banear/ban, spam, canales (de chat), timeout, "palabra prohibida" ni fan-out. El vocabulario es neutro: parámetro, umbral, ventana, unidad, default, límite, ejemplo, preset, propuesta, simulación, descriptor. La búsqueda de literales prohibidos solo arroja falsos positivos neutros: "el único canal de información/sensorial" (idiom de accesibilidad), "Banner" (término de UI) y "Bandeja" (ejemplo de inbox preexistente en el base y la especialización Blazor), ninguno del dominio fuente. |
-| D8 — `project_type` | Cumple | No se inventan valores: la extensión aplica de forma transversal "a cualquier proyecto con superficies de configuración"; los `project_type` citados (web-monolith, web-microservices, mobile-app-maui, desktop-app) son del conjunto cerrado existente. |
+| D8 — `tipo_proyecto_codigo` | Cumple | No se inventan valores: la extensión aplica de forma transversal "a cualquier proyecto de código con superficies de configuración"; los `tipo_proyecto_codigo` citados (web-monolith, web-microservices, mobile-app-maui, desktop-app) son del conjunto cerrado existente. |
 
 ## 4. Verificación de trazabilidad
 
@@ -59,12 +59,12 @@ No se modificó `docs/`. No se sobrescribió ninguna plantilla.
 | Regla 03 → índice / extensión | Cumple | `Rules-UX-UI-DX.md` §1.4 indica cargar `Design-Rules-Config-Esquema` vía el índice cuando hay superficies de configuración. |
 | Marco teórico → subárbol | Cumple | `Marco-Teorico-SDD.md` §8.7 describe el eje de extensiones por capacidad y la configuración dirigida por esquema. |
 | Guía de usuario → árbol | Cumple | `SDD-User-Guide.md` §10.2 incluye `Design-Rules-Config-Esquema.md` en el árbol del plano `devs/`. |
-| Master-prompt → insumo | Cumple | `Master-Prompt.md` §6 suma la extensión como insumo de AG-03 para proyectos con superficies de configuración; §16 lo registra en la fila 3.2. |
+| Master-prompt → insumo | Cumple | `Master-Prompt.md` §6 suma la extensión como insumo de AG-03 para proyectos de código con superficies de configuración; §16 lo registra en la fila 3.2. |
 | Límite con 05/02 | Cumple | El documento de capacidad acota el lado UX y referencia el motor (registro de descriptores, validación, salidas estructuradas / tool calling, plan-and-apply) como cross-ref a 05 y el qué funcional a 02, sin implementarlos. |
 
 ## 5. Observaciones
 
-1. Fin de línea CRLF (informativa, preexistente). Como en la incorporación previa del catálogo, todos los archivos del repositorio usan CRLF y no hay `.gitattributes` que fuerce LF; los archivos nuevos se crearon en CRLF para mantener consistencia. Discrepancia preexistente a nivel template respecto del LF documentado en las invariantes de solución, fuera del alcance de esta incorporación.
+1. Fin de línea CRLF (informativa, preexistente). Como en la incorporación previa del catálogo, todos los archivos del repositorio usan CRLF y no hay `.gitattributes` que fuerce LF; los archivos nuevos se crearon en CRLF para mantener consistencia. Discrepancia preexistente a nivel template respecto del LF documentado en las invariantes de producto, fuera del alcance de esta incorporación.
 2. Higiene en §16 del master-prompt. Al agregar la fila 3.2 se corrigió el orden de las filas 3.0 y 3.1, que habían quedado invertidas en la incorporación anterior; la tabla queda ahora en orden ascendente.
 
 ## 6. Veredicto
@@ -78,3 +78,4 @@ Las invariantes D1–D8 se cumplen, con D7 verificada de forma explícita (ning�
 | Versión | Fecha | Cambios | Autor |
 | --- | --- | --- | --- |
 | 1.0 | 2026-06-20 | Nota de coherencia inicial de la incorporación de la extensión por capacidad "configuración dirigida por esquema" y su cableado en el base, el índice, la especialización Blazor, la regla 03, el marco teórico, la guía de usuario y el master-prompt. | AG-ROOT |
+| 1.1 | 2026-07-29 | Vocabulario normativo (framework 5.0), registrado en la 5.1. El campo de cabecera `**Proyecto:** Template SDD` pasa a `**Framework:** SDD`, porque el referente es el framework y no una unidad de compilación; es el patrón que ya usa `Coherencia-Vocabulario-Producto-Y-Proyecto-De-Codigo.md`. El cuerpo adopta el vocabulario de `Vocabulario-Rules.md` §2. **El alcance verificado por esta nota no se modifica**, según el criterio de reexpresión del `README.md`: se reexpresa cómo se nombra el sujeto verificado, no la verificación. La fila se registra en la 5.1 porque la migración modificó el archivo sin dejar registro, contra `SDD-Development-Guide.md` §VI.1. | AG-ROOT |

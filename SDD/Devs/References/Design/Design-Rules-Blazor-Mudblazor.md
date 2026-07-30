@@ -1,14 +1,14 @@
 # Reglas de diseño — Blazor Interactive Server + MudBlazor
 
-**Proyecto:** {{nombre-solucion}}
+**Producto:** {{Nombre-Producto}}
 **Documento:** Design-Rules-Blazor-Mudblazor.md
-**Versión:** 1.2
+**Versión:** 1.3
 **Estado:** Vigente
 **Fecha:** 2026-07-18
 **Autor:** {{equipo-o-rol}} (AG-03 UX/UI + Frontend Architect .NET)
 **Ámbito:** Web — Blazor Interactive Server (.NET 8/9) con MudBlazor v9
 **Hereda de:** `Design-Rules-Web-Generico.md`
-**Posición:** Insumo normativo de la categoría 03 para proyectos `project_type = web-monolith` o `web-microservices (con frontend)` cuyo stack declarado en la Parte C del intake sea Blazor + MudBlazor.
+**Posición:** Insumo normativo de la categoría 03 para proyectos de código `tipo_proyecto_codigo = web-monolith` o `web-microservices (con frontend)` cuyo stack declarado en la Parte C del intake sea Blazor + MudBlazor.
 
 ---
 
@@ -140,7 +140,7 @@ Notas de fidelidad:
 
 ### 4.1 Patrones de configuración dirigida por esquema → MudBlazor
 
-Cuando el proyecto carga la extensión `Design-Rules-Config-Esquema` (proyecto con superficies de configuración), sus patrones se realizan así, heredando el theme y la iconografía ya definidos:
+Cuando el proyecto de código carga la extensión `Design-Rules-Config-Esquema` (proyecto de código con superficies de configuración), sus patrones se realizan así, heredando el theme y la iconografía ya definidos:
 
 | Patrón de configuración (extensión) | Componentes MudBlazor |
 | --- | --- |
@@ -159,7 +159,7 @@ Notas de fidelidad:
 
 ### 4.2 Patrones de primer arranque, acceso monousuario e identidad de versión → MudBlazor
 
-Cuando el proyecto carga las extensiones `Design-Rules-Primer-Arranque`, `Design-Rules-Acceso-Monousuario` o `Design-Rules-Identidad-De-Version`, sus patrones se realizan así:
+Cuando el proyecto de código carga las extensiones `Design-Rules-Primer-Arranque`, `Design-Rules-Acceso-Monousuario` o `Design-Rules-Identidad-De-Version`, sus patrones se realizan así:
 
 | Patrón (extensión) | Componentes MudBlazor |
 | --- | --- |
@@ -201,7 +201,7 @@ Performance percibida: skeletons por encima de ~400ms; dado que cada interacció
 MudBlazor renderiza íconos como SVG inline a partir de un string de path/markup, lo que cumple el requisito "vector primero" del documento base. Reglas:
 
 - Los íconos se pasan como string SVG a `MudIcon`, `MudIconButton`, `Icon` de `MudButton`/`MudNavLink`, etc. El SVG hereda el color del componente vía `Color` o `currentColor`.
-- Set único por solución. MudBlazor trae Material Symbols (`Icons.Material.*`); si la solución usa Tabler u otro set, se registran como íconos custom (constantes string con el markup SVG) en una clase estática, p. ej.:
+- Set único por producto. MudBlazor trae Material Symbols (`Icons.Material.*`); si el producto usa Tabler u otro set, se registran como íconos custom (constantes string con el markup SVG) en una clase estática, p. ej.:
 
 ```csharp
 public static class TablerIcons
@@ -233,7 +233,7 @@ public static class TablerIcons
 
 ---
 
-## 8. Estructura de proyecto y convenciones de código
+## 8. Estructura de proyecto de código y convenciones de código
 
 - Theme en `Theme/AppTheme.cs`; íconos custom en `Theme/TablerIcons.cs`. Una sola definición, importada globalmente (`_Imports.razor`).
 - Componentes reutilizables del catálogo (tarjeta de acceso, badge de estado, fila de ABM) como componentes Razor propios que envuelven MudBlazor, para que el patrón viva en un solo lugar.
@@ -263,9 +263,9 @@ Además de los criterios del documento base, una superficie Blazor + MudBlazor c
 | Documento base | `Design-Rules-Web-Generico.md` |
 | Especialidad dueña | AG-03 UX/UI + Frontend Architect .NET |
 | Regla que lo invoca | `devs/Rules/Rules-UX-UI-DX.md` (selección por stack) |
-| Aplica a `project_type` | web-monolith, web-microservices (con frontend) con stack Blazor + MudBlazor |
+| Aplica a `tipo_proyecto_codigo` | web-monolith, web-microservices (con frontend) con stack Blazor + MudBlazor |
 | Extensiones por capacidad que mapea | `Design-Rules-Config-Esquema.md` (§4.1); `Design-Rules-Primer-Arranque.md`, `Design-Rules-Acceso-Monousuario.md` e `Design-Rules-Identidad-De-Version.md` (§4.2) |
-| Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>` del proyecto Blazor |
+| Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>` del proyecto de código Blazor |
 
 ---
 
@@ -276,3 +276,4 @@ Además de los criterios del documento base, una superficie Blazor + MudBlazor c
 | 1.0 | 2026-06-19 | Versión inicial. Mapeo del catálogo genérico a MudBlazor v9: theme tipado, render Interactive Server, patrones → componentes, estados, iconografía SVG con íconos custom, accesibilidad. | AG-03 UX/UI + Frontend Architect |
 | 1.1 | 2026-06-20 | Mapeo de los patrones de la extensión `Design-Rules-Config-Esquema` a componentes MudBlazor (nueva §4.1): campo dirigido por descriptor, ayuda contextual, divulgación progresiva, presets, explicación en palabras, indicador de simulación y ranura del asistente; estado `info` vía `Color.Info`/`Palette.Info`; previsualización de la propuesta con `MudDialog`. | AG-03 UX/UI + Frontend Architect |
 | 1.2 | 2026-07-18 | Mapeo de los patrones de las extensiones `Design-Rules-Primer-Arranque`, `Design-Rules-Acceso-Monousuario` e `Design-Rules-Identidad-De-Version` a componentes MudBlazor (nueva §4.2): shell partido sin `MudAppBar`/`MudDrawer`, tarjeta de aprovisionamiento y de acceso, redirección con `MudProgressLinear` y `replace: true`, banda de resultado con `MudAlert`, barra de identidad, orientación posterior, sello de versión y detalle de diagnóstico. Nota de fidelidad sobre formularios de identidad por POST a endpoints (fuera del circuito interactivo) con `AntiforgeryToken` y `autocomplete` declarado. §11 registra las extensiones mapeadas. | AG-03 UX/UI + Frontend Architect |
+| 1.3 | 2026-07-29 | Vocabulario normativo (framework 5.0), registrado en la 5.1. El cuerpo adopta «proyecto de código» donde el referente es la unidad de compilación y «producto» donde es el nivel superior, según `Vocabulario-Rules.md` §2. El campo de cabecera pasa de `**Proyecto:**` a `**Producto:** {{Nombre-Producto}}`: la migración lo había dejado como `**Proyecto de código:**` sobre un valor de nivel producto, que `Vocabulario-Rules.md` §4 R3 prohíbe. La fila se registra en la 5.1 porque la migración modificó el archivo sin dejar registro, contra `SDD-Development-Guide.md` §VI.1. | AG-03 UX/UI |

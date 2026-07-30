@@ -1,8 +1,8 @@
 # Reglas de diseño — Acceso de operador único en panel monolítico
 
-**Proyecto:** {{nombre-solucion}}
+**Producto:** {{Nombre-Producto}}
 **Documento:** Design-Rules-Acceso-Monousuario.md
-**Versión:** 1.0
+**Versión:** 1.1
 **Estado:** Vigente
 **Fecha:** 2026-07-18
 **Autor:** {{equipo-o-rol}} (AG-03 UX/UI)
@@ -14,9 +14,9 @@
 
 ## 0. Propósito y alcance
 
-Este documento codifica el lenguaje de diseño del acceso en un perfil concreto: el panel de control monolítico de un servicio específico, operado por una sola persona sobre su propia instancia. Es una extensión por capacidad del catálogo, transversal a cualquier stack, y aplica a todo proyecto cuyo intake declare una única identidad de operación.
+Este documento codifica el lenguaje de diseño del acceso en un perfil concreto: el panel de control monolítico de un servicio específico, operado por una sola persona sobre su propia instancia. Es una extensión por capacidad del catálogo, transversal a cualquier stack, y aplica a todo proyecto de código cuyo intake declare una única identidad de operación.
 
-Carga condicional: el subagente AG-03 lo suma al base solo cuando el proyecto declara acceso de operador único (Parte C del intake o casos de uso de 02 con una sola identidad y sin gestión de usuarios). No aplica a productos con varias identidades, roles diferenciados, invitaciones o federación de identidad; en esos casos rige el patrón de acceso general del documento base.
+Carga condicional: el subagente AG-03 lo suma al base solo cuando el proyecto de código declara acceso de operador único (Parte C del intake o casos de uso de 02 con una sola identidad y sin gestión de usuarios). No aplica a productos con varias identidades, roles diferenciados, invitaciones o federación de identidad; en esos casos rige el patrón de acceso general del documento base.
 
 El perfil de operador único no es una versión recortada del acceso multiusuario: es un perfil con reglas propias. Su valor de diseño está en lo que omite deliberadamente. Cada ceremonia de identidad que se arrastra sin necesidad (registro, selección de cuenta, recuperación por correo, roles) agrega superficie, agrega decisiones y no compra nada, porque no hay a quién distinguir de quién.
 
@@ -53,9 +53,9 @@ El perfil se declara por lo que incluye y, sobre todo, por lo que omite. La omis
 | Menú de perfil | Reducido a la identidad visible más las dos acciones anteriores | No hay preferencias por usuario que administrar. |
 
 Reglas de uso del contrato:
-- Las omisiones se declaran en el artefacto `experiencia-de-uso` del proyecto; no se dejan implícitas.
+- Las omisiones se declaran en el artefacto `experiencia-de-uso` del proyecto de código; no se dejan implícitas.
 - Ningún elemento omitido se muestra deshabilitado ni "próximamente": lo que no aplica, no se dibuja.
-- Si el proyecto evoluciona a varias identidades, se abandona este perfil por el patrón general; no se lo estira.
+- Si el proyecto de código evoluciona a varias identidades, se abandona este perfil por el patrón general; no se lo estira.
 
 ---
 
@@ -84,7 +84,7 @@ Heredan los tokens, la tipografía y el espaciado del documento base. Cada patr�
 Anatomía: contenedor de ancho acotado (~380px) sobre `color.background.primary`, borde `color.border.tertiary`, anclado a la franja superior del lienzo. Contiene título, banda de resultado (§4.2), campo de identificador, campo de secreto, una única acción primaria de ancho completo y el sello de versión al pie (ver la extensión de versionado). Estados: normal, con error, con confirmación entrante, enviando. Comportamiento: sin acciones secundarias; los campos declaran su propósito para que el gestor de credenciales del navegador los reconozca.
 
 ### 4.2 Banda de resultado por código
-Anatomía: banda de ancho completo dentro de la tarjeta, sobre los campos. Variante de error (estado `danger`, `role="alert"`) y variante de confirmación (estado `success`, `role="status"`). Comportamiento: el texto no se compone en la vista; se resuelve desde un código de resultado contra el catálogo del proyecto (§5). Un código sin entrada en el catálogo cae en un mensaje genérico, nunca en el código crudo ni en el detalle técnico.
+Anatomía: banda de ancho completo dentro de la tarjeta, sobre los campos. Variante de error (estado `danger`, `role="alert"`) y variante de confirmación (estado `success`, `role="status"`). Comportamiento: el texto no se compone en la vista; se resuelve desde un código de resultado contra el catálogo del proyecto de código (§5). Un código sin entrada en el catálogo cae en un mensaje genérico, nunca en el código crudo ni en el detalle técnico.
 
 ### 4.3 Barra de identidad
 Anatomía: en la barra superior del shell de trabajo, la identidad activa como texto, seguida de dos acciones: cambio de secreto y cierre de sesión, ambas con ícono y etiqueta textual. Estados: normal, en envío del cierre. Comportamiento: el cierre de sesión es una acción que muta estado y se envía como tal, no como enlace de navegación; lleva etiqueta accesible explícita. Nunca se colapsa a solo ícono en escritorio.
@@ -115,7 +115,7 @@ Además de los estados del documento base, la superficie de acceso declara:
 | Sesión expirada | La sesión venció por inactividad o por tope | Retorno al shell de acceso | Que la sesión venció, sin culpar al usuario |
 
 Reglas del catálogo de resultados:
-- Cada resultado tiene un código estable y un texto único; el texto vive en el catálogo del proyecto, no repetido por superficie.
+- Cada resultado tiene un código estable y un texto único; el texto vive en el catálogo del proyecto de código, no repetido por superficie.
 - El rechazo de credenciales es indiferenciado por diseño: distinguir "identificador inexistente" de "secreto incorrecto" confirma la existencia de la identidad a quien no debería saberlo.
 - Ningún mensaje expone parámetros de la política (umbrales, ventanas, duraciones), ni detalle técnico del rechazo.
 - Los textos se escriben desde el lado del usuario y proponen la acción siguiente; un mensaje que solo constata el fallo está incompleto.
@@ -138,7 +138,7 @@ Cross-ref. El esquema de derivación y verificación del secreto, el transporte 
 
 ## 7. Esqueletos de referencia
 
-Esquemas de referencia de las superficies que introduce esta extensión. Fijan la composición, no los valores; los wireframes del proyecto los detallan y referencian los patrones por nombre.
+Esquemas de referencia de las superficies que introduce esta extensión. Fijan la composición, no los valores; los wireframes del proyecto de código los detallan y referencian los patrones por nombre.
 
 Superficie de acceso (patrones §4.1, §4.2):
 
@@ -218,12 +218,12 @@ Una superficie de acceso cumple esta extensión cuando: existe una sola identida
 | Hereda de | `Design-Rules-Web-Generico.md` |
 | Mapeado por | especializaciones por stack (por ejemplo `Design-Rules-Blazor-Mudblazor.md`) |
 | Extensión hermana | `Design-Rules-Primer-Arranque.md` (crea la identidad única y comparte el shell de acceso) |
-| Regla que lo invoca | `devs/Rules/Rules-UX-UI-DX.md` (cuando el proyecto declara acceso de operador único) |
+| Regla que lo invoca | `devs/Rules/Rules-UX-UI-DX.md` (cuando el proyecto de código declara acceso de operador único) |
 | Cross-ref técnico | categoría 05 (esquema de credenciales, credencial de sesión, protección de formulario, control de intentos) |
 | Cross-ref funcional | categoría 02 (qué funcional de autenticar, cambiar el secreto y cerrar sesión) |
 | Cross-ref de operación | categoría 09 (provisión y rotación operativa del secreto) |
 | Marco teórico | `Guides/Marco-Teorico-SDD.md`, cap. UX/UI/DX |
-| Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>` de las superficies de acceso e identidad del proyecto |
+| Artefactos operativos que lo aplican | `experiencia-de-uso`, `wireframes-<superficie>` de las superficies de acceso e identidad del proyecto de código |
 
 ---
 
@@ -232,3 +232,4 @@ Una superficie de acceso cumple esta extensión cuando: existe una sola identida
 | Versión | Fecha | Cambios | Autor |
 | --- | --- | --- | --- |
 | 1.0 | 2026-07-18 | Versión inicial. Extensión por capacidad: acceso de operador único en panel monolítico. Contrato del perfil por inclusión y omisión, shell partido acceso/trabajo, patrones de componente (tarjeta de acceso, banda de resultado por código, barra de identidad, cambio de secreto, restricción temporal, continuidad entre superficies), catálogo de resultados, frontera de sesión, esqueletos de referencia, accesibilidad AA y anti-patrones. Agnóstico de framework, sin literales de dominio. | AG-03 UX/UI |
+| 1.1 | 2026-07-29 | Vocabulario normativo (framework 5.0), registrado en la 5.1. El cuerpo adopta «proyecto de código» donde el referente es la unidad de compilación y «producto» donde es el nivel superior, según `Vocabulario-Rules.md` §2. El campo de cabecera pasa de `**Proyecto:**` a `**Producto:** {{Nombre-Producto}}`: la migración lo había dejado como `**Proyecto de código:**` sobre un valor de nivel producto, que `Vocabulario-Rules.md` §4 R3 prohíbe. La fila se registra en la 5.1 porque la migración modificó el archivo sin dejar registro, contra `SDD-Development-Guide.md` §VI.1. | AG-03 UX/UI |
